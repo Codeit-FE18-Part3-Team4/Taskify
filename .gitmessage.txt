@@ -1,0 +1,18 @@
+✨ type [#issue] 메세지
+
+# 형식: gitmoji type [#issue] message
+# 예시: ✨ feat [#10] 로그인 기능 개발
+#
+# Types:
+# ✨ feat      : 기능이 변경되는 작업 (새 코드 작성, 기존 코드 변경, 삭제 등)  
+# ♻️ refactor  : 기능이 변경되지 않는 작업 (코드 정리/개선, 오타 수정 등)
+# 🚨 fix       : 오류, 버그 수정 작업
+# 🔧 config    : 프로젝트 설정 작업
+# 📝 docs      : 문서 작업 (e.g. README.md)
+# 🚀 release   : 프로젝트 배포 관련 작업 (e.g. 버전 변경, 호스팅 서비스 설정 파일 변경 등)
+# 🎨 design    : CSS 등 UI 디자인 변경 → CSS 코드 변경 한정
+# ⚰️ remove    : 파일을 삭제하는 작업만 수행
+# 🚚 rename    : 파일 또는 폴더명을 수정하거나 위치(경로)를 변경
+# 🍱 asset     : 이미지 등 assets 파일 추가
+#
+# [#issue] 는 Github issue에서 관련 작업에 대해 생성한 issue 번호
