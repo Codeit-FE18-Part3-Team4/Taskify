@@ -1,0 +1,43 @@
+.button{
+  background: #fff;
+  border: none;
+  border-radius: 8px;
+  width: 354px;
+  height: 70px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  transition: ease-in-out .3s;
+}
+.TodoButton{
+  width: 314px;
+  height: 40px;
+}
+.icon{
+  width: 22px;
+  height: 22px;
+  background-color: black;
+}
+
+/* Tablet */
+@media (min-width: 768px) and (max-width: 1199px){
+  .button{
+    width: 544px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 767px){
+  .button{
+    width: 284px;
+  }
+  .TodoButton{
+    height: 32px;
+  }
+  .icon{
+    width: 20px;
+    height: 20px;
+  }
+}
