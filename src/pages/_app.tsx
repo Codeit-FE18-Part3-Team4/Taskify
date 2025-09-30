@@ -1,5 +1,14 @@
-import type { AppProps } from 'next/app';
+import type { AppProps } from "next/app";
+import localFont from "next/font/local";
+
+const pretendardFont = localFont({
+  src: "../assets/fonts/pretendard/PretendardVariable.woff2",
+});
 
 export default function App({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />;
+  return (
+    <main className={pretendardFont.className}>
+      <Component {...pageProps} />
+    </main>
+  );
 }
