@@ -1,3 +1,4 @@
+import typographyStyles from "@/components/typography/typography.module.css";
 import { ReactNode } from "react";
 
 function Section({ title, children }: { title: string; children: ReactNode }) {
@@ -6,6 +7,68 @@ function Section({ title, children }: { title: string; children: ReactNode }) {
       <h2>{title}</h2>
       {children}
     </section>
+  );
+}
+
+function Typography() {
+  const sizes = [
+    [
+      [typographyStyles["xl3-bold"], "Text-3xl Bold"],
+      [typographyStyles["xl3-semibold"], "Text-3xl Semibold"],
+    ],
+    [
+      [typographyStyles["xl2-bold"], "Text-2xl Bold"],
+      [typographyStyles["xl2-semibold"], "Text-2xl Semibold"],
+      [typographyStyles["xl2-medium"], "Text-2xl Medium"],
+      [typographyStyles["xl2-regular"], "Text-2xl Regular"],
+    ],
+    [
+      [typographyStyles["xl-bold"], "Text-xl Bold"],
+      [typographyStyles["xl-semibold"], "Text-xl Semibold"],
+      [typographyStyles["xl-medium"], "Text-xl Medium"],
+      [typographyStyles["xl-regular"], "Text-xl Regular"],
+    ],
+    [
+      [typographyStyles["lg2-bold"], "Text-lg2 Bold"],
+      [typographyStyles["lg2-semibold"], "Text-lg2 Semibold"],
+      [typographyStyles["lg2-medium"], "Text-lg2 Medium"],
+      [typographyStyles["lg2-regular"], "Text-lg2 Regular"],
+    ],
+    [
+      [typographyStyles["lg-bold"], "Text-lg Bold"],
+      [typographyStyles["lg-semibold"], "Text-lg Semibold"],
+      [typographyStyles["lg-medium"], "Text-lg Medium"],
+      [typographyStyles["lg-regular"], "Text-lg Regular"],
+    ],
+    [
+      [typographyStyles["md-bold"], "Text-md Bold"],
+      [typographyStyles["md-semibold"], "Text-md Semibold"],
+      [typographyStyles["md-medium"], "Text-md Medium"],
+      [typographyStyles["md-regular"], "Text-md Regular"],
+    ],
+    [
+      [typographyStyles["sm-semibold"], "Text-sm Semibold"],
+      [typographyStyles["sm-medium"], "Text-sm Medium"],
+    ],
+    [
+      [typographyStyles["xs-semibold"], "Text-xs Semibold"],
+      [typographyStyles["xs-medium"], "Text-xs Medium"],
+      [typographyStyles["xs-regular"], "Text-xs Regular"],
+    ],
+  ];
+
+  return (
+    <div>
+      {sizes.map((sizeGroup, index) => (
+        <div key={index}>
+          {sizeGroup.map((size) => (
+            <div key={size[0]} className={size[0]}>
+              {size[1]}
+            </div>
+          ))}
+        </div>
+      ))}
+    </div>
   );
 }
 
@@ -30,7 +93,7 @@ export default function Page() {
       </header>
       <hr />
       <Section title="Typography">
-        <p>This is a section about typography.</p>
+        <Typography />
       </Section>
       <Section title="Color">
         <p>This is a section about color.</p>

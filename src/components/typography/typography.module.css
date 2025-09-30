@@ -1,0 +1,177 @@
+/* Text-3xl */
+
+.xl3-bold {
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 42px;
+}
+
+.xl3-semibold {
+  font-size: 32px;
+  font-weight: 600;
+  line-height: 42px;
+}
+
+/* Text-2xl */
+
+.xl2-bold {
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 32px;
+}
+
+.xl2-semibold {
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 32px;
+}
+
+.xl2-medium {
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 32px;
+}
+
+.xl2-regular {
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 32px;
+}
+
+/* Text-xl */
+
+.xl-bold {
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 32px;
+}
+
+.xl-semibold {
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 32px;
+}
+
+.xl-medium {
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 32px;
+}
+
+.xl-regular {
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 32px;
+}
+
+/* Text-2lg */
+
+.lg2-bold {
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 26px;
+}
+
+.lg2-semibold {
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 26px;
+}
+
+.lg2-medium {
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 26px;
+}
+
+.lg2-regular {
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 26px;
+}
+
+/* Text-lg */
+
+.lg-bold {
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 26px;
+}
+
+.lg-semibold {
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 26px;
+}
+
+.lg-medium {
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 26px;
+}
+
+.lg-regular {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 26px;
+}
+
+/* Text-md */
+
+.md-bold {
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 24px;
+}
+
+.md-semibold {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 24px;
+}
+
+.md-medium {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 24px;
+}
+
+.md-regular {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 24px;
+}
+
+/* Text-sm */
+
+.sm-semibold {
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 22px;
+}
+
+.sm-medium {
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 22px;
+}
+
+/* Text-xs */
+
+.xs-semibold {
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 20px;
+}
+
+.xs-medium {
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 18px;
+}
+
+.xs-regular {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 18px;
+}
