@@ -87,7 +87,11 @@
 }
 
 .colorPicker {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border-radius: 50%;
+  cursor: pointer;
 }
 
 .cp_small {
@@ -98,4 +102,14 @@
 .cp_large {
   width: 30px;
   height: 30px;
+}
+
+.checkIcon_small {
+  width: 22px;
+  height: 22px;
+}
+
+.checkIcon_large {
+  width: 24px;
+  height: 24px;
 }

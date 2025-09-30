@@ -13,9 +13,10 @@ export default function CardChips({
   tagName = "",
 }: CardChipsProps) {
   const chipClasses = `${styles["card"]} ${styles[`cd_${size}`]}`;
+  const calculateColor = (color % 4) as keyof typeof CARD_COLORS;
 
   return (
-    <span className={chipClasses} style={CARD_COLORS[color]}>
+    <span className={chipClasses} style={CARD_COLORS[calculateColor]}>
       {tagName}
     </span>
   );
