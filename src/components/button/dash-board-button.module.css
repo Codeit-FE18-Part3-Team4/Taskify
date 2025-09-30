@@ -1,0 +1,49 @@
+.button{
+  background: #fff;
+  border: none;
+  border-radius: 8px;
+  width: 332px;
+  height: 70px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  cursor: pointer;
+  transition: ease-in-out .3s;
+  padding: 0 20px;
+  box-sizing: border-box;
+  font-size: 16px;
+}
+.button > span{
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+.button > span > img{
+  display: block;
+  width: 20px;
+  height: 16px;
+  padding-left: 8px;
+}
+.dot{
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #7AC555;
+}
+/* Tablet */
+@media (min-width: 768px) and (max-width: 1199px) {
+  .button {
+    width: 247px;
+    height: 68px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 767px) {
+  .button {
+    width: 260px;
+    height: 58px;
+    font-size: 14px;
+  }
+}
