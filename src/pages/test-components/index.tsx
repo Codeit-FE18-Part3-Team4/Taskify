@@ -72,6 +72,47 @@ function Typography() {
   );
 }
 
+function Color() {
+  function ColorBox({ token }: { token: string }) {
+    return (
+      <div
+        style={{
+          width: "100px",
+          height: "50px",
+          backgroundColor: `var(--color-${token})`,
+        }}
+      ></div>
+    );
+  }
+  function PaletteBox({ children }: { children: ReactNode }) {
+    return <div style={{ display: "flex" }}>{children}</div>;
+  }
+  return (
+    <div>
+      <PaletteBox>
+        <ColorBox token="gray800" />
+        <ColorBox token="gray700" />
+        <ColorBox token="gray600" />
+        <ColorBox token="gray500" />
+        <ColorBox token="gray400" />
+        <ColorBox token="gray300" />
+        <ColorBox token="gray200" />
+        <ColorBox token="gray100" />
+      </PaletteBox>
+      <PaletteBox>
+        <ColorBox token="violet" />
+        <ColorBox token="violet80" />
+        <ColorBox token="red" />
+        <ColorBox token="green" />
+        <ColorBox token="purple" />
+        <ColorBox token="orange" />
+        <ColorBox token="blue" />
+        <ColorBox token="pink" />
+      </PaletteBox>
+    </div>
+  );
+}
+
 export default function Page() {
   return (
     <main>
@@ -96,7 +137,7 @@ export default function Page() {
         <Typography />
       </Section>
       <Section title="Color">
-        <p>This is a section about color.</p>
+        <Color />
       </Section>
       <Section title="Button">
         <p>This is a section about button.</p>

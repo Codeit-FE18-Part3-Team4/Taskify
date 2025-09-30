@@ -1,3 +1,4 @@
+import "@/components/color/color.css";
 import type { AppProps } from "next/app";
 import localFont from "next/font/local";
 
