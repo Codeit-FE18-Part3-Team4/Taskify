@@ -1,0 +1,27 @@
+.button {
+  border: none;
+  border-radius: 8px;
+  color: #fff;
+  cursor: pointer;
+  width: 520px;
+  height: 50px;
+  background: #5534da;
+}
+.disabled {
+  background-color: #9fa6b2;
+  cursor: not-allowed;
+}
+.cancel{
+  background: #fff;
+  color: #787486;
+}
+.action{
+  background: #fff;
+  color: #5534DA;
+}
+/* Tablet */
+@media (max-width: 1199px) {
+  .button {
+    width: 351px;
+  }
+}
