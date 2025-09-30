@@ -1,4 +1,4 @@
-.button{
+.button {
   background: #fff;
   border: none;
   border-radius: 8px;
@@ -9,35 +9,68 @@
   align-items: center;
   gap: 12px;
   cursor: pointer;
-  transition: ease-in-out .3s;
+  transition: ease-in-out 0.3s;
+  font-size: 18px;
 }
-.TodoButton{
+.TodoButton {
   width: 314px;
   height: 40px;
 }
-.icon{
+.iconBtn {
   width: 22px;
   height: 22px;
-  background-color: black;
+  background-color: #f1effd;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 4px;
 }
-
+.icon{
+  width: 9px;
+  height: 9px;
+}
+.dashboard {
+  width: 332px;
+  font-size: 16px;
+  font-weight: 600;
+}
+.delete{
+  width: 320px;
+  height: 62px;
+  font-weight: 500;
+}
 /* Tablet */
-@media (min-width: 768px) and (max-width: 1199px){
-  .button{
+@media (min-width: 768px) and (max-width: 1199px) {
+  .button {
     width: 544px;
+  }
+  .dashboard {
+    width: 247px;
+    height: 68px;
   }
 }
 
 /* Mobile */
-@media (max-width: 767px){
-  .button{
+@media (max-width: 767px) {
+  .button {
     width: 284px;
+    height: 66px;
+    font-size: 16px;
   }
-  .TodoButton{
+  .TodoButton {
     height: 32px;
   }
-  .icon{
+  .dashboard {
+    width: 260px;
+    height: 58px;
+    font-size: 14px;
+  }
+  .iconBtn {
     width: 20px;
     height: 20px;
+  }
+  .delete{
+    width: 284px;
+    height: 52px;
   }
 }
