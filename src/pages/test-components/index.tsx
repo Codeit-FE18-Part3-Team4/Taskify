@@ -3,6 +3,8 @@ import { ReactNode } from "react";
 import { ProfileColor } from "@/constants/chips/profile-colors.enum";
 import BadgeChip from "@/components/chips/chip-badge";
 import { COMMONSIZE } from "@/constants/common/common-size";
+import BoardColorChip from "@/components/chips/chips-board-color";
+import { BOARD_COLORS } from "@/constants/chips/chip-board-colors";
 
 function Section({ title, children }: { title: string; children: ReactNode }) {
   return (
@@ -152,10 +154,23 @@ export default function Page() {
         <p>This is a section about chip.</p>
         <div
           style={{
-            marginRight: `30px`,
+            margin: `10px`,
             display: `flex`,
             gap: `10px`,
-            marginBottom: `10px`,
+          }}
+        >
+          {Object.entries(BOARD_COLORS).map(([colorKey]) => (
+            <BoardColorChip
+              key={colorKey}
+              colorKey={colorKey as keyof typeof BOARD_COLORS}
+            />
+          ))}
+        </div>
+        <div
+          style={{
+            margin: `10px`,
+            display: `flex`,
+            gap: `10px`,
           }}
         >
           {Object.values(ProfileColor)
@@ -169,7 +184,7 @@ export default function Page() {
               />
             ))}
         </div>
-        <div style={{ marginRight: `30px`, display: `flex`, gap: `10px` }}>
+        <div style={{ margin: `10px`, display: `flex`, gap: `10px` }}>
           {Object.values(ProfileColor)
             .filter((value) => typeof value === "number")
             .map((colorIndex) => (
