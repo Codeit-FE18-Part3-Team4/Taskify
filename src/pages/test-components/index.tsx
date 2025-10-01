@@ -77,24 +77,42 @@ function TypographySample() {
   );
 }
 
-function Color() {
+function ColorSample() {
   function ColorBox({ token }: { token: string }) {
     return (
       <div
         style={{
-          width: "100px",
+          minWidth: "80px",
           height: "50px",
+          padding: "0 10px",
           backgroundColor: `var(--color-${token})`,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          color: "white",
+          fontWeight: "medium",
         }}
-      ></div>
+      >
+        {token}
+      </div>
     );
   }
+
   function PaletteBox({ children }: { children: ReactNode }) {
     return <div style={{ display: "flex" }}>{children}</div>;
   }
+
   return (
     <div>
       <PaletteBox>
+        <ColorBox token="black900" />
+        <ColorBox token="black800" />
+        <ColorBox token="black700" />
+        <ColorBox token="black600" />
+        <ColorBox token="black500" />
+      </PaletteBox>
+      <PaletteBox>
+        <ColorBox token="gray900" />
         <ColorBox token="gray800" />
         <ColorBox token="gray700" />
         <ColorBox token="gray600" />
@@ -105,14 +123,33 @@ function Color() {
         <ColorBox token="gray100" />
       </PaletteBox>
       <PaletteBox>
-        <ColorBox token="violet" />
-        <ColorBox token="violet80" />
+        <ColorBox token="brand950" />
+        <ColorBox token="brand900" />
+        <ColorBox token="brand800" />
+        <ColorBox token="brand700" />
+        <ColorBox token="brand600" />
+        <ColorBox token="brand500" />
+        <ColorBox token="brand400" />
+        <ColorBox token="brand300" />
+        <ColorBox token="brand200" />
+        <ColorBox token="brand100" />
+      </PaletteBox>
+      <PaletteBox>
+        <ColorBox token="background" />
+        <ColorBox token="modalBackground" />
+        <ColorBox token="stroke" />
+      </PaletteBox>
+      <PaletteBox>
         <ColorBox token="red" />
-        <ColorBox token="green" />
-        <ColorBox token="purple" />
-        <ColorBox token="orange" />
         <ColorBox token="blue" />
-        <ColorBox token="pink" />
+        <ColorBox token="blue300" />
+        <ColorBox token="green" />
+        <ColorBox token="violet" />
+        <ColorBox token="cyan" />
+        <ColorBox token="rose" />
+        <ColorBox token="cobaltBlue" />
+        <ColorBox token="yellow" />
+        <ColorBox token="orange" />
       </PaletteBox>
     </div>
   );
@@ -142,7 +179,7 @@ export default function Page() {
         <TypographySample />
       </Section>
       <Section title="Color">
-        <Color />
+        <ColorSample />
       </Section>
       <Section title="Button">
         <p>This is a section about button.</p>
