@@ -1,0 +1,59 @@
+.button {
+  color: var(--color-white);
+  border: none;
+  border-radius: 100px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.1s ease-in-out;
+  font-size: 18px;
+}
+.auto {
+  width: 100%;
+  height: 60px;
+}
+.lg {
+  width: 200px;
+  height: 60px;
+  font-size: 18px;
+}
+.md {
+  width: 200px;
+  height: 50px;
+  font-size: 16px;
+}
+.sm {
+  width: 120px;
+  height: 36px;
+  font-size: 16px;
+}
+.xs {
+  width: 91px;
+  height: 29px;
+  font-size: 14px;
+}
+.primary {
+  background: #00a200;
+}
+.primary:hover {
+  background: #0b8a0b;
+}
+.secondary {
+  background: #3c3c41;
+}
+.secondary:hover {
+  background: #333236;
+}
+.delete {
+  background: #ca372b;
+}
+.disabled {
+  cursor: not-allowed;
+}
+.primary.disabled {
+  background: #10671f;
+  color: #00330d;
+}
+.secondary.disabled {
+  background: #3c3c41;
+  color: #787486;
+}
