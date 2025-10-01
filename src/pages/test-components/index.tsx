@@ -1,5 +1,8 @@
 import typographyStyles from "@/components/typography/typography.module.css";
 import { ReactNode } from "react";
+import { ProfileColor } from "@/constants/chips/profile-colors.enum";
+import BadgeChip from "@/components/chips/chip-badge";
+import { COMMONSIZE } from "@/constants/common/common-size";
 
 function Section({ title, children }: { title: string; children: ReactNode }) {
   return (
@@ -147,6 +150,37 @@ export default function Page() {
       </Section>
       <Section title="Chip">
         <p>This is a section about chip.</p>
+        <div
+          style={{
+            marginRight: `30px`,
+            display: `flex`,
+            gap: `10px`,
+            marginBottom: `10px`,
+          }}
+        >
+          {Object.values(ProfileColor)
+            .filter((value) => typeof value === "number")
+            .map((colorIndex) => (
+              <BadgeChip
+                key={colorIndex}
+                tagName={"태그내용"}
+                colorIndex={colorIndex as ProfileColor}
+                size={COMMONSIZE.Small}
+              />
+            ))}
+        </div>
+        <div style={{ marginRight: `30px`, display: `flex`, gap: `10px` }}>
+          {Object.values(ProfileColor)
+            .filter((value) => typeof value === "number")
+            .map((colorIndex) => (
+              <BadgeChip
+                key={colorIndex}
+                tagName="태그내용"
+                colorIndex={colorIndex as ProfileColor}
+                size={COMMONSIZE.Large}
+              />
+            ))}
+        </div>
       </Section>
       <Section title="Modal">
         <p>This is a section about modal.</p>
