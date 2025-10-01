@@ -135,6 +135,17 @@ function ColorSample() {
         <ColorBox token="brand100" />
       </PaletteBox>
       <PaletteBox>
+        <ColorBox token="red900" />
+        <ColorBox token="red800" />
+        <ColorBox token="red700" />
+        <ColorBox token="red600" />
+        <ColorBox token="red500" />
+        <ColorBox token="red400" />
+        <ColorBox token="red300" />
+        <ColorBox token="red200" />
+        <ColorBox token="red100" />
+      </PaletteBox>
+      <PaletteBox>
         <ColorBox token="background" />
         <ColorBox token="modalBackground" />
         <ColorBox token="stroke" />

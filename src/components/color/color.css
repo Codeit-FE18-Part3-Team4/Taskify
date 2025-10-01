@@ -32,6 +32,18 @@
   --color-brand200: #a6ebaa;
   --color-brand100: #cff8d2;
 
+  /* Red */
+
+  --color-red900: #40100d;
+  --color-red800: #651a14;
+  --color-red700: #8a241c;
+  --color-red600: #b02e23;
+  --color-red500: #ca372b;
+  --color-red400: #e66e65;
+  --color-red300: #f19b94;
+  --color-red200: #f7c5c1;
+  --color-red100: #fce8e6;
+
   /* Background */
 
   --color-background: #1b1a1f;
@@ -40,7 +52,7 @@
 
   /* Semantic */
 
-  --color-red: #ca372b;
+  --color-red: var(--color-red500);
   --color-blue: #1458bc;
   --color-blue300: #76a5ea;
   --color-green: #206e4e;
