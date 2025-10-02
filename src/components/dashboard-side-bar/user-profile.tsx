@@ -1,7 +1,7 @@
 import SettingIcon from "@/assets/images/ic-setting.svg";
 import Typography from "@/components/typography/typography";
 import Image from "next/image";
-import styles from "../dashboard-side-bar.module.css";
+import styles from "./dashboard-side-bar.module.css";
 
 interface UserProfileProps {
   name: string;

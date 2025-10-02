@@ -1,7 +1,7 @@
 import { MouseEventHandler } from 'react'
-import UserProfile from './components/user-profile'
-import Header from './components/header'
-import Main from './components/main'
+import UserProfile from './user-profile'
+import Header from './header'
+import Main from './main'
 import styles from './dashboard-side-bar.module.css'
 
 interface DashboardSideBarProps {

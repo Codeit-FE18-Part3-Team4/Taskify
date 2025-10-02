@@ -2,9 +2,9 @@ import ArrowRightIcon from "@/assets/images/ic-chevorn-right.svg";
 import ArrowLeftIcon from "@/assets/images/ic-chevron-left.svg";
 import Typography from "@/components/typography/typography";
 import Image from "next/image";
-import styles from "../dashboard-side-bar.module.css";
+import styles from "./dashboard-side-bar.module.css";
 
-interface DashboardPagenationProps {
+interface DashboardPaginationProps {
   onPrev: () => void;
   onNext: () => void;
   isPrevDisabled?: boolean;
@@ -13,12 +13,12 @@ interface DashboardPagenationProps {
   totalPages?: number;
 }
 
-export default function DashboardPagenation({
+export default function DashboardPagination({
   onPrev,
   onNext,
   isPrevDisabled = true,
   isNextDisabled = true,
-}: DashboardPagenationProps) {
+}: DashboardPaginationProps) {
   const pervDisabled = isPrevDisabled ? styles.disabled : "";
   const nextDisabled = isNextDisabled ? styles.disabled : "";
 

@@ -3,9 +3,9 @@ import plusIcon from "@/assets/images/ic-plus.svg";
 import Typography from "@/components/typography/typography";
 import Image from "next/image";
 import { MouseEventHandler, useState } from "react";
-import styles from "../dashboard-side-bar.module.css";
+import styles from "./dashboard-side-bar.module.css";
 import DashboardButton from "./dashboard-button";
-import DashboardPagenation from "./dashboard-pagenation";
+import DashboardPagination from "./dashboard-pagination";
 
 interface DashboardSideBarMainProps {
   dashboardAdd: MouseEventHandler<HTMLButtonElement>;
@@ -175,7 +175,7 @@ export default function Main({ dashboardAdd }: DashboardSideBarMainProps) {
           {button.title}
         </DashboardButton>
       ))}
-      <DashboardPagenation onPrev={() => { }} onNext={() => { }}/>
+      <DashboardPagination onPrev={() => { }} onNext={() => { }}/>
     </div>
   );
 }

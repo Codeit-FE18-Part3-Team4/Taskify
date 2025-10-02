@@ -1,7 +1,7 @@
 import logoImg from "@/assets/images/taskify-logo.svg";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import styles from "../dashboard-side-bar.module.css";
+import styles from "./dashboard-side-bar.module.css";
 
 export default function Header() {
   const router = useRouter();

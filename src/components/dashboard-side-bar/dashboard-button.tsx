@@ -2,7 +2,7 @@ import CrownIcon from "@/assets/images/ic-crown.svg";
 import Typography from "@/components/typography/typography";
 import Image from "next/image";
 import { MouseEventHandler, ReactNode } from "react";
-import styles from "../dashboard-side-bar.module.css";
+import styles from "./dashboard-side-bar.module.css";
 
 interface DashboardButtonProps {
   children: ReactNode;
