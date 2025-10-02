@@ -39,6 +39,9 @@
 .delete {
   background: var(--color-red500);
 }
+.delete:hover{
+  background: var(--color-red600);
+}
 .disabled {
   cursor: not-allowed;
 }
