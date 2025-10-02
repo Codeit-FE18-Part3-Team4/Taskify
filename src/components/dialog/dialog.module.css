@@ -14,6 +14,7 @@
 
 @media (max-width: 375px) {
   .dialog {
+    width: calc(307px - 60px);
     padding-top: 30px;
     gap: 20px;
   }
