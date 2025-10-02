@@ -1,6 +1,8 @@
 import Button, { ButtonSize, ButtonVariant } from "@/components/button/button";
 import Typography from "@/components/typography/typography";
 import { ReactNode } from "react";
+import Input, { InputSize, InputVariant } from "@/components/input/input";
+import SearchIcon from "../../components/input/search-icon-svg";
 
 function Section({ title, children }: { title: string; children: ReactNode }) {
   return (
@@ -220,6 +222,41 @@ function ButtonBox() {
   );
 }
 
+function InputBox() {
+  const sizes = [InputSize.Large, InputSize.Medium];
+  const variants = [
+    InputVariant.Normal,
+    InputVariant.Active,
+    InputVariant.Disabled,
+    InputVariant.Completed,
+    InputVariant.Error,
+  ];
+  return (
+    <div>
+      {variants.map((variant) => (
+        <div key={variant}>
+          <div>{variant}</div>
+          {sizes.map((size) => (
+            <div
+              key={`${variant}-${size}`}
+              style={{ display: "inline-block", margin: 4 }}
+            >
+              <Input
+                variant={variant}
+                size={size}
+                value="Text"
+                icon={<SearchIcon />}
+                onChange={() => {}}
+                errorMessage="Message"
+              />
+            </div>
+          ))}
+        </div>
+      ))}
+    </div>
+  );
+}
+
 export default function Page() {
   return (
     <main style={{ padding: "24px" }}>
@@ -250,7 +287,7 @@ export default function Page() {
         <ButtonBox />
       </Section>
       <Section title="Input">
-        <p>This is a section about input.</p>
+        <InputBox />
       </Section>
       <Section title="Chip">
         <p>This is a section about chip.</p>
