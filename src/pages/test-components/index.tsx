@@ -1,10 +1,10 @@
 import typographyStyles from "@/components/typography/typography.module.css";
 import { ReactNode } from "react";
 import { ProfileColor } from "@/constants/chips/profile-colors.enum";
-import BadgeChip from "@/components/chips/chip-badge";
-import { COMMONSIZE } from "@/constants/common/common-size";
-import BoardColorChip from "@/components/chips/chips-board-color";
-import { BOARD_COLORS } from "@/constants/chips/chip-board-colors";
+import BadgeChip from "@/components/chips/badge";
+import BoardColorChip from "@/components/chips/chips-color";
+import { CHIP_COLORS } from "@/constants/chips/chip-colors";
+import { CommonSize } from "@/constants/common/common-size.enum";
 
 function Section({ title, children }: { title: string; children: ReactNode }) {
   return (
@@ -152,23 +152,24 @@ export default function Page() {
       </Section>
       <Section title="Chip">
         <p>This is a section about chip.</p>
-        <div
-          style={{
-            margin: `10px`,
-            display: `flex`,
-            gap: `10px`,
-          }}
-        >
-          {Object.entries(BOARD_COLORS).map(([colorKey]) => (
-            <BoardColorChip
-              key={colorKey}
-              colorKey={colorKey as keyof typeof BOARD_COLORS}
-            />
+        {Object.values(CommonSize)
+          .filter((value) => typeof value === "number")
+          .map((size) => (
+            <div
+              key={size}
+              style={{
+                display: "flex",
+                gap: "10px",
+              }}
+            >
+              {CHIP_COLORS.map((item, index) => (
+                <BoardColorChip key={index} color={item} size={size} />
+              ))}
+            </div>
           ))}
-        </div>
+
         <div
           style={{
-            margin: `10px`,
             display: `flex`,
             gap: `10px`,
           }}
@@ -178,21 +179,8 @@ export default function Page() {
             .map((colorIndex) => (
               <BadgeChip
                 key={colorIndex}
-                tagName={"태그내용"}
+                title={"태그내용"}
                 colorIndex={colorIndex as ProfileColor}
-                size={COMMONSIZE.Small}
-              />
-            ))}
-        </div>
-        <div style={{ margin: `10px`, display: `flex`, gap: `10px` }}>
-          {Object.values(ProfileColor)
-            .filter((value) => typeof value === "number")
-            .map((colorIndex) => (
-              <BadgeChip
-                key={colorIndex}
-                tagName="태그내용"
-                colorIndex={colorIndex as ProfileColor}
-                size={COMMONSIZE.Large}
               />
             ))}
         </div>
