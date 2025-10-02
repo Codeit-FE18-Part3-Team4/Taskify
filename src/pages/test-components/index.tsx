@@ -1,3 +1,4 @@
+import Button, { ButtonSize, ButtonVariant } from "@/components/button/button";
 import typographyStyles from "@/components/typography/typography.module.css";
 import { ReactNode } from "react";
 
@@ -113,6 +114,59 @@ function Color() {
   );
 }
 
+function ButtonBox() {
+  const sizes = [
+    ButtonSize.Large,
+    ButtonSize.Medium,
+    ButtonSize.Small,
+    ButtonSize.XSmall,
+  ];
+  return (
+    <div>
+      <div>
+        {sizes.map((size) => (
+          <div
+            key={`primary-${size}`}
+            style={{ display: "inline-block", margin: "4px" }}
+          >
+            <Button size={size}>Label</Button>
+            <Button size={size} disabled>
+              Label
+            </Button>
+          </div>
+        ))}
+      </div>
+      <div>
+        {sizes.map((size) => (
+          <div
+            key={`secondary-${size}`}
+            style={{ display: "inline-block", margin: "4px" }}
+          >
+            <Button size={size} variant={ButtonVariant.Secondary}>
+              Label
+            </Button>
+            <Button size={size} variant={ButtonVariant.Secondary} disabled>
+              Label
+            </Button>
+          </div>
+        ))}
+      </div>
+      <div>
+        {sizes.map((size) => (
+          <div
+            key={`delete-${size}`}
+            style={{ display: "inline-block", margin: "4px" }}
+          >
+            <Button size={size} variant={ButtonVariant.Delete}>
+              삭제
+            </Button>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 export default function Page() {
   return (
     <main>
@@ -140,7 +194,7 @@ export default function Page() {
         <Color />
       </Section>
       <Section title="Button">
-        <p>This is a section about button.</p>
+        <ButtonBox />
       </Section>
       <Section title="Input">
         <p>This is a section about input.</p>
