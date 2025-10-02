@@ -12,6 +12,8 @@
 
 .content {
   background-color: var(--color-modalBackground);
+  border-radius: 24px;
+  border: 1px solid var(--color-stroke);
 }
 
 @keyframes fadeIn {
