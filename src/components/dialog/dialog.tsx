@@ -1,6 +1,7 @@
 import Typography from "@/components/typography/typography";
 import { useDialog } from "@/hooks/use-dialog";
 import { classnames } from "@/utils/classnames";
+import { useMediaQuery } from "@uidotdev/usehooks";
 import Button, { ButtonSize, ButtonVariant } from "../button/button";
 import Modal from "../modal/modal";
 import styles from "./dialog.module.css";
@@ -12,6 +13,7 @@ interface Props {
 
 export default function Dialog({ message, dialogKey }: Props) {
   const { openDialog } = useDialog({ key: dialogKey });
+  const isMobile = useMediaQuery("(max-width: 375px)");
 
   const handleClick = () => {
     openDialog(false);
@@ -20,7 +22,12 @@ export default function Dialog({ message, dialogKey }: Props) {
   return (
     <Modal modalKey={dialogKey}>
       <div className={styles.dialog}>
-        <p className={classnames(styles.message, Typography.xlSemiBold)}>
+        <p
+          className={classnames(
+            styles.message,
+            isMobile ? Typography.lgSemiBold : Typography.xlSemiBold
+          )}
+        >
           {message}
         </p>
         <Button
