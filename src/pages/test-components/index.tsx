@@ -223,13 +223,13 @@ function ButtonBox() {
 }
 
 function ModalSample() {
-  const { isMount, isOpen, openModal } = useModal();
+  const { isShowModal, openModal } = useModal();
 
   return (
     <>
       <button onClick={() => openModal(true)}>Open Modal</button>
-      {isMount && (
-        <Modal isOpen={isOpen}>
+      {isShowModal && (
+        <Modal>
           <div
             style={{
               width: "600px",

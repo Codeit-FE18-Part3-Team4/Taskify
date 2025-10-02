@@ -5,12 +5,11 @@ import { createPortal } from "react-dom";
 import styles from "./modal.module.css";
 
 interface Props {
-  isOpen: boolean;
   children: ReactNode;
 }
 
-export default function Modal({ isOpen, children }: Props) {
-  const { openModal, onClose } = useModal();
+export default function Modal({ children }: Props) {
+  const { isOpen, openModal, onClose } = useModal();
 
   const handleAnimationEnd = () => {
     if (isOpen) return;
