@@ -42,7 +42,7 @@ export default function Button({
   const disabledStyle = disabled === true ? styles.disabled : "";
   return (
     <button
-      className={`${styles.button} ${styles[variant]} ${styles[size]} ${FONT_SIZE} ${isWidthFull ? styles.widthFull : ""} ${disabledStyle}`}
+      className={`${styles.button} ${styles[variant]} ${styles[size]} ${isWidthFull ? styles.widthFull : ""} ${disabledStyle}`}
       disabled={disabled}
       onClick={onClick}
     >
