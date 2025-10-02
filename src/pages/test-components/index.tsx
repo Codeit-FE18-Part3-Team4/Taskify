@@ -364,6 +364,8 @@ function AlertSample() {
             alertKey={ALERT_KEY}
             title="Alert Title"
             message="This is an important alert message."
+            onCancel={() => console.log("Alert cancelled")}
+            onConfirm={() => console.log("Alert confirmed")}
           />
         )}
       </div>

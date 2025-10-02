@@ -10,14 +10,28 @@ interface Props {
   title: string;
   alertKey: string;
   message: string;
+  onCancel?: () => void;
+  onConfirm?: () => void;
 }
 
-export default function Alert({ title, message, alertKey }: Props) {
+export default function Alert({
+  alertKey,
+  title,
+  message,
+  onCancel,
+  onConfirm,
+}: Props) {
   const { openAlert } = useAlert({ key: alertKey });
   const isMobile = useMediaQuery("(max-width: 375px)");
 
-  const handleClick = () => {
+  const handleCancelClick = () => {
     openAlert(false);
+    onCancel?.();
+  };
+
+  const handleConfirmClick = () => {
+    openAlert(false);
+    onConfirm?.();
   };
 
   return (
@@ -45,14 +59,14 @@ export default function Alert({ title, message, alertKey }: Props) {
           <Button
             variant={ButtonVariant.Secondary}
             size={ButtonSize.Auto}
-            onClick={handleClick}
+            onClick={handleCancelClick}
           >
             취소
           </Button>
           <Button
             variant={ButtonVariant.Delete}
             size={ButtonSize.Auto}
-            onClick={handleClick}
+            onClick={handleConfirmClick}
           >
             확인
           </Button>
