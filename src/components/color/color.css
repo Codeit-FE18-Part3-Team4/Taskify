@@ -1,25 +1,65 @@
 * {
+  /* Black */
+
+  --color-black900: #131215;
+  --color-black800: #201f23;
+  --color-black700: #262629;
+  --color-black600: #333236;
+  --color-black500: #4b4b4b;
+
   /* Grayscale */
 
-  --color-black: #000000;
-  --color-gray800: #171717;
-  --color-gray700: #333236;
-  --color-gray600: #4b4b4b;
+  --color-gray900: #3c3c41;
+  --color-gray800: #49474f;
+  --color-gray700: #524f5b;
+  --color-gray600: #5b5963;
   --color-gray500: #787486;
-  --color-gray400: #9fa6b2;
-  --color-gray300: #d9d9d9;
-  --color-gray200: #eeeeee;
-  --color-gray100: #fafafa;
-  --color-white: #ffffff;
+  --color-gray400: #a39fb2;
+  --color-gray300: #d6d5d9;
+  --color-gray200: #ececee;
+  --color-gray100: #f8f7fa;
+
+  /* Brand */
+
+  --color-brand950: #00330d;
+  --color-brand900: #00490c;
+  --color-brand800: #10671f;
+  --color-brand700: #0d7910;
+  --color-brand600: #0b8a0b;
+  --color-brand500: #00a200;
+  --color-brand400: #3fc03f;
+  --color-brand300: #6bda71;
+  --color-brand200: #a6ebaa;
+  --color-brand100: #cff8d2;
+
+  /* Red */
+
+  --color-red900: #40100d;
+  --color-red800: #651a14;
+  --color-red700: #8a241c;
+  --color-red600: #b02e23;
+  --color-red500: #ca372b;
+  --color-red400: #e66e65;
+  --color-red300: #f19b94;
+  --color-red200: #f7c5c1;
+  --color-red100: #fce8e6;
+
+  /* Background */
+
+  --color-background: #1b1a1f;
+  --color-modalBackground: #242429;
+  --color-stroke: #676975;
 
   /* Semantic */
 
-  --color-violet: #5534da;
-  --color-violet80: #f1effd;
-  --color-red: #d6173a;
-  --color-green: #7ac555;
-  --color-purple: #760dde;
-  --color-orange: #ffa500;
-  --color-blue: #76a5ea;
-  --color-pink: #e876ea;
+  --color-red: var(--color-red500);
+  --color-blue: #1458bc;
+  --color-blue300: #76a5ea;
+  --color-green: #206e4e;
+  --color-violet: #593ea5;
+  --color-cyan: #1f6a83;
+  --color-rose: #ae2e24;
+  --color-cobaltBlue: #1458bc;
+  --color-yellow: #bd8c00;
+  --color-orange: #9f4b00;
 }

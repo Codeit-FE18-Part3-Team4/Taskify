@@ -1,60 +1,65 @@
 import Button, { ButtonSize, ButtonVariant } from "@/components/button/button";
-import typographyStyles from "@/components/typography/typography.module.css";
+import Typography from "@/components/typography/typography";
 import { ReactNode } from "react";
 
 function Section({ title, children }: { title: string; children: ReactNode }) {
   return (
-    <section>
-      <h2>{title}</h2>
+    <section style={{ margin: "24px 0" }}>
+      <h2
+        className={Typography.xl2Bold}
+        style={{
+          marginBottom: "12px",
+          paddingBottom: "8px",
+          borderBottom: "1px solid black",
+        }}
+      >
+        {title}
+      </h2>
       {children}
     </section>
   );
 }
 
-function Typography() {
+function TypographySample() {
   const sizes = [
     [
-      [typographyStyles["xl3-bold"], "Text-3xl Bold"],
-      [typographyStyles["xl3-semibold"], "Text-3xl Semibold"],
+      [Typography.xl3Bold, "3xl Bold"],
+      [Typography.xl3SemiBold, "3xl Semibold"],
     ],
     [
-      [typographyStyles["xl2-bold"], "Text-2xl Bold"],
-      [typographyStyles["xl2-semibold"], "Text-2xl Semibold"],
-      [typographyStyles["xl2-medium"], "Text-2xl Medium"],
-      [typographyStyles["xl2-regular"], "Text-2xl Regular"],
+      [Typography.xl2Bold, "2xl Bold"],
+      [Typography.xl2SemiBold, "2xl Semibold"],
+      [Typography.xl2Medium, "2xl Medium"],
     ],
     [
-      [typographyStyles["xl-bold"], "Text-xl Bold"],
-      [typographyStyles["xl-semibold"], "Text-xl Semibold"],
-      [typographyStyles["xl-medium"], "Text-xl Medium"],
-      [typographyStyles["xl-regular"], "Text-xl Regular"],
+      [Typography.xlBold, "xl Bold"],
+      [Typography.xlSemiBold, "xl Semibold"],
+      [Typography.xlMedium, "xl Medium"],
     ],
     [
-      [typographyStyles["lg2-bold"], "Text-lg2 Bold"],
-      [typographyStyles["lg2-semibold"], "Text-lg2 Semibold"],
-      [typographyStyles["lg2-medium"], "Text-lg2 Medium"],
-      [typographyStyles["lg2-regular"], "Text-lg2 Regular"],
+      [Typography.lg2Bold, "2lg Bold"],
+      [Typography.lg2SemiBold, "2lg Semibold"],
+      [Typography.lg2Medium, "2lg Medium"],
     ],
     [
-      [typographyStyles["lg-bold"], "Text-lg Bold"],
-      [typographyStyles["lg-semibold"], "Text-lg Semibold"],
-      [typographyStyles["lg-medium"], "Text-lg Medium"],
-      [typographyStyles["lg-regular"], "Text-lg Regular"],
+      [Typography.lgBold, "lg Bold"],
+      [Typography.lgSemiBold, "lg Semibold"],
+      [Typography.lgMedium, "lg Medium"],
+      [Typography.lgMedium160, "lg Medium 160"],
     ],
     [
-      [typographyStyles["md-bold"], "Text-md Bold"],
-      [typographyStyles["md-semibold"], "Text-md Semibold"],
-      [typographyStyles["md-medium"], "Text-md Medium"],
-      [typographyStyles["md-regular"], "Text-md Regular"],
+      [Typography.mdBold, "md Bold"],
+      [Typography.mdSemiBold, "md Semibold"],
+      [Typography.mdMedium, "md Medium"],
+      [Typography.mdMedium150, "md Medium 150"],
     ],
     [
-      [typographyStyles["sm-semibold"], "Text-sm Semibold"],
-      [typographyStyles["sm-medium"], "Text-sm Medium"],
+      [Typography.smSemiBold, "sm Semibold"],
+      [Typography.smMedium, "sm Medium"],
     ],
     [
-      [typographyStyles["xs-semibold"], "Text-xs Semibold"],
-      [typographyStyles["xs-medium"], "Text-xs Medium"],
-      [typographyStyles["xs-regular"], "Text-xs Regular"],
+      [Typography.xsSemiBold, "xs Semibold"],
+      [Typography.xsMedium, "xs Medium"],
     ],
   ];
 
@@ -73,24 +78,42 @@ function Typography() {
   );
 }
 
-function Color() {
+function ColorSample() {
   function ColorBox({ token }: { token: string }) {
     return (
       <div
         style={{
-          width: "100px",
+          minWidth: "80px",
           height: "50px",
+          padding: "0 10px",
           backgroundColor: `var(--color-${token})`,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          color: "white",
+          fontWeight: "medium",
         }}
-      ></div>
+      >
+        {token}
+      </div>
     );
   }
+
   function PaletteBox({ children }: { children: ReactNode }) {
     return <div style={{ display: "flex" }}>{children}</div>;
   }
+
   return (
     <div>
       <PaletteBox>
+        <ColorBox token="black900" />
+        <ColorBox token="black800" />
+        <ColorBox token="black700" />
+        <ColorBox token="black600" />
+        <ColorBox token="black500" />
+      </PaletteBox>
+      <PaletteBox>
+        <ColorBox token="gray900" />
         <ColorBox token="gray800" />
         <ColorBox token="gray700" />
         <ColorBox token="gray600" />
@@ -101,14 +124,44 @@ function Color() {
         <ColorBox token="gray100" />
       </PaletteBox>
       <PaletteBox>
-        <ColorBox token="violet" />
-        <ColorBox token="violet80" />
+        <ColorBox token="brand950" />
+        <ColorBox token="brand900" />
+        <ColorBox token="brand800" />
+        <ColorBox token="brand700" />
+        <ColorBox token="brand600" />
+        <ColorBox token="brand500" />
+        <ColorBox token="brand400" />
+        <ColorBox token="brand300" />
+        <ColorBox token="brand200" />
+        <ColorBox token="brand100" />
+      </PaletteBox>
+      <PaletteBox>
+        <ColorBox token="red900" />
+        <ColorBox token="red800" />
+        <ColorBox token="red700" />
+        <ColorBox token="red600" />
+        <ColorBox token="red500" />
+        <ColorBox token="red400" />
+        <ColorBox token="red300" />
+        <ColorBox token="red200" />
+        <ColorBox token="red100" />
+      </PaletteBox>
+      <PaletteBox>
+        <ColorBox token="background" />
+        <ColorBox token="modalBackground" />
+        <ColorBox token="stroke" />
+      </PaletteBox>
+      <PaletteBox>
         <ColorBox token="red" />
-        <ColorBox token="green" />
-        <ColorBox token="purple" />
-        <ColorBox token="orange" />
         <ColorBox token="blue" />
-        <ColorBox token="pink" />
+        <ColorBox token="blue300" />
+        <ColorBox token="green" />
+        <ColorBox token="violet" />
+        <ColorBox token="cyan" />
+        <ColorBox token="rose" />
+        <ColorBox token="cobaltBlue" />
+        <ColorBox token="yellow" />
+        <ColorBox token="orange" />
       </PaletteBox>
     </div>
   );
@@ -169,10 +222,10 @@ function ButtonBox() {
 
 export default function Page() {
   return (
-    <main>
+    <main style={{ padding: "24px" }}>
       <header>
-        <h1>공통 컴포넌트 테스트 페이지</h1>
-        <ul>
+        <h1 className={Typography.xl3Bold}>공통 컴포넌트 테스트 페이지</h1>
+        <ul className={Typography.lg2Medium} style={{ marginTop: "16px" }}>
           <li>
             구현한 공통 컴포넌트의 동작을 테스트하고 사용 방법을 확인하는
             페이지입니다.
@@ -186,12 +239,12 @@ export default function Page() {
           </li>
         </ul>
       </header>
-      <hr />
+      <hr style={{ margin: "24px 0" }} />
       <Section title="Typography">
-        <Typography />
+        <TypographySample />
       </Section>
       <Section title="Color">
-        <Color />
+        <ColorSample />
       </Section>
       <Section title="Button">
         <ButtonBox />
