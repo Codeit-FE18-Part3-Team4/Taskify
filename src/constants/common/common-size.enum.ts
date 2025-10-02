@@ -1,5 +1,12 @@
 export enum CommonSize {
-  small,
-  medium,
-  large,
+  Small,
+  Medium,
+  Large,
+}
+
+export enum colorFrameSize {
+  XSmall,
+  Small,
+  Medium,
+  Large,
 }
