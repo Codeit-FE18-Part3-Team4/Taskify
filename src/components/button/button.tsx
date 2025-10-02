@@ -13,44 +13,40 @@ export enum ButtonSize {
   Medium = "md",
   Small = "sm",
   XSmall = "xs",
-  Auto = "auto",
 }
 
-export const ButtonFontSize = {
-  lg2SemiBold: Typography.lg2SemiBold,
-  lgSemiBold: Typography.lgSemiBold,
-  mdSemiBold: Typography.mdSemiBold
-} as const;
+const FONT_SIZE: Record<ButtonSize, string> = {
+  [ButtonSize.Large]: Typography.lg2SemiBold,
+  [ButtonSize.Medium]: Typography.lgSemiBold,
+  [ButtonSize.Small]: Typography.lgSemiBold,
+  [ButtonSize.XSmall]: Typography.mdSemiBold,
+};
 
 interface ButtonProps {
   children: ReactNode;
   variant?: ButtonVariant;
   size?: ButtonSize;
-  fontSize?: typeof ButtonFontSize[keyof typeof ButtonFontSize];
   disabled?: boolean;
   isWidthFull?: boolean;
-  isHeightFull?: boolean;
   onClick?: MouseEventHandler<HTMLButtonElement>;
 }
 
 export default function Button({
   children,
   variant = ButtonVariant.Primary,
-  size = ButtonSize.Auto,
-  fontSize = ButtonFontSize.lg2SemiBold,
+  size = ButtonSize.Large,
   disabled,
   isWidthFull,
-  isHeightFull,
   onClick,
 }: ButtonProps) {
   const disabledStyle = disabled === true ? styles.disabled : "";
   return (
     <button
-      className={`${styles.button} ${styles[variant]} ${styles[size]} ${fontSize} ${isWidthFull ? styles.widthFull : ""} ${isHeightFull ? styles.heightFull : ""} ${disabledStyle}`}
+      className={`${styles.button} ${styles[variant]} ${styles[size]} ${FONT_SIZE} ${isWidthFull ? styles.widthFull : ""} ${disabledStyle}`}
       disabled={disabled}
       onClick={onClick}
     >
-      <span>{children}</span>
+      <span className={FONT_SIZE[size]}>{children}</span>
     </button>
   );
 }
