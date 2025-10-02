@@ -1,5 +1,7 @@
 import Button, { ButtonSize, ButtonVariant } from "@/components/button/button";
+import Modal from "@/components/modal/modal";
 import Typography from "@/components/typography/typography";
+import { useModal } from "@/hooks/use-modal";
 import { ReactNode } from "react";
 
 function Section({ title, children }: { title: string; children: ReactNode }) {
@@ -220,6 +222,35 @@ function ButtonBox() {
   );
 }
 
+function ModalSample() {
+  const { isMount, isOpen, openModal, onClose } = useModal();
+
+  return (
+    <>
+      <button onClick={() => openModal(true)}>Open Modal</button>
+      {isMount && (
+        <Modal isOpen={isOpen} onClose={onClose}>
+          <div
+            style={{
+              width: "600px",
+              height: "600px",
+              backgroundColor: "#242429",
+              borderRadius: "24px",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <h2 style={{ color: "white" }}>Modal Title</h2>
+            <button onClick={() => openModal(false)}>Close Modal</button>
+          </div>
+        </Modal>
+      )}
+    </>
+  );
+}
+
 export default function Page() {
   return (
     <main style={{ padding: "24px" }}>
@@ -256,7 +287,7 @@ export default function Page() {
         <p>This is a section about chip.</p>
       </Section>
       <Section title="Modal">
-        <p>This is a section about modal.</p>
+        <ModalSample />
       </Section>
       <Section title="Dropdown">
         <p>This is a section about dropdown.</p>
