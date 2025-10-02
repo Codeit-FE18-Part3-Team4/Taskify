@@ -5,7 +5,7 @@
 }
 
 .field {
-  position: relative; /* ✅ 아이콘 기준을 여기로 */
+  position: relative;
 }
 
 .input {
