@@ -1,6 +1,11 @@
 import Button, { ButtonSize, ButtonVariant } from "@/components/button/button";
 import Typography from "@/components/typography/typography";
 import { ReactNode } from "react";
+import { ProfileColor } from "@/constants/chips/profile-colors.enum";
+import BadgeChip from "@/components/chips/badge";
+import BoardColorChip from "@/components/chips/chips-color";
+import { CHIP_COLORS } from "@/constants/chips/chip-colors";
+import { CommonSize } from "@/constants/common/common-size.enum";
 
 function Section({ title, children }: { title: string; children: ReactNode }) {
   return (
@@ -254,6 +259,38 @@ export default function Page() {
       </Section>
       <Section title="Chip">
         <p>This is a section about chip.</p>
+        {Object.values(CommonSize)
+          .filter((value) => typeof value === "number")
+          .map((size) => (
+            <div
+              key={size}
+              style={{
+                display: "flex",
+                gap: "10px",
+              }}
+            >
+              {CHIP_COLORS.map((item, index) => (
+                <BoardColorChip key={index} color={item} size={size} />
+              ))}
+            </div>
+          ))}
+
+        <div
+          style={{
+            display: `flex`,
+            gap: `10px`,
+          }}
+        >
+          {Object.values(ProfileColor)
+            .filter((value) => typeof value === "number")
+            .map((colorIndex) => (
+              <BadgeChip
+                key={colorIndex}
+                title={"태그내용"}
+                colorIndex={colorIndex as ProfileColor}
+              />
+            ))}
+        </div>
       </Section>
       <Section title="Modal">
         <p>This is a section about modal.</p>
