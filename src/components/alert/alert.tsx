@@ -1,25 +1,27 @@
 import { useAlert } from "@/hooks/use-alert";
 import { classnames } from "@/utils/classnames";
 import { useMediaQuery } from "@uidotdev/usehooks";
-import Button, { ButtonSize, ButtonVariant } from "../button/button";
 import Modal from "../modal/modal";
 import Typography from "../typography/typography";
+import AlertAction, { AlertActionType } from "./alert-action";
 import styles from "./alert.module.css";
 
 interface Props {
   title: string;
   alertKey: string;
   message: string;
+  actionType: AlertActionType;
   onCancel?: () => void;
-  onConfirm?: () => void;
+  onAction?: () => void;
 }
 
 export default function Alert({
   alertKey,
   title,
   message,
+  actionType,
   onCancel,
-  onConfirm,
+  onAction,
 }: Props) {
   const { openAlert } = useAlert({ key: alertKey });
   const isMobile = useMediaQuery("(max-width: 375px)");
@@ -29,9 +31,9 @@ export default function Alert({
     onCancel?.();
   };
 
-  const handleConfirmClick = () => {
+  const handleActionClick = () => {
     openAlert(false);
-    onConfirm?.();
+    onAction?.();
   };
 
   return (
@@ -56,20 +58,11 @@ export default function Alert({
           </p>
         </div>
         <div className={styles.action}>
-          <Button
-            variant={ButtonVariant.Secondary}
-            size={ButtonSize.Auto}
+          <AlertAction
+            type={AlertActionType.Cancel}
             onClick={handleCancelClick}
-          >
-            취소
-          </Button>
-          <Button
-            variant={ButtonVariant.Delete}
-            size={ButtonSize.Auto}
-            onClick={handleConfirmClick}
-          >
-            확인
-          </Button>
+          />
+          <AlertAction type={actionType} onClick={handleActionClick} />
         </div>
       </div>
     </Modal>

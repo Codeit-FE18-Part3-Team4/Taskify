@@ -1,4 +1,5 @@
 import Alert from "@/components/alert/alert";
+import { AlertActionType } from "@/components/alert/alert-action";
 import Button, { ButtonSize, ButtonVariant } from "@/components/button/button";
 import Dialog from "@/components/dialog/dialog";
 import Modal from "@/components/modal/modal";
@@ -363,9 +364,10 @@ function AlertSample() {
           <Alert
             alertKey={ALERT_KEY}
             title="Alert Title"
-            message="This is an important alert message."
+            message="This is an alert message."
+            actionType={AlertActionType.Delete}
             onCancel={() => console.log("Alert cancelled")}
-            onConfirm={() => console.log("Alert confirmed")}
+            onAction={() => console.log("Alert confirmed")}
           />
         )}
       </div>
