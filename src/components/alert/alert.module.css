@@ -1,0 +1,40 @@
+.alert {
+  width: calc(600px - 60px);
+  padding: 40px 30px 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.title,
+.message {
+  color: var(--color-gray200);
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.action {
+  display: flex;
+  gap: 20px;
+}
+
+@media (max-width: 375px) {
+  .alert {
+    width: calc(335px - 40px);
+    padding: 30px 20px 24px;
+    gap: 20px;
+  }
+
+  .header {
+    gap: 8px;
+  }
+
+  .action {
+    gap: 12px;
+  }
+}

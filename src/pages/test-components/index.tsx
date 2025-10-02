@@ -1,7 +1,9 @@
+import Alert from "@/components/alert/alert";
 import Button, { ButtonSize, ButtonVariant } from "@/components/button/button";
 import Dialog from "@/components/dialog/dialog";
 import Modal from "@/components/modal/modal";
 import Typography from "@/components/typography/typography";
+import { useAlert } from "@/hooks/use-alert";
 import { useDialog } from "@/hooks/use-dialog";
 import { useModal } from "@/hooks/use-modal";
 import { ReactNode } from "react";
@@ -347,6 +349,28 @@ function DialogSample() {
   );
 }
 
+function AlertSample() {
+  const ALERT_KEY = "ALERT_SAMPLE";
+  const { isShowAlert, openAlert } = useAlert({
+    key: ALERT_KEY,
+  });
+
+  return (
+    <>
+      <div>
+        <button onClick={() => openAlert(true)}>Open Alert</button>
+        {isShowAlert && (
+          <Alert
+            alertKey={ALERT_KEY}
+            title="Alert Title"
+            message="This is an important alert message."
+          />
+        )}
+      </div>
+    </>
+  );
+}
+
 export default function Page() {
   return (
     <main style={{ padding: "24px" }}>
@@ -419,6 +443,9 @@ export default function Page() {
       </Section>
       <Section title="Dialog">
         <DialogSample />
+      </Section>
+      <Section title="Alert">
+        <AlertSample />
       </Section>
     </main>
   );
