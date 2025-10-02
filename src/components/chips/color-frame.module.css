@@ -1,0 +1,29 @@
+.color_frame {
+  width: 100%;
+  border: 2px solid transparent;
+  cursor: pointer;
+}
+
+.xsmall {
+  height: 40px;
+  border-radius: 10px;
+}
+
+.small {
+  height: 57px;
+  border-radius: 12px;
+}
+
+.medium {
+  height: 60px;
+  border-radius: 16px;
+}
+
+.large {
+  height: 40px;
+  border-radius: 10px;
+}
+
+.selected {
+  border: 2px solid #76a5ea;
+}

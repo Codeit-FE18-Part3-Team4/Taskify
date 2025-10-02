@@ -10,9 +10,9 @@ interface ChipColorProps {
 
 export default function ColorChip({
   color = CHIP_COLORS[0],
-  size = CommonSize.small,
+  size = CommonSize.Small,
 }: ChipColorProps) {
-  const sizeName = CommonSize[size];
+  const sizeName = CommonSize[size].toLowerCase();
   const chipClasses = `${styles[`color_chip_${sizeName}`]} color-chip`;
 
   return <ColorChipSvg className={chipClasses} color={color} />;
