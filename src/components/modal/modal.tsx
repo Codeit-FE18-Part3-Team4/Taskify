@@ -1,3 +1,4 @@
+import { useModal } from "@/hooks/use-modal";
 import { classnames } from "@/utils/classnames";
 import { ReactNode } from "react";
 import { createPortal } from "react-dom";
@@ -5,11 +6,12 @@ import styles from "./modal.module.css";
 
 interface Props {
   isOpen: boolean;
-  onClose: () => void;
   children: ReactNode;
 }
 
-export default function Modal({ isOpen, onClose, children }: Props) {
+export default function Modal({ isOpen, children }: Props) {
+  const { onClose } = useModal();
+
   const handleAnimationEnd = () => {
     if (isOpen) return;
     onClose();
