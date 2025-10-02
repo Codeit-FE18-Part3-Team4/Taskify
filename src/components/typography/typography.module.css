@@ -1,177 +1,137 @@
-/* Text-3xl */
-
-.xl3-bold {
+.xl3Bold {
   font-size: 32px;
   font-weight: 700;
-  line-height: 42px;
+  line-height: 38px;
 }
 
-.xl3-semibold {
+.xl3SemiBold {
   font-size: 32px;
   font-weight: 600;
-  line-height: 42px;
+  line-height: 38px;
 }
 
-/* Text-2xl */
-
-.xl2-bold {
+.xl2Bold {
   font-size: 24px;
   font-weight: 700;
-  line-height: 32px;
+  line-height: 29px;
 }
 
-.xl2-semibold {
+.xl2SemiBold {
   font-size: 24px;
   font-weight: 600;
-  line-height: 32px;
+  line-height: 29px;
 }
 
-.xl2-medium {
+.xl2Medium {
   font-size: 24px;
   font-weight: 500;
-  line-height: 32px;
+  line-height: 29px;
 }
 
-.xl2-regular {
-  font-size: 24px;
-  font-weight: 400;
-  line-height: 32px;
-}
-
-/* Text-xl */
-
-.xl-bold {
+.xlBold {
   font-size: 20px;
   font-weight: 700;
-  line-height: 32px;
+  line-height: 24px;
 }
 
-.xl-semibold {
+.xlSemiBold {
   font-size: 20px;
   font-weight: 600;
-  line-height: 32px;
+  line-height: 24px;
 }
 
-.xl-medium {
+.xlMedium {
   font-size: 20px;
   font-weight: 500;
-  line-height: 32px;
+  line-height: 24px;
 }
 
-.xl-regular {
-  font-size: 20px;
-  font-weight: 400;
-  line-height: 32px;
-}
-
-/* Text-2lg */
-
-.lg2-bold {
+.lg2Bold {
   font-size: 18px;
   font-weight: 700;
-  line-height: 26px;
+  line-height: 21px;
 }
 
-.lg2-semibold {
+.lg2SemiBold {
   font-size: 18px;
   font-weight: 600;
-  line-height: 26px;
+  line-height: 21px;
 }
 
-.lg2-medium {
+.lg2Medium {
   font-size: 18px;
   font-weight: 500;
-  line-height: 26px;
+  line-height: 21px;
 }
 
-.lg2-regular {
-  font-size: 18px;
-  font-weight: 400;
-  line-height: 26px;
-}
-
-/* Text-lg */
-
-.lg-bold {
+.lgBold {
   font-size: 16px;
   font-weight: 700;
-  line-height: 26px;
+  line-height: 19px;
 }
 
-.lg-semibold {
+.lgSemiBold {
   font-size: 16px;
   font-weight: 600;
-  line-height: 26px;
+  line-height: 19px;
 }
 
-.lg-medium {
+.lgMedium {
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 19px;
+}
+
+.lgMedium160 {
   font-size: 16px;
   font-weight: 500;
   line-height: 26px;
 }
 
-.lg-regular {
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 26px;
-}
-
-/* Text-md */
-
-.md-bold {
+.mdBold {
   font-size: 14px;
   font-weight: 700;
-  line-height: 24px;
+  line-height: 17px;
 }
 
-.md-semibold {
+.mdSemiBold {
   font-size: 14px;
   font-weight: 600;
-  line-height: 24px;
+  line-height: 17px;
 }
 
-.md-medium {
+.mdMedium {
   font-size: 14px;
   font-weight: 500;
-  line-height: 24px;
+  line-height: 17px;
 }
 
-.md-regular {
+.mdMedium150 {
   font-size: 14px;
-  font-weight: 400;
-  line-height: 24px;
+  font-weight: 500;
+  line-height: 21px;
 }
 
-/* Text-sm */
-
-.sm-semibold {
+.smSemiBold {
   font-size: 13px;
   font-weight: 600;
-  line-height: 22px;
+  line-height: 16px;
 }
 
-.sm-medium {
+.smMedium {
   font-size: 13px;
   font-weight: 500;
-  line-height: 22px;
+  line-height: 16px;
 }
 
-/* Text-xs */
-
-.xs-semibold {
+.xsSemiBold {
   font-size: 12px;
   font-weight: 600;
-  line-height: 20px;
+  line-height: 14px;
 }
 
-.xs-medium {
+.xsMedium {
   font-size: 12px;
   font-weight: 500;
-  line-height: 18px;
-}
-
-.xs-regular {
-  font-size: 12px;
-  font-weight: 400;
-  line-height: 18px;
+  line-height: 14px;
 }
