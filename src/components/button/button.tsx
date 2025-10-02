@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { MouseEventHandler, ReactNode } from "react";
 import styles from "./button.module.css";
 
 export enum ButtonVariant {
@@ -20,7 +20,7 @@ interface ButtonProps {
   variant?: ButtonVariant;
   size?: ButtonSize;
   disabled?: boolean;
-  onClick?: React.MouseEventHandler<HTMLButtonElement>;
+  onClick?: MouseEventHandler<HTMLButtonElement>;
 }
 
 export default function Button({
@@ -30,10 +30,10 @@ export default function Button({
   disabled,
   onClick,
 }: ButtonProps) {
-  const DisabledStyle = disabled === true ? styles.disabled : "";
+  const disabledStyle = disabled === true ? styles.disabled : "";
   return (
     <button
-      className={`${styles.button} ${styles[variant]} ${styles[size]} ${DisabledStyle}`}
+      className={`${styles.button} ${styles[variant]} ${styles[size]} ${disabledStyle}`}
       disabled={disabled}
       onClick={onClick}
     >
