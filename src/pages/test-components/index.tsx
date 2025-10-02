@@ -1,5 +1,7 @@
 import Button, { ButtonSize, ButtonVariant } from "@/components/button/button";
+import Modal from "@/components/modal/modal";
 import Typography from "@/components/typography/typography";
+import { useModal } from "@/hooks/use-modal";
 import { ReactNode } from "react";
 import { ProfileColor } from "@/constants/chips/profile-colors.enum";
 import BadgeChip from "@/components/chips/badge";
@@ -225,6 +227,66 @@ function ButtonBox() {
   );
 }
 
+function ModalSample() {
+  const MODAL_KEY_1 = "MODAL_SAMPLE_1";
+  const MODAL_KEY_2 = "MODAL_SAMPLE_2";
+  const { isShowModal: isShowModal1, openModal: openModal1 } = useModal({
+    key: MODAL_KEY_1,
+  });
+  const { isShowModal: isShowModal2, openModal: openModal2 } = useModal({
+    key: MODAL_KEY_2,
+  });
+
+  return (
+    <>
+      <div>
+        <button onClick={() => openModal1(true)}>Open Modal 1</button>
+        {isShowModal1 && (
+          <Modal modalKey={MODAL_KEY_1}>
+            <div
+              style={{
+                width: "600px",
+                height: "600px",
+                backgroundColor: "#242429",
+                borderRadius: "24px",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <h2 style={{ color: "white" }}>Modal 1 Title</h2>
+              <button onClick={() => openModal1(false)}>Close Modal 1</button>
+            </div>
+          </Modal>
+        )}
+      </div>
+      <div>
+        <button onClick={() => openModal2(true)}>Open Modal 2</button>
+        {isShowModal2 && (
+          <Modal modalKey={MODAL_KEY_2}>
+            <div
+              style={{
+                width: "600px",
+                height: "600px",
+                backgroundColor: "#242429",
+                borderRadius: "24px",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <h2 style={{ color: "white" }}>Modal 2 Title</h2>
+              <button onClick={() => openModal2(false)}>Close Modal 2</button>
+            </div>
+          </Modal>
+        )}
+      </div>
+    </>
+  );
+}
+
 export default function Page() {
   return (
     <main style={{ padding: "24px" }}>
@@ -293,7 +355,7 @@ export default function Page() {
         </div>
       </Section>
       <Section title="Modal">
-        <p>This is a section about modal.</p>
+        <ModalSample />
       </Section>
       <Section title="Dropdown">
         <p>This is a section about dropdown.</p>
