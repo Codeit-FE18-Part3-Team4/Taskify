@@ -1,6 +1,8 @@
 import Button, { ButtonSize, ButtonVariant } from "@/components/button/button";
+import Dialog from "@/components/dialog/dialog";
 import Modal from "@/components/modal/modal";
 import Typography from "@/components/typography/typography";
+import { useDialog } from "@/hooks/use-dialog";
 import { useModal } from "@/hooks/use-modal";
 import { ReactNode } from "react";
 import { ProfileColor } from "@/constants/chips/profile-colors.enum";
@@ -287,6 +289,24 @@ function ModalSample() {
   );
 }
 
+function DialogSample() {
+  const DIALOG_KEY = "DIALOG_SAMPLE";
+  const { isShowDialog, openDialog } = useDialog({
+    key: DIALOG_KEY,
+  });
+
+  return (
+    <>
+      <div>
+        <button onClick={() => openDialog(true)}>Open Dialog</button>
+        {isShowDialog && (
+          <Dialog dialogKey={DIALOG_KEY} message="Hello, this is a dialog!" />
+        )}
+      </div>
+    </>
+  );
+}
+
 export default function Page() {
   return (
     <main style={{ padding: "24px" }}>
@@ -357,8 +377,8 @@ export default function Page() {
       <Section title="Modal">
         <ModalSample />
       </Section>
-      <Section title="Dropdown">
-        <p>This is a section about dropdown.</p>
+      <Section title="Dialog">
+        <DialogSample />
       </Section>
     </main>
   );
