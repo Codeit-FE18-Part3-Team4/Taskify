@@ -5,8 +5,8 @@ export enum CommonSize {
 }
 
 export enum colorFrameSize {
-  XSmall,
-  Small,
-  Medium,
-  Large,
+  XSmall = "xsmall",
+  Small = "small",
+  Medium = "medium",
+  Large = "large",
 }

@@ -15,8 +15,7 @@ export default function ColorFrame({
   isSelected = false,
   ...props
 }: ColorFrameProps) {
-  const sizeName = colorFrameSize[size].toLowerCase();
-  const ColorFrameClasses = `${styles["color_frame"]} ${styles[`${sizeName}`]} ${isSelected ? styles["selected"] : ""}`;
+  const ColorFrameClasses = `${styles["color_frame"]} ${styles[`${size}`]} ${isSelected ? styles["selected"] : ""}`;
 
   return (
     <button

@@ -2,12 +2,16 @@ import Button, { ButtonSize, ButtonVariant } from "@/components/button/button";
 import Modal from "@/components/modal/modal";
 import Typography from "@/components/typography/typography";
 import { useModal } from "@/hooks/use-modal";
-import { ReactNode } from "react";
+import { ReactNode, useState } from "react";
 import { ProfileColor } from "@/constants/chips/profile-colors.enum";
 import BadgeChip from "@/components/chips/badge";
 import BoardColorChip from "@/components/chips/chips-color";
 import { CHIP_COLORS } from "@/constants/chips/chip-colors";
-import { CommonSize } from "@/constants/common/common-size.enum";
+import {
+  CommonSize,
+  colorFrameSize,
+} from "@/constants/common/common-size.enum";
+import ColorPalette from "@/components/color-palette/color-palette";
 
 function Section({ title, children }: { title: string; children: ReactNode }) {
   return (
@@ -288,6 +292,21 @@ function ModalSample() {
 }
 
 export default function Page() {
+  const sizes = Object.values(colorFrameSize).filter(
+    (value) => typeof value === "number"
+  );
+  const [selectedColors, setSelectedColors] = useState<(string | null)[]>(
+    sizes.map(() => null)
+  );
+
+  const handleSelect = (index: number, color: string | null) => {
+    setSelectedColors((prev) => {
+      const newArr = [...prev];
+      newArr[index] = color;
+      return newArr;
+    });
+  };
+
   return (
     <main style={{ padding: "24px" }}>
       <header>
@@ -353,6 +372,31 @@ export default function Page() {
               />
             ))}
         </div>
+
+        <div>
+          {Object.values(colorFrameSize).map((value, index) => (
+            <div
+              style={{
+                margin: "10px 0",
+                width:
+                  value === "xsmall"
+                    ? "295px"
+                    : value === "small"
+                      ? "335px"
+                      : value === "medium"
+                        ? "446px"
+                        : "740px",
+              }}
+            >
+              <ColorPalette
+                selectedColor={selectedColors[index]}
+                onSelect={(color) => handleSelect(index, color)}
+                size={value}
+              />
+            </div>
+          ))}
+        </div>
+        <p>💣선택된 색: {selectedColors}</p>
       </Section>
       <Section title="Modal">
         <ModalSample />
