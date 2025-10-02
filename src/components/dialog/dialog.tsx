@@ -9,14 +9,16 @@ import styles from "./dialog.module.css";
 interface Props {
   dialogKey: string;
   message: string;
+  onConfirm?: () => void;
 }
 
-export default function Dialog({ message, dialogKey }: Props) {
+export default function Dialog({ dialogKey, message, onConfirm }: Props) {
   const { openDialog } = useDialog({ key: dialogKey });
   const isMobile = useMediaQuery("(max-width: 375px)");
 
   const handleClick = () => {
     openDialog(false);
+    onConfirm?.();
   };
 
   return (

@@ -300,7 +300,11 @@ function DialogSample() {
       <div>
         <button onClick={() => openDialog(true)}>Open Dialog</button>
         {isShowDialog && (
-          <Dialog dialogKey={DIALOG_KEY} message="Hello, this is a dialog!" />
+          <Dialog
+            dialogKey={DIALOG_KEY}
+            message="Hello, this is a dialog!"
+            onConfirm={() => console.log("Dialog confirmed")}
+          />
         )}
       </div>
     </>
