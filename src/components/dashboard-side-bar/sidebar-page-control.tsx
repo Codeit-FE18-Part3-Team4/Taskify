@@ -4,7 +4,7 @@ import Typography from "@/components/typography/typography";
 import Image from "next/image";
 import styles from "./dashboard-side-bar.module.css";
 
-interface DashboardPaginationProps {
+interface SidebarPageControlProps {
   onPrev: () => void;
   onNext: () => void;
   isPrevDisabled?: boolean;
@@ -13,12 +13,12 @@ interface DashboardPaginationProps {
   totalPages?: number;
 }
 
-export default function DashboardPagination({
+export default function SidebarPageControl({
   onPrev,
   onNext,
   isPrevDisabled = true,
   isNextDisabled = true,
-}: DashboardPaginationProps) {
+}: SidebarPageControlProps) {
   const pervDisabled = isPrevDisabled ? styles.disabled : "";
   const nextDisabled = isNextDisabled ? styles.disabled : "";
 

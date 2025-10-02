@@ -5,7 +5,7 @@ import Image from "next/image";
 import { MouseEventHandler, useState } from "react";
 import styles from "./dashboard-side-bar.module.css";
 import DashboardButton from "./dashboard-button";
-import DashboardPagination from "./dashboard-pagination";
+import SidebarPageControl from "./sidebar-page-control";
 
 interface DashboardSideBarMainProps {
   dashboardAdd: MouseEventHandler<HTMLButtonElement>;
@@ -175,7 +175,7 @@ export default function Main({ dashboardAdd }: DashboardSideBarMainProps) {
           {button.title}
         </DashboardButton>
       ))}
-      <DashboardPagination onPrev={() => { }} onNext={() => { }}/>
+      <SidebarPageControl onPrev={() => { }} onNext={() => { }}/>
     </div>
   );
 }
