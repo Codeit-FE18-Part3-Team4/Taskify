@@ -223,30 +223,61 @@ function ButtonBox() {
 }
 
 function ModalSample() {
-  const { isShowModal, openModal } = useModal();
+  const MODAL_KEY_1 = "MODAL_SAMPLE_1";
+  const MODAL_KEY_2 = "MODAL_SAMPLE_2";
+  const { isShowModal: isShowModal1, openModal: openModal1 } = useModal({
+    key: MODAL_KEY_1,
+  });
+  const { isShowModal: isShowModal2, openModal: openModal2 } = useModal({
+    key: MODAL_KEY_2,
+  });
 
   return (
     <>
-      <button onClick={() => openModal(true)}>Open Modal</button>
-      {isShowModal && (
-        <Modal>
-          <div
-            style={{
-              width: "600px",
-              height: "600px",
-              backgroundColor: "#242429",
-              borderRadius: "24px",
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <h2 style={{ color: "white" }}>Modal Title</h2>
-            <button onClick={() => openModal(false)}>Close Modal</button>
-          </div>
-        </Modal>
-      )}
+      <div>
+        <button onClick={() => openModal1(true)}>Open Modal 1</button>
+        {isShowModal1 && (
+          <Modal modalKey={MODAL_KEY_1}>
+            <div
+              style={{
+                width: "600px",
+                height: "600px",
+                backgroundColor: "#242429",
+                borderRadius: "24px",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <h2 style={{ color: "white" }}>Modal 1 Title</h2>
+              <button onClick={() => openModal1(false)}>Close Modal 1</button>
+            </div>
+          </Modal>
+        )}
+      </div>
+      <div>
+        <button onClick={() => openModal2(true)}>Open Modal 2</button>
+        {isShowModal2 && (
+          <Modal modalKey={MODAL_KEY_2}>
+            <div
+              style={{
+                width: "600px",
+                height: "600px",
+                backgroundColor: "#242429",
+                borderRadius: "24px",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <h2 style={{ color: "white" }}>Modal 2 Title</h2>
+              <button onClick={() => openModal2(false)}>Close Modal 2</button>
+            </div>
+          </Modal>
+        )}
+      </div>
     </>
   );
 }

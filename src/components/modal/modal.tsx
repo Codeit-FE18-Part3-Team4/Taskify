@@ -5,15 +5,16 @@ import { createPortal } from "react-dom";
 import styles from "./modal.module.css";
 
 interface Props {
+  modalKey: string;
   children: ReactNode;
 }
 
-export default function Modal({ children }: Props) {
-  const { isOpen, openModal, onClose } = useModal();
+export default function Modal({ modalKey, children }: Props) {
+  const { isOpenModal, openModal, onCloseModal } = useModal({ key: modalKey });
 
   const handleAnimationEnd = () => {
-    if (isOpen) return;
-    onClose();
+    if (isOpenModal) return;
+    onCloseModal();
   };
 
   const handleClick = () => {
@@ -26,7 +27,10 @@ export default function Modal({ children }: Props) {
 
   const modal = (
     <div
-      className={classnames(styles.modal, isOpen ? styles.open : styles.close)}
+      className={classnames(
+        styles.modal,
+        isOpenModal ? styles.open : styles.close
+      )}
       onAnimationEnd={handleAnimationEnd}
       onClick={handleClick}
     >
