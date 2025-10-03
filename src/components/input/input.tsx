@@ -14,7 +14,7 @@ export enum InputSize {
   Auto = "auto",
 }
 
-export type InputProps = {
+interface InputProps {
   value?: string;
   onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
   onBlur?: (e: FocusEvent<HTMLInputElement>) => void;
@@ -26,7 +26,7 @@ export type InputProps = {
   size?: InputSize;
   icon?: ReactNode;
   variant?: InputVariant;
-};
+}
 
 export default function Input({
   value,
