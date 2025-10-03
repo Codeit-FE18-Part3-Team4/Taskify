@@ -1,4 +1,5 @@
-import { MouseEventHandler } from "react";
+import { useMediaQuery } from "@uidotdev/usehooks";
+import { MouseEventHandler, useMemo } from "react";
 import Button, { ButtonSize, ButtonVariant } from "../button/button";
 
 export enum AlertActionType {
@@ -17,8 +18,19 @@ interface Props {
 }
 
 export default function AlertAction({ type, onClick }: Props) {
+  const isMobile = useMediaQuery("(max-width: 375px)");
+
+  const buttonSize = useMemo(() => {
+    return isMobile ? ButtonSize.Medium : ButtonSize.Large;
+  }, [isMobile]);
+
   return (
-    <Button variant={VARIENT[type]} size={ButtonSize.Auto} onClick={onClick}>
+    <Button
+      variant={VARIENT[type]}
+      size={buttonSize}
+      isWidthFull
+      onClick={onClick}
+    >
       {type}
     </Button>
   );
