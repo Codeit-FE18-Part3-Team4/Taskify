@@ -1,24 +1,24 @@
 import React, { useState } from "react";
 import styles from "./color-palette.module.css";
 import ColorFrame from "@/components/chips/color-frame";
-import { colorFrameSize } from "@/constants/common/common-size.enum";
+import { ColorFrameSize } from "@/constants/common/common-size";
 import { CHIP_COLORS } from "@/constants/chips/chip-colors";
 
 interface ColorPaletteProps {
   selectedColor?: string | null;
-  onSelect: (color: string | null) => void;
-  size?: colorFrameSize;
+  onSelect: (color: string) => void;
+  size?: ColorFrameSize;
 }
 
 export default function ColorPalette({
   selectedColor,
   onSelect,
-  size = colorFrameSize.XSmall,
+  size = ColorFrameSize.XSmall,
 }: ColorPaletteProps) {
   const handleClick = (color: string) => {
-    onSelect(selectedColor === color ? null : color);
+    selectedColor !== color && onSelect(color);
   };
-  const colorFrameClasses = `${styles["pallete_container"]} ${styles[size]}`;
+  const colorFrameClasses = `${styles.palleteContainer} ${styles[size]}`;
 
   return (
     <div className={colorFrameClasses}>

@@ -3,14 +3,11 @@ import Modal from "@/components/modal/modal";
 import Typography from "@/components/typography/typography";
 import { useModal } from "@/hooks/use-modal";
 import { ReactNode, useState } from "react";
-import { ProfileColor } from "@/constants/chips/profile-colors.enum";
+import { ProfileColor } from "@/constants/chips/profile-colors";
 import BadgeChip from "@/components/chips/badge";
 import BoardColorChip from "@/components/chips/chips-color";
 import { CHIP_COLORS } from "@/constants/chips/chip-colors";
-import {
-  CommonSize,
-  colorFrameSize,
-} from "@/constants/common/common-size.enum";
+import { CommonSize, ColorFrameSize } from "@/constants/common/common-size";
 import ColorPalette from "@/components/color-palette/color-palette";
 
 function Section({ title, children }: { title: string; children: ReactNode }) {
@@ -292,14 +289,12 @@ function ModalSample() {
 }
 
 export default function Page() {
-  const sizes = Object.values(colorFrameSize).filter(
-    (value) => typeof value === "number"
-  );
-  const [selectedColors, setSelectedColors] = useState<(string | null)[]>(
-    sizes.map(() => null)
+  const sizes = Object.values(ColorFrameSize);
+  const [selectedColors, setSelectedColors] = useState<string[]>(
+    sizes.map(() => "")
   );
 
-  const handleSelect = (index: number, color: string | null) => {
+  const handleSelect = (index: number, color: string) => {
     setSelectedColors((prev) => {
       const newArr = [...prev];
       newArr[index] = color;
@@ -374,7 +369,7 @@ export default function Page() {
         </div>
 
         <div>
-          {Object.values(colorFrameSize).map((value, index) => (
+          {Object.values(ColorFrameSize).map((value, index) => (
             <div
               style={{
                 margin: "10px 0",

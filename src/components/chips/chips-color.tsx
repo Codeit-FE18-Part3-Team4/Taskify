@@ -1,7 +1,7 @@
 import styles from "./chips-color.module.css";
 import ColorChipSvg from "./chip-color-svg";
 import { CHIP_COLORS, type ChipColor } from "@/constants/chips/chip-colors";
-import { CommonSize } from "@/constants/common/common-size.enum";
+import { CommonSize } from "@/constants/common/common-size";
 
 interface ChipColorProps {
   color?: ChipColor;

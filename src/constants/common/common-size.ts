@@ -4,7 +4,7 @@ export enum CommonSize {
   Large,
 }
 
-export enum colorFrameSize {
+export enum ColorFrameSize {
   XSmall = "xsmall",
   Small = "small",
   Medium = "medium",
