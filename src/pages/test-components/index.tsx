@@ -9,6 +9,7 @@ import BadgeChip from "@/components/chips/badge";
 import BoardColorChip from "@/components/chips/chips-color";
 import { CHIP_COLORS } from "@/constants/chips/chip-colors";
 import { CommonSize } from "@/constants/common/common-size.enum";
+import TextArea, { TextAreaSize } from "@/components/input/text-area";
 
 function Section({ title, children }: { title: string; children: ReactNode }) {
   return (
@@ -323,6 +324,24 @@ function InputBox() {
   );
 }
 
+function TextAreaBox() {
+  const sizes = [TextAreaSize.PC, TextAreaSize.Mobile];
+  return (
+    <div>
+      {sizes.map((size) => (
+        <div key={size} style={{ display: "inline-block", margin: "8px" }}>
+          <div style={{ marginBottom: "8px" }}>
+            <TextArea size={size} placeholder="Text" />
+          </div>
+          <div style={{ marginBottom: "8px" }}>
+            <TextArea size={size} placeholder="Disabled" disabled />
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
 export default function Page() {
   return (
     <main style={{ padding: "24px" }}>
@@ -354,6 +373,7 @@ export default function Page() {
       </Section>
       <Section title="Input">
         <InputBox />
+        <TextAreaBox />
       </Section>
       <Section title="Chip">
         <p>This is a section about chip.</p>
