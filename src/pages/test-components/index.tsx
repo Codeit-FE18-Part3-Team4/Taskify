@@ -1,7 +1,7 @@
 import Button, { ButtonSize, ButtonVariant } from "@/components/button/button";
 import Typography from "@/components/typography/typography";
 import { ReactNode } from "react";
-import Input, { InputSize, InputVariant } from "@/components/input/input";
+import Input, { InputSize } from "@/components/input/input";
 import SearchIcon from "@/components/input/search-icon-svg";
 
 function Section({ title, children }: { title: string; children: ReactNode }) {
@@ -224,33 +224,24 @@ function ButtonBox() {
 
 function InputBox() {
   const sizes = [InputSize.Large, InputSize.Medium];
-  const variants = [
-    InputVariant.Normal,
-    InputVariant.Active,
-    InputVariant.Disabled,
-    InputVariant.Completed,
-    InputVariant.Error,
-  ];
+
   return (
     <div>
-      {variants.map((variant) => (
-        <div key={variant}>
-          <div>{variant}</div>
-          {sizes.map((size) => (
-            <div
-              key={`${variant}-${size}`}
-              style={{ display: "inline-block", margin: 4 }}
-            >
-              <Input
-                variant={variant}
-                size={size}
-                value="Text"
-                icon={<SearchIcon />}
-                onChange={() => {}}
-                errorMessage="Message"
-              />
-            </div>
-          ))}
+      {sizes.map((size) => (
+        <div key={size} style={{ display: "inline-block", margin: "8px" }}>
+          <div style={{ marginBottom: "8px" }}>
+            <Input size={size} placeholder="placeholder" />
+          </div>
+          <div style={{ marginBottom: "8px" }}>
+            <Input size={size} placeholder="Disabled" disabled />
+          </div>
+          <div>
+            <Input
+              size={size}
+              placeholder="Invalid Input"
+              errorMessage="Error Message"
+            />
+          </div>
         </div>
       ))}
     </div>

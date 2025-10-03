@@ -2,21 +2,13 @@ import styles from "./input.module.css";
 import { ReactNode, ChangeEvent, CSSProperties } from "react";
 import Typography from "@/components/typography/typography";
 
-export enum InputVariant {
-  Normal = "normal",
-  Active = "active",
-  Disabled = "disabled",
-  Completed = "completed",
-  Error = "error",
-}
-
 export enum InputSize {
   Large = "lg",
   Medium = "md",
   Auto = "auto",
 }
 
-type InputProps = {
+export type InputProps = {
   value?: string;
   onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
   placeholder?: string;
@@ -24,7 +16,6 @@ type InputProps = {
   disabled?: boolean;
   className?: string;
   errorMessage?: string;
-  variant?: InputVariant;
   size?: InputSize;
   icon?: ReactNode;
 };
@@ -36,21 +27,20 @@ export default function Input({
   type = "text",
   className,
   errorMessage,
-  variant = InputVariant.Normal,
   size = InputSize.Large,
   icon,
+  disabled,
 }: InputProps) {
   const iconSize = size === InputSize.Large ? 20 : 18;
   const iconStyle = { "--icon-size": `${iconSize}px` } as CSSProperties;
+
+  const hasError = !disabled && Boolean(errorMessage);
 
   return (
     <div className={styles.wrapper}>
       <div className={styles.field}>
         {icon && (
-          <span
-            className={`${styles.icon} ${styles[`icon_${variant}`]}`}
-            style={iconStyle}
-          >
+          <span className={`${styles.icon}`} style={iconStyle}>
             {icon}
           </span>
         )}
@@ -59,21 +49,17 @@ export default function Input({
           onChange={onChange}
           placeholder={placeholder}
           type={type}
+          disabled={disabled}
           className={`
         ${styles.input}
-        ${styles[variant]}
+        ${hasError ? styles.error : ""}
         ${styles[size]}
         ${icon ? styles.withIcon : styles.withoutIcon}
         ${Typography.lgMedium}
         ${className ?? ""}`}
         />
       </div>
-
-      {variant === InputVariant.Error && errorMessage && (
-        <p className={`${styles.errorMessage} ${Typography.mdMedium}`}>
-          {errorMessage}
-        </p>
-      )}
+      {hasError && <p className={styles.errorMessage}>{errorMessage}</p>}
     </div>
   );
 }

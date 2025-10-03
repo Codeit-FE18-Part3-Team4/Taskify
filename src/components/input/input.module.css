@@ -11,6 +11,34 @@
 .input {
   box-sizing: border-box;
   outline: none;
+  background-color: var(--color-black800);
+  border: 1px solid var(--color-gray700);
+  color: var(--color-gray300);
+}
+
+.input::placeholder {
+  color: var(--color-gray400);
+}
+
+.input:focus {
+  border: 1.5px solid var(--color-blue300);
+  color: var(--color-gray200);
+}
+
+.input:disabled {
+  background-color: var(--color-gray900);
+  border: none;
+  color: var(--color-gray400);
+}
+
+.error {
+  border: 1px solid var(--color-red500);
+  color: var(--color-gray100);
+}
+
+.error:focus {
+  border: 1px solid var(--color-red500);
+  color: var(--color-gray100);
 }
 
 .withIcon {
@@ -83,31 +111,6 @@
   height: 20px;
 }
 
-.normal {
-  background-color: var(--color-black800);
-  border: 1px solid var(--color-gray700);
-  color: var(--color-gray400);
-}
-.active {
-  background-color: var(--color-black800);
-  border: 1.5px solid var(--color-blue300);
-  color: var(--color-gray200);
-}
-.disabled {
-  background-color: var(--color-gray900);
-  border: none;
-  color: var(--color-gray400);
-}
-.completed {
-  background-color: var(--color-black800);
-  border: 1px solid var(--color-gray700);
-  color: var(--color-gray300);
-}
-.error {
-  background-color: var(--color-black800);
-  border: 1px solid var(--color-red500);
-  color: var(--color-gray100);
-}
 .errorMessage {
   color: var(--color-red500);
 }
