@@ -17,6 +17,10 @@ export default function Dialog({ dialogKey, message, onConfirm }: Props) {
   const { openDialog } = useDialog({ key: dialogKey });
   const isMobile = useMediaQuery("(max-width: 375px)");
 
+  const messageTypography = useMemo(() => {
+    return isMobile ? Typography.lgSemiBold : Typography.xlSemiBold;
+  }, [isMobile]);
+
   const buttonSize = useMemo(() => {
     return isMobile ? ButtonSize.Medium : ButtonSize.Large;
   }, [isMobile]);
@@ -29,12 +33,7 @@ export default function Dialog({ dialogKey, message, onConfirm }: Props) {
   return (
     <Modal modalKey={dialogKey}>
       <div className={styles.dialog}>
-        <p
-          className={classnames(
-            styles.message,
-            isMobile ? Typography.lgSemiBold : Typography.xlSemiBold
-          )}
-        >
+        <p className={classnames(styles.message, messageTypography)}>
           {message}
         </p>
         <Button
