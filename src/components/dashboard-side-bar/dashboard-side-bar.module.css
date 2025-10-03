@@ -3,7 +3,8 @@
   background: var(--color-black900);
   width: 340px;
   display: flex;
-  height: 100%;
+  flex-shrink: 0;
+  height: 100vh;
   flex-direction: column;
 }
 .button {
