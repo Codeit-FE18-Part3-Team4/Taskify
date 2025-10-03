@@ -7,26 +7,24 @@ import styles from "./dashboard-side-bar.module.css";
 interface SidebarPageControlProps {
   onPrev: () => void;
   onNext: () => void;
-  isPrevDisabled?: boolean;
-  isNextDisabled?: boolean;
-  currentPage?: number;
-  totalPages?: number;
+  currentPage: number;
+  totalPages: number;
 }
 
 export default function SidebarPageControl({
   onPrev,
   onNext,
-  isPrevDisabled = true,
-  isNextDisabled = true,
+  currentPage,
+  totalPages,
 }: SidebarPageControlProps) {
-  const pervDisabled = isPrevDisabled ? styles.disabled : "";
-  const nextDisabled = isNextDisabled ? styles.disabled : "";
+  const pervDisabled = currentPage === 0 ? styles.disabled : "";
+  const nextDisabled = totalPages > 1 ? "" : styles.disabled;
 
   return (
     <div className={styles.dashboardPagenation}>
       <button
         onClick={onPrev}
-        disabled={isPrevDisabled}
+        disabled={currentPage === 0}
         className={`${styles.button} ${pervDisabled}`}
       >
         <Image
@@ -39,7 +37,7 @@ export default function SidebarPageControl({
       </button>
       <button
         onClick={onNext}
-        disabled={isNextDisabled}
+        disabled={totalPages < 2}
         className={`${styles.button} ${nextDisabled}`}
       >
         <span className={Typography.lgMedium}>다음</span>

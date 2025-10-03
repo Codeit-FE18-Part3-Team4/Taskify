@@ -56,8 +56,8 @@ export default function Main() {
         );
       })}
       <SidebarPageControl
-        currentPage={1}
-        totalPages={5}
+        currentPage={0}
+        totalPages={2}
         onPrev={() => {}}
         onNext={() => {}}
       />
