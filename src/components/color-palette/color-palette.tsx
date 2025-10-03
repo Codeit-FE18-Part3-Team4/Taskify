@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styles from "./color-palette.module.css";
 import ColorFrame from "@/components/chips/color-frame";
-import { ColorFrameSize } from "@/constants/common/common-size";
+import { ColorFrameSize } from "@/constants/chips/color-frame-size";
 import { CHIP_COLORS } from "@/constants/chips/chip-colors";
 
 interface ColorPaletteProps {

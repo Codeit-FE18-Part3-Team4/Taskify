@@ -8,7 +8,8 @@ import Input, { InputSize, InputVariant } from "@/components/input/input";
 import BadgeChip from "@/components/chips/badge";
 import BoardColorChip from "@/components/chips/chips-color";
 import { CHIP_COLORS } from "@/constants/chips/chip-colors";
-import { CommonSize, ColorFrameSize } from "@/constants/common/common-size";
+import { ColorFrameSize } from "@/constants/chips/color-frame-size";
+import { CommonSize } from "@/constants/common/common-size";
 import ColorPalette from "@/components/color-palette/color-palette";
 
 function Section({ title, children }: { title: string; children: ReactNode }) {
