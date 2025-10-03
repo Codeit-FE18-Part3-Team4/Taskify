@@ -1,8 +1,7 @@
 import Button, { ButtonSize, ButtonVariant } from "@/components/button/button";
 import Typography from "@/components/typography/typography";
 import { ReactNode } from "react";
-import Input, { InputSize } from "@/components/input/input";
-import SearchIcon from "@/components/input/search-icon-svg";
+import Input, { InputSize, InputVariant } from "@/components/input/input";
 
 function Section({ title, children }: { title: string; children: ReactNode }) {
   return (
@@ -235,11 +234,20 @@ function InputBox() {
           <div style={{ marginBottom: "8px" }}>
             <Input size={size} placeholder="Disabled" disabled />
           </div>
+          <div style={{ marginBottom: "8px" }}>
+            <div>
+              <Input
+                size={size}
+                placeholder="Invalid Input"
+                errorMessage="Error Message"
+              />
+            </div>
+          </div>
           <div>
             <Input
               size={size}
-              placeholder="Invalid Input"
-              errorMessage="Error Message"
+              placeholder="Search Input"
+              variant={InputVariant.Search}
             />
           </div>
         </div>

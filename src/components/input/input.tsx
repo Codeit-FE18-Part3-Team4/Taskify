@@ -1,6 +1,12 @@
 import styles from "./input.module.css";
-import { ReactNode, ChangeEvent, CSSProperties } from "react";
+import { ReactNode, ChangeEvent, FocusEvent, useState } from "react";
 import Typography from "@/components/typography/typography";
+import SearchIcon from "@/components/input/search-icon-svg";
+
+export enum InputVariant {
+  Default = "default",
+  Search = "searchInput",
+}
 
 export enum InputSize {
   Large = "lg",
@@ -11,6 +17,7 @@ export enum InputSize {
 export type InputProps = {
   value?: string;
   onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
+  onBlur?: (e: FocusEvent<HTMLInputElement>) => void;
   placeholder?: string;
   type?: string;
   disabled?: boolean;
@@ -18,11 +25,13 @@ export type InputProps = {
   errorMessage?: string;
   size?: InputSize;
   icon?: ReactNode;
+  variant?: InputVariant;
 };
 
 export default function Input({
   value,
   onChange,
+  onBlur,
   placeholder,
   type = "text",
   className,
@@ -30,23 +39,27 @@ export default function Input({
   size = InputSize.Large,
   icon,
   disabled,
+  variant = InputVariant.Default,
 }: InputProps) {
-  const iconSize = size === InputSize.Large ? 20 : 18;
-  const iconStyle = { "--icon-size": `${iconSize}px` } as CSSProperties;
-
+  const iconSize = `${size}Icon`;
   const hasError = !disabled && Boolean(errorMessage);
+  icon = variant === InputVariant.Search ? <SearchIcon /> : null;
+  const [isFocused, setIsFocused] = useState(false);
 
   return (
     <div className={styles.wrapper}>
-      <div className={styles.field}>
+      <div className={`${styles.field} ${isFocused ? styles.focused : ""}`}>
         {icon && (
-          <span className={`${styles.icon}`} style={iconStyle}>
-            {icon}
-          </span>
+          <span className={`${styles.icon} ${styles[iconSize]}`}>{icon}</span>
         )}
         <input
           value={value}
           onChange={onChange}
+          onBlur={(e) => {
+            setIsFocused(false);
+            onBlur?.(e);
+          }}
+          onFocus={() => setIsFocused(true)}
           placeholder={placeholder}
           type={type}
           disabled={disabled}
