@@ -36,19 +36,19 @@
 }
 
 .icon_normal svg {
-  fill: var(--color-gray700);
+  color: var(--color-gray700);
 }
 .icon_active svg {
-  fill: var(--color-gray500);
+  color: var(--color-gray500);
 }
 .icon_error svg {
-  fill: var(--color-gray700);
+  color: var(--color-gray700);
 }
 .icon_disabled svg {
-  fill: var(--color-gray700);
+  color: var(--color-gray700);
 }
 .icon_completed svg {
-  fill: var(--color-gray700);
+  color: var(--color-gray700);
 }
 
 .lg {

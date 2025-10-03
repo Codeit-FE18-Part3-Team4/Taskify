@@ -3,7 +3,10 @@ interface SearchIconProps {
   size?: number;
 }
 
-export default function SearchIcon({ color, size = 20 }: SearchIconProps) {
+export default function SearchIcon({
+  color = "currentColor",
+  size = 20,
+}: SearchIconProps) {
   return (
     <svg
       width={size}
