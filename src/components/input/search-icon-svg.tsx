@@ -4,7 +4,7 @@ interface SearchIconProps {
 }
 
 export default function SearchIcon({
-  color = "currentColor",
+  color = "var(--color-gray700)",
   size = 20,
 }: SearchIconProps) {
   return (
