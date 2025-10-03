@@ -1,0 +1,45 @@
+.textarea {
+  background-color: var(--color-black800);
+  color: var(--color-gray300);
+  resize: none;
+  border-radius: 14px;
+  box-shadow: 0 0 0 1px var(--color-gray700) inset;
+  border: none;
+  padding: 20px 20px;
+  outline: none;
+}
+
+.textarea::placeholder {
+  color: var(--color-gray400);
+  border: none;
+}
+
+.textarea:focus {
+  background-color: transparent;
+  color: var(--color-gray200);
+  box-shadow: 0 0 0 1.5px var(--color-blue300) inset;
+  border: none;
+}
+
+.textarea:disabled {
+  background-color: var(--color-gray900);
+  color: var(--color-gray400);
+  border: none;
+}
+
+.pc {
+  width: 290px;
+  height: 140px;
+  border-radius: 14px;
+}
+.mobile {
+  width: 290px;
+  height: 120px;
+  border-radius: 12px;
+}
+
+.auto {
+  width: 100%;
+  height: auto;
+  border-radius: 14px;
+}
