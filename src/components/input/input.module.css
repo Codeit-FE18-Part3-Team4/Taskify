@@ -12,7 +12,7 @@
   box-sizing: border-box;
   outline: none;
   background-color: var(--color-black800);
-  border: 1px solid var(--color-gray700);
+  border: none;
   box-shadow: 0 0 0 1px var(--color-gray700) inset;
   color: var(--color-gray300);
 }
@@ -22,7 +22,7 @@
 }
 
 .input:focus {
-  border: 1px solid var(--color-blue300);
+  border: none;
   box-shadow: 0 0 0 1.5px var(--color-blue300) inset;
   color: var(--color-gray200);
 }
@@ -34,15 +34,15 @@
 }
 
 .error {
-  border: 1px solid var(--color-red500);
+  border: none;
   box-shadow: 0 0 0 1px var(--color-red500) inset;
   color: var(--color-gray100);
 }
 
 .error:focus {
-  border: 1px solid var(--color-red500);
   box-shadow: 0 0 0 1px var(--color-red500) inset;
   color: var(--color-gray100);
+  border: none;
 }
 
 .withIcon {
