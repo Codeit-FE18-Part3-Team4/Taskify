@@ -11,7 +11,7 @@ interface DashboardButtonProps {
   children: ReactNode;
   createdByMe: boolean;
   active: boolean;
-  chip: number;
+  chip?: number;
   onClick?: MouseEventHandler<HTMLButtonElement>;
 }
 
@@ -23,13 +23,14 @@ export default function DashboardButton({
   onClick,
 }: DashboardButtonProps) {
   const activeButton = active === true ? styles.active : "";
+  const randomChip = Math.floor(Math.random() * 7);
 
   return (
     <button
       onClick={onClick}
       className={`${styles.button} ${styles.dashboardButton} ${activeButton}`}
     >
-      <ColorChip size={CommonSize.small} color={ CHIP_COLORS[chip] } />
+      <ColorChip size={CommonSize.small} color={CHIP_COLORS[randomChip]} />
       <span
         className={`${active === true ? Typography.lg2Bold : Typography.lg2Medium}`}
       >

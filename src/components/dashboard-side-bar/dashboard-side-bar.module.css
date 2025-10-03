@@ -87,6 +87,9 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  position: sticky;
+  bottom: 0;
+  background: var(--color-black900);
 }
 .footer .userBox {
   display: flex;

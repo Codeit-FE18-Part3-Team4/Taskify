@@ -4,15 +4,13 @@ import Header from './header'
 import Main from './main'
 import styles from './dashboard-side-bar.module.css'
 
-interface DashboardSideBarProps {
-  dashboardAdd: MouseEventHandler<HTMLButtonElement>;
-}
 
-export default function DashboardSideBar({ dashboardAdd } : DashboardSideBarProps) {
+
+export default function DashboardSideBar() {
   return (
     <div className={styles.sideBar}>
       <Header />
-      <Main dashboardAdd={dashboardAdd}/>
+      <Main/>
       <UserProfile name={'박민영'} profileImageUrl='' />
     </div>
   )
