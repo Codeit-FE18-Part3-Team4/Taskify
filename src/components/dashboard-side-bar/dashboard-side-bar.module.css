@@ -4,7 +4,7 @@
   width: 340px;
   display: flex;
   flex-shrink: 0;
-  height: 100vh;
+  min-height: 100vh;
   flex-direction: column;
 }
 .button {
