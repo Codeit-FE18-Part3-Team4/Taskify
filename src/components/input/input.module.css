@@ -33,7 +33,6 @@
 .icon svg {
   width: var(--icon-size);
   height: var(--icon-size);
-  display: inline-block;
 }
 
 .icon_normal svg {

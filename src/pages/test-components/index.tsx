@@ -2,7 +2,7 @@ import Button, { ButtonSize, ButtonVariant } from "@/components/button/button";
 import Typography from "@/components/typography/typography";
 import { ReactNode } from "react";
 import Input, { InputSize, InputVariant } from "@/components/input/input";
-import SearchIcon from "../../components/input/search-icon-svg";
+import SearchIcon from "@/components/input/search-icon-svg";
 
 function Section({ title, children }: { title: string; children: ReactNode }) {
   return (

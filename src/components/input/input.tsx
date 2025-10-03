@@ -1,7 +1,6 @@
-// src/components/Input/Input.tsx
 import styles from "./input.module.css";
 import { ReactNode } from "react";
-import Typography from "../typography/typography";
+import Typography from "@/components/typography/typography";
 
 export enum InputVariant {
   Normal = "normal",
