@@ -1,7 +1,14 @@
 import Button, { ButtonSize, ButtonVariant } from "@/components/button/button";
+import Modal from "@/components/modal/modal";
 import Typography from "@/components/typography/typography";
+import { useModal } from "@/hooks/use-modal";
 import { ReactNode } from "react";
 import Input, { InputSize, InputVariant } from "@/components/input/input";
+import { ProfileColor } from "@/constants/chips/profile-colors.enum";
+import BadgeChip from "@/components/chips/badge";
+import BoardColorChip from "@/components/chips/chips-color";
+import { CHIP_COLORS } from "@/constants/chips/chip-colors";
+import { CommonSize } from "@/constants/common/common-size.enum";
 
 function Section({ title, children }: { title: string; children: ReactNode }) {
   return (
@@ -221,6 +228,66 @@ function ButtonBox() {
   );
 }
 
+function ModalSample() {
+  const MODAL_KEY_1 = "MODAL_SAMPLE_1";
+  const MODAL_KEY_2 = "MODAL_SAMPLE_2";
+  const { isShowModal: isShowModal1, openModal: openModal1 } = useModal({
+    key: MODAL_KEY_1,
+  });
+  const { isShowModal: isShowModal2, openModal: openModal2 } = useModal({
+    key: MODAL_KEY_2,
+  });
+
+  return (
+    <>
+      <div>
+        <button onClick={() => openModal1(true)}>Open Modal 1</button>
+        {isShowModal1 && (
+          <Modal modalKey={MODAL_KEY_1}>
+            <div
+              style={{
+                width: "600px",
+                height: "600px",
+                backgroundColor: "#242429",
+                borderRadius: "24px",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <h2 style={{ color: "white" }}>Modal 1 Title</h2>
+              <button onClick={() => openModal1(false)}>Close Modal 1</button>
+            </div>
+          </Modal>
+        )}
+      </div>
+      <div>
+        <button onClick={() => openModal2(true)}>Open Modal 2</button>
+        {isShowModal2 && (
+          <Modal modalKey={MODAL_KEY_2}>
+            <div
+              style={{
+                width: "600px",
+                height: "600px",
+                backgroundColor: "#242429",
+                borderRadius: "24px",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <h2 style={{ color: "white" }}>Modal 2 Title</h2>
+              <button onClick={() => openModal2(false)}>Close Modal 2</button>
+            </div>
+          </Modal>
+        )}
+      </div>
+    </>
+  );
+}
+
 function InputBox() {
   const sizes = [InputSize.Large, InputSize.Medium];
 
@@ -290,9 +357,41 @@ export default function Page() {
       </Section>
       <Section title="Chip">
         <p>This is a section about chip.</p>
+        {Object.values(CommonSize)
+          .filter((value) => typeof value === "number")
+          .map((size) => (
+            <div
+              key={size}
+              style={{
+                display: "flex",
+                gap: "10px",
+              }}
+            >
+              {CHIP_COLORS.map((item, index) => (
+                <BoardColorChip key={index} color={item} size={size} />
+              ))}
+            </div>
+          ))}
+
+        <div
+          style={{
+            display: `flex`,
+            gap: `10px`,
+          }}
+        >
+          {Object.values(ProfileColor)
+            .filter((value) => typeof value === "number")
+            .map((colorIndex) => (
+              <BadgeChip
+                key={colorIndex}
+                title={"태그내용"}
+                colorIndex={colorIndex as ProfileColor}
+              />
+            ))}
+        </div>
       </Section>
       <Section title="Modal">
-        <p>This is a section about modal.</p>
+        <ModalSample />
       </Section>
       <Section title="Dropdown">
         <p>This is a section about dropdown.</p>
