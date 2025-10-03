@@ -1,5 +1,5 @@
 import styles from "./input.module.css";
-import { ReactNode } from "react";
+import { ReactNode, ChangeEvent, CSSProperties } from "react";
 import Typography from "@/components/typography/typography";
 
 export enum InputVariant {
@@ -18,7 +18,7 @@ export enum InputSize {
 
 type InputProps = {
   value?: string;
-  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
   placeholder?: string;
   type?: string;
   disabled?: boolean;
@@ -41,7 +41,7 @@ export default function Input({
   icon,
 }: InputProps) {
   const iconSize = size === InputSize.Large ? 20 : 18;
-  const iconStyle = { "--icon-size": `${iconSize}px` } as React.CSSProperties;
+  const iconStyle = { "--icon-size": `${iconSize}px` } as CSSProperties;
 
   return (
     <div className={styles.wrapper}>
@@ -61,8 +61,8 @@ export default function Input({
           type={type}
           className={`
         ${styles.input}
-        ${styles[`${variant}`]}
-        ${styles[`${size}`]}
+        ${styles[variant]}
+        ${styles[size]}
         ${icon ? styles.withIcon : styles.withoutIcon}
         ${Typography.lgMedium}
         ${className ?? ""}`}
