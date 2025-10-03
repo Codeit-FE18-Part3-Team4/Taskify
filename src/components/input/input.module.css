@@ -1,0 +1,104 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.field {
+  position: relative;
+}
+
+.input {
+  box-sizing: border-box;
+  outline: none;
+  background-color: var(--color-black800);
+  border: none;
+  box-shadow: 0 0 0 1px var(--color-gray700) inset;
+  color: var(--color-gray300);
+}
+
+.input::placeholder {
+  color: var(--color-gray400);
+}
+
+.input:focus {
+  border: none;
+  box-shadow: 0 0 0 1.5px var(--color-blue300) inset;
+  color: var(--color-gray200);
+}
+
+.input:disabled {
+  background-color: var(--color-gray900);
+  border: none;
+  color: var(--color-gray400);
+}
+
+.error {
+  border: none;
+  box-shadow: 0 0 0 1px var(--color-red500) inset;
+  color: var(--color-gray100);
+}
+
+.error:focus {
+  box-shadow: 0 0 0 1px var(--color-red500) inset;
+  color: var(--color-gray100);
+  border: none;
+}
+
+.withIcon {
+  padding-left: 48px;
+}
+
+.withoutIcon {
+  padding-left: 20px;
+}
+
+.icon {
+  position: absolute;
+  top: 50%;
+  left: 20px;
+  transform: translateY(-50%);
+  pointer-events: none;
+  display: block;
+  color: var(--color-gray700);
+}
+
+.field.focused .icon svg {
+  color: var(--color-gray500);
+}
+
+.lgIcon svg {
+  width: 20px;
+  height: 20px;
+}
+
+.mdIcon svg {
+  width: 18px;
+  height: 18px;
+}
+
+.autoIcon svg {
+  width: 20px;
+  height: 20px;
+}
+
+.lg {
+  width: 290px;
+  height: 54px;
+  border-radius: 14px;
+}
+.md {
+  width: 290px;
+  height: 48px;
+  border-radius: 12px;
+}
+
+.auto {
+  width: 100%;
+  height: 54px;
+  border-radius: 14px;
+}
+
+.errorMessage {
+  color: var(--color-red500);
+}
