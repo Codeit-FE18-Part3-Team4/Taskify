@@ -1,6 +1,6 @@
+import { useResponsive } from "@/hooks/ues-responsive";
 import { useAlert } from "@/hooks/use-alert";
 import { classnames } from "@/utils/classnames";
-import { useMediaQuery } from "@uidotdev/usehooks";
 import { useMemo } from "react";
 import Modal from "../modal/modal";
 import Typography from "../typography/typography";
@@ -25,7 +25,7 @@ export default function Alert({
   onAction,
 }: Props) {
   const { openAlert } = useAlert({ key: alertKey });
-  const isMobile = useMediaQuery("(max-width: 375px)");
+  const { isMobile } = useResponsive();
 
   const titleTypography = useMemo(() => {
     return isMobile ? Typography.lg2SemiBold : Typography.xl2SemiBold;

@@ -1,4 +1,4 @@
-import { useMediaQuery } from "@uidotdev/usehooks";
+import { useResponsive } from "@/hooks/ues-responsive";
 import { MouseEventHandler, useMemo } from "react";
 import Button, { ButtonSize, ButtonVariant } from "../button/button";
 
@@ -18,7 +18,7 @@ interface Props {
 }
 
 export default function AlertAction({ type, onClick }: Props) {
-  const isMobile = useMediaQuery("(max-width: 375px)");
+  const { isMobile } = useResponsive();
 
   const buttonSize = useMemo(() => {
     return isMobile ? ButtonSize.Medium : ButtonSize.Large;
