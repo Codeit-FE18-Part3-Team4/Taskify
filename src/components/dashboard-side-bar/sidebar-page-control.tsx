@@ -17,7 +17,7 @@ export default function SidebarPageControl({
   currentPage,
   totalPages,
 }: SidebarPageControlProps) {
-  const pervDisabled = currentPage === 0 ? styles.disabled : "";
+  const prevDisabled = currentPage === 0 ? styles.disabled : "";
   const nextDisabled = totalPages > 1 ? "" : styles.disabled;
 
   return (
@@ -25,7 +25,7 @@ export default function SidebarPageControl({
       <button
         onClick={onPrev}
         disabled={currentPage === 0}
-        className={`${styles.button} ${pervDisabled}`}
+        className={`${styles.button} ${prevDisabled}`}
       >
         <Image
           src={ArrowLeftIcon}
