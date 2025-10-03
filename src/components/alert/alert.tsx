@@ -1,6 +1,7 @@
 import { useAlert } from "@/hooks/use-alert";
 import { classnames } from "@/utils/classnames";
 import { useMediaQuery } from "@uidotdev/usehooks";
+import { useMemo } from "react";
 import Modal from "../modal/modal";
 import Typography from "../typography/typography";
 import AlertAction, { AlertActionType } from "./alert-action";
@@ -26,6 +27,14 @@ export default function Alert({
   const { openAlert } = useAlert({ key: alertKey });
   const isMobile = useMediaQuery("(max-width: 375px)");
 
+  const titleTypography = useMemo(() => {
+    return isMobile ? Typography.lg2SemiBold : Typography.xl2SemiBold;
+  }, [isMobile]);
+
+  const messageTypography = useMemo(() => {
+    return isMobile ? Typography.lgMedium : Typography.xlMedium;
+  }, [isMobile]);
+
   const handleCancelClick = () => {
     openAlert(false);
     onCancel?.();
@@ -40,20 +49,8 @@ export default function Alert({
     <Modal modalKey={alertKey}>
       <div className={styles.alert}>
         <div className={styles.header}>
-          <h2
-            className={classnames(
-              styles.title,
-              isMobile ? Typography.lg2SemiBold : Typography.xl2SemiBold
-            )}
-          >
-            {title}
-          </h2>
-          <p
-            className={classnames(
-              styles.message,
-              isMobile ? Typography.lgMedium : Typography.xlMedium
-            )}
-          >
+          <h2 className={classnames(styles.title, titleTypography)}>{title}</h2>
+          <p className={classnames(styles.message, messageTypography)}>
             {message}
           </p>
         </div>
