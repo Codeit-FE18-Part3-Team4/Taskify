@@ -8,9 +8,14 @@ interface UserProfileProps {
   profileImageUrl: string | undefined;
 }
 
-export default function UserProfile({ name, profileImageUrl }: UserProfileProps) {
-  const shotName = name.length > 1 ? name.substring(1) : name;
+function sliceUserName(userName: string) {
+  return userName.length > 1 ? userName.substring(1) : userName;
+}
 
+export default function UserProfile({
+  name,
+  profileImageUrl,
+}: UserProfileProps) {
   return (
     <div className={styles.footer}>
       <div className={styles.userBox}>
@@ -23,7 +28,7 @@ export default function UserProfile({ name, profileImageUrl }: UserProfileProps)
               alt="유저 프로필"
             />
           ) : (
-            <span>{shotName}</span>
+            <span>{sliceUserName(name)}</span>
           )}
         </div>
         <p className={Typography.lgBold}>{name}</p>
