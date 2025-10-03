@@ -1,13 +1,17 @@
 import CrownIcon from "@/assets/images/ic-crown.svg";
 import Typography from "@/components/typography/typography";
+import { CHIP_COLORS } from "@/constants/chips/chip-colors";
+import { CommonSize } from "@/constants/common/common-size.enum";
 import Image from "next/image";
 import { MouseEventHandler, ReactNode } from "react";
+import ColorChip from "../chips/chips-color";
 import styles from "./dashboard-side-bar.module.css";
 
 interface DashboardButtonProps {
   children: ReactNode;
   createdByMe: boolean;
   active: boolean;
+  chip: number;
   onClick?: MouseEventHandler<HTMLButtonElement>;
 }
 
@@ -15,6 +19,7 @@ export default function DashboardButton({
   children,
   createdByMe,
   active,
+  chip,
   onClick,
 }: DashboardButtonProps) {
   const activeButton = active === true ? styles.active : "";
@@ -24,7 +29,7 @@ export default function DashboardButton({
       onClick={onClick}
       className={`${styles.button} ${styles.dashboardButton} ${activeButton}`}
     >
-      <Image src={"/"} width={24} height={24} alt="태그 아이콘" />
+      <ColorChip size={CommonSize.small} color={ CHIP_COLORS[chip] } />
       <span
         className={`${active === true ? Typography.lg2Bold : Typography.lg2Medium}`}
       >

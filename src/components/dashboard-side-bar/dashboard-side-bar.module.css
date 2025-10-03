@@ -65,6 +65,9 @@
   align-items: center;
   gap: 8px;
 }
+.dashboardButton > svg{
+  padding: 0;
+}
 .dashboardButton > .crownIcon {
   filter: invert(42%) sepia(100%) saturate(5942%) hue-rotate(110deg)
     brightness(95%) contrast(91%);
