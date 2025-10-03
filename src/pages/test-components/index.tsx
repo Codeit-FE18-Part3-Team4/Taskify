@@ -3,6 +3,7 @@ import Modal from "@/components/modal/modal";
 import Typography from "@/components/typography/typography";
 import { useModal } from "@/hooks/use-modal";
 import { ReactNode } from "react";
+import Input, { InputSize, InputVariant } from "@/components/input/input";
 import { ProfileColor } from "@/constants/chips/profile-colors.enum";
 import BadgeChip from "@/components/chips/badge";
 import BoardColorChip from "@/components/chips/chips-color";
@@ -287,6 +288,41 @@ function ModalSample() {
   );
 }
 
+function InputBox() {
+  const sizes = [InputSize.Large, InputSize.Medium];
+
+  return (
+    <div>
+      {sizes.map((size) => (
+        <div key={size} style={{ display: "inline-block", margin: "8px" }}>
+          <div style={{ marginBottom: "8px" }}>
+            <Input size={size} placeholder="placeholder" />
+          </div>
+          <div style={{ marginBottom: "8px" }}>
+            <Input size={size} placeholder="Disabled" disabled />
+          </div>
+          <div style={{ marginBottom: "8px" }}>
+            <div>
+              <Input
+                size={size}
+                placeholder="Invalid Input"
+                errorMessage="Error Message"
+              />
+            </div>
+          </div>
+          <div>
+            <Input
+              size={size}
+              placeholder="Search Input"
+              variant={InputVariant.Search}
+            />
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
 export default function Page() {
   return (
     <main style={{ padding: "24px" }}>
@@ -317,7 +353,7 @@ export default function Page() {
         <ButtonBox />
       </Section>
       <Section title="Input">
-        <p>This is a section about input.</p>
+        <InputBox />
       </Section>
       <Section title="Chip">
         <p>This is a section about chip.</p>
