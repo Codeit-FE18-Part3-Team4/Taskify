@@ -1,0 +1,18 @@
+import styles from "./text-area.module.css";
+import { TextareaHTMLAttributes } from "react";
+import Typography from "@/components/typography/typography";
+
+interface TextAreaProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
+  className?: string;
+}
+
+export default function TextArea({ className, ...props }: TextAreaProps) {
+  return (
+    <textarea
+      {...props}
+      className={`${styles.textarea} 
+                  ${Typography.lgMedium} 
+                  ${className ?? ""} `}
+    />
+  );
+}

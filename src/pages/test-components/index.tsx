@@ -1,6 +1,8 @@
 import Button, { ButtonSize, ButtonVariant } from "@/components/button/button";
+import Dialog from "@/components/dialog/dialog";
 import Modal from "@/components/modal/modal";
 import Typography from "@/components/typography/typography";
+import { useDialog } from "@/hooks/use-dialog";
 import { useModal } from "@/hooks/use-modal";
 import { ReactNode, useState } from "react";
 import { ProfileColor } from "@/constants/chips/profile-colors";
@@ -11,6 +13,7 @@ import { CHIP_COLORS } from "@/constants/chips/chip-colors";
 import { ColorFrameSize } from "@/constants/chips/color-frame-size";
 import { CommonSize } from "@/constants/common/common-size";
 import ColorPalette from "@/components/color-palette/color-palette";
+import TextArea from "@/components/input/text-area";
 
 function Section({ title, children }: { title: string; children: ReactNode }) {
   return (
@@ -325,6 +328,41 @@ function InputBox() {
   );
 }
 
+function DialogSample() {
+  const DIALOG_KEY = "DIALOG_SAMPLE";
+  const { isShowDialog, openDialog } = useDialog({
+    key: DIALOG_KEY,
+  });
+
+  return (
+    <>
+      <div>
+        <button onClick={() => openDialog(true)}>Open Dialog</button>
+        {isShowDialog && (
+          <Dialog
+            dialogKey={DIALOG_KEY}
+            message="Hello, this is a dialog!"
+            onConfirm={() => console.log("Dialog confirmed")}
+          />
+        )}
+      </div>
+    </>
+  );
+}
+
+function TextAreaBox() {
+  return (
+    <div>
+      <div style={{ marginBottom: "8px" }}>
+        <TextArea placeholder="Text" />
+      </div>
+      <div style={{ marginBottom: "8px" }}>
+        <TextArea placeholder="Disabled" disabled />
+      </div>
+    </div>
+  );
+}
+
 export default function Page() {
   const sizes = Object.values(ColorFrameSize);
   const [selectedColors, setSelectedColors] = useState<string[]>(
@@ -369,6 +407,7 @@ export default function Page() {
       </Section>
       <Section title="Input">
         <InputBox />
+        <TextAreaBox />
       </Section>
       <Section title="Chip">
         <p>This is a section about chip.</p>
@@ -433,8 +472,8 @@ export default function Page() {
       <Section title="Modal">
         <ModalSample />
       </Section>
-      <Section title="Dropdown">
-        <p>This is a section about dropdown.</p>
+      <Section title="Dialog">
+        <DialogSample />
       </Section>
     </main>
   );
