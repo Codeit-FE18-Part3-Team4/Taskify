@@ -1,7 +1,7 @@
-import styles from "./input.module.css";
-import { ReactNode, ChangeEvent, FocusEvent, useState } from "react";
-import Typography from "@/components/typography/typography";
 import SearchIcon from "@/components/input/search-icon-svg";
+import Typography from "@/components/typography";
+import { ChangeEvent, FocusEvent, ReactNode, useState } from "react";
+import styles from "./input.module.css";
 
 export enum InputVariant {
   Default = "default",

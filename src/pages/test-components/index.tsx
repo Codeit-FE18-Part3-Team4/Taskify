@@ -1,12 +1,11 @@
-import Alert from "@/components/alert/alert";
-import { AlertActionType } from "@/components/alert/alert-action";
+import Alert, { AlertActionType } from "@/components/alert";
 import Button, { ButtonSize, ButtonVariant } from "@/components/button/button";
 import BadgeChip from "@/components/chips/badge";
 import BoardColorChip from "@/components/chips/chips-color";
-import Dialog from "@/components/dialog/dialog";
+import Dialog from "@/components/dialog";
 import Input, { InputSize, InputVariant } from "@/components/input/input";
-import Modal from "@/components/modal/modal";
-import Typography from "@/components/typography/typography";
+import Modal from "@/components/modal";
+import Typography from "@/components/typography";
 import { CHIP_COLORS } from "@/constants/chips/chip-colors";
 import { ProfileColor } from "@/constants/chips/profile-colors.enum";
 import { CommonSize } from "@/constants/common/common-size.enum";

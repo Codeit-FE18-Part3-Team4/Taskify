@@ -1,6 +1,6 @@
 import ArrowRightIcon from "@/assets/images/ic-chevorn-right.svg";
 import ArrowLeftIcon from "@/assets/images/ic-chevron-left.svg";
-import Typography from "@/components/typography/typography";
+import Typography from "@/components/typography";
 import Image from "next/image";
 import styles from "./dashboard-side-bar.module.css";
 

@@ -1,11 +1,47 @@
+import Modal from "@/components/modal";
+import Typography from "@/components/typography";
 import { useAlert } from "@/hooks/use-alert";
 import { useResponsive } from "@/hooks/use-responsive";
 import { classnames } from "@/utils/classnames";
-import { useMemo } from "react";
-import Modal from "../modal/modal";
-import Typography from "../typography/typography";
-import AlertAction, { AlertActionType } from "./alert-action";
+import { MouseEventHandler, useMemo } from "react";
+import Button, { ButtonSize, ButtonVariant } from "../button/button";
 import styles from "./alert.module.css";
+
+export enum AlertActionType {
+  Cancel = "취소",
+  Delete = "삭제",
+}
+
+interface AlertActionProps {
+  type: AlertActionType;
+  onClick: MouseEventHandler<HTMLButtonElement>;
+}
+
+function AlertAction({ type, onClick }: AlertActionProps) {
+  const { isMobile } = useResponsive();
+
+  const buttonVariant = useMemo(() => {
+    return {
+      [AlertActionType.Cancel]: ButtonVariant.Secondary,
+      [AlertActionType.Delete]: ButtonVariant.Delete,
+    }[type];
+  }, [type]);
+
+  const buttonSize = useMemo(() => {
+    return isMobile ? ButtonSize.Medium : ButtonSize.Large;
+  }, [isMobile]);
+
+  return (
+    <Button
+      variant={buttonVariant}
+      size={buttonSize}
+      isWidthFull
+      onClick={onClick}
+    >
+      {type}
+    </Button>
+  );
+}
 
 interface Props {
   title: string;
