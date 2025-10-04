@@ -1,12 +1,10 @@
-import styles from "./text-area.module.css";
+import styles from "./textarea.module.css";
 import { TextareaHTMLAttributes } from "react";
 import Typography from "@/components/typography/typography";
 
-interface TextAreaProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
-  className?: string;
-}
+interface TextareaProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {}
 
-export default function TextArea({ className, ...props }: TextAreaProps) {
+export default function Textarea({ className, ...props }: TextareaProps) {
   return (
     <textarea
       {...props}

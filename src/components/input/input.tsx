@@ -1,11 +1,21 @@
 import styles from "./input.module.css";
-import { ReactNode, ChangeEvent, FocusEvent, useState } from "react";
+import {
+  ReactNode,
+  useState,
+  InputHTMLAttributes,
+  FocusEvent as ReactFocusEvent,
+  useMemo,
+} from "react";
 import Typography from "@/components/typography/typography";
 import SearchIcon from "@/components/input/search-icon-svg";
+import VisibilityNowOnIcon from "./visibility-on-svg";
+import VisibilityNowOffIcon from "./visibility-off-svg";
+import { classnames } from "@/utils/classnames";
 
 export enum InputVariant {
   Default = "default",
-  Search = "searchInput",
+  Search = "search",
+  Password = "password",
 }
 
 export enum InputSize {
@@ -14,24 +24,21 @@ export enum InputSize {
   Auto = "auto",
 }
 
-interface InputProps {
-  value?: string;
-  onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
-  onBlur?: (e: FocusEvent<HTMLInputElement>) => void;
-  placeholder?: string;
-  type?: string;
-  disabled?: boolean;
-  className?: string;
+export type IconPosition = "left" | "right";
+
+interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   errorMessage?: string;
   size?: InputSize;
   icon?: ReactNode;
   variant?: InputVariant;
+  iconPosition?: IconPosition;
 }
 
 export default function Input({
   value,
   onChange,
   onBlur,
+  onFocus,
   placeholder,
   type = "text",
   className,
@@ -40,37 +47,94 @@ export default function Input({
   icon,
   disabled,
   variant = InputVariant.Default,
+  iconPosition,
+  ...props
 }: InputProps) {
-  const iconSize = `${size}Icon`;
   const hasError = !disabled && Boolean(errorMessage);
-  icon = variant === InputVariant.Search ? <SearchIcon /> : null;
   const [isFocused, setIsFocused] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const iconSize = `${size}Icon`;
+  const resolvedIcon = useMemo(() => {
+    switch (variant) {
+      case InputVariant.Search:
+        return <SearchIcon />;
+      case InputVariant.Password:
+        return (
+          <button
+            className={styles.eyeBtn}
+            onClick={() => setShowPassword((prev) => !prev)}
+          >
+            {showPassword ? <VisibilityNowOnIcon /> : <VisibilityNowOffIcon />}
+          </button>
+        );
+      default:
+        return null;
+    }
+  }, [variant, showPassword]);
+
+  const handleBlur = (e: ReactFocusEvent<HTMLInputElement>) => {
+    setIsFocused(false);
+    onBlur?.(e);
+  };
+
+  const handleFocus = (e: ReactFocusEvent<HTMLInputElement>) => {
+    setIsFocused(true);
+    onFocus?.(e);
+  };
 
   return (
     <div className={styles.wrapper}>
-      <div className={`${styles.field} ${isFocused ? styles.focused : ""}`}>
-        {icon && (
-          <span className={`${styles.icon} ${styles[iconSize]}`}>{icon}</span>
+      <div
+        className={classnames(styles.field, isFocused ? styles.focused : "")}
+      >
+        {variant === InputVariant.Search && (
+          <span
+            className={classnames(
+              styles.icon,
+              styles.leftIcon,
+              styles[iconSize]
+            )}
+          >
+            {resolvedIcon}
+          </span>
         )}
         <input
           value={value}
           onChange={onChange}
-          onBlur={(e) => {
-            setIsFocused(false);
-            onBlur?.(e);
-          }}
-          onFocus={() => setIsFocused(true)}
+          onBlur={handleBlur}
+          onFocus={handleFocus}
           placeholder={placeholder}
-          type={type}
+          type={
+            variant === InputVariant.Password
+              ? showPassword
+                ? "text"
+                : "password"
+              : type
+          }
           disabled={disabled}
-          className={`
-        ${styles.input}
-        ${hasError ? styles.error : ""}
-        ${styles[size]}
-        ${icon ? styles.withIcon : styles.withoutIcon}
-        ${Typography.lgMedium}
-        ${className ?? ""}`}
+          className={classnames(
+            styles.input,
+            styles[size],
+            Typography.lgMedium,
+            hasError ? styles.error : "",
+            variant === InputVariant.Search ? styles.withLeftIcon : "",
+            variant === InputVariant.Password ? styles.withRightIcon : "",
+            variant === InputVariant.Default ? styles.withoutIcon : "",
+            className ?? ""
+          )}
+          {...props}
         />
+        {variant === InputVariant.Password && (
+          <span
+            className={classnames(
+              styles.icon,
+              styles.rightIcon,
+              styles[iconSize]
+            )}
+          >
+            {resolvedIcon}
+          </span>
+        )}
       </div>
       {hasError && <p className={styles.errorMessage}>{errorMessage}</p>}
     </div>

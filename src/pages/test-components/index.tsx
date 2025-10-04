@@ -13,8 +13,7 @@ import { CHIP_COLORS } from "@/constants/chips/chip-colors";
 import { ColorFrameSize } from "@/constants/chips/color-frame-size";
 import { CommonSize } from "@/constants/common/common-size";
 import ColorPalette from "@/components/color-palette/color-palette";
-import TextArea from "@/components/input/text-area";
-
+import Textarea from "@/components/input/textarea";
 function Section({ title, children }: { title: string; children: ReactNode }) {
   return (
     <section style={{ margin: "24px 0" }}>
@@ -315,11 +314,18 @@ function InputBox() {
               />
             </div>
           </div>
-          <div>
+          <div style={{ marginBottom: "8px" }}>
             <Input
               size={size}
               placeholder="Search Input"
               variant={InputVariant.Search}
+            />
+          </div>
+          <div>
+            <Input
+              size={size}
+              placeholder="Password Input"
+              variant={InputVariant.Password}
             />
           </div>
         </div>
@@ -350,14 +356,14 @@ function DialogSample() {
   );
 }
 
-function TextAreaBox() {
+function TextareaBox() {
   return (
     <div>
       <div style={{ marginBottom: "8px" }}>
-        <TextArea placeholder="Text" />
+        <Textarea placeholder="Text" />
       </div>
       <div style={{ marginBottom: "8px" }}>
-        <TextArea placeholder="Disabled" disabled />
+        <Textarea placeholder="Disabled" disabled />
       </div>
     </div>
   );
@@ -407,7 +413,7 @@ export default function Page() {
       </Section>
       <Section title="Input">
         <InputBox />
-        <TextAreaBox />
+        <TextareaBox />
       </Section>
       <Section title="Chip">
         <p>This is a section about chip.</p>
