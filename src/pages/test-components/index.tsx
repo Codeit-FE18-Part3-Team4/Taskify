@@ -8,6 +8,7 @@ import Input, { InputSize, InputVariant } from "@/components/input/input";
 import Textarea from "@/components/input/textarea";
 import Modal from "@/components/modal";
 import Sheet, { SheetActionType } from "@/components/sheet";
+import SheetSection from "@/components/sheet/sheet-section";
 import Typography from "@/components/typography";
 import { CHIP_COLORS } from "@/constants/chips/chip-colors";
 import { ColorFrameSize } from "@/constants/chips/color-frame-size";
@@ -417,9 +418,15 @@ function SheetSample() {
             onCancel={() => console.log("Sheet cancelled")}
             onAction={() => console.log("Sheet confirmed")}
           >
-            <input />
-            <input />
-            <input />
+            <SheetSection title="제목" required>
+              <input />
+            </SheetSection>
+            <SheetSection title="설명" required>
+              <input />
+            </SheetSection>
+            <SheetSection title="태그">
+              <input />
+            </SheetSection>
           </Sheet>
         )}
       </div>
