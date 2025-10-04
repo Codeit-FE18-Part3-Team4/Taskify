@@ -58,7 +58,6 @@ export default function Input({
     switch (variant) {
       case InputVariant.Search:
         return <SearchIcon />;
-
       case InputVariant.Password:
         return (
           <button
@@ -68,7 +67,6 @@ export default function Input({
             {showPassword ? <VisibilityNowOnIcon /> : <VisibilityNowOffIcon />}
           </button>
         );
-
       default:
         return null;
     }
