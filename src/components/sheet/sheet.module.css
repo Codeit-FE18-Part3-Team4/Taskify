@@ -1,0 +1,50 @@
+.sheet {
+  width: 600px;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.title {
+  color: var(--color-gray300);
+}
+
+.closeButton {
+  background: none;
+  outline: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  height: 24px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.actions {
+  display: flex;
+  gap: 20px;
+}
+
+@media (max-width: 375px) {
+  .sheet {
+    width: 335px;
+    padding: 24px 20px 20px;
+    gap: 16px;
+  }
+
+  .actions {
+    display: flex;
+    gap: 12px;
+  }
+}
