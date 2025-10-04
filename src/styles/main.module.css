@@ -79,3 +79,30 @@
   align-items: center;
   gap: 20px;
 }
+.mainSection{
+  padding: 94px 0;
+}
+.mainSection .mainSectionCard{
+  width: 1365px;
+  margin: 0 auto;
+}
+.mainSection .mainSectionCard .flexBox{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 127px;
+}
+.mainSection .mainSectionCard .textBox > span{
+  color: var(--color-brand400);
+  font-size: 24px;
+}
+.mainSection .mainSectionCard .textBox > h3{
+  font-size: 50px;
+  line-height: 140%;
+  padding: 14px 0;
+  color: var(--color-gray100);
+}
+.mainSection .mainSectionCard .textBox > p{
+  line-height: 150%;
+  color: var(--color-gray400);
+}
