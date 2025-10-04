@@ -1,4 +1,4 @@
-import "@/components/color/color.css";
+import "@/components/color/color-variables.css";
 import ModalProvider from "@/components/modal/modal-provider";
 import "@/styles/global.css";
 import "@/styles/reset.css";
