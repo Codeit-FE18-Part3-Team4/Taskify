@@ -1,12 +1,24 @@
 .textarea {
+  width: 100%;
+  max-width: 290px;
+  box-sizing: border-box;
+  border-radius: 14px;
+  height: 140px;
   background-color: var(--color-black800);
   color: var(--color-gray300);
   resize: none;
   border-radius: 14px;
   box-shadow: 0 0 0 1px var(--color-gray700) inset;
   border: none;
-  padding: 20px 20px;
+  padding: 20px;
   outline: none;
+}
+
+@media (max-width: 768px) {
+  .textarea {
+    height: 120px;
+    border-radius: 12px;
+  }
 }
 
 .textarea::placeholder {
@@ -25,21 +37,4 @@
   background-color: var(--color-gray900);
   color: var(--color-gray400);
   border: none;
-}
-
-.pc {
-  width: 290px;
-  height: 140px;
-  border-radius: 14px;
-}
-.mobile {
-  width: 290px;
-  height: 120px;
-  border-radius: 12px;
-}
-
-.auto {
-  width: 100%;
-  height: auto;
-  border-radius: 14px;
 }
