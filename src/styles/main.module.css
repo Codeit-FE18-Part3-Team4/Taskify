@@ -1,5 +1,31 @@
 .mainWrap{
   background: #161519;
+  position: relative;
+}
+.mainWrap::after{
+  content: "";
+  width: 298px;
+  height: 298px;
+  background: var(--color-brand500);
+  opacity: 0.6;
+  filter: blur(1000);
+  position: absolute;
+  top: 820px;
+  left: 106px;
+  border-radius: 100%;
+}
+
+.mainWrap::before{
+  content: "";
+  width: 344px;
+  height: 344px;
+  background: var(--color-brand500);
+  opacity: 0.6;
+  filter: blur(1000);
+  position: absolute;
+  top: 302px;
+  left: 1244px;
+  border-radius: 100%;
 }
 
 .header {
@@ -28,6 +54,8 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 100px;
+  z-index: 10;
 }
 .mainSectionTopWrap > .mainSectionTopMain{
   width: 510px;

@@ -5,8 +5,19 @@ import Typography from "@/components/typography/typography";
 import styles from "@/styles/main.module.css";
 import type { NextPage } from "next";
 import Image from "next/image";
+import { useRouter } from "next/router";
 
 const Home: NextPage = () => {
+  const router = useRouter();
+
+  const handleClickLoginPage = () => {
+    router.push("/login");
+  };
+
+  const handleClickSignupPage = () => {
+    router.push("/signup");
+  };
+
   return (
     <div className={styles.mainWrap}>
       <header className={styles.header}>
@@ -14,8 +25,8 @@ const Home: NextPage = () => {
           <Image src={Logo} width={186} height={48} alt="로고 이미지" />
         </button>
         <div className={styles.headerButtonBox}>
-          <button className={Typography.lgMedium}>로그인</button>
-          <button className={Typography.lgMedium}>회원가입</button>
+          <button onClick={handleClickLoginPage} className={Typography.lgMedium}>로그인</button>
+          <button onClick={handleClickSignupPage} className={Typography.lgMedium}>회원가입</button>
         </div>
       </header>
       <main>
@@ -24,8 +35,8 @@ const Home: NextPage = () => {
             <h1 className={Typography.lg2Bold}>더 새로워진 일정 관리</h1>
             <span className={Typography.lg2Bold}>TASKIFY</span>
             <div className={styles.buttonBox}>
-              <Button variant={ButtonVariant.Secondary}>회원가입하기</Button>
-              <Button>로그인하기</Button>
+              <Button onClick={handleClickSignupPage} variant={ButtonVariant.Secondary}>회원가입하기</Button>
+              <Button onClick={handleClickLoginPage}>로그인하기</Button>
             </div>
           </div>
           <div className={styles.mainSectionTopImg}>
