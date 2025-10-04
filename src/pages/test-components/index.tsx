@@ -8,6 +8,7 @@ import { ColorFrameSize } from "@/components/chips/color-frame/color-frame-size"
 import ColorPalette from "@/components/color-palette/color-palette";
 import DashboardSideBar from "@/components/dashboard-side-bar/dashboard-side-bar";
 import Dialog from "@/components/dialog";
+import Dropdown from "@/components/dropdown";
 import Input, { InputSize, InputVariant } from "@/components/input/input";
 import Textarea, { TextareaSize } from "@/components/input/textarea";
 import Modal from "@/components/modal";
@@ -241,6 +242,36 @@ function ButtonBox() {
           </div>
         ))}
       </div>
+    </div>
+  );
+}
+
+function DropdownSample() {
+  return (
+    <div style={{ display: "flex", gap: "16px" }}>
+      <Dropdown options={["Option 1", "Option 2", "Option 3 "]}>
+        <button
+          style={{ width: "200px", height: "50px", borderRadius: "16px" }}
+        >
+          Dropdown with 3 options
+        </button>
+      </Dropdown>
+      <Dropdown
+        options={[
+          "Option 1",
+          "Option 2",
+          "Option 3 ",
+          "Option 4",
+          "Option 5",
+          "Option 6",
+        ]}
+      >
+        <button
+          style={{ width: "300px", height: "50px", borderRadius: "16px" }}
+        >
+          Dropdown with 6 options
+        </button>
+      </Dropdown>
     </div>
   );
 }
@@ -612,6 +643,9 @@ export default function Page() {
         <ColorChipSample />
         <BadgeSample />
         <ColorPaletteSample />
+      </Section>
+      <Section title="Dropdown">
+        <DropdownSample />
       </Section>
       <Section title="Modal">
         <ModalSample />
