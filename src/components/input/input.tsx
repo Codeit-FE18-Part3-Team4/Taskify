@@ -4,13 +4,17 @@ import {
   useState,
   InputHTMLAttributes,
   FocusEvent as ReactFocusEvent,
+  useMemo,
 } from "react";
 import Typography from "@/components/typography/typography";
 import SearchIcon from "@/components/input/search-icon-svg";
+import VisibilityNowOnIcon from "./visibility-on-svg";
+import VisibilityNowOffIcon from "./visibility-off-svg";
+import { classnames } from "@/utils/classnames";
 
 export enum InputVariant {
   Default = "default",
-  Search = "searchInput",
+  Search = "search",
   Password = "password",
 }
 
@@ -20,11 +24,14 @@ export enum InputSize {
   Auto = "auto",
 }
 
+export type IconPosition = "left" | "right";
+
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   errorMessage?: string;
   size?: InputSize;
   icon?: ReactNode;
   variant?: InputVariant;
+  iconPosition?: IconPosition;
 }
 
 export default function Input({
@@ -40,12 +47,32 @@ export default function Input({
   icon,
   disabled,
   variant = InputVariant.Default,
+  iconPosition,
   ...props
 }: InputProps) {
   const hasError = !disabled && Boolean(errorMessage);
   const [isFocused, setIsFocused] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const iconSize = `${size}Icon`;
-  icon = variant === InputVariant.Search ? <SearchIcon /> : null;
+  const resolvedIcon = useMemo(() => {
+    switch (variant) {
+      case InputVariant.Search:
+        return <SearchIcon />;
+
+      case InputVariant.Password:
+        return (
+          <button
+            className={styles.eyeBtn}
+            onClick={() => setShowPassword((prev) => !prev)}
+          >
+            {showPassword ? <VisibilityNowOnIcon /> : <VisibilityNowOffIcon />}
+          </button>
+        );
+
+      default:
+        return null;
+    }
+  }, [variant, showPassword]);
 
   const handleBlur = (e: ReactFocusEvent<HTMLInputElement>) => {
     setIsFocused(false);
@@ -60,8 +87,12 @@ export default function Input({
   return (
     <div className={styles.wrapper}>
       <div className={`${styles.field} ${isFocused ? styles.focused : ""}`}>
-        {icon && (
-          <span className={`${styles.icon} ${styles[iconSize]}`}>{icon}</span>
+        {variant === InputVariant.Search && (
+          <span
+            className={`${styles.icon} ${styles.leftIcon} ${styles[iconSize]} `}
+          >
+            {resolvedIcon}
+          </span>
         )}
         <input
           value={value}
@@ -69,17 +100,33 @@ export default function Input({
           onBlur={handleBlur}
           onFocus={handleFocus}
           placeholder={placeholder}
-          type={type}
+          type={
+            variant === InputVariant.Password
+              ? showPassword
+                ? "text"
+                : "password"
+              : type
+          }
           disabled={disabled}
-          className={`
-        ${styles.input}
-        ${hasError ? styles.error : ""}
-        ${styles[size]}
-        ${icon ? styles.withIcon : styles.withoutIcon}
-        ${Typography.lgMedium}
-        ${className ?? ""}`}
+          className={classnames(
+            styles.input,
+            styles[size],
+            Typography.lgMedium,
+            hasError ? styles.error : "",
+            variant === InputVariant.Search ? styles.withLeftIcon : "",
+            variant === InputVariant.Password ? styles.withRightIcon : "",
+            variant === InputVariant.Default ? styles.withoutIcon : "",
+            className ?? ""
+          )}
           {...props}
         />
+        {variant === InputVariant.Password && (
+          <span
+            className={`${styles.icon} ${styles.rightIcon} ${styles[iconSize]}`}
+          >
+            {resolvedIcon}
+          </span>
+        )}
       </div>
       {hasError && <p className={styles.errorMessage}>{errorMessage}</p>}
     </div>
