@@ -40,6 +40,9 @@
   align-items: center;
   cursor: pointer;
 }
+.dropdownOption:hover {
+  background-color: var(--color-black500);
+}
 
 @media (max-width: 375px) {
   .dropdown {
