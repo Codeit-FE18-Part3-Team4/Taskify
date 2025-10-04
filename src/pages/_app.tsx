@@ -1,5 +1,6 @@
 import "@/components/color/color.css";
 import ModalProvider from "@/components/modal/modal-provider";
+import "@/styles/global.css";
 import "@/styles/reset.css";
 import type { AppProps } from "next/app";
 import localFont from "next/font/local";
