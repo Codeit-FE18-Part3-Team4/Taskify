@@ -1,11 +1,17 @@
 import styles from "./input.module.css";
-import { ReactNode, ChangeEvent, FocusEvent, useState } from "react";
+import {
+  ReactNode,
+  useState,
+  InputHTMLAttributes,
+  FocusEvent as ReactFocusEvent,
+} from "react";
 import Typography from "@/components/typography/typography";
 import SearchIcon from "@/components/input/search-icon-svg";
 
 export enum InputVariant {
   Default = "default",
   Search = "searchInput",
+  Password = "password",
 }
 
 export enum InputSize {
@@ -14,14 +20,7 @@ export enum InputSize {
   Auto = "auto",
 }
 
-interface InputProps {
-  value?: string;
-  onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
-  onBlur?: (e: FocusEvent<HTMLInputElement>) => void;
-  placeholder?: string;
-  type?: string;
-  disabled?: boolean;
-  className?: string;
+interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   errorMessage?: string;
   size?: InputSize;
   icon?: ReactNode;
@@ -32,6 +31,7 @@ export default function Input({
   value,
   onChange,
   onBlur,
+  onFocus,
   placeholder,
   type = "text",
   className,
@@ -40,11 +40,22 @@ export default function Input({
   icon,
   disabled,
   variant = InputVariant.Default,
+  ...props
 }: InputProps) {
-  const iconSize = `${size}Icon`;
   const hasError = !disabled && Boolean(errorMessage);
-  icon = variant === InputVariant.Search ? <SearchIcon /> : null;
   const [isFocused, setIsFocused] = useState(false);
+  const iconSize = `${size}Icon`;
+  icon = variant === InputVariant.Search ? <SearchIcon /> : null;
+
+  const handleBlur = (e: ReactFocusEvent<HTMLInputElement>) => {
+    setIsFocused(false);
+    onBlur?.(e);
+  };
+
+  const handleFocus = (e: ReactFocusEvent<HTMLInputElement>) => {
+    setIsFocused(true);
+    onFocus?.(e);
+  };
 
   return (
     <div className={styles.wrapper}>
@@ -55,11 +66,8 @@ export default function Input({
         <input
           value={value}
           onChange={onChange}
-          onBlur={(e) => {
-            setIsFocused(false);
-            onBlur?.(e);
-          }}
-          onFocus={() => setIsFocused(true)}
+          onBlur={handleBlur}
+          onFocus={handleFocus}
           placeholder={placeholder}
           type={type}
           disabled={disabled}
@@ -70,6 +78,7 @@ export default function Input({
         ${icon ? styles.withIcon : styles.withoutIcon}
         ${Typography.lgMedium}
         ${className ?? ""}`}
+          {...props}
         />
       </div>
       {hasError && <p className={styles.errorMessage}>{errorMessage}</p>}
