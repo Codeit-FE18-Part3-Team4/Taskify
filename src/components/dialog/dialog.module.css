@@ -1,5 +1,5 @@
 .dialog {
-  width: calc(458px - 60px);
+  width: 458px;
   padding: 50px 30px 30px;
   display: flex;
   flex-direction: column;
@@ -14,7 +14,7 @@
 
 @media (max-width: 375px) {
   .dialog {
-    width: calc(307px - 60px);
+    width: 307px;
     padding-top: 30px;
     gap: 20px;
   }
