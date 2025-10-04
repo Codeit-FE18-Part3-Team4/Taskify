@@ -10,7 +10,8 @@
   background-color: var(--color-black700);
   border: 1px solid var(--color-gray700);
   border-radius: 14px;
-  padding: 0 16px;
+  padding-right: 16px;
+  overflow: hidden;
 }
 
 .dropdownContent {
@@ -31,21 +32,27 @@
 }
 
 .dropdownOption {
-  padding: 0 14px;
+  padding-left: 24px;
+  padding-right: 8px;
   height: 40px;
   color: var(--color-gray100);
   display: flex;
   align-items: center;
+  cursor: pointer;
 }
 
 @media (max-width: 375px) {
   .dropdown {
     border-radius: 12px;
-    padding: 0 12px;
+    padding-right: 0 12px;
   }
 
   .dropdownContent {
     padding: 8px 0;
     max-height: calc(40px * 3 + 20px);
+  }
+
+  .dropdownOption {
+    padding-left: 18px;
   }
 }

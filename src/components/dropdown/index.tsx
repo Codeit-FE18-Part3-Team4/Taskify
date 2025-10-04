@@ -6,13 +6,19 @@ import styles from "./dropdown.module.css";
 interface Props {
   options: ReactNode[];
   children: ReactNode;
+  onSelect?: (index: number) => void;
 }
 
-export default function Dropdown({ options, children }: Props) {
+export default function Dropdown({ options, children, onSelect }: Props) {
   const [isShow, setShow] = useState(false);
 
   const handleAnchorClick = () => {
     setShow((prev) => !prev);
+  };
+
+  const handleOptionClick = (index: number) => {
+    onSelect?.(index);
+    setShow(false);
   };
 
   return (
@@ -28,6 +34,7 @@ export default function Dropdown({ options, children }: Props) {
                   styles.dropdownOption,
                   Typography.lgMedium
                 )}
+                onClick={() => handleOptionClick(index)}
               >
                 {option}
               </div>

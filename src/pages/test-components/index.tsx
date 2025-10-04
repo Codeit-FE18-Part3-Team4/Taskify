@@ -247,25 +247,34 @@ function ButtonBox() {
 }
 
 function DropdownSample() {
+  const options1 = ["Option 1", "Option 2", "Option 3 "];
+  const options2 = [
+    "Option 1",
+    "Option 2",
+    "Option 3 ",
+    "Option 4",
+    "Option 5",
+    "Option 6",
+  ];
+
+  const handleSelect1 = (index: number) => {
+    console.log("Select", options1[index]);
+  };
+
+  const handleSelect2 = (index: number) => {
+    console.log("Select", options2[index]);
+  };
+
   return (
     <div style={{ display: "flex", gap: "16px" }}>
-      <Dropdown options={["Option 1", "Option 2", "Option 3 "]}>
+      <Dropdown options={options1} onSelect={handleSelect1}>
         <button
           style={{ width: "200px", height: "50px", borderRadius: "16px" }}
         >
           Dropdown with 3 options
         </button>
       </Dropdown>
-      <Dropdown
-        options={[
-          "Option 1",
-          "Option 2",
-          "Option 3 ",
-          "Option 4",
-          "Option 5",
-          "Option 6",
-        ]}
-      >
+      <Dropdown options={options2} onSelect={handleSelect2}>
         <button
           style={{ width: "300px", height: "50px", borderRadius: "16px" }}
         >
