@@ -1,0 +1,22 @@
+.mainWrap{
+  background: #161519;
+}
+.header {
+  padding: 24px 120px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 2px solid var(--color-black700);
+}
+.header .headerButtonBox{
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.header .headerButtonBox > button{
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 10px 12px;
+  color: var(--color-gray300);
+}
