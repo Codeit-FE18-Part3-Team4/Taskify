@@ -27,7 +27,7 @@
 }
 
 .textarea:focus {
-  background-color: transparent;
+  background-color: none;
   color: var(--color-gray200);
   box-shadow: 0 0 0 1.5px var(--color-blue300) inset;
   border: none;
