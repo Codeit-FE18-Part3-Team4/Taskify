@@ -1,19 +1,19 @@
 import Alert from "@/components/alert/alert";
 import { AlertActionType } from "@/components/alert/alert-action";
 import Button, { ButtonSize, ButtonVariant } from "@/components/button/button";
+import BadgeChip from "@/components/chips/badge";
+import BoardColorChip from "@/components/chips/chips-color";
 import Dialog from "@/components/dialog/dialog";
+import Input, { InputSize, InputVariant } from "@/components/input/input";
 import Modal from "@/components/modal/modal";
 import Typography from "@/components/typography/typography";
+import { CHIP_COLORS } from "@/constants/chips/chip-colors";
+import { ProfileColor } from "@/constants/chips/profile-colors.enum";
+import { CommonSize } from "@/constants/common/common-size.enum";
 import { useAlert } from "@/hooks/use-alert";
 import { useDialog } from "@/hooks/use-dialog";
 import { useModal } from "@/hooks/use-modal";
 import { ReactNode } from "react";
-import Input, { InputSize, InputVariant } from "@/components/input/input";
-import { ProfileColor } from "@/constants/chips/profile-colors.enum";
-import BadgeChip from "@/components/chips/badge";
-import BoardColorChip from "@/components/chips/chips-color";
-import { CHIP_COLORS } from "@/constants/chips/chip-colors";
-import { CommonSize } from "@/constants/common/common-size.enum";
 
 function Section({ title, children }: { title: string; children: ReactNode }) {
   return (
