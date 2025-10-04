@@ -1,6 +1,6 @@
 import Typography from "@/components/typography/typography";
-import { useResponsive } from "@/hooks/ues-responsive";
 import { useDialog } from "@/hooks/use-dialog";
+import { useResponsive } from "@/hooks/use-responsive";
 import { classnames } from "@/utils/classnames";
 import { useMemo } from "react";
 import Button, { ButtonSize, ButtonVariant } from "../button/button";

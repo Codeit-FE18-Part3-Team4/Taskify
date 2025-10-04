@@ -1,5 +1,5 @@
-import { useResponsive } from "@/hooks/ues-responsive";
 import { useAlert } from "@/hooks/use-alert";
+import { useResponsive } from "@/hooks/use-responsive";
 import { classnames } from "@/utils/classnames";
 import { useMemo } from "react";
 import Modal from "../modal/modal";

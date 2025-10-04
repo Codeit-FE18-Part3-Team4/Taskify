@@ -1,4 +1,4 @@
-import { useResponsive } from "@/hooks/ues-responsive";
+import { useResponsive } from "@/hooks/use-responsive";
 import { MouseEventHandler, useMemo } from "react";
 import Button, { ButtonSize, ButtonVariant } from "../button/button";
 
