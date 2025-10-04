@@ -1,5 +1,5 @@
 .alert {
-  width: calc(600px - 60px);
+  width: 600px;
   padding: 40px 30px 30px;
   display: flex;
   flex-direction: column;
@@ -25,7 +25,7 @@
 
 @media (max-width: 375px) {
   .alert {
-    width: calc(335px - 40px);
+    width: 335px;
     padding: 30px 20px 24px;
     gap: 20px;
   }
