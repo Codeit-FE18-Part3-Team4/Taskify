@@ -1,4 +1,6 @@
+import MainImg from "@/assets/images/main-01.png";
 import Logo from "@/assets/images/taskify-logo.svg";
+import Button, { ButtonVariant } from "@/components/button/button";
 import Typography from "@/components/typography/typography";
 import styles from "@/styles/main.module.css";
 import type { NextPage } from "next";
@@ -8,15 +10,35 @@ const Home: NextPage = () => {
   return (
     <div className={styles.mainWrap}>
       <header className={styles.header}>
-        <div className={styles.logo}>
+        <button className={styles.logo}>
           <Image src={Logo} width={186} height={48} alt="로고 이미지" />
-        </div>
-        <div className={ styles.headerButtonBox}>
+        </button>
+        <div className={styles.headerButtonBox}>
           <button className={Typography.lgMedium}>로그인</button>
           <button className={Typography.lgMedium}>회원가입</button>
         </div>
       </header>
-      
+      <main>
+        <section className={styles.mainSectionTopWrap}>
+          <div className={styles.mainSectionTopMain}>
+            <h1 className={Typography.lg2Bold}>더 새로워진 일정 관리</h1>
+            <span className={Typography.lg2Bold}>TASKIFY</span>
+            <div className={styles.buttonBox}>
+              <Button variant={ButtonVariant.Secondary}>회원가입하기</Button>
+              <Button>로그인하기</Button>
+            </div>
+          </div>
+          <div className={styles.mainSectionTopImg}>
+            <Image
+              src={MainImg}
+              width={1078}
+              height={682}
+              alt="메인 페이지 이미지"
+            />
+          </div>
+        </section>
+        <section></section>
+      </main>
     </div>
   );
 };

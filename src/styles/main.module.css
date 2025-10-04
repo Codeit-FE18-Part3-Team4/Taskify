@@ -1,6 +1,7 @@
 .mainWrap{
   background: #161519;
 }
+
 .header {
   padding: 24px 120px;
   display: flex;
@@ -8,15 +9,45 @@
   justify-content: space-between;
   border-bottom: 2px solid var(--color-black700);
 }
+.header button{
+  background: none;
+  border: none;
+  cursor: pointer;
+}
 .header .headerButtonBox{
   display: flex;
   align-items: center;
   gap: 14px;
 }
 .header .headerButtonBox > button{
-  background: none;
-  border: none;
-  cursor: pointer;
   padding: 10px 12px;
   color: var(--color-gray300);
+}
+.mainSectionTopWrap{
+  padding: 159px 0 159px 240px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.mainSectionTopWrap > .mainSectionTopMain{
+  width: 510px;
+  flex-shrink: 0;
+}
+.mainSectionTopMain > h1{
+  padding-bottom: 10px;
+  font-size: 60px;
+  color: var(--color-gray100);
+  line-height: 100%;
+}
+.mainSectionTopMain > span{
+  display: block;
+  font-size: 84px;
+  color: var(--color-brand400);
+  padding-bottom: 50px;
+  line-height: 100%;
+}
+.mainSectionTopWrap .buttonBox{
+  display: flex;
+  align-items: center;
+  gap: 20px;
 }
