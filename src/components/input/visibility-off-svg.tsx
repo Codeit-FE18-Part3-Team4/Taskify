@@ -4,7 +4,7 @@ interface VisibilityNowOffIconProps {
 }
 
 export default function VisibilityNowOffIcon({
-  color = "var(--color-gray400)",
+  color = "var(--color-gray500)",
   size = 24,
 }: VisibilityNowOffIconProps) {
   return (

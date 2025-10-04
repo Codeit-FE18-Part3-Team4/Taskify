@@ -4,7 +4,7 @@ interface VisibilityNowOnIconProps {
 }
 
 export default function VisibilityNowOnIcon({
-  color = "var(--color-gray400)",
+  color = "var(--color-gray500)",
   size = 24,
 }: VisibilityNowOnIconProps) {
   return (
