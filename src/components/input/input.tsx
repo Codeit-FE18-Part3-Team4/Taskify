@@ -84,10 +84,16 @@ export default function Input({
 
   return (
     <div className={styles.wrapper}>
-      <div className={`${styles.field} ${isFocused ? styles.focused : ""}`}>
+      <div
+        className={classnames(styles.field, isFocused ? styles.focused : "")}
+      >
         {variant === InputVariant.Search && (
           <span
-            className={`${styles.icon} ${styles.leftIcon} ${styles[iconSize]} `}
+            className={classnames(
+              styles.icon,
+              styles.leftIcon,
+              styles[iconSize]
+            )}
           >
             {resolvedIcon}
           </span>
@@ -120,7 +126,11 @@ export default function Input({
         />
         {variant === InputVariant.Password && (
           <span
-            className={`${styles.icon} ${styles.rightIcon} ${styles[iconSize]}`}
+            className={classnames(
+              styles.icon,
+              styles.rightIcon,
+              styles[iconSize]
+            )}
           >
             {resolvedIcon}
           </span>
