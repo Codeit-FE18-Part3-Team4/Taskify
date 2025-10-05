@@ -5,7 +5,7 @@ import Typography from "@/components/typography/typography";
 import { useDialog } from "@/hooks/use-dialog";
 import { useModal } from "@/hooks/use-modal";
 import { ReactNode, useState } from "react";
-import { ProfileColor } from "@/constants/chips/profile-colors";
+import { ProfileColor } from "@/constants/profile/profile-colors";
 import Input, { InputSize, InputVariant } from "@/components/input/input";
 import BadgeChip from "@/components/chips/badge";
 import BoardColorChip from "@/components/chips/chips-color";
@@ -433,15 +433,13 @@ export default function Page() {
             gap: `10px`,
           }}
         >
-          {Object.values(ProfileColor)
-            .filter((value) => typeof value === "number")
-            .map((colorIndex) => (
-              <BadgeChip
-                key={colorIndex}
-                title={"태그내용"}
-                colorIndex={colorIndex as ProfileColor}
-              />
-            ))}
+          {Object.values(ProfileColor).map((profile, colorIndex) => (
+            <BadgeChip
+              key={colorIndex}
+              title={"태그내용"}
+              colorIndex={colorIndex}
+            />
+          ))}
         </div>
 
         <div>
