@@ -1,16 +1,22 @@
 import Typography from "@/components/typography";
 import { useResponsive } from "@/hooks/use-responsive";
 import { classnames } from "@/utils/classnames";
-import { ReactNode, useMemo, useState } from "react";
+import {
+  MouseEventHandler,
+  ReactNode,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import styles from "./dropdown.module.css";
 
-function DropdownContainer({
-  options,
-  onSelect,
-}: {
+interface DropdownContainerProps {
   options: ReactNode[];
-  onSelect?: (index: number) => void;
-}) {
+  onSelect: (index: number) => void;
+}
+
+function DropdownContainer({ options, onSelect }: DropdownContainerProps) {
   const { isMobile } = useResponsive();
 
   const scrollableOrEmpty = useMemo(() => {
@@ -19,11 +25,14 @@ function DropdownContainer({
   }, [options, isMobile]);
 
   const handleOptionClick = (index: number) => {
-    onSelect?.(index);
+    onSelect(index);
   };
 
   return (
-    <div className={classnames(styles.dropdown, scrollableOrEmpty)}>
+    <div
+      className={classnames(styles.dropdown, scrollableOrEmpty)}
+      tabIndex={0}
+    >
       <div className={styles.dropdownContent}>
         {options.map((option, index) => (
           <div
@@ -51,8 +60,10 @@ interface Props {
 
 export default function Dropdown({ options, children, onSelect }: Props) {
   const [isShow, setShow] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
-  const handleAnchorClick = () => {
+  const handleAnchorClick: MouseEventHandler<HTMLDivElement> = (event) => {
+    event.stopPropagation();
     setShow((prev) => !prev);
   };
 
@@ -61,8 +72,25 @@ export default function Dropdown({ options, children, onSelect }: Props) {
     setShow(false);
   };
 
+  useEffect(() => {
+    function handleMouseUp(event: MouseEvent) {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
+        if (!isShow) return;
+        setShow(false);
+      }
+    }
+
+    document.addEventListener("mouseup", handleMouseUp);
+    return () => {
+      document.removeEventListener("mouseup", handleMouseUp);
+    };
+  }, [isShow]);
+
   return (
-    <div className={styles.container}>
+    <div className={styles.container} ref={dropdownRef}>
       <div onClick={handleAnchorClick}>{children}</div>
       {isShow && (
         <DropdownContainer options={options} onSelect={handleOptionSelect} />
