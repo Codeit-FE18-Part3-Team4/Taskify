@@ -11,9 +11,14 @@ import {
 } from "react";
 import styles from "./dropdown.module.css";
 
+export interface DropdownOption {
+  element: ReactNode;
+  value: string;
+}
+
 interface DropdownContainerProps {
-  options: ReactNode[];
-  onSelect: (index: number) => void;
+  options: DropdownOption[];
+  onSelect: (value: string) => void;
 }
 
 function DropdownContainer({ options, onSelect }: DropdownContainerProps) {
@@ -25,7 +30,7 @@ function DropdownContainer({ options, onSelect }: DropdownContainerProps) {
   }, [options, isMobile]);
 
   const handleOptionClick = (index: number) => {
-    onSelect(index);
+    onSelect(options[index].value);
   };
 
   return (
@@ -44,7 +49,7 @@ function DropdownContainer({ options, onSelect }: DropdownContainerProps) {
             )}
             onClick={() => handleOptionClick(index)}
           >
-            {option}
+            {option.element}
           </div>
         ))}
       </div>
@@ -53,9 +58,9 @@ function DropdownContainer({ options, onSelect }: DropdownContainerProps) {
 }
 
 interface Props {
-  options: ReactNode[];
+  options: DropdownOption[];
   children: ReactNode;
-  onSelect?: (index: number) => void;
+  onSelect?: (index: string) => void;
 }
 
 export default function Dropdown({ options, children, onSelect }: Props) {
@@ -67,8 +72,8 @@ export default function Dropdown({ options, children, onSelect }: Props) {
     setShow((prev) => !prev);
   };
 
-  const handleOptionSelect = (index: number) => {
-    onSelect?.(index);
+  const handleOptionSelect = (value: string) => {
+    onSelect?.(value);
     setShow(false);
   };
 

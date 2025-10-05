@@ -8,7 +8,7 @@ import { ColorFrameSize } from "@/components/chips/color-frame/color-frame-size"
 import ColorPalette from "@/components/color-palette/color-palette";
 import DashboardSideBar from "@/components/dashboard-side-bar/dashboard-side-bar";
 import Dialog from "@/components/dialog";
-import Dropdown from "@/components/dropdown";
+import Dropdown, { DropdownOption } from "@/components/dropdown";
 import Input, { InputSize, InputVariant } from "@/components/input/input";
 import Textarea, { TextareaSize } from "@/components/input/textarea";
 import Modal from "@/components/modal";
@@ -247,22 +247,29 @@ function ButtonBox() {
 }
 
 function DropdownSample() {
-  const options1 = ["Option 1", "Option 2", "Option 3 "];
-  const options2 = [
-    "Option 1",
-    "Option 2",
-    "Option 3 ",
-    "Option 4",
-    "Option 5",
-    "Option 6",
+  const options1: DropdownOption[] = [
+    { element: "Option 1", value: "option1" },
+    { element: "Option 2", value: "option2" },
+    { element: "Option 3", value: "option3" },
+  ];
+  const options2: DropdownOption[] = [
+    { element: "Option 1", value: "option1" },
+    { element: "Option 2", value: "option2" },
+    { element: <div>"Option 3"</div>, value: "option3" },
+    { element: "Option 4", value: "option4" },
+    { element: "Option 5", value: "option5" },
+    { element: <div>"Option 6"</div>, value: "option6" },
   ];
 
-  const handleSelect1 = (index: number) => {
-    console.log("Select", options1[index]);
+  const [selectedValue1, setSelectedValue1] = useState<string>("");
+  const [selectedValue2, setSelectedValue2] = useState<string>("");
+
+  const handleSelect1 = (value: string) => {
+    setSelectedValue1(value);
   };
 
-  const handleSelect2 = (index: number) => {
-    console.log("Select", options2[index]);
+  const handleSelect2 = (value: string) => {
+    setSelectedValue2(value);
   };
 
   return (
@@ -271,14 +278,18 @@ function DropdownSample() {
         <button
           style={{ width: "200px", height: "50px", borderRadius: "16px" }}
         >
-          Dropdown with 3 options
+          {selectedValue1
+            ? `Selected ${selectedValue1}`
+            : "Dropdown with 3 options"}
         </button>
       </Dropdown>
       <Dropdown options={options2} onSelect={handleSelect2}>
         <button
           style={{ width: "300px", height: "50px", borderRadius: "16px" }}
         >
-          Dropdown with 6 options
+          {selectedValue2
+            ? `Selected ${selectedValue2}`
+            : "Dropdown with 6 options"}
         </button>
       </Dropdown>
     </div>
