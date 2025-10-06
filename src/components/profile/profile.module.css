@@ -6,10 +6,17 @@
   white-space: nowrap;
   display: flex;
   align-items: center;
-  justify-content: flex-start;
   height: 100%;
   overflow: hidden;
   color: #ffffff;
+}
+
+.alignCenter {
+  justify-content: center;
+}
+
+.alignStart {
+  justify-content: flex-start;
 }
 
 .naviType {

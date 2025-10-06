@@ -8,6 +8,10 @@ export enum ProfileColor {
   Orange = "var(--color-orange)",
 }
 
+export enum RemainProfileColor {
+  Blue = "var(--color-blue)",
+}
+
 export const ProfileColors = [
   ProfileColor.Green,
   ProfileColor.Violet,

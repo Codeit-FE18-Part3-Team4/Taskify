@@ -1,5 +1,8 @@
 import styles from "./profile.module.css";
-import { ProfileColors } from "@/constants/profile/profile-colors";
+import {
+  ProfileColors,
+  RemainProfileColor,
+} from "@/constants/profile/profile-colors";
 import { ProfileSize, ProfileType } from "@/constants/profile/profile";
 import typographyStyles from "@/components/typography/typography.module.css";
 
@@ -8,6 +11,7 @@ interface ProfileProps {
   type?: ProfileType;
   colorIndex?: number;
   name?: string;
+  isRemain?: boolean;
 }
 
 export default function Profile({
@@ -15,14 +19,21 @@ export default function Profile({
   type = ProfileType.Normal,
   colorIndex = 0,
   name = "",
+  isRemain = false,
 }: ProfileProps) {
   const calculateColorIndex = colorIndex % 7;
-  const color = ProfileColors[calculateColorIndex];
+  const color = isRemain
+    ? RemainProfileColor.Blue
+    : ProfileColors[calculateColorIndex];
   const NavigationBarClasses = `${styles.profile} ${type === ProfileType.NavigationBar ? styles.naviType : ""} ${styles[size]} ${typographyStyles.xsSemiBold}`;
+  const spanClasses = name.length >= 3 ? styles.alignStart : styles.alignCenter;
 
   return (
-    <div className={NavigationBarClasses} style={{ backgroundColor: color }}>
-      <span>{name}</span>
+    <div
+      className={NavigationBarClasses}
+      style={{ backgroundColor: color, marginLeft: "-12px" }}
+    >
+      <span className={spanClasses}>{name}</span>
     </div>
   );
 }
