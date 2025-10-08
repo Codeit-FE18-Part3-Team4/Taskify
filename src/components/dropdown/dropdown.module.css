@@ -1,6 +1,6 @@
 .container {
   position: relative;
-  width: fit-content;
+  width: 100%;
 }
 
 .dropdown {
@@ -33,6 +33,9 @@
 }
 .anchor.showing {
   border-color: var(--color-gray400);
+}
+.anchor > span {
+  flex-grow: 1;
 }
 
 .dropdownContent {
