@@ -97,7 +97,10 @@ export default function Dropdown({ options, children, onSelect }: Props) {
 
   return (
     <div className={styles.container} ref={dropdownRef}>
-      <div className={styles.anchor} onClick={handleAnchorClick}>
+      <div
+        className={classnames(styles.anchor, isShow ? styles.showing : "")}
+        onClick={handleAnchorClick}
+      >
         <span>{children}</span>
         <ChevronIcon
           direction={isShow ? Direction.Up : Direction.Down}
