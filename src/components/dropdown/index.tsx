@@ -1,3 +1,4 @@
+import ChevronIcon, { Direction } from "@/components/icon/chevron-icon";
 import Typography from "@/components/typography";
 import { useResponsive } from "@/hooks/use-responsive";
 import { classnames } from "@/utils/classnames";
@@ -96,7 +97,14 @@ export default function Dropdown({ options, children, onSelect }: Props) {
 
   return (
     <div className={styles.container} ref={dropdownRef}>
-      <div onClick={handleAnchorClick}>{children}</div>
+      <div className={styles.anchor} onClick={handleAnchorClick}>
+        {children}
+        <ChevronIcon
+          direction={isShow ? Direction.Up : Direction.Down}
+          size={18}
+          color="#F8F7FA" // gray100
+        />
+      </div>
       {isShow && (
         <DropdownContainer options={options} onSelect={handleOptionSelect} />
       )}

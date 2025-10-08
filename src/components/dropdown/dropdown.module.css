@@ -16,6 +16,25 @@
   padding-right: 16px; /* scrollbar right margin */
 }
 
+.anchor {
+  background-color: var(--color-black700);
+  border: 1px solid var(--color-gray700);
+  border-radius: 14px;
+  height: 54px;
+  padding: 0 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--color-gray100);
+}
+.anchor:focus {
+  border-color: var(--color-gray400);
+}
+.anchor.showing {
+  border-color: var(--color-gray400);
+}
+
 .dropdownContent {
   padding: 10px 0;
   max-height: calc(40px * 5 + 20px);

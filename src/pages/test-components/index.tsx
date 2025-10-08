@@ -273,24 +273,25 @@ function DropdownSample() {
   };
 
   return (
-    <div style={{ display: "flex", gap: "16px" }}>
+    <div
+      style={{
+        display: "flex",
+        gap: "16px",
+        backgroundColor: "#404040",
+        padding: "32px",
+      }}
+    >
       <Dropdown options={options1} onSelect={handleSelect1}>
-        <button
-          style={{ width: "200px", height: "50px", borderRadius: "16px" }}
-        >
-          {selectedValue1
-            ? `Selected ${selectedValue1}`
-            : "Dropdown with 3 options"}
-        </button>
+        {selectedValue1
+          ? `Selected ${selectedValue1}`
+          : "Dropdown with 3 options"}
       </Dropdown>
       <Dropdown options={options2} onSelect={handleSelect2}>
-        <button
-          style={{ width: "300px", height: "50px", borderRadius: "16px" }}
-        >
+        <div style={{ padding: "8px", border: "1px solid white" }}>
           {selectedValue2
             ? `Selected ${selectedValue2}`
             : "Dropdown with 6 options"}
-        </button>
+        </div>
       </Dropdown>
     </div>
   );
