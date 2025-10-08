@@ -12,7 +12,9 @@ export default function LoginPage() {
     <main className={styles.main}>
       <section className={styles.leftSection}>
         <div className={styles.loginCard}>
-          <Image src={LogoImg} alt="로고" width={340} height={87} />
+          <div className={styles.logoWrapper}>
+            <Image src={LogoImg} alt="로고" width={340} height={87} />
+          </div>
           <form className={styles.loginForm}>
             <p>아이디</p>
             <Input
