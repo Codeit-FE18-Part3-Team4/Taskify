@@ -78,6 +78,11 @@
     padding-right: 12px; /* scrollbar right margin */
   }
 
+  .anchor {
+    border-radius: 12px;
+    height: 48px;
+  }
+
   .dropdownContent {
     padding: 8px 0;
     max-height: calc(40px * 3 + 20px);
