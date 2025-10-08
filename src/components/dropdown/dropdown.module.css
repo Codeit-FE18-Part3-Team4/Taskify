@@ -45,7 +45,7 @@
   overflow-x: hidden;
 }
 .dropdownContent::-webkit-scrollbar {
-  width: 6px;
+  width: 0px;
 }
 .dropdownContent::-webkit-scrollbar-track {
   margin: 16px 0;
@@ -53,6 +53,9 @@
 .dropdownContent::-webkit-scrollbar-thumb {
   border-radius: 14px;
   background: #5e5e66;
+}
+.dropdownContent.scrollable::-webkit-scrollbar {
+  width: 6px;
 }
 
 .dropdownOption {

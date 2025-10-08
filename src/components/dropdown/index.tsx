@@ -39,7 +39,7 @@ function DropdownContainer({ options, onSelect }: DropdownContainerProps) {
       className={classnames(styles.dropdown, scrollableOrEmpty)}
       tabIndex={0}
     >
-      <div className={styles.dropdownContent}>
+      <div className={classnames(styles.dropdownContent, scrollableOrEmpty)}>
         {options.map((option, index) => (
           <div
             key={`dropdown-${index}`}
