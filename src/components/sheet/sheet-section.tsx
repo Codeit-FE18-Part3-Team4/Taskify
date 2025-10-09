@@ -18,7 +18,7 @@ export default function SheetSection({
   const { isMobile } = useResponsive();
 
   const typography = useMemo(() => {
-    return isMobile ? Typography.lgSemiBold : Typography.xlSemiBold;
+    return isMobile ? Typography.mdSemiBold : Typography.lgSemiBold;
   }, [isMobile]);
 
   return (
