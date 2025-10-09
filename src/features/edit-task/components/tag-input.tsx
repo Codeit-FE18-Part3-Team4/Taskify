@@ -1,5 +1,6 @@
 import Badge from "@/components/chips/badge";
 import Typography from "@/components/typography";
+import { useBackdropClick } from "@/hooks/use-backdrop-unmount";
 import { classnames } from "@/utils/classnames";
 import { ChangeEvent, useEffect, useMemo, useRef, useState } from "react";
 import styles from "./tag-input.module.css";
@@ -48,6 +49,12 @@ interface Props {
 export default function TagInput({ tags = [] }: Props) {
   const [inputValue, setInputValue] = useState<string>("");
   const [isEditing, setEditing] = useState(false);
+  const tagInputRef = useBackdropClick<HTMLDivElement>({
+    callback: () => {
+      if (!isEditing) return;
+      setEditing(false);
+    },
+  });
   const inputRef = useRef<HTMLInputElement>(null);
 
   const showsBadgeList = useMemo(() => {
@@ -56,10 +63,6 @@ export default function TagInput({ tags = [] }: Props) {
 
   const handleClick = () => {
     setEditing(true);
-  };
-
-  const handleBlur = () => {
-    setEditing(false);
   };
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -76,7 +79,7 @@ export default function TagInput({ tags = [] }: Props) {
   }, [isEditing]);
 
   return (
-    <div className={styles.container}>
+    <div className={styles.container} ref={tagInputRef}>
       <div
         className={classnames(
           styles.tagInput,
@@ -92,7 +95,6 @@ export default function TagInput({ tags = [] }: Props) {
             className={Typography.lgMedium}
             placeholder="태그를 입력해주세요."
             onChange={handleInputChange}
-            onBlur={handleBlur}
             ref={inputRef}
           />
         )}
