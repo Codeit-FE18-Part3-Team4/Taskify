@@ -2,19 +2,20 @@ import Alert, { AlertActionType } from "@/components/alert";
 import Button, { ButtonSize, ButtonVariant } from "@/components/button/button";
 import BadgeChip from "@/components/chips/badge";
 import BoardColorChip from "@/components/chips/chips-color";
+import ColorPalette from "@/components/color-palette/color-palette";
 import Dialog from "@/components/dialog";
 import Input, { InputSize, InputVariant } from "@/components/input/input";
-import TextArea from "@/components/input/text-area";
+import Textarea from "@/components/input/textarea";
 import Modal from "@/components/modal";
 import Typography from "@/components/typography";
 import { CHIP_COLORS } from "@/constants/chips/chip-colors";
-import { ProfileColor } from "@/constants/chips/profile-colors.enum";
-import { CommonSize } from "@/constants/common/common-size.enum";
+import { ColorFrameSize } from "@/constants/chips/color-frame-size";
+import { ProfileColor } from "@/constants/chips/profile-colors";
+import { CommonSize } from "@/constants/common/common-size";
 import { useAlert } from "@/hooks/use-alert";
 import { useDialog } from "@/hooks/use-dialog";
 import { useModal } from "@/hooks/use-modal";
-import { ReactNode } from "react";
-
+import { ReactNode, useState } from "react";
 function Section({ title, children }: { title: string; children: ReactNode }) {
   return (
     <section style={{ margin: "24px 0" }}>
@@ -301,25 +302,32 @@ function InputBox() {
       {sizes.map((size) => (
         <div key={size} style={{ display: "inline-block", margin: "8px" }}>
           <div style={{ marginBottom: "8px" }}>
-            <Input size={size} placeholder="placeholder" />
+            <Input $size={size} placeholder="placeholder" />
           </div>
           <div style={{ marginBottom: "8px" }}>
-            <Input size={size} placeholder="Disabled" disabled />
+            <Input $size={size} placeholder="Disabled" disabled />
           </div>
           <div style={{ marginBottom: "8px" }}>
             <div>
               <Input
-                size={size}
+                $size={size}
                 placeholder="Invalid Input"
                 errorMessage="Error Message"
               />
             </div>
           </div>
-          <div>
+          <div style={{ marginBottom: "8px" }}>
             <Input
-              size={size}
+              $size={size}
               placeholder="Search Input"
               variant={InputVariant.Search}
+            />
+          </div>
+          <div>
+            <Input
+              $size={size}
+              placeholder="Password Input"
+              variant={InputVariant.Password}
             />
           </div>
         </div>
@@ -375,20 +383,33 @@ function AlertSample() {
   );
 }
 
-function TextAreaBox() {
+function TextareaBox() {
   return (
     <div>
       <div style={{ marginBottom: "8px" }}>
-        <TextArea placeholder="Text" />
+        <Textarea placeholder="Text" />
       </div>
       <div style={{ marginBottom: "8px" }}>
-        <TextArea placeholder="Disabled" disabled />
+        <Textarea placeholder="Disabled" disabled />
       </div>
     </div>
   );
 }
 
 export default function Page() {
+  const sizes = Object.values(ColorFrameSize);
+  const [selectedColors, setSelectedColors] = useState<string[]>(
+    sizes.map(() => "")
+  );
+
+  const handleSelect = (index: number, color: string) => {
+    setSelectedColors((prev) => {
+      const newArr = [...prev];
+      newArr[index] = color;
+      return newArr;
+    });
+  };
+
   return (
     <main style={{ padding: "24px" }}>
       <header>
@@ -419,7 +440,7 @@ export default function Page() {
       </Section>
       <Section title="Input">
         <InputBox />
-        <TextAreaBox />
+        <TextareaBox />
       </Section>
       <Section title="Chip">
         <p>This is a section about chip.</p>
@@ -455,6 +476,31 @@ export default function Page() {
               />
             ))}
         </div>
+
+        <div>
+          {Object.values(ColorFrameSize).map((value, index) => (
+            <div
+              style={{
+                margin: "10px 0",
+                width:
+                  value === "xsmall"
+                    ? "295px"
+                    : value === "small"
+                      ? "335px"
+                      : value === "medium"
+                        ? "446px"
+                        : "740px",
+              }}
+            >
+              <ColorPalette
+                selectedColor={selectedColors[index]}
+                onSelect={(color) => handleSelect(index, color)}
+                size={value}
+              />
+            </div>
+          ))}
+        </div>
+        <p>💣선택된 색: {selectedColors}</p>
       </Section>
       <Section title="Modal">
         <ModalSample />

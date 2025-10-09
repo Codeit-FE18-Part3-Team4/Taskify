@@ -1,7 +1,6 @@
 .textarea {
   width: 100%;
   max-width: 290px;
-  box-sizing: border-box;
   border-radius: 14px;
   height: 140px;
   background-color: var(--color-black800);
@@ -27,7 +26,7 @@
 }
 
 .textarea:focus {
-  background-color: none;
+  background-color: var(--color-black800);
   color: var(--color-gray200);
   box-shadow: 0 0 0 1.5px var(--color-blue300) inset;
   border: none;

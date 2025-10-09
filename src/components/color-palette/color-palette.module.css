@@ -1,0 +1,24 @@
+.palleteContainer {
+  width: 100%;
+  display: flex;
+}
+
+.xsmall {
+  height: 40px;
+  gap: 8px;
+}
+
+.small {
+  height: 57px;
+  gap: 12px;
+}
+
+.medium {
+  height: 60px;
+  gap: 16px;
+}
+
+.large {
+  height: 90px;
+  gap: 16px;
+}

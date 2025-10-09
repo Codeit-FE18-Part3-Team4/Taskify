@@ -14,6 +14,7 @@
   border: none;
   box-shadow: 0 0 0 1px var(--color-gray700) inset;
   color: var(--color-gray300);
+  padding: 0 20px;
 }
 
 .input::placeholder {
@@ -44,22 +45,35 @@
   border: none;
 }
 
-.withIcon {
+.withLeftIcon {
   padding-left: 48px;
+}
+
+.withRightIcon {
+  padding-right: 48px;
 }
 
 .withoutIcon {
   padding-left: 20px;
+  padding-right: 20px;
 }
 
 .icon {
   position: absolute;
   top: 50%;
-  left: 20px;
   transform: translateY(-50%);
-  pointer-events: none;
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   color: var(--color-gray700);
+}
+
+.leftIcon {
+  left: 20px;
+}
+
+.rightIcon {
+  right: 20px;
 }
 
 .field.focused .icon svg {
@@ -86,6 +100,7 @@
   height: 54px;
   border-radius: 14px;
 }
+
 .md {
   width: 290px;
   height: 48px;
@@ -100,4 +115,12 @@
 
 .errorMessage {
   color: var(--color-red500);
+}
+
+.eyeBtn {
+  all: unset;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
