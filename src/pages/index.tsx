@@ -11,11 +11,10 @@ import Logo from "@/assets/images/taskify-logo.svg";
 import Button, { ButtonVariant } from "@/components/button/button";
 import Typography from "@/components/typography/typography";
 import styles from "@/styles/main.module.css";
-import type { NextPage } from "next";
 import Image from "next/image";
 import { useRouter } from "next/router";
 
-const Home: NextPage = () => {
+export default function Home() {
   const router = useRouter();
 
   const handleClickLoginPage = () => {
@@ -29,8 +28,8 @@ const Home: NextPage = () => {
   return (
     <div className={styles.mainWrap}>
       <header className={styles.header}>
-        <button className={styles.logo}>
-          <Image src={Logo} width={186} height={48} alt="로고 이미지" />
+        <button role="link" className={styles.logo}>
+          <Image src={Logo} width={186} height={48} alt="로고" />
         </button>
         <div className={styles.headerButtonBox}>
           <button
@@ -180,8 +179,8 @@ const Home: NextPage = () => {
       </main>
       <footer className={styles.footer}>
         <div className={styles.logo}>
-          <button className={styles.logo}>
-            <Image src={Logo} width={186} height={48} alt="로고 이미지" />
+          <button>
+            <Image src={Logo} width={186} height={48} alt="로고" />
           </button>
         </div>
         <div className={styles.faqBox}>
@@ -190,23 +189,16 @@ const Home: NextPage = () => {
         </div>
         <div className={styles.snsBox}>
           <button>
-            <Image src={EmailIcon} width={20} height={20} alt="이메일 아이콘" />
+            <Image src={EmailIcon} width={20} height={20} alt="이메일" />
           </button>
           <button>
-            <Image
-              src={FacebookIcon}
-              width={20}
-              height={20}
-              alt="페이스북 아이콘"
-            />
+            <Image src={FacebookIcon} width={20} height={20} alt="페이스북" />
           </button>
           <button>
-            <Image src={InstaIcon} width={20} height={20} alt="인스타 아이콘" />
+            <Image src={InstaIcon} width={20} height={20} alt="인스타" />
           </button>
         </div>
       </footer>
     </div>
   );
-};
-
-export default Home;
+}
