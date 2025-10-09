@@ -1,4 +1,4 @@
-import { ProfileColor } from "./profile-colors.enum";
+import { ProfileColor } from "./profile-colors";
 
 export const BADGE_COLORS = {
   [ProfileColor.Green]: {
