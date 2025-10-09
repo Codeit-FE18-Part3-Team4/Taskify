@@ -1,5 +1,9 @@
-.tagInput {
+.container {
   width: 100%;
+  position: relative;
+}
+
+.tagInput {
   padding: 15px 20px;
   box-shadow: 0 0 0 1px var(--color-gray700) inset;
   background-color: var(--color-black800);
@@ -26,6 +30,31 @@
 }
 .tagInput > input::placeholder {
   color: var(--color-gray400);
+}
+
+.combobox {
+  position: absolute;
+  top: calc(100% + 8px);
+  padding: 16px 18px;
+  box-shadow: 0 0 0 1px var(--color-gray700) inset;
+  background-color: var(--color-black800);
+  border-radius: 14px;
+  color: var(--color-gray300);
+}
+
+.combobox > .options {
+  margin-top: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.combobox > .create {
+  margin-top: 16px;
+  display: flex;
+  gap: 8px;
+  align-items: center;
 }
 
 @media (max-width: 375px) {

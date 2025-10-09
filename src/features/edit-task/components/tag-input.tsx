@@ -14,6 +14,33 @@ function TagList({ tags }: { tags: string[] }) {
   );
 }
 
+function Combobox({
+  tags,
+  inputValue = "",
+}: {
+  tags: string[];
+  inputValue?: string;
+}) {
+  return (
+    <div className={styles.combobox}>
+      <header className={Typography.xsSemiBold}>옵션 선택 또는 생성</header>
+      {tags.length > 0 && (
+        <div className={styles.options}>
+          {tags.map((tag, index) => (
+            <Badge key={tag} title={tag} colorIndex={index} />
+          ))}
+        </div>
+      )}
+      {inputValue && (
+        <div className={styles.create}>
+          <span className={Typography.smSemiBold}>생성</span>
+          <Badge title={inputValue} />
+        </div>
+      )}
+    </div>
+  );
+}
+
 interface Props {
   tags?: string[];
 }
@@ -49,7 +76,7 @@ export default function TagInput({ tags = [] }: Props) {
   }, [isEditing]);
 
   return (
-    <>
+    <div className={styles.container}>
       <div
         className={classnames(
           styles.tagInput,
@@ -70,6 +97,7 @@ export default function TagInput({ tags = [] }: Props) {
           />
         )}
       </div>
-    </>
+      {isEditing && <Combobox tags={tags} inputValue={inputValue} />}
+    </div>
   );
 }
