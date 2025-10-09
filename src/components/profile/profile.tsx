@@ -3,7 +3,8 @@ import {
   ProfileColors,
   RemainProfileColor,
 } from "@/constants/profile/profile-colors";
-import { ProfileSize, ProfileType } from "@/constants/profile/profile";
+import { ProfileSize } from "@/constants/profile/profile-size";
+import { ProfileType } from "@/constants/profile/profile-type";
 import typographyStyles from "@/components/typography/typography.module.css";
 
 interface ProfileProps {

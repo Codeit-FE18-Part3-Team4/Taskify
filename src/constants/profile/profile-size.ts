@@ -5,8 +5,3 @@ export enum ProfileSize {
   Large = "large",
   XLarge = "xlarge",
 }
-
-export enum ProfileType {
-  Normal,
-  NavigationBar,
-}
