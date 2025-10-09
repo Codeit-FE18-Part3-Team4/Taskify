@@ -6,27 +6,104 @@ import Image from "next/image";
 import Input, { InputSize, InputVariant } from "@/components/input/input";
 import Button, { ButtonSize, ButtonVariant } from "@/components/button/button";
 import Typography from "@/components/typography/typography";
+import { useState, useEffect, ChangeEvent } from "react";
 
 export default function LoginPage() {
+  const [id, setId] = useState("");
+  const [password, setPassword] = useState("");
+  const [idErrorMessage, setIdErrorMessage] = useState("");
+  const [passwordErrorMessage, setPasswordErrorMessage] = useState("");
+  const [isLoginButtonDisabled, setIsLoginButtonDisabled] = useState(true);
+
+  const isValidEmail = (id: string) => {
+    return /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(id);
+  };
+  const isValidPassword = (password: string) => password.length >= 8;
+
+  const onIdChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setId(e.target.value);
+  };
+
+  const onIdBlur = () => {
+    if (!id) {
+      setIdErrorMessage("");
+      return;
+    }
+
+    if (isValidEmail(id)) {
+      setIdErrorMessage("");
+    } else {
+      setIdErrorMessage("이메일 형식으로 작성해주세요");
+    }
+  };
+
+  const onPasswordChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setPassword(e.target.value);
+  };
+
+  const onPasswordBlur = () => {
+    if (!password) {
+      setPasswordErrorMessage("");
+      return;
+    }
+
+    if (isValidPassword(password)) {
+      setPasswordErrorMessage("");
+    } else {
+      setPasswordErrorMessage("8자 이상 입력해주세요");
+    }
+  };
+
+  const onIdFocus = () => {
+    if (idErrorMessage) setIdErrorMessage("");
+  };
+
+  const onPasswordFocus = () => {
+    if (passwordErrorMessage) setPasswordErrorMessage("");
+  };
+
+  const onSubmit = () => {
+    // TODO: 추후에 Api 요청 및 로그인 로직 추가
+  };
+
+  useEffect(() => {
+    const isFormValid =
+      !!id && isValidEmail(id) && !!password && isValidPassword(password);
+
+    setIsLoginButtonDisabled(!isFormValid);
+  }, [id, password]);
+
   return (
     <main className={styles.main}>
       <section className={styles.leftSection}>
         <div className={styles.loginCard}>
-          <div className={styles.logoWrapper}>
-            <Image src={LogoImg} alt="로고" width={340} height={87} />
-          </div>
+          <Link href="/">
+            <div className={styles.logoWrapper}>
+              <Image src={LogoImg} alt="로고" width={340} height={87} />
+            </div>
+          </Link>
           <form className={styles.loginForm}>
             <p>아이디</p>
             <Input
               variant={InputVariant.Default}
               size={InputSize.Auto}
               placeholder="아이디를 입력해주세요"
+              onChange={onIdChange}
+              onBlur={onIdBlur}
+              errorMessage={idErrorMessage}
+              value={id}
+              onFocus={onIdFocus}
             />
             <p>비밀번호</p>
             <Input
               variant={InputVariant.Password}
               size={InputSize.Auto}
               placeholder="8자 이상 입력해주세요"
+              onChange={onPasswordChange}
+              onBlur={onPasswordBlur}
+              errorMessage={passwordErrorMessage}
+              value={password}
+              onFocus={onPasswordFocus}
             />
           </form>
           <div className={styles.loginActions}>
@@ -34,6 +111,7 @@ export default function LoginPage() {
               variant={ButtonVariant.Primary}
               size={ButtonSize.Large}
               isWidthFull
+              disabled={isLoginButtonDisabled}
             >
               로그인
             </Button>

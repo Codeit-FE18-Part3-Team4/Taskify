@@ -27,7 +27,7 @@
 .loginForm {
   width: 100%;
   color: var(--color-gray300);
-  gap: 12px;
+  gap: 16px;
   display: flex;
   flex-direction: column;
 }
