@@ -1,0 +1,36 @@
+.tagInput {
+  width: 100%;
+  padding: 15px 20px;
+  box-shadow: 0 0 0 1px var(--color-gray700) inset;
+  background-color: var(--color-black800);
+  border-radius: 14px;
+  cursor: text;
+}
+.tagInput.pointerCursor {
+  cursor: pointer;
+}
+
+.tagList {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.tagInput > input {
+  width: 100%;
+  border: none;
+  outline: none;
+  background-color: transparent;
+  color: var(--color-gray200);
+  padding: 2.5px 0;
+}
+.tagInput > input::placeholder {
+  color: var(--color-gray400);
+}
+
+@media (max-width: 375px) {
+  .tagInput {
+    border-radius: 12px;
+    padding: 12px 20px;
+  }
+}

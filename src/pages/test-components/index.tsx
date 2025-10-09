@@ -21,6 +21,7 @@ import Typography from "@/components/typography";
 import { CommonSize } from "@/constants/common/common-size";
 import { ProfileRandomColor } from "@/constants/profile-random-color";
 import ImageInput from "@/features/edit-task/components/image-input";
+import TagInput from "@/features/edit-task/components/tag-input";
 import { useAlert } from "@/hooks/use-alert";
 import { useDialog } from "@/hooks/use-dialog";
 import { useModal } from "@/hooks/use-modal";
@@ -518,6 +519,12 @@ function SheetSample() {
             </SheetSection>
             <SheetSection title="설명" required>
               <input />
+            </SheetSection>
+            <SheetSection title="태그 (empty)">
+              <TagInput />
+            </SheetSection>
+            <SheetSection title="태그 (filled)">
+              <TagInput tags={["프로젝트", "디자인", "상"]} />
             </SheetSection>
             <SheetSection title="이미지">
               <ImageInput onChange={handleImageChange} />
