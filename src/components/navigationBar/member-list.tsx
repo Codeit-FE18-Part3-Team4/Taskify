@@ -1,7 +1,7 @@
 import Profile from "@/components/profile/profile";
 import { ProfileSize, ProfileType } from "@/constants/profile/profile";
 import styles from "./member-list.module.css";
-import { MemberInfo } from "@/constants/profile/member-info";
+import { MemberInfo } from "@/type/member-info";
 
 interface MembersProps {
   showMembers: MemberInfo[];
