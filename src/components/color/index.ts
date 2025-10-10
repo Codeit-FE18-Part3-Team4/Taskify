@@ -52,7 +52,7 @@ export enum Color {
 
   /* Semantic */
 
-  Red = "var(red500 =",
+  Red = Red500,
   Blue = "#1458bc",
   Blue300 = "#76a5ea",
   Green = "#206e4e",
