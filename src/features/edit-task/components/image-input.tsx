@@ -4,17 +4,18 @@ import { useFileDragAndDrop } from "@/hooks/use-file-drag-and-drop";
 import { useResponsive } from "@/hooks/use-responsive";
 import { classnames } from "@/utils/classnames";
 import Image from "next/image";
-import { ChangeEvent, RefObject, useMemo } from "react";
+import { ChangeEvent, useMemo } from "react";
 import styles from "./sheet-image-input.module.css";
 
 export default function ImageInput() {
   const { isMobile } = useResponsive();
-  const { targetRef, isDraggingOnTarget } = useFileDragAndDrop({
-    fileType: "image/",
-    onDrop: (file) => {
-      console.log(file);
-    },
-  });
+  const { targetRef, isDraggingOnTarget } =
+    useFileDragAndDrop<HTMLLabelElement>({
+      fileType: "image/",
+      onDrop: (file) => {
+        console.log(file);
+      },
+    });
 
   const typography = useMemo(() => {
     return isMobile ? Typography.mdBold : Typography.lgBold;
@@ -33,7 +34,7 @@ export default function ImageInput() {
         styles.imageInput,
         isDraggingOnTarget ? styles.dragging : ""
       )}
-      ref={targetRef as RefObject<HTMLLabelElement>}
+      ref={targetRef}
     >
       <Image src={ImageIcon} alt="이미지" width={32} height={32} />
       <span className={typography}>+ image upload</span>

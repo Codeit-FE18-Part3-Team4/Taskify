@@ -1,13 +1,21 @@
-import { useEffect, useRef, useState } from "react";
+import { RefObject, useEffect, useRef, useState } from "react";
 
 interface Props {
   fileType: string;
   onDrop?: (file: File) => void;
 }
 
-export function useFileDragAndDrop({ fileType, onDrop }: Props) {
+interface Result<Element extends HTMLElement> {
+  targetRef: RefObject<Element>;
+  isDraggingOnTarget: boolean;
+}
+
+export function useFileDragAndDrop<Element extends HTMLElement>({
+  fileType,
+  onDrop,
+}: Props): Result<Element> {
   const [isDraggingOnTarget, setDraggingOnTarget] = useState(false);
-  const targetRef = useRef<HTMLElement | null>(null);
+  const targetRef = useRef<Element | null>(null);
 
   useEffect(() => {
     const target = targetRef.current;
@@ -91,5 +99,5 @@ export function useFileDragAndDrop({ fileType, onDrop }: Props) {
     };
   }, [targetRef.current, fileType]);
 
-  return { targetRef, isDraggingOnTarget };
+  return { targetRef: targetRef as RefObject<Element>, isDraggingOnTarget };
 }
