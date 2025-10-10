@@ -7,9 +7,9 @@ import {
   useMemo,
 } from "react";
 import Typography from "@/components/typography/typography";
-import SearchIcon from "@/components/input/SearchIcon";
-import VisibilityNowOnIcon from "./VisibilityOnIcon";
-import VisibilityNowOffIcon from "./VisibilityOffIcon";
+import SearchIcon from "@/components/input/search-icon-svg";
+import VisibilityNowOnIcon from "./visibility-on-svg";
+import VisibilityNowOffIcon from "./visibility-off-svg";
 import { classnames } from "@/utils/classnames";
 
 export enum InputVariant {
