@@ -51,11 +51,11 @@ export default function LoginPage() {
   };
 
   const onIdFocus = () => {
-    if (idErrorMessage) setIdErrorMessage("");
+    setIdErrorMessage("");
   };
 
   const onPasswordFocus = () => {
-    if (passwordErrorMessage) setPasswordErrorMessage("");
+    setPasswordErrorMessage("");
   };
 
   const onSubmit = () => {
