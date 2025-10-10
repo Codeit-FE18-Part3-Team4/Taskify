@@ -1,10 +1,10 @@
 import styles from "./profile.module.css";
 import {
-  ProfileColors,
+  ProfileColorsArray,
   RemainProfileColor,
-} from "@/constants/profile/profile-colors";
-import { ProfileSize } from "@/constants/profile/profile-size";
-import { ProfileType } from "@/constants/profile/profile-type";
+} from "@/constants/profile-random-color";
+import { ProfileSize } from "@/components/profile/profile-size";
+import { ProfileType } from "@/components/profile/profile-type";
 import typographyStyles from "@/components/typography/typography.module.css";
 import { classnames } from "@/utils/classnames";
 
@@ -25,8 +25,8 @@ export default function Profile({
 }: ProfileProps) {
   const calculateColorIndex = colorIndex % 7;
   const color = isRemain
-    ? RemainProfileColor.Blue
-    : ProfileColors[calculateColorIndex];
+    ? RemainProfileColor.backgroundColor
+    : ProfileColorsArray[calculateColorIndex];
   const NavigationBarClasses = classnames(
     styles.profile,
     type === ProfileType.NavigationBar ? styles.naviType : "",

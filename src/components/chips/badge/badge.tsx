@@ -1,6 +1,5 @@
 import styles from "./badge.module.css";
-import { BADGE_COLORS } from "@/constants/chips/badge-colors";
-import { ProfileColors } from "@/constants/profile/profile-colors";
+import { BADGE_COLORS } from "@/components/chips/badge/badge-colors";
 import typographyStyles from "@/components/typography/typography.module.css";
 
 interface BadgeProps {
@@ -10,11 +9,10 @@ interface BadgeProps {
 
 export default function Badge({ colorIndex = 0, title = "" }: BadgeProps) {
   const badgeClasses = `${styles.badge} ${typographyStyles["sm-semibold"]}`;
-  const calculateColorIndex = colorIndex % 7;
-  const color = ProfileColors[calculateColorIndex];
+  const calculateColorIndex = colorIndex % BADGE_COLORS.length;
 
   return (
-    <span className={badgeClasses} style={BADGE_COLORS[color]}>
+    <span className={badgeClasses} style={BADGE_COLORS[calculateColorIndex]}>
       {title}
     </span>
   );

@@ -5,12 +5,12 @@ import Typography from "@/components/typography/typography";
 import { useDialog } from "@/hooks/use-dialog";
 import { useModal } from "@/hooks/use-modal";
 import { ReactNode, useState } from "react";
-import { ProfileColor } from "@/constants/profile/profile-colors";
+import { ProfileRandomColor } from "@/constants/profile-random-color";
 import Input, { InputSize, InputVariant } from "@/components/input/input";
-import BadgeChip from "@/components/chips/badge";
-import BoardColorChip from "@/components/chips/chips-color";
-import { CHIP_COLORS } from "@/constants/chips/chip-colors";
-import { ColorFrameSize } from "@/constants/chips/color-frame-size";
+import BadgeChip from "@/components/chips/badge/badge";
+import BoardColorChip from "@/components/chips/chip-color/chips-color";
+import { CHIP_COLORS } from "@/components/chips/chip-color/chip-colors";
+import { ColorFrameSize } from "@/components/chips/color-frame/color-frame-size";
 import { CommonSize } from "@/constants/common/common-size";
 import ColorPalette from "@/components/color-palette/color-palette";
 import TextArea from "@/components/input/text-area";
@@ -433,7 +433,7 @@ export default function Page() {
             gap: `10px`,
           }}
         >
-          {Object.values(ProfileColor).map((profile, colorIndex) => (
+          {Object.values(ProfileRandomColor).map((profile, colorIndex) => (
             <BadgeChip
               key={colorIndex}
               title={"태그내용"}
