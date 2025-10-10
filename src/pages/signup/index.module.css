@@ -1,0 +1,48 @@
+.main {
+  background-color: var(--color-background);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+}
+
+.signupCard {
+  display: flex;
+  flex-direction: column;
+  width: 520px;
+  gap: 40px;
+  align-items: center;
+  justify-content: center;
+}
+
+.signupForm {
+  width: 100%;
+  color: var(--color-gray300);
+  gap: 12px;
+  display: flex;
+  flex-direction: column;
+}
+
+.checkboxWrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.signupActions {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  justify-content: center;
+  align-items: center;
+  color: var(--color-gray400);
+}
+
+.loginLink {
+  color: var(--color-gray300);
+  text-decoration: none;
+}
