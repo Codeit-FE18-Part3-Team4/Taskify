@@ -121,6 +121,11 @@ export default function TagInput({ tags = [], onChange }: Props) {
   };
 
   const handleTagCreate = (value: string) => {
+    if (tags.includes(value)) {
+      handleTagSelect(value);
+      return;
+    }
+
     onChange?.([...tags, value]);
     setTagsHistory([...tagsHistory, value]);
     setInputValue("");
