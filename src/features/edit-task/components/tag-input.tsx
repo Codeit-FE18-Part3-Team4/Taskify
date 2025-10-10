@@ -18,12 +18,24 @@ function TagList({ tags }: { tags: string[] }) {
 function Combobox({
   tags,
   inputValue = "",
+  onChange,
+  onCreate,
 }: {
   tags: string[];
   inputValue?: string;
+  onChange?: (tag: string) => void;
+  onCreate?: (value: string) => void;
 }) {
   const hasTags = tags.length > 0;
   const hasContent = hasTags || inputValue;
+
+  const handleTagClick = (tag: string) => {
+    onChange?.(tag);
+  };
+
+  const handleCreateClick = () => {
+    onCreate?.(inputValue);
+  };
 
   return (
     <div
@@ -36,7 +48,7 @@ function Combobox({
       {tags.length > 0 && (
         <ul className={styles.options}>
           {tags.map((tag, index) => (
-            <li key={tag}>
+            <li key={tag} onClick={() => handleTagClick(tag)}>
               <Badge title={tag} colorIndex={index} />
             </li>
           ))}
@@ -45,6 +57,7 @@ function Combobox({
       {inputValue && (
         <div
           className={classnames(styles.create, hasTags ? styles.hasTags : "")}
+          onClick={handleCreateClick}
         >
           <span className={Typography.smSemiBold}>생성</span>
           <Badge title={inputValue} />
@@ -56,9 +69,10 @@ function Combobox({
 
 interface Props {
   tags?: string[];
+  onChange?: (tag: string) => void;
 }
 
-export default function TagInput({ tags = [] }: Props) {
+export default function TagInput({ tags = [], onChange }: Props) {
   const [inputValue, setInputValue] = useState<string>("");
   const [isEditing, setEditing] = useState(false);
   const tagInputRef = useBackdropClick<HTMLDivElement>({
@@ -81,6 +95,18 @@ export default function TagInput({ tags = [] }: Props) {
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
     setInputValue(value);
+  };
+
+  const handleTagChange = (tag: string) => {
+    onChange?.(tag);
+    setInputValue("");
+    setEditing(false);
+  };
+
+  const handleTagCreate = (value: string) => {
+    onChange?.(value);
+    setInputValue("");
+    setEditing(false);
   };
 
   useEffect(() => {
@@ -112,7 +138,14 @@ export default function TagInput({ tags = [] }: Props) {
           />
         )}
       </div>
-      {isEditing && <Combobox tags={tags} inputValue={inputValue} />}
+      {isEditing && (
+        <Combobox
+          tags={tags}
+          inputValue={inputValue}
+          onChange={handleTagChange}
+          onCreate={handleTagCreate}
+        />
+      )}
     </div>
   );
 }

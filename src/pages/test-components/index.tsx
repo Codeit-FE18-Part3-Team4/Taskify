@@ -497,9 +497,14 @@ function SheetSample() {
     key: SHEET_KEY,
   });
   const [image, setImage] = useState<File | null>(null);
+  const [tags, setTags] = useState<string[]>(["프로젝트", "디자인", "상"]);
 
   const handleImageChange = (file: File) => {
     setImage(file);
+  };
+
+  const handleTagChange = (tag: string) => {
+    setTags((prev) => [...prev, tag]);
   };
 
   return (
@@ -520,11 +525,8 @@ function SheetSample() {
             <SheetSection title="설명" required>
               <input />
             </SheetSection>
-            <SheetSection title="태그 (empty)" zIndex={2}>
-              <TagInput />
-            </SheetSection>
-            <SheetSection title="태그 (filled)" zIndex={1}>
-              <TagInput tags={["프로젝트", "디자인", "상"]} />
+            <SheetSection title="태그" zIndex={1}>
+              <TagInput tags={tags} onChange={handleTagChange} />
             </SheetSection>
             <SheetSection title="이미지">
               <ImageInput onChange={handleImageChange} />
