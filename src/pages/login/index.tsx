@@ -7,6 +7,7 @@ import Input, { InputSize, InputVariant } from "@/components/input/input";
 import Button, { ButtonSize, ButtonVariant } from "@/components/button/button";
 import Typography from "@/components/typography/typography";
 import { useState, useEffect, ChangeEvent } from "react";
+import { validateEmail, validatePassword } from "@/utils/validator";
 
 export default function LoginPage() {
   const [id, setId] = useState("");
@@ -14,11 +15,6 @@ export default function LoginPage() {
   const [idErrorMessage, setIdErrorMessage] = useState("");
   const [passwordErrorMessage, setPasswordErrorMessage] = useState("");
   const [isLoginButtonDisabled, setIsLoginButtonDisabled] = useState(true);
-
-  const isValidEmail = (id: string) => {
-    return /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(id);
-  };
-  const isValidPassword = (password: string) => password.length >= 8;
 
   const onIdChange = (e: ChangeEvent<HTMLInputElement>) => {
     setId(e.target.value);
@@ -30,7 +26,7 @@ export default function LoginPage() {
       return;
     }
 
-    if (isValidEmail(id)) {
+    if (validateEmail(id)) {
       setIdErrorMessage("");
     } else {
       setIdErrorMessage("이메일 형식으로 작성해주세요");
@@ -47,7 +43,7 @@ export default function LoginPage() {
       return;
     }
 
-    if (isValidPassword(password)) {
+    if (validatePassword(password)) {
       setPasswordErrorMessage("");
     } else {
       setPasswordErrorMessage("8자 이상 입력해주세요");
@@ -68,7 +64,7 @@ export default function LoginPage() {
 
   useEffect(() => {
     const isFormValid =
-      !!id && isValidEmail(id) && !!password && isValidPassword(password);
+      !!id && validateEmail(id) && !!password && validatePassword(password);
 
     setIsLoginButtonDisabled(!isFormValid);
   }, [id, password]);
