@@ -2,7 +2,7 @@
   border: 2px dashed var(--color-gray700);
   border-radius: 14px;
   height: 140px;
-  background-color: var(--color-black700);
+  background-color: var(--color-black800);
   color: var(--color-gray400);
   display: flex;
   flex-direction: column;
