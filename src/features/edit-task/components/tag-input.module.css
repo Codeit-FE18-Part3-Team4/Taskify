@@ -33,6 +33,7 @@
 }
 
 .combobox {
+  width: 100%;
   position: absolute;
   top: calc(100% + 8px);
   padding: 16px 18px;
