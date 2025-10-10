@@ -44,6 +44,7 @@
 
 .signupLink {
   color: var(--color-gray300);
+  text-decoration: none;
 }
 
 .hidden {
