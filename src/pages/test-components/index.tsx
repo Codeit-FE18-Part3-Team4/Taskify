@@ -7,6 +7,8 @@ import Dialog from "@/components/dialog";
 import Input, { InputSize, InputVariant } from "@/components/input/input";
 import Textarea from "@/components/input/textarea";
 import Modal from "@/components/modal";
+import Sheet, { SheetActionType } from "@/components/sheet";
+import SheetSection from "@/components/sheet/sheet-section";
 import Typography from "@/components/typography";
 import { CHIP_COLORS } from "@/constants/chips/chip-colors";
 import { ColorFrameSize } from "@/constants/chips/color-frame-size";
@@ -15,7 +17,9 @@ import { CommonSize } from "@/constants/common/common-size";
 import { useAlert } from "@/hooks/use-alert";
 import { useDialog } from "@/hooks/use-dialog";
 import { useModal } from "@/hooks/use-modal";
+import { useSheet } from "@/hooks/use-sheet";
 import { ReactNode, useState } from "react";
+
 function Section({ title, children }: { title: string; children: ReactNode }) {
   return (
     <section style={{ margin: "24px 0" }}>
@@ -396,6 +400,40 @@ function TextareaBox() {
   );
 }
 
+function SheetSample() {
+  const SHEET_KEY = "SHEET_SAMPLE";
+  const { isShowSheet, openSheet } = useSheet({
+    key: SHEET_KEY,
+  });
+
+  return (
+    <>
+      <div>
+        <button onClick={() => openSheet(true)}>Open Sheet</button>
+        {isShowSheet && (
+          <Sheet
+            sheetKey={SHEET_KEY}
+            title="Sheet Title"
+            actionType={SheetActionType.Create}
+            onCancel={() => console.log("Sheet cancelled")}
+            onAction={() => console.log("Sheet confirmed")}
+          >
+            <SheetSection title="제목" required>
+              <input />
+            </SheetSection>
+            <SheetSection title="설명" required>
+              <input />
+            </SheetSection>
+            <SheetSection title="태그">
+              <input />
+            </SheetSection>
+          </Sheet>
+        )}
+      </div>
+    </>
+  );
+}
+
 export default function Page() {
   const sizes = Object.values(ColorFrameSize);
   const [selectedColors, setSelectedColors] = useState<string[]>(
@@ -510,6 +548,9 @@ export default function Page() {
       </Section>
       <Section title="Alert">
         <AlertSample />
+      </Section>
+      <Section title="Sheet">
+        <SheetSample />
       </Section>
     </main>
   );

@@ -1,0 +1,16 @@
+.sheetSection {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.title {
+  color: var(--color-gray300);
+}
+
+.required {
+  color: var(--color-brand600);
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 19px;
+}
