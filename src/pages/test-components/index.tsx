@@ -20,6 +20,7 @@ import ColorChip from "@/components/chips/chip-color/chips-color";
 import { CHIP_COLORS } from "@/components/chips/chip-color/chip-colors";
 import { ColorFrameSize } from "@/components/chips/color-frame/color-frame-size";
 import { ProfileRandomColor } from "@/constants/profile-random-color";
+import Checkbox from "@/components/checkbox/index";
 
 function Section({ title, children }: { title: string; children: ReactNode }) {
   return (
@@ -555,6 +556,9 @@ export default function Page() {
       <Section title="Input">
         <InputBox />
         <TextareaBox />
+      </Section>
+      <Section title="Checkbox">
+        <Checkbox />
       </Section>
       <Section title="Chip">
         <ColorChipSample />
