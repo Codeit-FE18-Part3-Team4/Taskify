@@ -6,7 +6,7 @@ import { useResponsive } from "@/hooks/use-responsive";
 import { classnames } from "@/utils/classnames";
 import Image from "next/image";
 import { ChangeEvent, useEffect, useMemo, useState } from "react";
-import styles from "./sheet-image-input.module.css";
+import styles from "./image-input.module.css";
 
 type FileChangeHandler = (file: File) => void;
 
