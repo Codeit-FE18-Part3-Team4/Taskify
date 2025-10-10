@@ -18,7 +18,7 @@ export interface DropdownOption {
 }
 
 interface DropdownContainerProps {
-  options: DropdownOption[];
+  options: DropdownOption[] | string[];
   onSelect: (value: string) => void;
 }
 
@@ -31,7 +31,9 @@ function DropdownContainer({ options, onSelect }: DropdownContainerProps) {
   }, [options, isMobile]);
 
   const handleOptionClick = (index: number) => {
-    onSelect(options[index].value);
+    onSelect(
+      typeof options[index] === "string" ? options[index] : options[index].value
+    );
   };
 
   return (
@@ -50,7 +52,7 @@ function DropdownContainer({ options, onSelect }: DropdownContainerProps) {
             )}
             onClick={() => handleOptionClick(index)}
           >
-            {option.element}
+            {typeof option === "string" ? option : option.element}
           </div>
         ))}
       </div>
@@ -59,12 +61,18 @@ function DropdownContainer({ options, onSelect }: DropdownContainerProps) {
 }
 
 interface Props {
-  options: DropdownOption[];
+  placeholder?: string;
+  options: DropdownOption[] | string[];
   children: ReactNode;
   onSelect?: (index: string) => void;
 }
 
-export default function Dropdown({ options, children, onSelect }: Props) {
+export default function Dropdown({
+  placeholder,
+  options,
+  children,
+  onSelect,
+}: Props) {
   const [isShow, setShow] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -101,7 +109,9 @@ export default function Dropdown({ options, children, onSelect }: Props) {
         className={classnames(styles.anchor, isShow ? styles.showing : "")}
         onClick={handleAnchorClick}
       >
-        <span>{children}</span>
+        <span className={isShow || children ? styles.highlight : ""}>
+          {children || placeholder || ""}
+        </span>
         <ChevronIcon
           direction={isShow ? Direction.Up : Direction.Down}
           size={18}

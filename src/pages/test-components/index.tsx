@@ -5,6 +5,7 @@ import Badge from "@/components/chips/badge/badge";
 import { CHIP_COLORS } from "@/components/chips/chip-color/chip-colors";
 import ColorChip from "@/components/chips/chip-color/chips-color";
 import { ColorFrameSize } from "@/components/chips/color-frame/color-frame-size";
+import { Color } from "@/components/color";
 import ColorPalette from "@/components/color-palette/color-palette";
 import DashboardSideBar from "@/components/dashboard-side-bar/dashboard-side-bar";
 import Dialog from "@/components/dialog";
@@ -17,6 +18,7 @@ import { ProfileSize } from "@/components/profile/profile-size";
 import { ProfileType } from "@/components/profile/profile-type";
 import Sheet, { SheetActionType } from "@/components/sheet";
 import SheetSection from "@/components/sheet/sheet-section";
+import SheetSectionGroup from "@/components/sheet/sheet-section-group";
 import Typography from "@/components/typography";
 import { CommonSize } from "@/constants/common/common-size";
 import { ProfileRandomColor } from "@/constants/profile-random-color";
@@ -560,6 +562,8 @@ function SheetSample() {
   });
   const [image, setImage] = useState<File | null>(null);
   const [tags, setTags] = useState<string[]>([]);
+  const [column, setColumn] = useState<string>("");
+  const [assignee, setAssignee] = useState<string>("");
 
   const handleImageChange = (file: File) => {
     setImage(file);
@@ -568,6 +572,36 @@ function SheetSample() {
   const handleTagChange = (tags: string[]) => {
     setTags(tags);
   };
+
+  const handleColumnSelect = (value: string) => {
+    setColumn(value);
+  };
+
+  const handleAssigneeSelect = (value: string) => {
+    setAssignee(value);
+  };
+
+  function ProfileCard({ name }: { name: string }) {
+    return (
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          gap: "8px",
+        }}
+      >
+        <div
+          style={{
+            width: "24px",
+            height: "24px",
+            backgroundColor: Color.Green,
+            borderRadius: "50%",
+          }}
+        ></div>
+        <span>{name}</span>
+      </div>
+    );
+  }
 
   return (
     <>
@@ -587,6 +621,29 @@ function SheetSample() {
             <SheetSection title="설명" required>
               <input />
             </SheetSection>
+            <SheetSectionGroup zIndex={2}>
+              <SheetSection title="칼럼">
+                <Dropdown
+                  placeholder="칼럼 선택"
+                  options={["To do", "Progress", "Done"]}
+                  onSelect={handleColumnSelect}
+                >
+                  {column}
+                </Dropdown>
+              </SheetSection>
+              <SheetSection title="담당자">
+                <Dropdown
+                  placeholder="담당자 선택"
+                  options={[
+                    { element: <ProfileCard name="User 1" />, value: "user1" },
+                    { element: <ProfileCard name="User 2" />, value: "user2" },
+                  ]}
+                  onSelect={handleAssigneeSelect}
+                >
+                  {assignee && <ProfileCard name={assignee} />}
+                </Dropdown>
+              </SheetSection>
+            </SheetSectionGroup>
             <SheetSection title="태그" zIndex={1}>
               <TagInput tags={tags} onChange={handleTagChange} />
             </SheetSection>
