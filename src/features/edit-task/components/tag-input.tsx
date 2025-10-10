@@ -53,6 +53,7 @@ export default function TagInput({ tags = [] }: Props) {
     callback: () => {
       if (!isEditing) return;
       setEditing(false);
+      setInputValue("");
     },
   });
   const inputRef = useRef<HTMLInputElement>(null);
