@@ -406,6 +406,11 @@ function SheetSample() {
   const { isShowSheet, openSheet } = useSheet({
     key: SHEET_KEY,
   });
+  const [image, setImage] = useState<File | null>(null);
+
+  const handleImageChange = (file: File) => {
+    setImage(file);
+  };
 
   return (
     <>
@@ -426,7 +431,7 @@ function SheetSample() {
               <input />
             </SheetSection>
             <SheetSection title="이미지">
-              <ImageInput />
+              <ImageInput onChange={handleImageChange} />
             </SheetSection>
           </Sheet>
         )}

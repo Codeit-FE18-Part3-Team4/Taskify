@@ -27,6 +27,33 @@
   display: none;
 }
 
+.previewContainer {
+  position: relative;
+  width: fit-content;
+}
+
+.imagePreview {
+  margin-top: 12px;
+  margin-right: 12px;
+  position: relative;
+  width: 231px;
+  height: 140px;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 2px solid var(--color-gray700);
+}
+
+.previewDeleteButton {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: none;
+  border: none;
+  outline: none;
+  padding: 0;
+  cursor: pointer;
+}
+
 @media (max-width: 375px) {
   .imageInput {
     height: 120px;
