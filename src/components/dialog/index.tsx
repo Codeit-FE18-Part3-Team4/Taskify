@@ -1,10 +1,10 @@
-import Typography from "@/components/typography/typography";
-import { useResponsive } from "@/hooks/ues-responsive";
+import Modal from "@/components/modal";
+import Typography from "@/components/typography";
 import { useDialog } from "@/hooks/use-dialog";
+import { useResponsive } from "@/hooks/use-responsive";
 import { classnames } from "@/utils/classnames";
 import { useMemo } from "react";
 import Button, { ButtonSize, ButtonVariant } from "../button/button";
-import Modal from "../modal/modal";
 import styles from "./dialog.module.css";
 
 interface Props {

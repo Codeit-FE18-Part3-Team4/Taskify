@@ -1,6 +1,6 @@
 import homeIcon from "@/assets/images/ic-home.svg";
 import plusIcon from "@/assets/images/ic-plus.svg";
-import Typography from "@/components/typography/typography";
+import Typography from "@/components/typography";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { getDashboards } from "./api/dashboard";

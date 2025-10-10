@@ -1,5 +1,5 @@
 import CrownIcon from "@/assets/images/ic-crown.svg";
-import Typography from "@/components/typography/typography";
+import Typography from "@/components/typography";
 import { CHIP_COLORS } from "@/components/chips/chip-color/chip-colors";
 import { CommonSize } from "@/constants/common/common-size";
 import Image from "next/image";
