@@ -63,9 +63,19 @@
   width: 100%;
   padding: 4px 18px;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }
 .combobox > .options > li:hover {
   background-color: var(--color-gray900);
+}
+
+.usedTag {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--color-blue300);
 }
 
 .combobox > .create {

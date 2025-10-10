@@ -497,14 +497,14 @@ function SheetSample() {
     key: SHEET_KEY,
   });
   const [image, setImage] = useState<File | null>(null);
-  const [tags, setTags] = useState<string[]>(["프로젝트", "디자인", "상"]);
+  const [tags, setTags] = useState<string[]>([]);
 
   const handleImageChange = (file: File) => {
     setImage(file);
   };
 
-  const handleTagChange = (tag: string) => {
-    setTags((prev) => [...prev, tag]);
+  const handleTagChange = (tags: string[]) => {
+    setTags(tags);
   };
 
   return (
