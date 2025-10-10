@@ -1,0 +1,34 @@
+.imageInput {
+  border: 2px dashed var(--color-gray700);
+  border-radius: 14px;
+  height: 140px;
+  background-color: var(--color-black700);
+  color: var(--color-gray400);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 2px;
+  transition: border-color 0.3s;
+  cursor: pointer;
+}
+.imageInput.dragging {
+  border-color: var(--color-gray400);
+}
+.imageInput:hover {
+  border-color: var(--color-gray400);
+}
+
+.imageInput img {
+  filter: invert(64%) sepia(1%) saturate(2498%) hue-rotate(244deg)
+    brightness(102%) contrast(88%);
+}
+.imageInput input {
+  display: none;
+}
+
+@media (max-width: 375px) {
+  .imageInput {
+    height: 120px;
+  }
+}
