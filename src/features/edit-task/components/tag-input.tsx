@@ -122,7 +122,8 @@ export default function TagInput({ tags = [], onChange }: Props) {
       <div
         className={classnames(
           styles.tagInput,
-          showsBadgeList ? styles.pointerCursor : ""
+          showsBadgeList ? styles.pointerCursor : "",
+          isEditing ? styles.editing : ""
         )}
         onClick={handleClick}
       >

@@ -13,6 +13,9 @@
 .tagInput.pointerCursor {
   cursor: pointer;
 }
+.tagInput.editing {
+  box-shadow: 0 0 0 1.5px var(--color-blue300) inset;
+}
 
 .tagList {
   display: flex;
