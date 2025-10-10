@@ -1,19 +1,25 @@
+import Alert, { AlertActionType } from "@/components/alert";
 import Button, { ButtonSize, ButtonVariant } from "@/components/button/button";
-import Dialog from "@/components/dialog/dialog";
-import Modal from "@/components/modal/modal";
-import Typography from "@/components/typography/typography";
-import { useDialog } from "@/hooks/use-dialog";
-import { useModal } from "@/hooks/use-modal";
-import { ReactNode, useState } from "react";
-import { ProfileColor } from "@/constants/chips/profile-colors";
-import Input, { InputSize, InputVariant } from "@/components/input/input";
 import BadgeChip from "@/components/chips/badge";
 import BoardColorChip from "@/components/chips/chips-color";
+import ColorPalette from "@/components/color-palette/color-palette";
+import Dialog from "@/components/dialog";
+import Input, { InputSize, InputVariant } from "@/components/input/input";
+import Textarea from "@/components/input/textarea";
+import Modal from "@/components/modal";
+import Sheet, { SheetActionType } from "@/components/sheet";
+import SheetSection from "@/components/sheet/sheet-section";
+import Typography from "@/components/typography";
 import { CHIP_COLORS } from "@/constants/chips/chip-colors";
 import { ColorFrameSize } from "@/constants/chips/color-frame-size";
+import { ProfileColor } from "@/constants/chips/profile-colors";
 import { CommonSize } from "@/constants/common/common-size";
-import ColorPalette from "@/components/color-palette/color-palette";
-import Textarea from "@/components/input/textarea";
+import { useAlert } from "@/hooks/use-alert";
+import { useDialog } from "@/hooks/use-dialog";
+import { useModal } from "@/hooks/use-modal";
+import { useSheet } from "@/hooks/use-sheet";
+import { ReactNode, useState } from "react";
+
 function Section({ title, children }: { title: string; children: ReactNode }) {
   return (
     <section style={{ margin: "24px 0" }}>
@@ -300,15 +306,15 @@ function InputBox() {
       {sizes.map((size) => (
         <div key={size} style={{ display: "inline-block", margin: "8px" }}>
           <div style={{ marginBottom: "8px" }}>
-            <Input size={size} placeholder="placeholder" />
+            <Input $size={size} placeholder="placeholder" />
           </div>
           <div style={{ marginBottom: "8px" }}>
-            <Input size={size} placeholder="Disabled" disabled />
+            <Input $size={size} placeholder="Disabled" disabled />
           </div>
           <div style={{ marginBottom: "8px" }}>
             <div>
               <Input
-                size={size}
+                $size={size}
                 placeholder="Invalid Input"
                 errorMessage="Error Message"
               />
@@ -316,14 +322,14 @@ function InputBox() {
           </div>
           <div style={{ marginBottom: "8px" }}>
             <Input
-              size={size}
+              $size={size}
               placeholder="Search Input"
               variant={InputVariant.Search}
             />
           </div>
           <div>
             <Input
-              size={size}
+              $size={size}
               placeholder="Password Input"
               variant={InputVariant.Password}
             />
@@ -356,6 +362,31 @@ function DialogSample() {
   );
 }
 
+function AlertSample() {
+  const ALERT_KEY = "ALERT_SAMPLE";
+  const { isShowAlert, openAlert } = useAlert({
+    key: ALERT_KEY,
+  });
+
+  return (
+    <>
+      <div>
+        <button onClick={() => openAlert(true)}>Open Alert</button>
+        {isShowAlert && (
+          <Alert
+            alertKey={ALERT_KEY}
+            title="Alert Title"
+            message="This is an alert message."
+            actionType={AlertActionType.Delete}
+            onCancel={() => console.log("Alert cancelled")}
+            onAction={() => console.log("Alert confirmed")}
+          />
+        )}
+      </div>
+    </>
+  );
+}
+
 function TextareaBox() {
   return (
     <div>
@@ -366,6 +397,40 @@ function TextareaBox() {
         <Textarea placeholder="Disabled" disabled />
       </div>
     </div>
+  );
+}
+
+function SheetSample() {
+  const SHEET_KEY = "SHEET_SAMPLE";
+  const { isShowSheet, openSheet } = useSheet({
+    key: SHEET_KEY,
+  });
+
+  return (
+    <>
+      <div>
+        <button onClick={() => openSheet(true)}>Open Sheet</button>
+        {isShowSheet && (
+          <Sheet
+            sheetKey={SHEET_KEY}
+            title="Sheet Title"
+            actionType={SheetActionType.Create}
+            onCancel={() => console.log("Sheet cancelled")}
+            onAction={() => console.log("Sheet confirmed")}
+          >
+            <SheetSection title="제목" required>
+              <input />
+            </SheetSection>
+            <SheetSection title="설명" required>
+              <input />
+            </SheetSection>
+            <SheetSection title="태그">
+              <input />
+            </SheetSection>
+          </Sheet>
+        )}
+      </div>
+    </>
   );
 }
 
@@ -480,6 +545,12 @@ export default function Page() {
       </Section>
       <Section title="Dialog">
         <DialogSample />
+      </Section>
+      <Section title="Alert">
+        <AlertSample />
+      </Section>
+      <Section title="Sheet">
+        <SheetSample />
       </Section>
     </main>
   );

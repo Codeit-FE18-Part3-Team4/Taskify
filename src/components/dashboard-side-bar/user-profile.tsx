@@ -1,5 +1,5 @@
 import SettingIcon from "@/assets/images/ic-setting.svg";
-import Typography from "@/components/typography/typography";
+import Typography from "@/components/typography";
 import Image from "next/image";
 import styles from "./dashboard-side-bar.module.css";
 
