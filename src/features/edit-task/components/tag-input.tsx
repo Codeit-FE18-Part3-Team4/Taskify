@@ -22,18 +22,30 @@ function Combobox({
   tags: string[];
   inputValue?: string;
 }) {
+  const hasTags = tags.length > 0;
+  const hasContent = hasTags || inputValue;
+
   return (
-    <div className={styles.combobox}>
+    <div
+      className={classnames(
+        styles.combobox,
+        hasContent ? styles.hasContent : ""
+      )}
+    >
       <header className={Typography.xsSemiBold}>옵션 선택 또는 생성</header>
       {tags.length > 0 && (
-        <div className={styles.options}>
+        <ul className={styles.options}>
           {tags.map((tag, index) => (
-            <Badge key={tag} title={tag} colorIndex={index} />
+            <li key={tag}>
+              <Badge title={tag} colorIndex={index} />
+            </li>
           ))}
-        </div>
+        </ul>
       )}
       {inputValue && (
-        <div className={styles.create}>
+        <div
+          className={classnames(styles.create, hasTags ? styles.hasTags : "")}
+        >
           <span className={Typography.smSemiBold}>생성</span>
           <Badge title={inputValue} />
         </div>

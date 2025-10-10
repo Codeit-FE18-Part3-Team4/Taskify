@@ -36,26 +36,48 @@
   width: 100%;
   position: absolute;
   top: calc(100% + 8px);
-  padding: 16px 18px;
+  padding: 16px 0;
   box-shadow: 0 0 0 1px var(--color-gray700) inset;
   background-color: var(--color-black800);
   border-radius: 14px;
   color: var(--color-gray300);
 }
+.combobox.hasContent {
+  padding-bottom: 12px;
+}
+
+.combobox > header {
+  padding: 0 18px;
+}
 
 .combobox > .options {
-  margin-top: 8px;
+  margin-top: 4px;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  gap: 8px;
+  list-style: none;
+}
+.combobox > .options > li {
+  width: 100%;
+  padding: 4px 18px;
+  cursor: pointer;
+}
+.combobox > .options > li:hover {
+  background-color: var(--color-gray900);
 }
 
 .combobox > .create {
-  margin-top: 16px;
+  margin-top: 4px;
+  padding: 4px 18px;
   display: flex;
   gap: 8px;
   align-items: center;
+  cursor: pointer;
+}
+.combobox > .create.hasTags {
+  margin-top: 12px;
+}
+.combobox > .create:hover {
+  background-color: var(--color-gray900);
 }
 
 @media (max-width: 375px) {

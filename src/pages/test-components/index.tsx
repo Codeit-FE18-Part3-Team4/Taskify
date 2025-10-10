@@ -520,7 +520,7 @@ function SheetSample() {
             <SheetSection title="설명" required>
               <input />
             </SheetSection>
-            <SheetSection title="태그 (empty)">
+            <SheetSection title="태그 (empty)" zIndex={2}>
               <TagInput />
             </SheetSection>
             <SheetSection title="태그 (filled)" zIndex={1}>
