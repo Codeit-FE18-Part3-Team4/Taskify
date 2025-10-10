@@ -14,6 +14,7 @@ import { CHIP_COLORS } from "@/constants/chips/chip-colors";
 import { ColorFrameSize } from "@/constants/chips/color-frame-size";
 import { ProfileColor } from "@/constants/chips/profile-colors";
 import { CommonSize } from "@/constants/common/common-size";
+import ImageInput from "@/features/edit-task/components/image-input";
 import { useAlert } from "@/hooks/use-alert";
 import { useDialog } from "@/hooks/use-dialog";
 import { useModal } from "@/hooks/use-modal";
@@ -424,8 +425,8 @@ function SheetSample() {
             <SheetSection title="설명" required>
               <input />
             </SheetSection>
-            <SheetSection title="태그">
-              <input />
+            <SheetSection title="이미지">
+              <ImageInput />
             </SheetSection>
           </Sheet>
         )}
