@@ -13,7 +13,7 @@
   outline: none;
 }
 
-@media (max-width: 744px) {
+@media (max-width: 375px) {
   .textarea {
     height: 120px;
     border-radius: 12px;
