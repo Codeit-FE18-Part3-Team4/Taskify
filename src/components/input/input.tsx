@@ -61,6 +61,7 @@ export default function Input({
       case InputVariant.Password:
         return (
           <button
+            type="button"
             className={styles.eyeBtn}
             onClick={() => setShowPassword((prev) => !prev)}
           >
