@@ -9,7 +9,6 @@
 }
 
 .input {
-  box-sizing: border-box;
   outline: none;
   background-color: var(--color-black800);
   border: none;

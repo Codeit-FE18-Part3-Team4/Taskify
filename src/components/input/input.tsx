@@ -1,16 +1,16 @@
-import styles from "./input.module.css";
+import SearchIcon from "@/components/input/search-icon-svg";
+import Typography from "@/components/typography";
+import { classnames } from "@/utils/classnames";
 import {
-  ReactNode,
-  useState,
   InputHTMLAttributes,
   FocusEvent as ReactFocusEvent,
+  ReactNode,
   useMemo,
+  useState,
 } from "react";
-import Typography from "@/components/typography/typography";
-import SearchIcon from "@/components/input/search-icon-svg";
-import VisibilityNowOnIcon from "./visibility-on-svg";
+import styles from "./input.module.css";
 import VisibilityNowOffIcon from "./visibility-off-svg";
-import { classnames } from "@/utils/classnames";
+import VisibilityNowOnIcon from "./visibility-on-svg";
 
 export enum InputVariant {
   Default = "default",
@@ -28,7 +28,7 @@ export type IconPosition = "left" | "right";
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   errorMessage?: string;
-  size?: InputSize;
+  $size?: InputSize;
   icon?: ReactNode;
   variant?: InputVariant;
   iconPosition?: IconPosition;
@@ -43,7 +43,7 @@ export default function Input({
   type = "text",
   className,
   errorMessage,
-  size = InputSize.Large,
+  $size = InputSize.Large,
   icon,
   disabled,
   variant = InputVariant.Default,
@@ -53,7 +53,7 @@ export default function Input({
   const hasError = !disabled && Boolean(errorMessage);
   const [isFocused, setIsFocused] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-  const iconSize = `${size}Icon`;
+  const iconSize = `${$size}Icon`;
   const resolvedIcon = useMemo(() => {
     switch (variant) {
       case InputVariant.Search:
@@ -114,7 +114,7 @@ export default function Input({
           disabled={disabled}
           className={classnames(
             styles.input,
-            styles[size],
+            styles[$size],
             Typography.lgMedium,
             hasError ? styles.error : "",
             variant === InputVariant.Search ? styles.withLeftIcon : "",

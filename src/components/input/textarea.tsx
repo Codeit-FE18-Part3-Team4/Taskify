@@ -1,6 +1,6 @@
-import styles from "./textarea.module.css";
+import Typography from "@/components/typography";
 import { TextareaHTMLAttributes } from "react";
-import Typography from "@/components/typography/typography";
+import styles from "./textarea.module.css";
 
 interface TextareaProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {}
 

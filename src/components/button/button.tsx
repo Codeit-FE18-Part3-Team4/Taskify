@@ -1,5 +1,5 @@
 import { MouseEventHandler, ReactNode } from "react";
-import Typography from "../typography/typography";
+import Typography from "../typography";
 import styles from "./button.module.css";
 
 export enum ButtonVariant {
