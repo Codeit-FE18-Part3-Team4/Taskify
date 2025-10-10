@@ -523,7 +523,7 @@ function SheetSample() {
             <SheetSection title="태그 (empty)">
               <TagInput />
             </SheetSection>
-            <SheetSection title="태그 (filled)">
+            <SheetSection title="태그 (filled)" zIndex={1}>
               <TagInput tags={["프로젝트", "디자인", "상"]} />
             </SheetSection>
             <SheetSection title="이미지">
