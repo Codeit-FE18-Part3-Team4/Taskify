@@ -1,17 +1,17 @@
-import styles from "./index.module.css";
-import Link from "next/link";
-import Image from "next/image";
 import LogoImg from "@/assets/images/taskify-logo.svg";
-import Input, { InputSize, InputVariant } from "@/components/input/input";
 import Button, { ButtonSize, ButtonVariant } from "@/components/button/button";
-import Typography from "@/components/typography/index";
 import Checkbox from "@/components/checkbox";
-import { useState, ChangeEvent, useEffect } from "react";
+import Input, { InputSize, InputVariant } from "@/components/input/input";
+import Typography from "@/components/typography";
 import {
   validateEmail,
-  validatePassword,
   validateNickname,
+  validatePassword,
 } from "@/utils/validator";
+import Image from "next/image";
+import Link from "next/link";
+import { ChangeEvent, useEffect, useState } from "react";
+import styles from "./index.module.css";
 
 export default function SignupPage() {
   const [email, setEmail] = useState("");

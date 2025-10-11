@@ -1,13 +1,13 @@
-import styles from "./index.module.css";
-import Link from "next/link";
-import LogoImg from "@/assets/images/taskify-logo.svg";
 import LoginImg from "@/assets/images/login-main.png";
-import Image from "next/image";
-import Input, { InputSize, InputVariant } from "@/components/input/input";
+import LogoImg from "@/assets/images/taskify-logo.svg";
 import Button, { ButtonSize, ButtonVariant } from "@/components/button/button";
+import Input, { InputSize, InputVariant } from "@/components/input/input";
 import Typography from "@/components/typography";
-import { useState, useEffect, ChangeEvent } from "react";
 import { validateEmail, validatePassword } from "@/utils/validator";
+import Image from "next/image";
+import Link from "next/link";
+import { ChangeEvent, useEffect, useState } from "react";
+import styles from "./index.module.css";
 
 export default function LoginPage() {
   const [id, setId] = useState("");
