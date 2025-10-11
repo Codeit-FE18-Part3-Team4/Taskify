@@ -2,11 +2,11 @@ import { CommonSize } from "@/constants/common/common-size";
 import styles from "./navigation-bar.module.css";
 import SettingSvg from "./setting-svg";
 import UserPlusSvg from "./user-plus-svg";
-import typographyStyles from "@/components/typography/typography";
+import typographyStyles from "@/components/typography";
 import Link from "next/link";
 import { MemberInfo } from "@/type/member-info";
 import MemberList from "./member-list";
-import Modal from "@/components/modal/modal";
+import Modal from "@/components/modal";
 import { useModal } from "@/hooks/use-modal";
 
 interface NavigationBarProps {
