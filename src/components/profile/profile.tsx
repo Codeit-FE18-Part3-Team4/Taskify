@@ -36,10 +36,7 @@ export default function Profile({
   const spanClasses = name.length >= 3 ? styles.alignStart : styles.alignCenter;
 
   return (
-    <div
-      className={NavigationBarClasses}
-      style={{ backgroundColor: color, marginLeft: "-12px" }}
-    >
+    <div className={NavigationBarClasses} style={{ backgroundColor: color }}>
       <span className={spanClasses}>{name}</span>
     </div>
   );
