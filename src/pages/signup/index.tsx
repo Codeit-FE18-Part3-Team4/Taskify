@@ -74,11 +74,15 @@ export default function SignupPage() {
       return;
     }
 
-    if (validatePassword(password)) {
-      setPasswordErrorMessage("");
-      return;
-    } else {
+    if (!validatePassword(password)) {
       setPasswordErrorMessage("8자 이상 입력해주세요");
+      return;
+    }
+
+    if (password !== passwordCheck) {
+      setPasswordCheckErrorMessage("비밀번호가 일치하지 않습니다");
+    } else {
+      setPasswordCheckErrorMessage("");
     }
   };
 
