@@ -1,6 +1,5 @@
 import Alert, { AlertActionType } from "@/components/alert";
 import Button, { ButtonSize, ButtonVariant } from "@/components/button/button";
-import ColorPalette from "@/components/color-palette/color-palette";
 import Dialog from "@/components/dialog";
 import Input, { InputSize, InputVariant } from "@/components/input/input";
 import Textarea from "@/components/input/textarea";
@@ -14,12 +13,9 @@ import { useDialog } from "@/hooks/use-dialog";
 import { useModal } from "@/hooks/use-modal";
 import { useSheet } from "@/hooks/use-sheet";
 import { ReactNode, useState } from "react";
-import Input, { InputSize, InputVariant } from "@/components/input/input";
-import TextArea from "@/components/input/text-area";
-import { CommonSize } from "@/constants/common/common-size";
 import ColorPalette from "@/components/color-palette/color-palette";
-import BadgeChip from "@/components/chips/badge/badge";
-import BoardColorChip from "@/components/chips/chip-color/chips-color";
+import Badge from "@/components/chips/badge/badge";
+import ColorChip from "@/components/chips/chip-color/chips-color";
 import { CHIP_COLORS } from "@/components/chips/chip-color/chip-colors";
 import { ColorFrameSize } from "@/components/chips/color-frame/color-frame-size";
 import { ProfileRandomColor } from "@/constants/profile-random-color";
@@ -435,12 +431,8 @@ function BadgeSample() {
           gap: `10px`,
         }}
       >
-        {Object.values(ProfileColor).map((profile, colorIndex) => (
-          <BadgeChip
-            key={colorIndex}
-            title={"태그내용"}
-            colorIndex={colorIndex}
-          />
+        {Object.values(ProfileRandomColor).map((profile, colorIndex) => (
+          <Badge key={colorIndex} title={"태그내용"} colorIndex={colorIndex} />
         ))}
       </div>
     </>
@@ -487,6 +479,40 @@ function ColorPaletteSample() {
         ))}
       </div>
       <p>💣선택된 색: {selectedColors}</p>
+    </>
+  );
+}
+
+function SheetSample() {
+  const SHEET_KEY = "SHEET_SAMPLE";
+  const { isShowSheet, openSheet } = useSheet({
+    key: SHEET_KEY,
+  });
+
+  return (
+    <>
+      <div>
+        <button onClick={() => openSheet(true)}>Open Sheet</button>
+        {isShowSheet && (
+          <Sheet
+            sheetKey={SHEET_KEY}
+            title="Sheet Title"
+            actionType={SheetActionType.Create}
+            onCancel={() => console.log("Sheet cancelled")}
+            onAction={() => console.log("Sheet confirmed")}
+          >
+            <SheetSection title="제목" required>
+              <input />
+            </SheetSection>
+            <SheetSection title="설명" required>
+              <input />
+            </SheetSection>
+            <SheetSection title="태그">
+              <input />
+            </SheetSection>
+          </Sheet>
+        )}
+      </div>
     </>
   );
 }
