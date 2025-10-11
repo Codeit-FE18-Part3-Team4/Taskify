@@ -15,5 +15,5 @@
 .checkbox:checked {
   background-color: var(--color-brand500);
   border: none;
-  background-image: url("./check.png");
+  background-image: url("./../../assets/images/ic-check.svg");
 }
