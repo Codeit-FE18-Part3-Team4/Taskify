@@ -308,15 +308,15 @@ function InputBox() {
       {sizes.map((size) => (
         <div key={size} style={{ display: "inline-block", margin: "8px" }}>
           <div style={{ marginBottom: "8px" }}>
-            <Input $size={size} placeholder="placeholder" />
+            <Input size={size} placeholder="placeholder" />
           </div>
           <div style={{ marginBottom: "8px" }}>
-            <Input $size={size} placeholder="Disabled" disabled />
+            <Input size={size} placeholder="Disabled" disabled />
           </div>
           <div style={{ marginBottom: "8px" }}>
             <div>
               <Input
-                $size={size}
+                size={size}
                 placeholder="Invalid Input"
                 errorMessage="Error Message"
               />
@@ -324,14 +324,14 @@ function InputBox() {
           </div>
           <div style={{ marginBottom: "8px" }}>
             <Input
-              $size={size}
+              size={size}
               placeholder="Search Input"
               variant={InputVariant.Search}
             />
           </div>
           <div>
             <Input
-              $size={size}
+              size={size}
               placeholder="Password Input"
               variant={InputVariant.Password}
             />

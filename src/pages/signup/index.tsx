@@ -137,7 +137,7 @@ export default function SignupPage() {
           <p>이메일</p>
           <Input
             variant={InputVariant.Default}
-            $size={InputSize.Auto}
+            size={InputSize.Auto}
             placeholder="이메일을 입력해주세요"
             onChange={onEmailChange}
             onBlur={onEmailBlur}
@@ -148,7 +148,7 @@ export default function SignupPage() {
           <p>닉네임</p>
           <Input
             variant={InputVariant.Default}
-            $size={InputSize.Auto}
+            size={InputSize.Auto}
             placeholder="닉네임을 입력해주세요"
             onChange={onNicknameChange}
             onBlur={onNicknameBlur}
@@ -159,7 +159,7 @@ export default function SignupPage() {
           <p>비밀번호</p>
           <Input
             variant={InputVariant.Password}
-            $size={InputSize.Auto}
+            size={InputSize.Auto}
             placeholder="8자 이상 입력해주세요"
             onChange={onPasswordChange}
             onBlur={onPasswordBlur}
@@ -170,7 +170,7 @@ export default function SignupPage() {
           <p>비밀번호 확인</p>
           <Input
             variant={InputVariant.Password}
-            $size={InputSize.Auto}
+            size={InputSize.Auto}
             placeholder="비밀번호를 한 번 더 입력해주세요"
             onChange={onPasswordCheckChange}
             onBlur={onPasswordCheckBlur}

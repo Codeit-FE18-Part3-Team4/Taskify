@@ -82,7 +82,7 @@ export default function LoginPage() {
             <p>아이디</p>
             <Input
               variant={InputVariant.Default}
-              $size={InputSize.Auto}
+              size={InputSize.Auto}
               placeholder="아이디를 입력해주세요"
               onChange={onIdChange}
               onBlur={onIdBlur}
@@ -93,7 +93,7 @@ export default function LoginPage() {
             <p>비밀번호</p>
             <Input
               variant={InputVariant.Password}
-              $size={InputSize.Auto}
+              size={InputSize.Auto}
               placeholder="8자 이상 입력해주세요"
               onChange={onPasswordChange}
               onBlur={onPasswordBlur}
