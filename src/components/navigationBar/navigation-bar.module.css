@@ -1,0 +1,78 @@
+.navigationBar {
+  width: 100%;
+  background-color: var(--color-background);
+  border-bottom: 2px solid var(--color-stroke);
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.small {
+  height: 50px;
+}
+
+.medium {
+  height: 60px;
+}
+
+.large {
+  height: 72px;
+  gap: 24px;
+}
+
+.rightIcons {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.iconLink {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 10.5px 12px;
+  gap: 10.25px;
+  border-radius: 5px;
+  text-decoration: none;
+}
+
+.rightIcons button {
+  background-color: transparent;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 10.5px 12px;
+  gap: 10.25px;
+  border-radius: 5px;
+  text-decoration: none;
+}
+
+.iconLink:hover,
+.rightIcons button:hover {
+  background-color: var(--color-modalBackground);
+}
+
+.iconLink {
+  margin-right: 15px;
+}
+
+.rightIcons button {
+  margin-right: 30px;
+}
+
+.iconSpan {
+  color: var(--color-gray400);
+}
+
+.icSmall {
+  width: 18px;
+  height: 18px;
+}
+
+.icMedium {
+  width: 20px;
+  height: 20px;
+}
