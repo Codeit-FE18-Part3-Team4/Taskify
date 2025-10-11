@@ -1,5 +1,3 @@
-"use client";
-
 import { useMediaQuery } from "react-responsive";
 
 export function useSsrResponsive() {
