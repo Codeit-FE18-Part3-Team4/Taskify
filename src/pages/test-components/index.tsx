@@ -1,7 +1,5 @@
 import Alert, { AlertActionType } from "@/components/alert";
 import Button, { ButtonSize, ButtonVariant } from "@/components/button/button";
-import BadgeChip from "@/components/chips/badge";
-import BoardColorChip from "@/components/chips/chips-color";
 import ColorPalette from "@/components/color-palette/color-palette";
 import Dialog from "@/components/dialog";
 import Input, { InputSize, InputVariant } from "@/components/input/input";
@@ -10,15 +8,17 @@ import Modal from "@/components/modal";
 import Sheet, { SheetActionType } from "@/components/sheet";
 import SheetSection from "@/components/sheet/sheet-section";
 import Typography from "@/components/typography";
-import { CHIP_COLORS } from "@/constants/chips/chip-colors";
-import { ColorFrameSize } from "@/constants/chips/color-frame-size";
-import { ProfileColor } from "@/constants/chips/profile-colors";
 import { CommonSize } from "@/constants/common/common-size";
 import { useAlert } from "@/hooks/use-alert";
 import { useDialog } from "@/hooks/use-dialog";
 import { useModal } from "@/hooks/use-modal";
 import { useSheet } from "@/hooks/use-sheet";
 import { ReactNode, useState } from "react";
+import BadgeChip from "@/components/chips/badge/badge";
+import BoardColorChip from "@/components/chips/chip-color/chips-color";
+import { CHIP_COLORS } from "@/components/chips/chip-color/chip-colors";
+import { ColorFrameSize } from "@/components/chips/color-frame/color-frame-size";
+import { ProfileRandomColor } from "@/constants/profile-random-color";
 
 function Section({ title, children }: { title: string; children: ReactNode }) {
   return (
@@ -504,15 +504,13 @@ export default function Page() {
             gap: `10px`,
           }}
         >
-          {Object.values(ProfileColor)
-            .filter((value) => typeof value === "number")
-            .map((colorIndex) => (
-              <BadgeChip
-                key={colorIndex}
-                title={"태그내용"}
-                colorIndex={colorIndex as ProfileColor}
-              />
-            ))}
+          {Object.values(ProfileRandomColor).map((profile, colorIndex) => (
+            <BadgeChip
+              key={colorIndex}
+              title={"태그내용"}
+              colorIndex={colorIndex}
+            />
+          ))}
         </div>
 
         <div>
