@@ -8,6 +8,7 @@ import Sheet, { SheetActionType } from "@/components/sheet";
 import SheetSection from "@/components/sheet/sheet-section";
 import Typography from "@/components/typography";
 import { CommonSize } from "@/constants/common/common-size";
+import ImageInput from "@/features/edit-task/components/image-input";
 import { useAlert } from "@/hooks/use-alert";
 import { useDialog } from "@/hooks/use-dialog";
 import { useModal } from "@/hooks/use-modal";
@@ -488,6 +489,11 @@ function SheetSample() {
   const { isShowSheet, openSheet } = useSheet({
     key: SHEET_KEY,
   });
+  const [image, setImage] = useState<File | null>(null);
+
+  const handleImageChange = (file: File) => {
+    setImage(file);
+  };
 
   return (
     <>
@@ -507,8 +513,8 @@ function SheetSample() {
             <SheetSection title="설명" required>
               <input />
             </SheetSection>
-            <SheetSection title="태그">
-              <input />
+            <SheetSection title="이미지">
+              <ImageInput onChange={handleImageChange} />
             </SheetSection>
           </Sheet>
         )}
