@@ -1,0 +1,16 @@
+.cardContainer {
+  background-color: var(--color-black700);
+  border: 1px solid var(--color-gray800);
+  border-radius: 20px;
+  padding: 20px;
+  color: var(--color-gray100);
+  width: 100%;
+  max-height: 340px;
+}
+
+.title {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
