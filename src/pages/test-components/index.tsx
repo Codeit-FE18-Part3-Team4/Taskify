@@ -404,7 +404,50 @@ function TextareaBox() {
   );
 }
 
-export default function Page() {
+function ColorChipSample() {
+  return (
+    <>
+      {Object.values(CommonSize)
+        .filter((value) => typeof value === "number")
+        .map((size) => (
+          <div
+            key={size}
+            style={{
+              display: "flex",
+              gap: "10px",
+            }}
+          >
+            {CHIP_COLORS.map((item, index) => (
+              <ColorChip key={index} color={item} size={size} />
+            ))}
+          </div>
+        ))}
+    </>
+  );
+}
+
+function BadgeSample() {
+  return (
+    <>
+      <div
+        style={{
+          display: `flex`,
+          gap: `10px`,
+        }}
+      >
+        {Object.values(ProfileColor).map((profile, colorIndex) => (
+          <BadgeChip
+            key={colorIndex}
+            title={"태그내용"}
+            colorIndex={colorIndex}
+          />
+        ))}
+      </div>
+    </>
+  );
+}
+
+function ColorPaletteSample() {
   const sizes = Object.values(ColorFrameSize);
   const [selectedColors, setSelectedColors] = useState<string[]>(
     sizes.map(() => "")
@@ -482,62 +525,9 @@ export default function Page() {
         <TextareaBox />
       </Section>
       <Section title="Chip">
-        <p>This is a section about chip.</p>
-        {Object.values(CommonSize)
-          .filter((value) => typeof value === "number")
-          .map((size) => (
-            <div
-              key={size}
-              style={{
-                display: "flex",
-                gap: "10px",
-              }}
-            >
-              {CHIP_COLORS.map((item, index) => (
-                <BoardColorChip key={index} color={item} size={size} />
-              ))}
-            </div>
-          ))}
-
-        <div
-          style={{
-            display: `flex`,
-            gap: `10px`,
-          }}
-        >
-          {Object.values(ProfileColor).map((profile, colorIndex) => (
-            <BadgeChip
-              key={colorIndex}
-              title={"태그내용"}
-              colorIndex={colorIndex}
-            />
-          ))}
-        </div>
-
-        <div>
-          {Object.values(ColorFrameSize).map((value, index) => (
-            <div
-              style={{
-                margin: "10px 0",
-                width:
-                  value === "xsmall"
-                    ? "295px"
-                    : value === "small"
-                      ? "335px"
-                      : value === "medium"
-                        ? "446px"
-                        : "740px",
-              }}
-            >
-              <ColorPalette
-                selectedColor={selectedColors[index]}
-                onSelect={(color) => handleSelect(index, color)}
-                size={value}
-              />
-            </div>
-          ))}
-        </div>
-        <p>💣선택된 색: {selectedColors}</p>
+        <ColorChipSample />
+        <BadgeSample />
+        <ColorPaletteSample />
       </Section>
       <Section title="Modal">
         <ModalSample />
