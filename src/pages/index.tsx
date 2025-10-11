@@ -13,10 +13,10 @@ import CardInThirdImg from "@/assets/images/main-06.png";
 import Logo from "@/assets/images/taskify-logo.svg";
 import Button, { ButtonSize, ButtonVariant } from "@/components/button/button";
 import Typography from "@/components/typography";
+import { useResponsiveValue } from "@/hooks/use-responsive-value";
 import { useSsrResponsive } from "@/hooks/use-ssr-responsive";
 import styles from "@/styles/main.module.css";
 import { classnames } from "@/utils/classnames";
-import { useResponsiveValue } from "@/hooks/use-responsive-value";
 import Image from "next/image";
 import { useRouter } from "next/router";
 
@@ -37,7 +37,7 @@ export default function Home() {
     desktop: MainImg,
     tablet: MainTabletImg,
     mobile: MainTabletImg,
-  })
+  });
 
   const responsiveButton = useResponsiveValue({
     desktop: ButtonSize.Large,
@@ -197,10 +197,20 @@ export default function Home() {
                       alt="사용 예시 이미지"
                     />
                   </div>
-                  <p className={classnames(point3CardTitleTypography, styles.title)}>
+                  <p
+                    className={classnames(
+                      point3CardTitleTypography,
+                      styles.title
+                    )}
+                  >
                     대시보드 설정
                   </p>
-                  <p className={classnames(point3CardTextTypography, styles.text)}>
+                  <p
+                    className={classnames(
+                      point3CardTextTypography,
+                      styles.text
+                    )}
+                  >
                     대시보드 사진과 이름을 변경할 수 있습니다.
                   </p>
                 </div>
@@ -213,10 +223,20 @@ export default function Home() {
                       alt="사용 예시 이미지"
                     />
                   </div>
-                  <p className={classnames(point3CardTitleTypography, styles.title)}>
+                  <p
+                    className={classnames(
+                      point3CardTitleTypography,
+                      styles.title
+                    )}
+                  >
                     초대
                   </p>
-                  <p className={classnames(point3CardTextTypography, styles.text)}>
+                  <p
+                    className={classnames(
+                      point3CardTextTypography,
+                      styles.text
+                    )}
+                  >
                     새로운 팀원을 초대할 수 있습니다.
                   </p>
                 </div>
@@ -229,10 +249,20 @@ export default function Home() {
                       alt="사용 예시 이미지"
                     />
                   </div>
-                  <p className={classnames(point3CardTitleTypography, styles.title)}>
+                  <p
+                    className={classnames(
+                      point3CardTitleTypography,
+                      styles.title
+                    )}
+                  >
                     구성원
                   </p>
-                  <p className={classnames(point3CardTextTypography, styles.text)}>
+                  <p
+                    className={classnames(
+                      point3CardTextTypography,
+                      styles.text
+                    )}
+                  >
                     구성원을 초대하고 내보낼 수 있습니다.
                   </p>
                 </div>

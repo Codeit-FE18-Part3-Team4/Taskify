@@ -15,7 +15,6 @@ export default function LoginPage() {
   const [idErrorMessage, setIdErrorMessage] = useState("");
   const [passwordErrorMessage, setPasswordErrorMessage] = useState("");
   const [isLoginButtonDisabled, setIsLoginButtonDisabled] = useState(true);
-
   const onIdChange = (e: ChangeEvent<HTMLInputElement>) => {
     setId(e.target.value);
   };
