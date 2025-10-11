@@ -1,5 +1,11 @@
 import Alert, { AlertActionType } from "@/components/alert";
 import Button, { ButtonSize, ButtonVariant } from "@/components/button/button";
+import Checkbox from "@/components/checkbox/index";
+import Badge from "@/components/chips/badge/badge";
+import { CHIP_COLORS } from "@/components/chips/chip-color/chip-colors";
+import ColorChip from "@/components/chips/chip-color/chips-color";
+import { ColorFrameSize } from "@/components/chips/color-frame/color-frame-size";
+import ColorPalette from "@/components/color-palette/color-palette";
 import Dialog from "@/components/dialog";
 import Input, { InputSize, InputVariant } from "@/components/input/input";
 import Textarea from "@/components/input/textarea";
@@ -8,18 +14,13 @@ import Sheet, { SheetActionType } from "@/components/sheet";
 import SheetSection from "@/components/sheet/sheet-section";
 import Typography from "@/components/typography";
 import { CommonSize } from "@/constants/common/common-size";
+import { ProfileRandomColor } from "@/constants/profile-random-color";
 import ImageInput from "@/features/edit-task/components/image-input";
 import { useAlert } from "@/hooks/use-alert";
 import { useDialog } from "@/hooks/use-dialog";
 import { useModal } from "@/hooks/use-modal";
 import { useSheet } from "@/hooks/use-sheet";
 import { ReactNode, useState } from "react";
-import ColorPalette from "@/components/color-palette/color-palette";
-import Badge from "@/components/chips/badge/badge";
-import ColorChip from "@/components/chips/chip-color/chips-color";
-import { CHIP_COLORS } from "@/components/chips/chip-color/chip-colors";
-import { ColorFrameSize } from "@/components/chips/color-frame/color-frame-size";
-import { ProfileRandomColor } from "@/constants/profile-random-color";
 
 function Section({ title, children }: { title: string; children: ReactNode }) {
   return (
@@ -307,15 +308,15 @@ function InputBox() {
       {sizes.map((size) => (
         <div key={size} style={{ display: "inline-block", margin: "8px" }}>
           <div style={{ marginBottom: "8px" }}>
-            <Input $size={size} placeholder="placeholder" />
+            <Input size={size} placeholder="placeholder" />
           </div>
           <div style={{ marginBottom: "8px" }}>
-            <Input $size={size} placeholder="Disabled" disabled />
+            <Input size={size} placeholder="Disabled" disabled />
           </div>
           <div style={{ marginBottom: "8px" }}>
             <div>
               <Input
-                $size={size}
+                size={size}
                 placeholder="Invalid Input"
                 errorMessage="Error Message"
               />
@@ -323,14 +324,14 @@ function InputBox() {
           </div>
           <div style={{ marginBottom: "8px" }}>
             <Input
-              $size={size}
+              size={size}
               placeholder="Search Input"
               variant={InputVariant.Search}
             />
           </div>
           <div>
             <Input
-              $size={size}
+              size={size}
               placeholder="Password Input"
               variant={InputVariant.Password}
             />
@@ -555,6 +556,9 @@ export default function Page() {
       <Section title="Input">
         <InputBox />
         <TextareaBox />
+      </Section>
+      <Section title="Checkbox">
+        <Checkbox />
       </Section>
       <Section title="Chip">
         <ColorChipSample />
