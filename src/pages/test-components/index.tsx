@@ -14,6 +14,10 @@ import { useDialog } from "@/hooks/use-dialog";
 import { useModal } from "@/hooks/use-modal";
 import { useSheet } from "@/hooks/use-sheet";
 import { ReactNode, useState } from "react";
+import Input, { InputSize, InputVariant } from "@/components/input/input";
+import TextArea from "@/components/input/text-area";
+import { CommonSize } from "@/constants/common/common-size";
+import ColorPalette from "@/components/color-palette/color-palette";
 import BadgeChip from "@/components/chips/badge/badge";
 import BoardColorChip from "@/components/chips/chip-color/chips-color";
 import { CHIP_COLORS } from "@/components/chips/chip-color/chip-colors";
@@ -400,40 +404,6 @@ function TextareaBox() {
   );
 }
 
-function SheetSample() {
-  const SHEET_KEY = "SHEET_SAMPLE";
-  const { isShowSheet, openSheet } = useSheet({
-    key: SHEET_KEY,
-  });
-
-  return (
-    <>
-      <div>
-        <button onClick={() => openSheet(true)}>Open Sheet</button>
-        {isShowSheet && (
-          <Sheet
-            sheetKey={SHEET_KEY}
-            title="Sheet Title"
-            actionType={SheetActionType.Create}
-            onCancel={() => console.log("Sheet cancelled")}
-            onAction={() => console.log("Sheet confirmed")}
-          >
-            <SheetSection title="제목" required>
-              <input />
-            </SheetSection>
-            <SheetSection title="설명" required>
-              <input />
-            </SheetSection>
-            <SheetSection title="태그">
-              <input />
-            </SheetSection>
-          </Sheet>
-        )}
-      </div>
-    </>
-  );
-}
-
 export default function Page() {
   const sizes = Object.values(ColorFrameSize);
   const [selectedColors, setSelectedColors] = useState<string[]>(
@@ -448,6 +418,37 @@ export default function Page() {
     });
   };
 
+  return (
+    <>
+      <div>
+        {Object.values(ColorFrameSize).map((value, index) => (
+          <div
+            style={{
+              margin: "10px 0",
+              width:
+                value === "xsmall"
+                  ? "295px"
+                  : value === "small"
+                    ? "335px"
+                    : value === "medium"
+                      ? "446px"
+                      : "740px",
+            }}
+          >
+            <ColorPalette
+              selectedColor={selectedColors[index]}
+              onSelect={(color) => handleSelect(index, color)}
+              size={value}
+            />
+          </div>
+        ))}
+      </div>
+      <p>💣선택된 색: {selectedColors}</p>
+    </>
+  );
+}
+
+export default function Page() {
   return (
     <main style={{ padding: "24px" }}>
       <header>
@@ -504,7 +505,7 @@ export default function Page() {
             gap: `10px`,
           }}
         >
-          {Object.values(ProfileRandomColor).map((profile, colorIndex) => (
+          {Object.values(ProfileColor).map((profile, colorIndex) => (
             <BadgeChip
               key={colorIndex}
               title={"태그내용"}
