@@ -8,12 +8,17 @@ interface BadgeProps {
   title: string;
 }
 
-export default function Badge({ colorIndex = 0, title = "" }: BadgeProps) {
+export default function Badge({ colorIndex = 0, title }: BadgeProps) {
   const badgeClasses = `${styles.badge} ${typographyStyles["sm-semibold"]}`;
+
+  const trimmedTitle = title.trim();
+  if (!trimmedTitle) return null;
+
   const calculateColorIndex = useMemo(() => {
     if (colorIndex !== undefined) {
       return colorIndex % BADGE_COLORS.length;
     }
+
     const hash = title.split("").reduce((acc, char, index) => {
       return acc + char.charCodeAt(0) * (index + 1);
     }, 0);
