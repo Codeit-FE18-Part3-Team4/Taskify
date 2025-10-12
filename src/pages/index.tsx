@@ -51,22 +51,22 @@ export default function Home() {
     mobile: SecondCardMobileImg,
   });
 
-  const mainSectionTab = useResponsiveValue({
+  const mainSectionTabTypography = useResponsiveValue({
     desktop: Typography.xl2Bold,
     tablet: Typography.xlBold,
     mobile: Typography.lgBold,
   });
-  const mainSectionText = useResponsiveValue({
+  const mainSectionTextTypography = useResponsiveValue({
     desktop: Typography.lg2Medium,
     tablet: Typography.lgMedium,
     mobile: Typography.mdMedium,
   });
-  const point3CardTitle = useResponsiveValue({
+  const point3CardTitleTypography = useResponsiveValue({
     desktop: Typography.lg2Bold,
     tablet: Typography.lgBold,
     mobile: Typography.lgBold,
   });
-  const point3CardText = useResponsiveValue({
+  const point3CardTextTypography = useResponsiveValue({
     desktop: Typography.lgMedium,
     tablet: Typography.mdMedium,
     mobile: Typography.mdMedium,
@@ -133,13 +133,13 @@ export default function Home() {
                   alt="메인 페이지 카드 이미지"
                 />
                 <div className={styles.textBox}>
-                  <span className={mainSectionTab}>Point 1</span>
+                  <span className={mainSectionTabTypography}>Point 1</span>
                   <h3 className={Typography.lg2Bold}>
                     내가 등록한 사진으로
                     <br />
                     기억에 남는 할 일 리스트
                   </h3>
-                  <p className={mainSectionText}>
+                  <p className={mainSectionTextTypography}>
                     카드 내 추가한 이미지를 상단 썸네일로 노출하여
                     <br />
                     작업에 대한 내용을 더 직관적으로 떠올릴 수 있어요
@@ -158,12 +158,12 @@ export default function Home() {
                   alt="메인 페이지 카드 이미지"
                 />
                 <div className={styles.textBox}>
-                  <span className={mainSectionTab}>Point 2</span>
+                  <span className={mainSectionTabTypography}>Point 2</span>
                   <h3 className={Typography.lg2Bold}>
                     자세한 정보는 명확하게,
                     <br />팀 논의는 빠르게 확인하세요
                   </h3>
-                  <p className={mainSectionText}>
+                  <p className={mainSectionTextTypography}>
                     작업에 필요한 세부 내용을 손쉽게 정리하고,
                     <br />
                     댓글을 통해 팀원들과 빠르게 소통해보세요
@@ -175,13 +175,13 @@ export default function Home() {
           <div className={styles.mainSectionCardBg}>
             <div className={styles.mainSectionCard}>
               <div className={styles.textBox}>
-                <span className={mainSectionTab}>Point 3</span>
+                <span className={mainSectionTabTypography}>Point 3</span>
                 <h3 className={Typography.lg2Bold}>
                   나에게 맞게, 더 효율적으로
                   <br />
                   생산성을 높이는 다양한 설정
                 </h3>
-                <p className={mainSectionText}>
+                <p className={mainSectionTextTypography}>
                   작업 방식에 맞게 색상, 팀원, 구성원 등을 쉽게 관리할 수 있어요
                   <br />
                   환경을 조율하면 일은 더 가볍고 빠르게 흘러갑니다.
@@ -197,10 +197,10 @@ export default function Home() {
                       alt="사용 예시 이미지"
                     />
                   </div>
-                  <p className={classnames(point3CardTitle, styles.title)}>
+                  <p className={classnames(point3CardTitleTypography, styles.title)}>
                     대시보드 설정
                   </p>
-                  <p className={classnames(point3CardText, styles.text)}>
+                  <p className={classnames(point3CardTextTypography, styles.text)}>
                     대시보드 사진과 이름을 변경할 수 있습니다.
                   </p>
                 </div>
@@ -213,10 +213,10 @@ export default function Home() {
                       alt="사용 예시 이미지"
                     />
                   </div>
-                  <p className={classnames(point3CardTitle, styles.title)}>
+                  <p className={classnames(point3CardTitleTypography, styles.title)}>
                     초대
                   </p>
-                  <p className={classnames(point3CardText, styles.text)}>
+                  <p className={classnames(point3CardTextTypography, styles.text)}>
                     새로운 팀원을 초대할 수 있습니다.
                   </p>
                 </div>
@@ -229,10 +229,10 @@ export default function Home() {
                       alt="사용 예시 이미지"
                     />
                   </div>
-                  <p className={classnames(point3CardTitle, styles.title)}>
+                  <p className={classnames(point3CardTitleTypography, styles.title)}>
                     구성원
                   </p>
-                  <p className={classnames(point3CardText, styles.text)}>
+                  <p className={classnames(point3CardTextTypography, styles.text)}>
                     구성원을 초대하고 내보낼 수 있습니다.
                   </p>
                 </div>
@@ -248,8 +248,8 @@ export default function Home() {
           </button>
         </div>
         <div className={styles.faqBox}>
-          <button className={point3CardText}>Privacy Policy</button>
-          <button className={point3CardText}>FAQ</button>
+          <button className={point3CardTextTypography}>Privacy Policy</button>
+          <button className={point3CardTextTypography}>FAQ</button>
         </div>
         <div className={styles.snsBox}>
           {[EmailIcon, FacebookIcon, InstaIcon].map((icon, index) => (
