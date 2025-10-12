@@ -8,7 +8,7 @@ interface BadgeProps {
   title: string;
 }
 
-export default function Badge({ colorIndex = 0, title }: BadgeProps) {
+export default function Badge({ colorIndex, title }: BadgeProps) {
   const badgeClasses = `${styles.badge} ${typographyStyles["sm-semibold"]}`;
 
   const trimmedTitle = title.trim();
