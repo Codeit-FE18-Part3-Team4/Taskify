@@ -1,16 +1,22 @@
 import EmailIcon from "@/assets/images/email.svg";
 import FacebookIcon from "@/assets/images/facebook.svg";
 import InstaIcon from "@/assets/images/instagram.svg";
+import MainTabletImg from "@/assets/images/main-01-tablet.png";
 import MainImg from "@/assets/images/main-01.png";
 import FirstCardImg from "@/assets/images/main-02.png";
-import SeconCardImg from "@/assets/images/main-03.png";
+import SecondCardMobileImg from "@/assets/images/main-03-mobile.png";
+import SecondCardTabletImg from "@/assets/images/main-03-tablet.png";
+import SecondCardImg from "@/assets/images/main-03.png";
 import CardInFirstImg from "@/assets/images/main-04.png";
 import CardInSeconImg from "@/assets/images/main-05.png";
 import CardInThirdImg from "@/assets/images/main-06.png";
 import Logo from "@/assets/images/taskify-logo.svg";
-import Button, { ButtonVariant } from "@/components/button/button";
-import Typography from "@/components/typography/typography";
+import Button, { ButtonSize, ButtonVariant } from "@/components/button/button";
+import Typography from "@/components/typography";
+import { useSsrResponsive } from "@/hooks/use-ssr-responsive";
 import styles from "@/styles/main.module.css";
+import { classnames } from "@/utils/classnames";
+import { useResponsiveValue } from "@/hooks/use-responsive-value";
 import Image from "next/image";
 import { useRouter } from "next/router";
 
@@ -24,6 +30,47 @@ export default function Home() {
   const handleClickSignupPage = () => {
     router.push("/signup");
   };
+
+  const { isMobile } = useSsrResponsive();
+
+  const responsiveMainImg = useResponsiveValue({
+    desktop: MainImg,
+    tablet: MainTabletImg,
+    mobile: MainTabletImg,
+  })
+
+  const responsiveButton = useResponsiveValue({
+    desktop: ButtonSize.Large,
+    tablet: ButtonSize.Large,
+    mobile: ButtonSize.Medium,
+  });
+
+  const responsiveSecondImg = useResponsiveValue({
+    desktop: SecondCardImg,
+    tablet: SecondCardTabletImg,
+    mobile: SecondCardMobileImg,
+  });
+
+  const mainSectionTabTypography = useResponsiveValue({
+    desktop: Typography.xl2Bold,
+    tablet: Typography.xlBold,
+    mobile: Typography.lgBold,
+  });
+  const mainSectionTextTypography = useResponsiveValue({
+    desktop: Typography.lg2Medium,
+    tablet: Typography.lgMedium,
+    mobile: Typography.mdMedium,
+  });
+  const point3CardTitleTypography = useResponsiveValue({
+    desktop: Typography.lg2Bold,
+    tablet: Typography.lgBold,
+    mobile: Typography.lgBold,
+  });
+  const point3CardTextTypography = useResponsiveValue({
+    desktop: Typography.lgMedium,
+    tablet: Typography.mdMedium,
+    mobile: Typography.mdMedium,
+  });
 
   return (
     <div className={styles.mainWrap}>
@@ -55,123 +102,140 @@ export default function Home() {
               <Button
                 onClick={handleClickSignupPage}
                 variant={ButtonVariant.Secondary}
+                size={responsiveButton}
               >
                 회원가입하기
               </Button>
-              <Button onClick={handleClickLoginPage}>로그인하기</Button>
+              <Button onClick={handleClickLoginPage} size={responsiveButton}>
+                로그인하기
+              </Button>
             </div>
           </div>
-          <div className={styles.mainSectionTopImg}>
-            <Image
-              src={MainImg}
-              width={1078}
-              height={682}
-              alt="메인 페이지 이미지"
-            />
-          </div>
+          {!isMobile && (
+            <div className={styles.mainSectionTopImg}>
+              <Image
+                src={responsiveMainImg}
+                width={1078}
+                height={682}
+                alt="메인 페이지 이미지"
+              />
+            </div>
+          )}
         </section>
         <section className={styles.mainSection}>
-          <div className={styles.mainSectionCard}>
-            <div className={styles.flexBox}>
-              <Image
-                src={FirstCardImg}
-                width={736}
-                height={613}
-                alt="메인 페이지 카드 이미지"
-              />
-              <div className={styles.textBox}>
-                <span className={Typography.lg2Bold}>Point 1</span>
-                <h3 className={Typography.lg2Bold}>
-                  내가 등록한 사진으로
-                  <br />
-                  기억에 남는 할 일 리스트
-                </h3>
-                <p className={Typography.lg2Medium}>
-                  카드 내 추가한 이미지를 상단 썸네일로 노출하여
-                  <br />
-                  작업에 대한 내용을 더 직관적으로 떠올릴 수 있어요
-                </p>
+          <div className={styles.mainSectionCardBg}>
+            <div className={styles.mainSectionCard}>
+              <div className={styles.flexBox}>
+                <Image
+                  src={FirstCardImg}
+                  width={736}
+                  height={613}
+                  alt="메인 페이지 카드 이미지"
+                />
+                <div className={styles.textBox}>
+                  <span className={mainSectionTabTypography}>Point 1</span>
+                  <h3 className={Typography.lg2Bold}>
+                    내가 등록한 사진으로
+                    <br />
+                    기억에 남는 할 일 리스트
+                  </h3>
+                  <p className={mainSectionTextTypography}>
+                    카드 내 추가한 이미지를 상단 썸네일로 노출하여
+                    <br />
+                    작업에 대한 내용을 더 직관적으로 떠올릴 수 있어요
+                  </p>
+                </div>
               </div>
             </div>
           </div>
-          <div className={styles.mainSectionCard}>
-            <div className={styles.flexBox}>
-              <Image
-                src={SeconCardImg}
-                width={736}
-                height={613}
-                alt="메인 페이지 카드 이미지"
-              />
-              <div className={styles.textBox}>
-                <span className={Typography.lg2Bold}>Point 2</span>
-                <h3 className={Typography.lg2Bold}>
-                  자세한 정보는 명확하게,
-                  <br />팀 논의는 빠르게 확인하세요
-                </h3>
-                <p className={Typography.lg2Medium}>
-                  작업에 필요한 세부 내용을 손쉽게 정리하고,
-                  <br />
-                  댓글을 통해 팀원들과 빠르게 소통해보세요
-                </p>
+          <div className={styles.mainSectionCardBg}>
+            <div className={styles.mainSectionCard}>
+              <div className={styles.flexBox}>
+                <Image
+                  src={responsiveSecondImg}
+                  width={736}
+                  height={613}
+                  alt="메인 페이지 카드 이미지"
+                />
+                <div className={styles.textBox}>
+                  <span className={mainSectionTabTypography}>Point 2</span>
+                  <h3 className={Typography.lg2Bold}>
+                    자세한 정보는 명확하게,
+                    <br />팀 논의는 빠르게 확인하세요
+                  </h3>
+                  <p className={mainSectionTextTypography}>
+                    작업에 필요한 세부 내용을 손쉽게 정리하고,
+                    <br />
+                    댓글을 통해 팀원들과 빠르게 소통해보세요
+                  </p>
+                </div>
               </div>
             </div>
           </div>
-          <div className={styles.mainSectionCard}>
-            <div className={styles.textBox}>
-              <span className={Typography.lg2Bold}>Point 3</span>
-              <h3 className={Typography.lg2Bold}>
-                나에게 맞게, 더 효율적으로
-                <br />
-                생산성을 높이는 다양한 설정
-              </h3>
-              <p className={Typography.lg2Medium}>
-                작업 방식에 맞게 색상, 팀원, 구성원 등을 쉽게 관리할 수 있어요
-                <br />
-                환경을 조율하면 일은 더 가볍고 빠르게 흘러갑니다.
-              </p>
-            </div>
-            <div className={styles.flexBox}>
-              <div className={styles.box}>
-                <div className={styles.imgBox}>
-                  <Image
-                    src={CardInFirstImg}
-                    width={368}
-                    height={192}
-                    alt="사용 예시 이미지"
-                  />
-                </div>
-                <p className={`${Typography.lg2Bold} ${styles.title}`}>
-                  대시보드 설정
-                </p>
-                <p className={`${Typography.lgMedium} ${styles.text}`}>
-                  대시보드 사진과 이름을 변경할 수 있습니다.
+          <div className={styles.mainSectionCardBg}>
+            <div className={styles.mainSectionCard}>
+              <div className={styles.textBox}>
+                <span className={mainSectionTabTypography}>Point 3</span>
+                <h3 className={Typography.lg2Bold}>
+                  나에게 맞게, 더 효율적으로
+                  <br />
+                  생산성을 높이는 다양한 설정
+                </h3>
+                <p className={mainSectionTextTypography}>
+                  작업 방식에 맞게 색상, 팀원, 구성원 등을 쉽게 관리할 수 있어요
+                  <br />
+                  환경을 조율하면 일은 더 가볍고 빠르게 흘러갑니다.
                 </p>
               </div>
-              <div className={styles.box}>
-                <div className={styles.imgBox}>
-                  <Image
-                    src={CardInSeconImg}
-                    width={368}
-                    height={192}
-                    alt="사용 예시 이미지"
-                  />
+              <div className={styles.flexBox}>
+                <div className={styles.box}>
+                  <div className={styles.imgBox}>
+                    <Image
+                      src={CardInFirstImg}
+                      width={368}
+                      height={192}
+                      alt="사용 예시 이미지"
+                    />
+                  </div>
+                  <p className={classnames(point3CardTitleTypography, styles.title)}>
+                    대시보드 설정
+                  </p>
+                  <p className={classnames(point3CardTextTypography, styles.text)}>
+                    대시보드 사진과 이름을 변경할 수 있습니다.
+                  </p>
                 </div>
-                <p className={styles.title}>초대</p>
-                <p className={styles.text}>새로운 팀원을 초대할 수 있습니다.</p>
-              </div>
-              <div className={styles.box}>
-                <div className={styles.imgBox}>
-                  <Image
-                    src={CardInThirdImg}
-                    width={368}
-                    height={192}
-                    alt="사용 예시 이미지"
-                  />
+                <div className={styles.box}>
+                  <div className={styles.imgBox}>
+                    <Image
+                      src={CardInSeconImg}
+                      width={368}
+                      height={192}
+                      alt="사용 예시 이미지"
+                    />
+                  </div>
+                  <p className={classnames(point3CardTitleTypography, styles.title)}>
+                    초대
+                  </p>
+                  <p className={classnames(point3CardTextTypography, styles.text)}>
+                    새로운 팀원을 초대할 수 있습니다.
+                  </p>
                 </div>
-                <p className={styles.title}>구성원</p>
-                <p className={styles.text}>
-                  구성원을 초대하고 내보낼 수 있습니다.
-                </p>
+                <div className={styles.box}>
+                  <div className={styles.imgBox}>
+                    <Image
+                      src={CardInThirdImg}
+                      width={368}
+                      height={192}
+                      alt="사용 예시 이미지"
+                    />
+                  </div>
+                  <p className={classnames(point3CardTitleTypography, styles.title)}>
+                    구성원
+                  </p>
+                  <p className={classnames(point3CardTextTypography, styles.text)}>
+                    구성원을 초대하고 내보낼 수 있습니다.
+                  </p>
+                </div>
               </div>
             </div>
           </div>
@@ -184,19 +248,15 @@ export default function Home() {
           </button>
         </div>
         <div className={styles.faqBox}>
-          <button className={Typography.lgMedium}>Privacy Policy</button>
-          <button className={Typography.lgMedium}>FAQ</button>
+          <button className={point3CardTextTypography}>Privacy Policy</button>
+          <button className={point3CardTextTypography}>FAQ</button>
         </div>
         <div className={styles.snsBox}>
-          <button>
-            <Image src={EmailIcon} width={20} height={20} alt="이메일" />
-          </button>
-          <button>
-            <Image src={FacebookIcon} width={20} height={20} alt="페이스북" />
-          </button>
-          <button>
-            <Image src={InstaIcon} width={20} height={20} alt="인스타" />
-          </button>
+          {[EmailIcon, FacebookIcon, InstaIcon].map((icon, index) => (
+            <button key={index}>
+              <Image src={icon} width={20} height={20} alt="SNS" />
+            </button>
+          ))}
         </div>
       </footer>
     </div>
