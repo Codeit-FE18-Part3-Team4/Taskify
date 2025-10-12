@@ -4,26 +4,21 @@ import typographyStyles from "@/components/typography/typography.module.css";
 import { useMemo } from "react";
 
 interface BadgeProps {
-  colorIndex?: number;
   title: string;
 }
 
-export default function Badge({ colorIndex, title }: BadgeProps) {
+export default function Badge({ title }: BadgeProps) {
   const badgeClasses = `${styles.badge} ${typographyStyles["sm-semibold"]}`;
 
   const trimmedTitle = title.trim();
   if (!trimmedTitle) return null;
 
   const calculateColorIndex = useMemo(() => {
-    if (colorIndex !== undefined) {
-      return colorIndex % BADGE_COLORS.length;
-    }
-
     const hash = title.split("").reduce((acc, char, index) => {
       return acc + char.charCodeAt(0) * (index + 1);
     }, 0);
     return hash % BADGE_COLORS.length;
-  }, [colorIndex, title]);
+  }, [title]);
 
   return (
     <span className={badgeClasses} style={BADGE_COLORS[calculateColorIndex]}>
