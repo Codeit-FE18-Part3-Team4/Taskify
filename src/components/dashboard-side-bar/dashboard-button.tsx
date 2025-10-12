@@ -1,10 +1,10 @@
 import CrownIcon from "@/assets/images/ic-crown.svg";
-import Typography from "@/components/typography/typography";
-import { CHIP_COLORS } from "@/constants/chips/chip-colors";
-import { CommonSize } from "@/constants/common/common-size.enum";
+import Typography from "@/components/typography";
+import { CHIP_COLORS } from "@/components/chips/chip-color/chip-colors";
+import { CommonSize } from "@/constants/common/common-size";
 import Image from "next/image";
 import { MouseEventHandler, ReactNode } from "react";
-import ColorChip from "../chips/chips-color";
+import ColorChip from "@/components/chips/chip-color/chips-color";
 import styles from "./dashboard-side-bar.module.css";
 
 interface DashboardButtonProps {
@@ -30,7 +30,7 @@ export default function DashboardButton({
       onClick={onClick}
       className={`${styles.button} ${styles.dashboardButton} ${activeButton}`}
     >
-      <ColorChip size={CommonSize.small} color={CHIP_COLORS[randomChip]} />
+      <ColorChip size={CommonSize.Small} color={CHIP_COLORS[randomChip]} />
       <span
         className={`${active === true ? Typography.lg2Bold : Typography.lg2Medium}`}
       >

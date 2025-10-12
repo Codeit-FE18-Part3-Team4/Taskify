@@ -1,0 +1,21 @@
+.dialog {
+  width: 458px;
+  padding: 50px 30px 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+}
+
+.title,
+.message {
+  color: white;
+}
+
+@media (max-width: 375px) {
+  .dialog {
+    width: 307px;
+    padding-top: 30px;
+    gap: 20px;
+  }
+}

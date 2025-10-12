@@ -1,0 +1,88 @@
+.main {
+  background-color: var(--color-background);
+  display: flex;
+  overflow: auto;
+  justify-content: space-between;
+  width: 100vw;
+  height: 100vh;
+}
+
+.leftSection {
+  padding: 314px 0px 314px 210px;
+}
+
+.rightSection {
+  padding: 80px;
+}
+
+.loginCard {
+  display: flex;
+  flex-direction: column;
+  width: 520px;
+  height: 452px;
+  gap: 40px;
+  align-items: center;
+}
+
+.loginForm {
+  width: 100%;
+  color: var(--color-gray300);
+  gap: 16px;
+  display: flex;
+  flex-direction: column;
+}
+
+.loginActions {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  justify-content: center;
+  align-items: center;
+  color: var(--color-gray400);
+}
+
+.signupLink {
+  color: var(--color-gray300);
+  text-decoration: none;
+}
+
+.hidden {
+  display: none;
+}
+
+@media (max-width: 744px) {
+  .main {
+    justify-content: center;
+    align-items: center;
+  }
+  .loginCard {
+    max-width: 520px;
+    width: 80vw;
+  }
+
+  .leftSection {
+    padding: 314px 112px;
+  }
+  .rightSection {
+    display: none;
+  }
+}
+
+@media (max-width: 375px) {
+  .loginCard {
+    max-width: 375px;
+    max-height: 412px;
+    width: 90vw;
+    gap: 30px;
+  }
+
+  .leftSection {
+    padding: 0;
+  }
+
+  .logoWrapper img {
+    max-width: 300px;
+    width: 90vw;
+  }
+}

@@ -1,0 +1,171 @@
+.mainWrap {
+  background: #161519;
+  position: relative;
+}
+.mainWrap::after {
+  content: "";
+  width: 298px;
+  height: 298px;
+  background: var(--color-brand500);
+  opacity: 0.6;
+  filter: blur(1000);
+  position: absolute;
+  top: 820px;
+  left: 106px;
+  border-radius: 100%;
+}
+
+.mainWrap::before {
+  content: "";
+  width: 344px;
+  height: 344px;
+  background: var(--color-brand500);
+  opacity: 0.6;
+  filter: blur(1000);
+  position: absolute;
+  top: 302px;
+  left: 1244px;
+  border-radius: 100%;
+}
+
+.header {
+  padding: 24px 120px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 2px solid var(--color-black700);
+}
+.header button {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+.header .headerButtonBox {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.header .headerButtonBox > button {
+  padding: 10px 12px;
+  color: var(--color-gray300);
+}
+.mainSectionTopWrap {
+  padding: 159px 0 159px 240px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 100px;
+  z-index: 10;
+  overflow: hidden;
+}
+.mainSectionTopWrap > .mainSectionTopMain {
+  width: 510px;
+  flex-shrink: 0;
+}
+.mainSectionTopMain > h1 {
+  padding-bottom: 10px;
+  font-size: 60px;
+  color: var(--color-gray100);
+  line-height: 100%;
+}
+.mainSectionTopMain > span {
+  display: block;
+  font-size: 84px;
+  color: var(--color-brand400);
+  padding-bottom: 50px;
+  line-height: 100%;
+}
+.mainSectionTopWrap .buttonBox {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.mainSection .mainSectionCard {
+  width: 1365px;
+  margin: 0 auto;
+  padding: 94px 0;
+}
+.mainSection .mainSectionCard:nth-of-type(2) {
+  padding: 179px 0 0;
+}
+.mainSection .mainSectionCard:nth-of-type(3) {
+  padding: 145px 0;
+}
+.mainSection .mainSectionCard:nth-of-type(3) .flexBox {
+  gap: 24px;
+  padding-top: 30px;
+}
+.mainSection .mainSectionCard:nth-of-type(3) .flexBox .box {
+  width: 462px;
+}
+.mainSection .mainSectionCard .flexBox {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.mainSection .mainSectionCard .flexBox > .box > .imgBox {
+  background: var(--color-background);
+  padding: 59px 37px 0 37px;
+  border-radius: 16px;
+}
+.mainSection .mainSectionCard .flexBox > .box > p {
+  padding: 0 30px;
+}
+.mainSection .mainSectionCard .flexBox > .box > .title {
+  color: var(--color-gray300);
+  padding: 28px 30px 10px;
+}
+.mainSection .mainSectionCard .flexBox > .box > .text {
+  color: var(--color-gray400);
+}
+.mainSection .mainSectionCard:nth-of-type(2) .flexBox {
+  flex-direction: row-reverse;
+  position: relative;
+}
+.mainSection .mainSectionCard .textBox > span {
+  color: var(--color-brand400);
+  font-size: 24px;
+}
+.mainSection .mainSectionCard .textBox > h3 {
+  font-size: 50px;
+  line-height: 140%;
+  padding: 14px 0;
+  color: var(--color-gray100);
+}
+.mainSection .mainSectionCard .textBox > p {
+  line-height: 150%;
+  color: var(--color-gray400);
+}
+.footer button {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24px 120px;
+  gap: 100px;
+  background: var(--color-black800);
+}
+.footer .logo {
+  flex: 1;
+  text-align: left;
+}
+.footer .faqBox {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+.footer .faqBox > button {
+  color: var(--color-gray400);
+}
+.footer .snsBox {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.footer .snsBox > button{
+  filter: invert(70%) sepia(21%) saturate(180%) hue-rotate(212deg) brightness(88%) contrast(89%);
+}
