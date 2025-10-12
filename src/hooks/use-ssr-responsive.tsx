@@ -1,12 +1,8 @@
-import { useEffect, useState } from "react";
+import { useIsClient } from "@uidotdev/usehooks";
 import { useMediaQuery } from "react-responsive";
 
 export function useSsrResponsive() {
-  const [isClient, setIsClient] = useState(false);
-
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
+  const isClient = useIsClient();
 
   const isMobile = useMediaQuery({ query: "(max-width: 375px)" });
   const isTablet = useMediaQuery({
