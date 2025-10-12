@@ -44,29 +44,36 @@ export default function Home() {
         : SeconCardImg;
   }, [isTablet, isMobile]);
 
-  const mainSectionTab = useMemo(() => {
-    return isTablet
-      ? Typography.xlBold
-      : isMobile
-        ? Typography.lgBold
-        : Typography.xl2Bold;
-  }, [isTablet, isMobile]);
+  const responsiveTypography = (
+    desktop: string,
+    tablet: string,
+    mobile: string
+  ) => {
+    if (isTablet) return tablet;
+    if (isMobile) return mobile;
+    return desktop;
+  };
 
-  const mainSectionText = useMemo(() => {
-    return isTablet
-      ? Typography.lgMedium
-      : isMobile
-        ? Typography.mdMedium
-        : Typography.lg2Medium;
-  }, [isTablet, isMobile]);
-
-  const point3CardTitle = useMemo(() => {
-    return isMobile ? Typography.lgBold : Typography.lg2Bold;
-  }, [isMobile]);
-
-  const point3CardText = useMemo(() => {
-    return isMobile ? Typography.mdMedium : Typography.lgMedium;
-  }, [isMobile]);
+  const mainSectionTab = responsiveTypography(
+    Typography.xl2Bold,
+    Typography.xlBold,
+    Typography.lgBold
+  );
+  const mainSectionText = responsiveTypography(
+    Typography.lg2Medium,
+    Typography.lgMedium,
+    Typography.mdMedium
+  );
+  const point3CardTitle = responsiveTypography(
+    Typography.lg2Bold,
+    Typography.lgBold,
+    Typography.lgBold
+  );
+  const point3CardText = responsiveTypography(
+    Typography.lgMedium,
+    Typography.mdMedium,
+    Typography.mdMedium
+  );
 
   return (
     <div className={styles.mainWrap}>
@@ -251,15 +258,11 @@ export default function Home() {
           <button className={point3CardText}>FAQ</button>
         </div>
         <div className={styles.snsBox}>
-          <button>
-            <Image src={EmailIcon} width={20} height={20} alt="이메일" />
-          </button>
-          <button>
-            <Image src={FacebookIcon} width={20} height={20} alt="페이스북" />
-          </button>
-          <button>
-            <Image src={InstaIcon} width={20} height={20} alt="인스타" />
-          </button>
+          {[EmailIcon, FacebookIcon, InstaIcon].map((icon, index) => (
+            <button key={index}>
+              <Image src={icon} width={20} height={20} alt="SNS" />
+            </button>
+          ))}
         </div>
       </footer>
     </div>
