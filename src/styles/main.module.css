@@ -1,13 +1,13 @@
 .mainWrap {
   background: #161519;
   position: relative;
+  overflow-x: hidden;
 }
 .mainWrap::after {
   content: "";
   width: 298px;
   height: 298px;
   background: var(--color-brand500);
-  opacity: 0.6;
   filter: blur(1000);
   position: absolute;
   top: 820px;
@@ -20,7 +20,6 @@
   width: 344px;
   height: 344px;
   background: var(--color-brand500);
-  opacity: 0.6;
   filter: blur(1000);
   position: absolute;
   top: 302px;
@@ -50,6 +49,7 @@
   color: var(--color-gray300);
 }
 .mainSectionTopWrap {
+  min-width: 1365px;
   padding: 159px 0 159px 240px;
   display: flex;
   justify-content: space-between;
@@ -57,6 +57,7 @@
   gap: 100px;
   z-index: 10;
   overflow: hidden;
+  position: relative;
 }
 .mainSectionTopWrap > .mainSectionTopMain {
   width: 510px;
@@ -80,59 +81,81 @@
   align-items: center;
   gap: 20px;
 }
-.mainSection .mainSectionCard {
+.mainSection .mainSectionCardBg:nth-of-type(2){
+  position: relative;
+}
+.mainSection .mainSectionCardBg:nth-of-type(2)::before{
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 400px;
+  height: 400px;
+  background: no-repeat center/100% url("../assets/images/main-bg-02.png");
+}
+.mainSection .mainSectionCardBg:nth-of-type(2)::after{
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: -165px;
+  width: 430px;
+  height: 790px;
+  background: no-repeat center/100% url("../assets/images/main-bg-01.png");
+}
+.mainSection .mainSectionCardBg .mainSectionCard {
   width: 1365px;
   margin: 0 auto;
   padding: 94px 0;
+  position: relative;
+  z-index: 1;
 }
-.mainSection .mainSectionCard:nth-of-type(2) {
+.mainSection .mainSectionCardBg:nth-of-type(2) .mainSectionCard {
   padding: 179px 0 0;
 }
-.mainSection .mainSectionCard:nth-of-type(3) {
+.mainSection .mainSectionCardBg:nth-of-type(3) .mainSectionCard {
   padding: 145px 0;
 }
-.mainSection .mainSectionCard:nth-of-type(3) .flexBox {
+.mainSection .mainSectionCardBg:nth-of-type(3) .mainSectionCard .flexBox {
   gap: 24px;
   padding-top: 30px;
 }
-.mainSection .mainSectionCard:nth-of-type(3) .flexBox .box {
+.mainSection .mainSectionCardBg:nth-of-type(3) .mainSectionCard .flexBox .box {
   width: 462px;
 }
-.mainSection .mainSectionCard .flexBox {
+.mainSection .mainSectionCardBg .mainSectionCard .flexBox {
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
-.mainSection .mainSectionCard .flexBox > .box > .imgBox {
+.mainSection .mainSectionCardBg .mainSectionCard .flexBox > .box > .imgBox {
   background: var(--color-background);
   padding: 59px 37px 0 37px;
   border-radius: 16px;
 }
-.mainSection .mainSectionCard .flexBox > .box > p {
+.mainSection .mainSectionCardBg .mainSectionCard .flexBox > .box > p {
   padding: 0 30px;
 }
-.mainSection .mainSectionCard .flexBox > .box > .title {
+.mainSection .mainSectionCardBg .mainSectionCard .flexBox > .box > .title {
   color: var(--color-gray300);
   padding: 28px 30px 10px;
 }
-.mainSection .mainSectionCard .flexBox > .box > .text {
+.mainSection .mainSectionCardBg .mainSectionCard .flexBox > .box > .text {
   color: var(--color-gray400);
 }
-.mainSection .mainSectionCard:nth-of-type(2) .flexBox {
+.mainSection .mainSectionCardBg:nth-of-type(2) .mainSectionCard .flexBox {
   flex-direction: row-reverse;
   position: relative;
 }
-.mainSection .mainSectionCard .textBox > span {
+.mainSection .mainSectionCardBg .mainSectionCard .textBox > span {
   color: var(--color-brand400);
-  font-size: 24px;
 }
-.mainSection .mainSectionCard .textBox > h3 {
+.mainSection .mainSectionCardBg .mainSectionCard .textBox > h3 {
   font-size: 50px;
   line-height: 140%;
   padding: 14px 0;
   color: var(--color-gray100);
 }
-.mainSection .mainSectionCard .textBox > p {
+.mainSection .mainSectionCardBg .mainSectionCard .textBox > p {
   line-height: 150%;
   color: var(--color-gray400);
 }
@@ -166,6 +189,254 @@
   align-items: center;
   gap: 14px;
 }
-.footer .snsBox > button{
-  filter: invert(70%) sepia(21%) saturate(180%) hue-rotate(212deg) brightness(88%) contrast(89%);
+.footer .snsBox > button > img {
+  filter: invert(75%) sepia(14%) saturate(281%) hue-rotate(212deg) brightness(85%) contrast(84%);
+}
+/* Tablet */
+@media (max-width: 744px) {
+  .mainWrap::after {
+    width: 200px;
+    height: 200px;
+    top: 147px;
+    left: 332px;
+    filter: blur(400);
+  }
+  .mainWrap::before {
+    display: none;
+  }
+  .header {
+    padding: 24px 30px;
+  }
+  .mainSectionTopWrap {
+    min-width: 100%;
+    padding: 61px 0 0 80px;
+    gap: 54px;
+  }
+  .mainSectionTopWrap > .mainSectionTopMain {
+    width: 293px;
+    flex-shrink: 0;
+  }
+  .mainSectionTopMain > h1 {
+    font-size: 34px;
+  }
+  .mainSectionTopMain > span {
+    font-size: 50px;
+    padding-bottom: 30px;
+  }
+  .mainSectionTopWrap .buttonBox {
+    flex-direction: column;
+  }
+  .mainSectionTopWrap .buttonBox > button {
+    width: 100%;
+  }
+  .mainSectionTopImg > img {
+    width: 317px;
+    height: 461px;
+  }
+  .mainSection .mainSectionCardBg:nth-of-type(2)::before{
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 200px;
+  height: 200px;
+  transform: scaleX(-1);
+  background: no-repeat center/100% url("../assets/images/main-bg-01.png");
+}
+.mainSection .mainSectionCardBg:nth-of-type(2)::after{
+  display: none;
+}
+  .mainSection .mainSectionCardBg .mainSectionCard {
+    width: 535px;
+    padding: 100px 0;
+  }
+  .mainSection .mainSectionCardBg:nth-of-type(2) .mainSectionCard {
+    padding: 100px 0;
+  }
+  .mainSection .mainSectionCardBg:nth-of-type(2) .mainSectionCard .flexBox::before{
+    position: relative;
+  }
+  .mainSection .mainSectionCardBg:nth-of-type(2) .mainSectionCard .flexBox::before{
+    content: "";
+    position:absolute;
+    z-index: 1;
+    left: -15px;
+    bottom: 220px; 
+    width: 535px;
+    height: 134px;
+    background: linear-gradient(transparent, #17161A);
+  }
+  .mainSection .mainSectionCardBg:nth-of-type(2) .mainSectionCard .flexBox > img{
+    width: 375px;
+    height: 524px;
+  }
+  .mainSection .mainSectionCardBg:nth-of-type(3) .mainSectionCard {
+    width: 560px;
+    padding: 100px 0;
+  }
+  .mainSection .mainSectionCardBg:nth-of-type(3) .mainSectionCard .flexBox {
+    gap: 50px;
+    padding-top: 30px;
+  }
+  .mainSection .mainSectionCardBg:nth-of-type(3) .mainSectionCard .flexBox .box {
+    width: 100%;
+  }
+  .mainSection .mainSectionCardBg .mainSectionCard .flexBox {
+    flex-direction: column;
+  }
+  .mainSection .mainSectionCardBg .mainSectionCard .flexBox > img {
+    width: 535px;
+    height: 446px;
+  }
+  .mainSection .mainSectionCardBg .mainSectionCard .flexBox > .box > .imgBox {
+    padding: 59px 96px 0 96px;
+  }
+  .mainSection .mainSectionCardBg .mainSectionCard .flexBox > .box > p {
+    padding: 0;
+  }
+  .mainSection .mainSectionCardBg .mainSectionCard .flexBox > .box > .title {
+    padding: 28px 0 10px;
+  }
+  .mainSection .mainSectionCardBg:nth-of-type(2) .mainSectionCard .flexBox {
+    flex-direction: column;
+  }
+  .mainSection .mainSectionCardBg .mainSectionCard .textBox {
+    width: 100%;
+  }
+  .mainSection .mainSectionCardBg .mainSectionCard .textBox > span {
+    display: block;
+    padding-top: 40px;
+  }
+  .mainSection .mainSectionCardBg .mainSectionCard .textBox > h3 {
+    font-size: 32px;
+    padding: 14px 0;
+  }
+  .footer {
+    padding: 24px 30px;
+  }
+}
+/* Mobile */
+@media (max-width: 375px) {
+  .mainWrap::after {
+    width: 200px;
+    height: 200px;
+    top: -13px;
+    left: 4px;
+    filter: blur(300);
+  }
+  .header {
+    padding: 15px 20px;
+  }
+  .header > .logo > img {
+    width: 140px;
+    height: 36px;
+  }
+  .header .headerButtonBox {
+    gap: 12px;
+  }
+  .mainSectionTopWrap {
+    min-width: 100%;
+    padding: 60px 30px;
+    gap: 54px;
+    text-align: center;
+  }
+  .mainSectionTopWrap .mainSectionTopMain {
+    width: 100%;
+  }
+  .mainSectionTopMain > h1 {
+    font-size: 24px;
+  }
+  .mainSectionTopMain > span {
+    font-size: 30px;
+    padding-bottom: 20px;
+  }
+  .mainSectionTopWrap .buttonBox {
+    flex-direction: row;
+    gap: 12px;
+  }
+  .mainSectionTopWrap .buttonBox > button {
+    width: 151px;
+  }
+  .mainSection .mainSectionCardBg:nth-of-type(2)::before{
+  width: 200px;
+  height: 200px;
+  transform: scaleX(1);
+  background: no-repeat center/100% url("../assets/images/main-bg-02.png");
+}
+  .mainSection .mainSectionCardBg .mainSectionCard {
+    width: 375px;
+    padding: 20px 30px 60px;
+  }
+  .mainSection .mainSectionCardBg:nth-of-type(2) .mainSectionCard{
+    padding: 40px 30px 60px;
+  }
+  .mainSection .mainSectionCardBg:nth-of-type(2) .mainSectionCard .flexBox{
+    position: relative;
+  }
+  .mainSection .mainSectionCardBg:nth-of-type(2) .mainSectionCard .flexBox > img{
+    width: 315px;
+    height: 640px;
+  }
+  .mainSection .mainSectionCardBg:nth-of-type(2) .mainSectionCard .flexBox::before{
+    bottom: 160px; 
+    width: 343px;
+    height: 342px;
+  }
+  .mainSection .mainSectionCardBg:nth-of-type(3) .mainSectionCard {
+    width: 375px;
+    padding: 40px 30px 60px;
+  }
+  .mainSection .mainSectionCardBg:nth-of-type(3) .mainSectionCard .flexBox {
+    gap: 44px;
+    padding-top: 40px;
+  }
+  .mainSection .mainSectionCardBg:nth-of-type(3) .mainSectionCard .flexBox .box {
+    width: 100%;
+  }
+  .mainSection .mainSectionCardBg:nth-of-type(3) .mainSectionCard .flexBox .box .imgBox {
+    padding: 25px 26px 0;
+  }
+  .mainSection .mainSectionCardBg:nth-of-type(3) .mainSectionCard .flexBox .box .imgBox > img {
+    width: 262px;
+    height: 170px;
+  }
+  .mainSection .mainSectionCardBg:nth-of-type(3) .mainSectionCard .textBox > span {
+    font-size: 16px;
+  }
+  .mainSection .mainSectionCardBg:nth-of-type(3) .mainSectionCard .textBox > h3 {
+    font-size: 24px;
+    padding: 12px 0;
+  }
+  .mainSection .mainSectionCardBg .mainSectionCard .flexBox > img {
+    width: 315px;
+    height: 262px;
+  }
+  .mainSection .mainSectionCardBg .mainSectionCard .flexBox .textBox > span {
+    padding-top: 30px;
+  }
+  .mainSection .mainSectionCardBg .mainSectionCard .flexBox .textBox > h3 {
+    padding: 12px 0;
+    font-size: 24px;
+  }
+  .footer {
+    padding: 15px 20px;
+    flex-direction: column;
+    gap: 25px;
+    align-items: start;
+  }
+  .footer > .logo > button > img {
+    width: 140px;
+    height: 36px;
+  }
+  .footer .faqBox {
+    gap: 20px;
+  }
+  .footer .faqBox > button {
+    color: var(--color-gray400);
+  }
+  .footer .snsBox {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
 }
