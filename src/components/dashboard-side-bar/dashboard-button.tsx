@@ -6,6 +6,7 @@ import Image from "next/image";
 import { MouseEventHandler, ReactNode } from "react";
 import ColorChip from "@/components/chips/chip-color/chips-color";
 import styles from "./dashboard-side-bar.module.css";
+import { useResponsiveValue } from "@/hooks/use-responsive-value";
 
 interface DashboardButtonProps {
   children: ReactNode;
@@ -25,6 +26,12 @@ export default function DashboardButton({
   const activeButton = active === true ? styles.active : "";
   const randomChip = Math.floor(Math.random() * 7);
 
+  const buttonText = useResponsiveValue({
+    desktop: Typography.lg2Bold,
+    tablet: Typography.lgBold,
+    mobile: Typography.lgBold,
+  })
+
   return (
     <button
       onClick={onClick}
@@ -32,7 +39,7 @@ export default function DashboardButton({
     >
       <ColorChip size={CommonSize.Small} color={CHIP_COLORS[randomChip]} />
       <span
-        className={`${active === true ? Typography.lg2Bold : Typography.lg2Medium}`}
+        className={buttonText}
       >
         {children}
       </span>
