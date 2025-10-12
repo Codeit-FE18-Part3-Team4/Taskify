@@ -4,9 +4,9 @@ import InstaIcon from "@/assets/images/instagram.svg";
 import MainTabletImg from "@/assets/images/main-01-tablet.png";
 import MainImg from "@/assets/images/main-01.png";
 import FirstCardImg from "@/assets/images/main-02.png";
-import SeconCardMobileImg from "@/assets/images/main-03-mobile.png";
-import SeconCardTabletImg from "@/assets/images/main-03-tablet.png";
-import SeconCardImg from "@/assets/images/main-03.png";
+import SecondCardMobileImg from "@/assets/images/main-03-mobile.png";
+import SecondCardTabletImg from "@/assets/images/main-03-tablet.png";
+import SecondCardImg from "@/assets/images/main-03.png";
 import CardInFirstImg from "@/assets/images/main-04.png";
 import CardInSeconImg from "@/assets/images/main-05.png";
 import CardInThirdImg from "@/assets/images/main-06.png";
@@ -16,9 +16,9 @@ import Typography from "@/components/typography";
 import { useSsrResponsive } from "@/hooks/use-ssr-responsive";
 import styles from "@/styles/main.module.css";
 import { classnames } from "@/utils/classnames";
+import { useResponsiveValue } from "@/hooks/use-responsive-value";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { useMemo } from "react";
 
 export default function Home() {
   const router = useRouter();
@@ -31,49 +31,46 @@ export default function Home() {
     router.push("/signup");
   };
 
-  const { isTablet, isMobile } = useSsrResponsive();
-  const responsiveMainImg = useMemo(() => {
-    return isTablet ? MainTabletImg : MainImg;
-  }, [isTablet]);
+  const { isMobile } = useSsrResponsive();
 
-  const responsiveSecondImg = useMemo(() => {
-    return isTablet
-      ? SeconCardTabletImg
-      : isMobile
-        ? SeconCardMobileImg
-        : SeconCardImg;
-  }, [isTablet, isMobile]);
+  const responsiveMainImg = useResponsiveValue({
+    desktop: MainImg,
+    tablet: MainTabletImg,
+    mobile: MainTabletImg,
+  })
 
-  const responsiveTypography = (
-    desktop: string,
-    tablet: string,
-    mobile: string
-  ) => {
-    if (isTablet) return tablet;
-    if (isMobile) return mobile;
-    return desktop;
-  };
+  const responsiveButton = useResponsiveValue({
+    desktop: ButtonSize.Large,
+    tablet: ButtonSize.Large,
+    mobile: ButtonSize.Medium,
+  });
 
-  const mainSectionTab = responsiveTypography(
-    Typography.xl2Bold,
-    Typography.xlBold,
-    Typography.lgBold
-  );
-  const mainSectionText = responsiveTypography(
-    Typography.lg2Medium,
-    Typography.lgMedium,
-    Typography.mdMedium
-  );
-  const point3CardTitle = responsiveTypography(
-    Typography.lg2Bold,
-    Typography.lgBold,
-    Typography.lgBold
-  );
-  const point3CardText = responsiveTypography(
-    Typography.lgMedium,
-    Typography.mdMedium,
-    Typography.mdMedium
-  );
+  const responsiveSecondImg = useResponsiveValue({
+    desktop: SecondCardImg,
+    tablet: SecondCardTabletImg,
+    mobile: SecondCardMobileImg,
+  });
+
+  const mainSectionTab = useResponsiveValue({
+    desktop: Typography.xl2Bold,
+    tablet: Typography.xlBold,
+    mobile: Typography.lgBold,
+  });
+  const mainSectionText = useResponsiveValue({
+    desktop: Typography.lg2Medium,
+    tablet: Typography.lgMedium,
+    mobile: Typography.mdMedium,
+  });
+  const point3CardTitle = useResponsiveValue({
+    desktop: Typography.lg2Bold,
+    tablet: Typography.lgBold,
+    mobile: Typography.lgBold,
+  });
+  const point3CardText = useResponsiveValue({
+    desktop: Typography.lgMedium,
+    tablet: Typography.mdMedium,
+    mobile: Typography.mdMedium,
+  });
 
   return (
     <div className={styles.mainWrap}>
@@ -105,14 +102,11 @@ export default function Home() {
               <Button
                 onClick={handleClickSignupPage}
                 variant={ButtonVariant.Secondary}
-                size={isMobile ? ButtonSize.Medium : ButtonSize.Large}
+                size={responsiveButton}
               >
                 회원가입하기
               </Button>
-              <Button
-                onClick={handleClickLoginPage}
-                size={isMobile ? ButtonSize.Medium : ButtonSize.Large}
-              >
+              <Button onClick={handleClickLoginPage} size={responsiveButton}>
                 로그인하기
               </Button>
             </div>
