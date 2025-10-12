@@ -1,0 +1,54 @@
+.profile {
+  border-radius: 50%;
+}
+
+.profile span {
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  height: 100%;
+  overflow: hidden;
+  color: #ffffff;
+}
+
+.alignCenter {
+  justify-content: center;
+}
+
+.alignStart {
+  justify-content: flex-start;
+}
+
+.naviType {
+  border: 2px solid #1b1a1f;
+}
+
+.xsmall {
+  width: 20px;
+  height: 20px;
+  font-size: 8px;
+}
+
+.small {
+  width: 24px;
+  height: 24px;
+  font-size: 10px;
+}
+
+.medium {
+  width: 26px;
+  height: 26px;
+  font-size: 12px;
+}
+
+.large {
+  width: 30px;
+  height: 30px;
+  font-size: 12px;
+}
+
+.xlarge {
+  width: 34px;
+  height: 34px;
+  font-size: 13px;
+}

@@ -1,7 +1,10 @@
 import Alert, { AlertActionType } from "@/components/alert";
 import Button, { ButtonSize, ButtonVariant } from "@/components/button/button";
-import BadgeChip from "@/components/chips/badge";
-import BoardColorChip from "@/components/chips/chips-color";
+import Checkbox from "@/components/checkbox/index";
+import Badge from "@/components/chips/badge/badge";
+import { CHIP_COLORS } from "@/components/chips/chip-color/chip-colors";
+import ColorChip from "@/components/chips/chip-color/chips-color";
+import { ColorFrameSize } from "@/components/chips/color-frame/color-frame-size";
 import ColorPalette from "@/components/color-palette/color-palette";
 import Dialog from "@/components/dialog";
 import Input, { InputSize, InputVariant } from "@/components/input/input";
@@ -10,10 +13,9 @@ import Modal from "@/components/modal";
 import Sheet, { SheetActionType } from "@/components/sheet";
 import SheetSection from "@/components/sheet/sheet-section";
 import Typography from "@/components/typography";
-import { CHIP_COLORS } from "@/constants/chips/chip-colors";
-import { ColorFrameSize } from "@/constants/chips/color-frame-size";
-import { ProfileColor } from "@/constants/chips/profile-colors";
 import { CommonSize } from "@/constants/common/common-size";
+import { ProfileRandomColor } from "@/constants/profile-random-color";
+import ImageInput from "@/features/edit-task/components/image-input";
 import { useAlert } from "@/hooks/use-alert";
 import { useDialog } from "@/hooks/use-dialog";
 import { useModal } from "@/hooks/use-modal";
@@ -306,15 +308,15 @@ function InputBox() {
       {sizes.map((size) => (
         <div key={size} style={{ display: "inline-block", margin: "8px" }}>
           <div style={{ marginBottom: "8px" }}>
-            <Input $size={size} placeholder="placeholder" />
+            <Input size={size} placeholder="placeholder" />
           </div>
           <div style={{ marginBottom: "8px" }}>
-            <Input $size={size} placeholder="Disabled" disabled />
+            <Input size={size} placeholder="Disabled" disabled />
           </div>
           <div style={{ marginBottom: "8px" }}>
             <div>
               <Input
-                $size={size}
+                size={size}
                 placeholder="Invalid Input"
                 errorMessage="Error Message"
               />
@@ -322,14 +324,14 @@ function InputBox() {
           </div>
           <div style={{ marginBottom: "8px" }}>
             <Input
-              $size={size}
+              size={size}
               placeholder="Search Input"
               variant={InputVariant.Search}
             />
           </div>
           <div>
             <Input
-              $size={size}
+              size={size}
               placeholder="Password Input"
               variant={InputVariant.Password}
             />
@@ -400,11 +402,99 @@ function TextareaBox() {
   );
 }
 
+function ColorChipSample() {
+  return (
+    <>
+      {Object.values(CommonSize)
+        .filter((value) => typeof value === "number")
+        .map((size) => (
+          <div
+            key={size}
+            style={{
+              display: "flex",
+              gap: "10px",
+            }}
+          >
+            {CHIP_COLORS.map((item, index) => (
+              <ColorChip key={index} color={item} size={size} />
+            ))}
+          </div>
+        ))}
+    </>
+  );
+}
+
+function BadgeSample() {
+  return (
+    <>
+      <div
+        style={{
+          display: `flex`,
+          gap: `10px`,
+        }}
+      >
+        {Object.values(ProfileRandomColor).map((profile, colorIndex) => (
+          <Badge key={colorIndex} title={"태그내용"} colorIndex={colorIndex} />
+        ))}
+      </div>
+    </>
+  );
+}
+
+function ColorPaletteSample() {
+  const sizes = Object.values(ColorFrameSize);
+  const [selectedColors, setSelectedColors] = useState<string[]>(
+    sizes.map(() => "")
+  );
+
+  const handleSelect = (index: number, color: string) => {
+    setSelectedColors((prev) => {
+      const newArr = [...prev];
+      newArr[index] = color;
+      return newArr;
+    });
+  };
+
+  return (
+    <>
+      <div>
+        {Object.values(ColorFrameSize).map((value, index) => (
+          <div
+            style={{
+              margin: "10px 0",
+              width:
+                value === "xsmall"
+                  ? "295px"
+                  : value === "small"
+                    ? "335px"
+                    : value === "medium"
+                      ? "446px"
+                      : "740px",
+            }}
+          >
+            <ColorPalette
+              selectedColor={selectedColors[index]}
+              onSelect={(color) => handleSelect(index, color)}
+              size={value}
+            />
+          </div>
+        ))}
+      </div>
+      <p>💣선택된 색: {selectedColors}</p>
+    </>
+  );
+}
+
 function SheetSample() {
   const SHEET_KEY = "SHEET_SAMPLE";
   const { isShowSheet, openSheet } = useSheet({
     key: SHEET_KEY,
   });
+  const [image, setImage] = useState<File | null>(null);
+
+  const handleImageChange = (file: File) => {
+    setImage(file);
+  };
 
   return (
     <>
@@ -424,8 +514,8 @@ function SheetSample() {
             <SheetSection title="설명" required>
               <input />
             </SheetSection>
-            <SheetSection title="태그">
-              <input />
+            <SheetSection title="이미지">
+              <ImageInput onChange={handleImageChange} />
             </SheetSection>
           </Sheet>
         )}
@@ -435,19 +525,6 @@ function SheetSample() {
 }
 
 export default function Page() {
-  const sizes = Object.values(ColorFrameSize);
-  const [selectedColors, setSelectedColors] = useState<string[]>(
-    sizes.map(() => "")
-  );
-
-  const handleSelect = (index: number, color: string) => {
-    setSelectedColors((prev) => {
-      const newArr = [...prev];
-      newArr[index] = color;
-      return newArr;
-    });
-  };
-
   return (
     <main style={{ padding: "24px" }}>
       <header>
@@ -480,65 +557,13 @@ export default function Page() {
         <InputBox />
         <TextareaBox />
       </Section>
+      <Section title="Checkbox">
+        <Checkbox />
+      </Section>
       <Section title="Chip">
-        <p>This is a section about chip.</p>
-        {Object.values(CommonSize)
-          .filter((value) => typeof value === "number")
-          .map((size) => (
-            <div
-              key={size}
-              style={{
-                display: "flex",
-                gap: "10px",
-              }}
-            >
-              {CHIP_COLORS.map((item, index) => (
-                <BoardColorChip key={index} color={item} size={size} />
-              ))}
-            </div>
-          ))}
-
-        <div
-          style={{
-            display: `flex`,
-            gap: `10px`,
-          }}
-        >
-          {Object.values(ProfileColor)
-            .filter((value) => typeof value === "number")
-            .map((colorIndex) => (
-              <BadgeChip
-                key={colorIndex}
-                title={"태그내용"}
-                colorIndex={colorIndex as ProfileColor}
-              />
-            ))}
-        </div>
-
-        <div>
-          {Object.values(ColorFrameSize).map((value, index) => (
-            <div
-              style={{
-                margin: "10px 0",
-                width:
-                  value === "xsmall"
-                    ? "295px"
-                    : value === "small"
-                      ? "335px"
-                      : value === "medium"
-                        ? "446px"
-                        : "740px",
-              }}
-            >
-              <ColorPalette
-                selectedColor={selectedColors[index]}
-                onSelect={(color) => handleSelect(index, color)}
-                size={value}
-              />
-            </div>
-          ))}
-        </div>
-        <p>💣선택된 색: {selectedColors}</p>
+        <ColorChipSample />
+        <BadgeSample />
+        <ColorPaletteSample />
       </Section>
       <Section title="Modal">
         <ModalSample />

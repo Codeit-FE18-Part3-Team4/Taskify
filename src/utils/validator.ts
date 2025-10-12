@@ -5,3 +5,7 @@ export function validateEmail(email: string) {
 export function validatePassword(password: string) {
   return password.length >= 8;
 }
+
+export function validateNickname(nickname: string) {
+  return nickname.length <= 10;
+}

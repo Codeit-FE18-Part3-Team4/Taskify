@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import styles from "./color-palette.module.css";
-import ColorFrame from "@/components/chips/color-frame";
-import { ColorFrameSize } from "@/constants/chips/color-frame-size";
-import { CHIP_COLORS } from "@/constants/chips/chip-colors";
+import ColorFrame from "@/components/chips/color-frame/color-frame";
+import { ColorFrameSize } from "@/components/chips/color-frame/color-frame-size";
+import { CHIP_COLORS } from "@/components/chips/chip-color/chip-colors";
 
 interface ColorPaletteProps {
   selectedColor?: string | null;

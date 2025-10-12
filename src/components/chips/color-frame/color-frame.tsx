@@ -1,6 +1,9 @@
 import styles from "./color-frame.module.css";
-import { CHIP_COLORS, type ChipColor } from "@/constants/chips/chip-colors";
-import { ColorFrameSize } from "@/constants/chips/color-frame-size";
+import {
+  CHIP_COLORS,
+  type ChipColor,
+} from "@/components/chips/chip-color/chip-colors";
+import { ColorFrameSize } from "@/components/chips/color-frame/color-frame-size";
 import { ButtonHTMLAttributes } from "react";
 
 interface ColorFrameProps extends ButtonHTMLAttributes<HTMLButtonElement> {
