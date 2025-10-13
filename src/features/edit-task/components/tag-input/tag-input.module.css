@@ -58,7 +58,17 @@
   display: flex;
   flex-direction: column;
   list-style: none;
+  max-height: calc(32px * 6); /* 최대 6개 항목 표시 */
+  overflow-y: auto;
 }
+.combobox > .options::-webkit-scrollbar {
+  width: 6px;
+}
+.combobox > .options::-webkit-scrollbar-thumb {
+  background-color: var(--color-gray700);
+  border-radius: 3px;
+}
+
 .combobox > .options > li {
   width: 100%;
   padding: 4px 18px;
