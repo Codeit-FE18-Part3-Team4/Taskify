@@ -1,11 +1,14 @@
 import styles from "./profile.module.css";
-import { ProfileColorsArray, RemainProfileColor } from "@/constants/profile-random-color";
+import {
+  ProfileColorsArray,
+  RemainProfileColor,
+} from "@/constants/profile-random-color";
 import { ProfileSize } from "@/components/profile/profile-size";
 import { ProfileType } from "@/components/profile/profile-type";
 import typographyStyles from "@/components/typography/typography.module.css";
 import { classnames } from "@/utils/classnames";
 import { useMemo } from "react";
-import { getColorIndex, getVisualLength } from "@/utils/string-converter";
+import { colorFromString, getVisualLength } from "@/utils/string-hashing";
 
 interface ProfileProps {
   size?: ProfileSize;
@@ -26,7 +29,7 @@ export default function Profile({
     if (colorIndex !== undefined) {
       return colorIndex % ProfileColorsArray.length;
     }
-    return getColorIndex(name, ProfileColorsArray.length);
+    return colorFromString(name, ProfileColorsArray.length);
   }, [colorIndex, name]);
 
   const color = isRemain
@@ -34,7 +37,8 @@ export default function Profile({
     : ProfileColorsArray[calculateColorIndex];
 
   const visualLength = getVisualLength(name);
-  const spanClasses = visualLength >= 5 ? styles.alignStart : styles.alignCenter;
+  const spanClasses =
+    visualLength >= 5 ? styles.alignStart : styles.alignCenter;
 
   const profileClasses = classnames(
     styles.profile,

@@ -1,11 +1,9 @@
-export function calculateString(str: string): number {
-  return str.split("").reduce((acc, char, index) => {
-    return acc + char.charCodeAt(0) * (index + 1);
-  }, 0);
-}
-
-export function getColorIndex(str: string, arrayLength: number): number {
-  return calculateString(str) % arrayLength;
+export function colorFromString(str: string, arrayLength: number): number {
+  return (
+    str.split("").reduce((acc, char, index) => {
+      return acc + char.charCodeAt(0) * (index + 1);
+    }, 0) % arrayLength
+  );
 }
 
 export function getVisualLength(str: string): number {
