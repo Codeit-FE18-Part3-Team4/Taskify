@@ -9,9 +9,12 @@ export function getColorIndex(str: string, arrayLength: number): number {
 }
 
 export function getVisualLength(str: string): number {
+  const KOREAN_LETTER_START = 0xac00;
+  const KOREAN_LETTER_END = 0xd7af;
+
   return str.split("").reduce((acc, char) => {
     const code = char.charCodeAt(0);
-    if (code >= 0xac00 && code <= 0xd7af) {
+    if (code >= KOREAN_LETTER_START && code <= KOREAN_LETTER_END) {
       return acc + 2;
     }
     return acc + 1;
