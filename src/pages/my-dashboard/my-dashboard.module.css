@@ -1,0 +1,96 @@
+.myDashboardWrap {
+  display: flex;
+}
+.myDashboardMainWrap {
+  width: 100%;
+  background: var(--color-background);
+}
+.myDashboardMain {
+  padding: 0 50px;
+}
+.myDashboardMain h1 {
+  color: var(--color-gray100);
+  padding: 24px 0 14px;
+}
+.myDashboardMain .dashboardSection {
+  padding-bottom: 50px;
+}
+.myDashboardMain .dashboardSection h2 {
+  color: var(--color-gray100);
+  padding: 8px 0;
+  margin-bottom: 20px;
+}
+.myDashboardMain .dashboardSection .emptyDashboard {
+  background: var(--color-black800);
+  border: 1px solid var(--color-gray700);
+  border-radius: 30px;
+  text-align: center;
+  min-width: 332px;
+}
+.myDashboardMain .dashboardSection .emptyDashboard > p {
+  padding-top: 26px;
+  color: var(--color-gray400);
+}
+.myDashboardMain .dashboardSection .emptyDashboard button {
+  background: var(--color-gray900);
+  border: none;
+  border-radius: 100px;
+  width: 107px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  gap: 4px;
+  color: var(--color-gray100);
+  cursor: pointer;
+}
+.myDashboardMain .dashboardSection .emptyDashboard button > img {
+  filter: invert(95%) sepia(32%) saturate(127%) hue-rotate(182deg)
+    brightness(87%) contrast(95%);
+}
+.myDashboardMain .dashboardSection:nth-of-type(1) .emptyDashboard {
+  padding: 40px 0;
+}
+.myDashboardMain .dashboardSection:nth-of-type(1) .emptyDashboard > p {
+  padding-bottom: 20px;
+}
+.myDashboardMain .dashboardSection:nth-of-type(2) .emptyDashboard {
+  padding: 70px 0;
+}
+
+/* Tablet */
+@media (max-width: 774px) {
+  .myDashboardMain {
+    padding: 0 30px;
+  }
+  .myDashboardMain .dashboardSection h2 {
+    margin-bottom: 10px;
+  }
+  .myDashboardMain .dashboardSection:nth-of-type(1) .emptyDashboard > img {
+    width: 65px;
+    height: 55px;
+  }
+  .myDashboardMain .dashboardSection:nth-of-type(2) .emptyDashboard > img {
+    width: 65px;
+    height: 60px;
+  }
+  .myDashboardMain .dashboardSection {
+    padding-bottom: 20px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 375px) {
+  .myDashboardMain {
+    padding: 0 20px;
+  }
+  .myDashboardMain .dashboardSection:nth-of-type(1) .emptyDashboard > img {
+    width: 60px;
+    height: 60px;
+  }
+  .myDashboardMain .dashboardSection:nth-of-type(2) .emptyDashboard > img {
+    width: 60px;
+    height: 60px;
+  }
+}
