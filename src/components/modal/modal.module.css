@@ -14,6 +14,11 @@
   background-color: var(--color-modalBackground);
   border-radius: 24px;
   border: 1px solid var(--color-stroke);
+  overflow: hidden;
+}
+.content.fullscreen {
+  border: none;
+  border-radius: 0px;
 }
 
 @keyframes fadeIn {
