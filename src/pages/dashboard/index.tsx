@@ -6,7 +6,7 @@ import Column from "@/components/dashboard/column/column";
 
 export default function DashboardPage() {
   return (
-    <div className="DashboardContainer">
+    <div>
       <Column />
     </div>
   );
