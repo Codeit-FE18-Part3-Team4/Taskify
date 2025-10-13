@@ -16,7 +16,6 @@ function Input({ onChange }: { onChange: FileChangeHandler }) {
     useFileDragAndDrop<HTMLLabelElement>({
       fileType: "image/",
       onDrop: (file) => {
-        console.log("Drop File in ImageInput: ", file);
         onChange(file);
       },
     });
@@ -27,7 +26,6 @@ function Input({ onChange }: { onChange: FileChangeHandler }) {
 
   const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
-    console.log("Change File in ImageInput: ", file);
     if (!file) return;
     onChange(file);
   };
