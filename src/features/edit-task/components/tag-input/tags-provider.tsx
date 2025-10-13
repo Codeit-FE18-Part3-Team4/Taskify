@@ -21,11 +21,7 @@ interface Props {
 }
 
 export default function TagsProvider({ children }: Props) {
-  const [tagsHistory, setTagsHistory] = useState<string[]>([
-    "프로젝트",
-    "디자인",
-    "상",
-  ]);
+  const [tagsHistory, setTagsHistory] = useState<string[]>([]);
 
   return (
     <TagsContext value={{ tagsHistory, setTagsHistory }}>
