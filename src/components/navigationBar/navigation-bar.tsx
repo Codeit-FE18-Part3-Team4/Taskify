@@ -40,6 +40,8 @@ export default function NavigationBar({
   if (members.length > 6) {
     showMembers = members.slice(0, 5);
     hideMembers = members.slice(5);
+  } else {
+    showMembers = members;
   }
 
   return (

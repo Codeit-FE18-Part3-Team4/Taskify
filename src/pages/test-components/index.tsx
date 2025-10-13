@@ -12,6 +12,9 @@ import Dialog from "@/components/dialog";
 import Input, { InputSize, InputVariant } from "@/components/input/input";
 import Textarea from "@/components/input/textarea";
 import Modal from "@/components/modal";
+import Profile from "@/components/profile/profile";
+import { ProfileSize } from "@/components/profile/profile-size";
+import { ProfileType } from "@/components/profile/profile-type";
 import Sheet, { SheetActionType } from "@/components/sheet";
 import SheetSection from "@/components/sheet/sheet-section";
 import Typography from "@/components/typography";
@@ -435,8 +438,8 @@ function BadgeSample() {
           gap: `10px`,
         }}
       >
-        {Object.values(ProfileRandomColor).map((profile, colorIndex) => (
-          <Badge key={colorIndex} title={"태그내용"} colorIndex={colorIndex} />
+        {Object.values(ProfileRandomColor).map((profile, index) => (
+          <Badge key={index} title={"태그내용"} />
         ))}
       </div>
     </>
@@ -526,6 +529,28 @@ function SheetSample() {
   );
 }
 
+function ProfileSample() {
+  return (
+    <>
+      <div style={{ display: "flex" }}>
+        {Array.from({ length: 7 }, (_, i) => (
+          <Profile
+            key={i}
+            type={ProfileType.NavigationBar}
+            name={`kim_${i}`}
+            size={ProfileSize.XLarge}
+          />
+        ))}
+      </div>
+      <div style={{ display: "flex" }}>
+        <Profile size={ProfileSize.XLarge} name="Lee" />
+        <Profile size={ProfileSize.XLarge} name="Lee" />
+        <Profile size={ProfileSize.XLarge} name="김아무개" />
+      </div>
+    </>
+  );
+}
+
 export default function Page() {
   const [dashboards, setDashboards] = useState<any[]>([]);
   useEffect(() => {
@@ -594,6 +619,9 @@ export default function Page() {
       </Section>
       <Section title="SideBar">
         <DashboardSideBar dashboards={dashboards} />
+      </Section>
+      <Section title="profile">
+        <ProfileSample />
       </Section>
     </main>
   );
