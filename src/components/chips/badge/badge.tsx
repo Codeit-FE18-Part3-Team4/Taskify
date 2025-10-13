@@ -1,6 +1,7 @@
 import styles from "./badge.module.css";
 import { BADGE_COLORS } from "@/components/chips/badge/badge-colors";
 import typographyStyles from "@/components/typography/typography.module.css";
+import { getColorIndex } from "@/utils/string-converter";
 import { useMemo } from "react";
 
 interface BadgeProps {
@@ -14,10 +15,7 @@ export default function Badge({ title }: BadgeProps) {
   if (!trimmedTitle) return null;
 
   const calculateColorIndex = useMemo(() => {
-    const hash = title.split("").reduce((acc, char, index) => {
-      return acc + char.charCodeAt(0) * (index + 1);
-    }, 0);
-    return hash % BADGE_COLORS.length;
+    return getColorIndex(title, BADGE_COLORS.length);
   }, [title]);
 
   return (
