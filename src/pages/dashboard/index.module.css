@@ -1,8 +1,13 @@
 .layoutContainer {
   display: flex;
+  background-color: var(--color-background);
 }
 
 .main {
   flex: 1;
   padding: 20px;
+}
+
+.columnWrapper {
+  display: flex;
 }
