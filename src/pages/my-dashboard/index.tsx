@@ -23,7 +23,7 @@ export default function MyDashboard() {
   return (
     <div className={styles.myDashboardWrap}>
       {!isMobile && <DashboardSideBar dashboards={dashboards} />}
-      <MyDashboardMain />
+      <MyDashboardMain dashboards={dashboards} />
     </div>
   );
 }

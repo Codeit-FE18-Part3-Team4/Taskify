@@ -1,0 +1,68 @@
+{
+  "cursorId": 3,
+  "invitations": [
+    {
+      "id": 1,
+      "inviter": {
+        "nickname": "홍길동",
+        "email": "hong.gildong@example.com",
+        "id": 101
+      },
+      "teamId": "team-alpha",
+      "dashboard": {
+        "title": "마케팅 성과 대시보드",
+        "id": 501
+      },
+      "invitee": {
+        "nickname": "이영희",
+        "email": "lee.younghee@example.com",
+        "id": 202
+      },
+      "inviteAccepted": true,
+      "createdAt": "2025-09-25T14:12:33.000Z",
+      "updatedAt": "2025-09-26T09:05:42.000Z"
+    },
+    {
+      "id": 2,
+      "inviter": {
+        "nickname": "김철수",
+        "email": "kim.cs@example.com",
+        "id": 102
+      },
+      "teamId": "team-beta",
+      "dashboard": {
+        "title": "프로젝트 관리 현황판",
+        "id": 502
+      },
+      "invitee": {
+        "nickname": "박민수",
+        "email": "park.ms@example.com",
+        "id": 203
+      },
+      "inviteAccepted": false,
+      "createdAt": "2025-10-01T08:45:19.000Z",
+      "updatedAt": "2025-10-01T08:45:19.000Z"
+    },
+    {
+      "id": 3,
+      "inviter": {
+        "nickname": "최수정",
+        "email": "choi.sj@example.com",
+        "id": 103
+      },
+      "teamId": "team-gamma",
+      "dashboard": {
+        "title": "매출 분석 리포트",
+        "id": 503
+      },
+      "invitee": {
+        "nickname": "오지훈",
+        "email": "oh.jh@example.com",
+        "id": 204
+      },
+      "inviteAccepted": true,
+      "createdAt": "2025-10-10T12:22:10.000Z",
+      "updatedAt": "2025-10-13T09:34:53.715Z"
+    }
+  ]
+}
