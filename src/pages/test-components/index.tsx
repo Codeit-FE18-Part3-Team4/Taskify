@@ -435,8 +435,8 @@ function BadgeSample() {
           gap: `10px`,
         }}
       >
-        {Object.values(ProfileRandomColor).map((profile, colorIndex) => (
-          <Badge key={colorIndex} title={"태그내용"} colorIndex={colorIndex} />
+        {Object.values(ProfileRandomColor).map((profile, index) => (
+          <Badge key={index} title={"태그내용"} />
         ))}
       </div>
     </>
