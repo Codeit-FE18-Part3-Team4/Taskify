@@ -1,0 +1,25 @@
+{
+  "data": [
+    {
+      "id": 0,
+      "title": "To-do",
+      "teamId": "18-4",
+      "createdAt": "2025-10-13T19:04:49.111Z",
+      "updatedAt": "2025-10-14T19:09:49.111Z"
+    },
+    {
+      "id": 1,
+      "title": "On Progress",
+      "teamId": "18-4",
+      "createdAt": "2025-10-13T19:04:49.111Z",
+      "updatedAt": "2025-10-14T19:09:49.111Z"
+    },
+    {
+      "id": 2,
+      "title": "Done",
+      "teamId": "18-4",
+      "createdAt": "2025-10-13T19:04:49.111Z",
+      "updatedAt": "2025-10-14T19:09:49.111Z"
+    }
+  ]
+}
