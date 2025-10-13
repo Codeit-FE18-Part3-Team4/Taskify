@@ -1,17 +1,20 @@
-import { MouseEventHandler } from 'react'
-import UserProfile from './user-profile'
-import Header from './header'
-import Main from './main'
-import styles from './dashboard-side-bar.module.css'
+import styles from "./dashboard-side-bar.module.css";
+import Header from "./header";
+import Main from "./main";
+import UserProfile from "./user-profile";
 
+interface DashboardSideBarProps {
+  dashboards: any[];
+};
 
-
-export default function DashboardSideBar() {
+export default function DashboardSideBar({
+  dashboards,
+}: DashboardSideBarProps) {
   return (
     <div className={styles.sideBar}>
       <Header />
-      <Main/>
-      <UserProfile name={'박민영'} profileImageUrl='' />
+      <Main dashboards={dashboards} />
+      <UserProfile name={"박민영"} profileImageUrl="" />
     </div>
-  )
+  );
 }
