@@ -1,3 +1,5 @@
+import { LETTER_RANGES } from "@/types/locale";
+
 export function colorFromString(str: string, arrayLength: number): number {
   return (
     str.split("").reduce((acc, char, index) => {
@@ -6,13 +8,13 @@ export function colorFromString(str: string, arrayLength: number): number {
   );
 }
 
-export function getVisualLength(str: string): number {
-  const KOREAN_LETTER_START = 0xac00;
-  const KOREAN_LETTER_END = 0xd7af;
-
+export function localeLengthKR(str: string): number {
   return str.split("").reduce((acc, char) => {
     const code = char.charCodeAt(0);
-    if (code >= KOREAN_LETTER_START && code <= KOREAN_LETTER_END) {
+    if (
+      code >= LETTER_RANGES.KOREAN.start &&
+      code <= LETTER_RANGES.KOREAN.end
+    ) {
       return acc + 2;
     }
     return acc + 1;

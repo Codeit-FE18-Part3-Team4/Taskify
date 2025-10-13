@@ -8,7 +8,7 @@ import { ProfileType } from "@/components/profile/profile-type";
 import typographyStyles from "@/components/typography/typography.module.css";
 import { classnames } from "@/utils/classnames";
 import { useMemo } from "react";
-import { colorFromString, getVisualLength } from "@/utils/string-hashing";
+import { colorFromString, localeLengthKR } from "@/utils/string-hashing";
 
 interface ProfileProps {
   size?: ProfileSize;
@@ -36,7 +36,7 @@ export default function Profile({
     ? RemainProfileColor.backgroundColor
     : ProfileColorsArray[calculateColorIndex];
 
-  const visualLength = getVisualLength(name);
+  const visualLength = localeLengthKR(name);
   const spanClasses =
     visualLength >= 5 ? styles.alignStart : styles.alignCenter;
 
