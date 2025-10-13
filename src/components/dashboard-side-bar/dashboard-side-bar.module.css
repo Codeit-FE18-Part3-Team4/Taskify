@@ -35,8 +35,6 @@
 }
 .dashboardAdd > span {
   color: var(--color-gray400);
-  font-size: 16px;
-  font-weight: 700;
 }
 .dashboardAdd > img {
   filter: invert(73%) sepia(15%) saturate(271%) hue-rotate(212deg)
@@ -66,7 +64,11 @@
   align-items: center;
   gap: 8px;
 }
-.dashboardButton > svg{
+.dashboardButton:hover{
+  background: var(--color-black700);
+  border-radius: 10px;
+}
+.dashboardButton > svg {
   padding: 0;
 }
 .dashboardButton > .crownIcon {
@@ -144,4 +146,37 @@
 .dashboardPagenation > button > img {
   filter: invert(90%) sepia(3%) saturate(108%) hue-rotate(218deg)
     brightness(108%) contrast(98%);
+}
+/* Tablet */
+@media (max-width: 745px) {
+  .sideBar {
+    width: 220px;
+  }
+  .logo {
+    padding: 0 10px;
+  }
+  .logo > img {
+    width: 130px;
+    height: 34px;
+  }
+  .main {
+    padding: 0 10px;
+  }
+  .dashboardButton {
+    width: 100%;
+    height: 50px;
+    padding: 15px 15px 15px 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+  }
+  .dashboardButton > .crownIcon {
+    width: 16px;
+    height: 16px;
+  }
+  .footer .userProfile {
+    width: 26px;
+    height: 26px;
+  }
 }

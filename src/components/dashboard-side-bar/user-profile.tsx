@@ -1,5 +1,6 @@
 import SettingIcon from "@/assets/images/ic-setting.svg";
 import Typography from "@/components/typography";
+import { useResponsiveValue } from "@/hooks/use-responsive-value";
 import Image from "next/image";
 import styles from "./dashboard-side-bar.module.css";
 
@@ -16,6 +17,12 @@ export default function UserProfile({
   name,
   profileImageUrl,
 }: UserProfileProps) {
+  const userName = useResponsiveValue({
+    desktop: Typography.lgBold,
+    tablet: Typography.mdBold,
+    mobile: Typography.mdBold
+  })
+
   return (
     <div className={styles.footer}>
       <div className={styles.userBox}>
@@ -31,7 +38,7 @@ export default function UserProfile({
             <span>{sliceUserName(name)}</span>
           )}
         </div>
-        <p className={Typography.lgBold}>{name}</p>
+        <p className={userName}>{name}</p>
       </div>
       <button className={styles.button}>
         <Image src={SettingIcon} width={20} height={20} alt="세팅 아이콘" />

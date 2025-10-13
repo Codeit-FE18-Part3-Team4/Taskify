@@ -6,10 +6,15 @@ import { CHIP_COLORS } from "@/components/chips/chip-color/chip-colors";
 import ColorChip from "@/components/chips/chip-color/chips-color";
 import { ColorFrameSize } from "@/components/chips/color-frame/color-frame-size";
 import ColorPalette from "@/components/color-palette/color-palette";
+import { getDashboards } from "@/components/dashboard-side-bar/api/dashboard";
+import DashboardSideBar from "@/components/dashboard-side-bar/dashboard-side-bar";
 import Dialog from "@/components/dialog";
 import Input, { InputSize, InputVariant } from "@/components/input/input";
 import Textarea from "@/components/input/textarea";
 import Modal from "@/components/modal";
+import Profile from "@/components/profile/profile";
+import { ProfileSize } from "@/components/profile/profile-size";
+import { ProfileType } from "@/components/profile/profile-type";
 import Sheet, { SheetActionType } from "@/components/sheet";
 import SheetSection from "@/components/sheet/sheet-section";
 import Typography from "@/components/typography";
@@ -20,7 +25,7 @@ import { useAlert } from "@/hooks/use-alert";
 import { useDialog } from "@/hooks/use-dialog";
 import { useModal } from "@/hooks/use-modal";
 import { useSheet } from "@/hooks/use-sheet";
-import { ReactNode, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 
 function Section({ title, children }: { title: string; children: ReactNode }) {
   return (
@@ -524,7 +529,42 @@ function SheetSample() {
   );
 }
 
+function ProfileSample() {
+  return (
+    <>
+      <div style={{ display: "flex" }}>
+        {Array.from({ length: 7 }, (_, i) => (
+          <Profile
+            key={i}
+            type={ProfileType.NavigationBar}
+            name={`kim_${i}`}
+            size={ProfileSize.XLarge}
+          />
+        ))}
+      </div>
+      <div style={{ display: "flex" }}>
+        <Profile size={ProfileSize.XLarge} name="Lee" />
+        <Profile size={ProfileSize.XLarge} name="Lee" />
+        <Profile size={ProfileSize.XLarge} name="김아무개" />
+      </div>
+    </>
+  );
+}
+
 export default function Page() {
+  const [dashboards, setDashboards] = useState<any[]>([]);
+  useEffect(() => {
+    const loadData = async () => {
+      try {
+        const { dashboards } = await getDashboards();
+        setDashboards(dashboards);
+      } catch (e) {
+        console.error(e);
+      }
+    };
+    loadData();
+  }, []);
+
   return (
     <main style={{ padding: "24px" }}>
       <header>
@@ -576,6 +616,12 @@ export default function Page() {
       </Section>
       <Section title="Sheet">
         <SheetSample />
+      </Section>
+      <Section title="SideBar">
+        <DashboardSideBar dashboards={dashboards} />
+      </Section>
+      <Section title="profile">
+        <ProfileSample />
       </Section>
     </main>
   );
