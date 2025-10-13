@@ -1,4 +1,4 @@
-import Badge from "@/components/chips/badge";
+import Badge from "@/components/chips/badge/badge";
 import Typography from "@/components/typography";
 import { useBackdropClick } from "@/hooks/use-backdrop-unmount";
 import { classnames } from "@/utils/classnames";
@@ -16,8 +16,8 @@ import { TagsContext } from "./tags-provider";
 function TagList({ tags }: { tags: string[] }) {
   return (
     <div className={styles.tagList}>
-      {tags?.map((tag, index) => (
-        <Badge key={tag} title={tag} colorIndex={index} />
+      {tags?.map((tag) => (
+        <Badge key={tag} title={tag} />
       ))}
     </div>
   );
@@ -57,9 +57,9 @@ function Combobox({
       <header className={Typography.xsSemiBold}>옵션 선택 또는 생성</header>
       {tagsHistory.length > 0 && (
         <ul className={styles.options}>
-          {tagsHistory.map((tag, index) => (
+          {tagsHistory.map((tag) => (
             <li key={tag} onClick={() => handleTagClick(tag)}>
-              <Badge title={tag} colorIndex={index} />
+              <Badge title={tag} />
               {tags.includes(tag) && <div className={styles.usedTag} />}
             </li>
           ))}
