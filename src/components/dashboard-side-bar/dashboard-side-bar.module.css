@@ -64,6 +64,10 @@
   align-items: center;
   gap: 8px;
 }
+.dashboardButton:hover{
+  background: var(--color-black700);
+  border-radius: 10px;
+}
 .dashboardButton > svg {
   padding: 0;
 }
