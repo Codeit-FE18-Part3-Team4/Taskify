@@ -172,12 +172,7 @@
     height: 16px;
   }
   .footer .userProfile {
-  width: 26px;
-  height: 26px;
+    width: 26px;
+    height: 26px;
+  }
 }
-}
-
-/* Mobile */
-/* @media (max-width: 375px) {
-  
-} */

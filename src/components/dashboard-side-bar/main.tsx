@@ -9,9 +9,9 @@ import DashboardButton from "./dashboard-button";
 import styles from "./dashboard-side-bar.module.css";
 import SidebarPageControl from "./sidebar-page-control";
 
-type MainProps = {
+interface MainProps {
   dashboards: any[];
-};
+}
 
 export default function Main({ dashboards }: MainProps) {
   const [activeId, setActiveId] = useState<number | null>(null);
@@ -30,7 +30,7 @@ export default function Main({ dashboards }: MainProps) {
     desktop: Typography.lg2Bold,
     tablet: Typography.lgBold,
     mobile: Typography.lgBold,
-  })
+  });
 
   return (
     <div className={styles.main}>
