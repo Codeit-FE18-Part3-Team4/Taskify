@@ -15,10 +15,6 @@ interface LoginSuccess {
     updatedAt: string;
   };
   accessToken: string;
-  refreshToken: string;
-}
-interface LoginError {
-  message: string;
 }
 
 export const login = async (body: LoginRequest): Promise<LoginSuccess> => {
