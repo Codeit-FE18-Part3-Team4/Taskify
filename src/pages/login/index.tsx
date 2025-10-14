@@ -10,25 +10,25 @@ import { ChangeEvent, useEffect, useState } from "react";
 import styles from "./index.module.css";
 
 export default function LoginPage() {
-  const [id, setId] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [idErrorMessage, setIdErrorMessage] = useState("");
+  const [emailErrorMessage, setEmailErrorMessage] = useState("");
   const [passwordErrorMessage, setPasswordErrorMessage] = useState("");
   const [isLoginButtonDisabled, setIsLoginButtonDisabled] = useState(true);
-  const onIdChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setId(e.target.value);
+  const onEmailChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setEmail(e.target.value);
   };
 
-  const onIdBlur = () => {
-    if (!id) {
-      setIdErrorMessage("");
+  const onEmailBlur = () => {
+    if (!email) {
+      setEmailErrorMessage("");
       return;
     }
 
-    if (validateEmail(id)) {
-      setIdErrorMessage("");
+    if (validateEmail(email)) {
+      setEmailErrorMessage("");
     } else {
-      setIdErrorMessage("이메일 형식으로 작성해주세요");
+      setEmailErrorMessage("이메일 형식으로 작성해주세요");
     }
   };
 
@@ -49,8 +49,8 @@ export default function LoginPage() {
     }
   };
 
-  const onIdFocus = () => {
-    setIdErrorMessage("");
+  const onEmailFocus = () => {
+    setEmailErrorMessage("");
   };
 
   const onPasswordFocus = () => {
@@ -63,10 +63,13 @@ export default function LoginPage() {
 
   useEffect(() => {
     const isFormValid =
-      !!id && validateEmail(id) && !!password && validatePassword(password);
+      !!email &&
+      validateEmail(email) &&
+      !!password &&
+      validatePassword(password);
 
     setIsLoginButtonDisabled(!isFormValid);
-  }, [id, password]);
+  }, [email, password]);
 
   return (
     <main className={styles.main}>
@@ -83,11 +86,11 @@ export default function LoginPage() {
               variant={InputVariant.Default}
               size={InputSize.Auto}
               placeholder="아이디를 입력해주세요"
-              onChange={onIdChange}
-              onBlur={onIdBlur}
-              errorMessage={idErrorMessage}
-              value={id}
-              onFocus={onIdFocus}
+              onChange={onEmailChange}
+              onBlur={onEmailBlur}
+              errorMessage={emailErrorMessage}
+              value={email}
+              onFocus={onEmailFocus}
             />
             <p>비밀번호</p>
             <Input
