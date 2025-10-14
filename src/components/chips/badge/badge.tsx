@@ -2,7 +2,7 @@ import styles from "./badge.module.css";
 import { BADGE_COLORS } from "@/components/chips/badge/badge-colors";
 import typographyStyles from "@/components/typography/typography.module.css";
 import { colorFromString } from "@/utils/string-hashing";
-import { useMemo } from "react";
+import { CSSProperties, useMemo } from "react";
 
 interface BadgeProps {
   title: string;
@@ -14,12 +14,12 @@ export default function Badge({ title }: BadgeProps) {
   const trimmedTitle = title.trim();
   if (!trimmedTitle) return null;
 
-  const calculateColorIndex = useMemo(() => {
-    return colorFromString(title, BADGE_COLORS.length);
+  const colorStyle = useMemo(() => {
+    return colorFromString(title, BADGE_COLORS) as CSSProperties;
   }, [title]);
 
   return (
-    <span className={badgeClasses} style={BADGE_COLORS[calculateColorIndex]}>
+    <span className={badgeClasses} style={colorStyle}>
       {title}
     </span>
   );

@@ -25,16 +25,17 @@ export default function Profile({
   name = "",
   isRemain = false,
 }: ProfileProps) {
-  const calculateColorIndex = useMemo(() => {
-    if (colorIndex !== undefined) {
-      return colorIndex % ProfileColorsArray.length;
+  const backgroundColor = useMemo(() => {
+    if (isRemain) {
+      return RemainProfileColor.backgroundColor;
     }
-    return colorFromString(name, ProfileColorsArray.length);
-  }, [colorIndex, name]);
 
-  const color = isRemain
-    ? RemainProfileColor.backgroundColor
-    : ProfileColorsArray[calculateColorIndex];
+    if (colorIndex !== undefined) {
+      return ProfileColorsArray[colorIndex % ProfileColorsArray.length];
+    }
+
+    return colorFromString(name, ProfileColorsArray);
+  }, [colorIndex, name, isRemain]);
 
   const visualLength = localeLengthKR(name);
   const spanClasses =
@@ -48,7 +49,7 @@ export default function Profile({
   );
 
   return (
-    <div className={profileClasses} style={{ backgroundColor: color }}>
+    <div className={profileClasses} style={{ backgroundColor }}>
       <span className={spanClasses}>{name}</span>
     </div>
   );
