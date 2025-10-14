@@ -4,12 +4,12 @@ import Badge from "@/components/chips/badge/badge";
 import { Color } from "@/components/color";
 import MoreIcon from "@/components/icon/more-icon";
 import XmarkIcon from "@/components/icon/xmark-icon";
-import { Direction, Menu, MenuItem } from "@/components/menu";
 import Modal from "@/components/modal";
 import Profile from "@/components/profile/profile";
 import { ProfileSize } from "@/components/profile/profile-size";
 import Typography from "@/components/typography";
 import { CardStatus } from "@/constants/card/card-status";
+import { Direction, Menu, MenuItem } from "@/features/card/components/menu";
 import { getComments } from "@/features/comment/apis/comment";
 import { useResponsive } from "@/hooks/use-responsive";
 import { Card } from "@/types/card";
@@ -125,7 +125,6 @@ function Main({
         setComments(data);
       } catch (error) {
         // TODO: Error handling
-        console.error("Failed to load comments:", error);
       }
     }
     loadComments();
@@ -133,7 +132,6 @@ function Main({
 
   const handleCommentSubmit = (value: string) => {
     // TODO: Add comment
-    console.log("Submit comment:", value);
   };
 
   return (
