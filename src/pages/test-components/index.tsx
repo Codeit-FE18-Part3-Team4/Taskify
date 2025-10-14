@@ -20,11 +20,13 @@ import SheetSection from "@/components/sheet/sheet-section";
 import Typography from "@/components/typography";
 import { CommonSize } from "@/constants/common/common-size";
 import { ProfileRandomColor } from "@/constants/profile-random-color";
+import { login } from "@/features/auth/apis/login";
 import ImageInput from "@/features/edit-task/components/image-input";
 import { useAlert } from "@/hooks/use-alert";
 import { useDialog } from "@/hooks/use-dialog";
 import { useModal } from "@/hooks/use-modal";
 import { useSheet } from "@/hooks/use-sheet";
+import { AuthStorage } from "@/services/auth-storage";
 import { ReactNode, useEffect, useState } from "react";
 
 function Section({ title, children }: { title: string; children: ReactNode }) {
@@ -551,6 +553,29 @@ function ProfileSample() {
   );
 }
 
+async function setTokenTest() {
+  const email = "dog3027@Naver.com";
+  const password = "11111111";
+  try {
+    const data = await login({ email, password });
+    AuthStorage.setToken(data.accessToken);
+  } catch (error: any) {
+  } finally {
+  }
+}
+
+function TokenTest() {
+  return (
+    <div>
+      <Button onClick={setTokenTest}>인증된 토큰 발급</Button>
+      <Button onClick={AuthStorage.clear}>토큰 지우기</Button>
+      <Button onClick={() => AuthStorage.setToken("fake token")}>
+        이상한 토큰 넣기
+      </Button>
+    </div>
+  );
+}
+
 export default function Page() {
   const [dashboards, setDashboards] = useState<any[]>([]);
   useEffect(() => {
@@ -622,6 +647,9 @@ export default function Page() {
       </Section>
       <Section title="profile">
         <ProfileSample />
+      </Section>
+      <Section title="token test">
+        <TokenTest />
       </Section>
     </main>
   );
