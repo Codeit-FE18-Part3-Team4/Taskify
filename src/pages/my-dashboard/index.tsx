@@ -2,7 +2,7 @@ import { getDashboards } from "@/components/dashboard-side-bar/api/dashboard";
 import DashboardSideBar from "@/components/dashboard-side-bar/dashboard-side-bar";
 import { useSsrResponsive } from "@/hooks/use-ssr-responsive";
 import { useEffect, useState } from "react";
-import { getInvitations } from "./api/invitations";
+import { getInvitations } from "../../features/my-dashboard/api/invitations";
 import MyDashboardMain from "./my-dashboard-main";
 import styles from "./my-dashboard.module.css";
 
