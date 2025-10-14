@@ -2,13 +2,26 @@ import Typography from "@/components/typography";
 import { TextareaHTMLAttributes } from "react";
 import styles from "./textarea.module.css";
 
-interface TextareaProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {}
+export enum TextareaSize {
+  Large = "lg",
+  Medium = "md",
+  Auto = "auto",
+}
 
-export default function Textarea({ className, ...props }: TextareaProps) {
+interface TextareaProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
+  size?: TextareaSize;
+}
+
+export default function Textarea({
+  size = TextareaSize.Auto,
+  className,
+  ...props
+}: TextareaProps) {
   return (
     <textarea
       {...props}
-      className={`${styles.textarea} 
+      className={`${styles.textarea}
+                  ${styles[size]} 
                   ${Typography.lgMedium} 
                   ${className ?? ""} `}
     />
