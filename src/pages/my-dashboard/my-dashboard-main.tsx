@@ -31,8 +31,6 @@ export default function MyDashboardMain({
 }: MyDashboardMainProps) {
   const router = useRouter();
   const myDashboards = dashboards.filter((item) => item.createdByMe);
-  console.log(myDashboards);
-  console.log(invitations);
 
   const activeButton = myDashboards.length > 4 ? styles.active : "";
 
