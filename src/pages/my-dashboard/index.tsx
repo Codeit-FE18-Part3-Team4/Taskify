@@ -13,7 +13,7 @@ export default function MyDashboard() {
   useEffect(() => {
     const loadData = async () => {
       try {
-        const { dashboards } = await getDashboards({});
+        const { dashboards } = await getDashboards();
         setDashboards(dashboards);
         console.log(dashboards);
       } catch (e) {
@@ -23,7 +23,7 @@ export default function MyDashboard() {
 
     const loadInvitations = async () => {
       try {
-        const { invitations } = await getInvitations({});
+        const { invitations } = await getInvitations();
         setInvitations(invitations);
       } catch (e) {
         console.error(e);

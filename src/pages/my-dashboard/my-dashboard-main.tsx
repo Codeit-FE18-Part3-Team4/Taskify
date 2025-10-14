@@ -31,7 +31,7 @@ export default function MyDashboardMain({
   invitations,
 }: MyDashboardMainProps) {
   const router = useRouter();
-  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [currentPage, setCurrentPage] = useState<number>(0);
   const [searchValue, setSearchValue] = useState<string>("");
   const myDashboards = dashboards.filter((item) => item.createdByMe);
   const responsivePageSize = useResponsiveValue({
