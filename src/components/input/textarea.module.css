@@ -50,3 +50,14 @@
   color: var(--color-gray400);
   border: none;
 }
+
+.textarea::-webkit-scrollbar {
+  width: 6px;
+}
+
+.textarea::-webkit-scrollbar-thumb {
+  background: var(--color-gray600);
+  border-radius: 100px;
+  cursor: default;
+  min-height: 40px;
+}
