@@ -1,6 +1,6 @@
 import "@/components/color/color-variables.css";
 import ModalProvider from "@/components/modal/modal-provider";
-import TagsProvider from "@/features/edit-task/components/tag-input/tags-provider";
+import TagsProvider from "@/features/card/components/tag-input/tags-provider";
 import "@/styles/global.css";
 import "@/styles/reset.css";
 import { NextPage } from "next";
