@@ -5,7 +5,7 @@ import { useResponsiveValue } from "@/hooks/use-responsive-value";
 import { classnames } from "@/utils/classnames";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import DashboardButton from "./dashboard-button";
 import styles from "./dashboard-side-bar.module.css";
 import SidebarPageControl from "./sidebar-page-control";
@@ -16,11 +16,37 @@ interface MainProps {
 
 export default function Main({ dashboards }: MainProps) {
   const router = useRouter();
+  const [currentPage, setCurrentPage] = useState<number>(0);
+  const pageSize = 10;
+
+  const totalPages = useMemo(() => {
+    return Math.ceil(dashboards.length / pageSize);
+  }, [dashboards]);
+
+  const currentDashboards = useMemo(() => {
+    const start = currentPage * pageSize;
+    const end = start + pageSize;
+    return dashboards.slice(start, end);
+  }, [dashboards, currentPage]);
+
   const currentDashboardId = router.query.id ? Number(router.query.id) : null;
 
   const handleDashboardNavigate = (id: number) => {
-    router.push(`/dashboard/${id}`)
+    router.push(`/dashboard/${id}`);
   };
+
+  const handlePrevPage = () => {
+    if (currentPage > 0) setCurrentPage((prev) => prev - 1);
+  };
+
+  const handleNextPage = () => {
+    if (currentPage < totalPages - 1) setCurrentPage((prev) => prev + 1);
+  };
+
+  useEffect(() => {
+    console.log(currentPage);
+    console.log("토탈", totalPages);
+  }, [currentPage]);
 
   const dashboardAddText = useResponsiveValue({
     desktop: Typography.lg2Bold,
@@ -49,7 +75,7 @@ export default function Main({ dashboards }: MainProps) {
         <Image src={homeIcon} width={24} height={24} alt="홈 아이콘" />
         <span className={homeText}>홈</span>
       </button>
-      {dashboards.map((dashboard) => {
+      {currentDashboards.map((dashboard) => {
         return (
           <DashboardButton
             onClick={() => handleDashboardNavigate(dashboard.id)}
@@ -62,10 +88,10 @@ export default function Main({ dashboards }: MainProps) {
         );
       })}
       <SidebarPageControl
-        currentPage={0}
-        totalPages={2}
-        onPrev={() => {}}
-        onNext={() => {}}
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPrev={handlePrevPage}
+        onNext={handleNextPage}
       />
     </div>
   );

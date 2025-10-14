@@ -18,7 +18,7 @@ export default function SidebarPageControl({
   totalPages,
 }: SidebarPageControlProps) {
   const prevDisabled = currentPage === 0 ? styles.disabled : "";
-  const nextDisabled = totalPages > 1 ? "" : styles.disabled;
+  const nextDisabled = currentPage === totalPages - 1 ? styles.disabled : "";
 
   return (
     <div className={styles.dashboardPagenation}>
@@ -37,7 +37,7 @@ export default function SidebarPageControl({
       </button>
       <button
         onClick={onNext}
-        disabled={totalPages < 2}
+        disabled={currentPage === totalPages - 1}
         className={`${styles.button} ${nextDisabled}`}
       >
         <span className={Typography.lgMedium}>다음</span>
