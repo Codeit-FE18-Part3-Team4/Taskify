@@ -11,10 +11,11 @@ import NavigationBar from "@/components/navigationBar/navigation-bar";
 import Typography from "@/components/typography";
 import { CommonSize } from "@/constants/common/common-size";
 import { useResponsiveValue } from "@/hooks/use-responsive-value";
+import { classnames } from "@/utils/classnames";
 import Image from "next/image";
 import { useRouter } from "next/router";
+import { useState } from "react";
 import styles from "./my-dashboard.module.css";
-import { classnames } from "@/utils/classnames";
 
 interface MyDashboardMainProps {
   dashboards: any[];
@@ -31,6 +32,11 @@ export default function MyDashboardMain({
 }: MyDashboardMainProps) {
   const router = useRouter();
   const myDashboards = dashboards.filter((item) => item.createdByMe);
+  const [searchList, setSearchList] = useState<string>("");
+
+  const filterInvitations = invitations.filter((item) =>
+    item.dashboard.title.toLowerCase().includes(searchList.toLowerCase())
+  );
 
   const activeButton = myDashboards.length > 4 ? styles.active : "";
 
@@ -143,7 +149,12 @@ export default function MyDashboardMain({
           <div className={styles.invitationsDashboardTop}>
             <h2 className={sectionTitle}>초대 받은 대시보드</h2>
             {invitations.length !== 0 && (
-              <Input placeholder="검색" variant={InputVariant.Search} />
+              <Input
+                placeholder="검색"
+                variant={InputVariant.Search}
+                onChange={(e) => setSearchList(e.target.value)}
+                value={searchList}
+              />
             )}
           </div>
           {invitations.length === 0 ? (
@@ -165,7 +176,7 @@ export default function MyDashboardMain({
                   <p className={Typography.lgSemiBold}>수락여부</p>
                 </div>
               </div>
-              {invitations.map((item) => (
+              {filterInvitations.map((item) => (
                 <div
                   key={item.id}
                   className={styles.invitationsDashboardSectionMain}
