@@ -6,7 +6,7 @@ import { CHIP_COLORS } from "@/components/chips/chip-color/chip-colors";
 import ColorChip from "@/components/chips/chip-color/chips-color";
 import { ColorFrameSize } from "@/components/chips/color-frame/color-frame-size";
 import ColorPalette from "@/components/color-palette/color-palette";
-import { getDashboards } from "@/components/dashboard-side-bar/api/dashboard";
+import { getDashboards } from "@/features/dashboard-side-bar/api/dashboard";
 import DashboardSideBar from "@/components/dashboard-side-bar/dashboard-side-bar";
 import Dialog from "@/components/dialog";
 import Input, { InputSize, InputVariant } from "@/components/input/input";
