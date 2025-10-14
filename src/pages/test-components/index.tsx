@@ -283,18 +283,18 @@ function DropdownSample() {
         padding: "32px",
       }}
     >
-      <Dropdown options={options1} onSelect={handleSelect1}>
-        {selectedValue1
-          ? `Selected ${selectedValue1}`
-          : "Dropdown with 3 options"}
-      </Dropdown>
-      <Dropdown options={options2} onSelect={handleSelect2}>
-        <div style={{ padding: "8px", border: "1px solid white" }}>
-          {selectedValue2
-            ? `Selected ${selectedValue2}`
-            : "Dropdown with 6 options"}
-        </div>
-      </Dropdown>
+      <Dropdown
+        value={selectedValue1}
+        placeholder="Dropdown with 3 options"
+        options={options1}
+        onSelect={handleSelect1}
+      />
+      <Dropdown
+        value={selectedValue2}
+        placeholder="Dropdown with 6 options"
+        options={options2}
+        onSelect={handleSelect2}
+      />
     </div>
   );
 }
@@ -624,24 +624,22 @@ function SheetSample() {
             <SheetSectionGroup zIndex={2}>
               <SheetSection title="칼럼">
                 <Dropdown
+                  value={column}
                   placeholder="칼럼 선택"
                   options={["To do", "Progress", "Done"]}
                   onSelect={handleColumnSelect}
-                >
-                  {column}
-                </Dropdown>
+                />
               </SheetSection>
               <SheetSection title="담당자">
                 <Dropdown
+                  value={assignee && <ProfileCard name={assignee} />}
                   placeholder="담당자 선택"
                   options={[
                     { element: <ProfileCard name="User 1" />, value: "user1" },
                     { element: <ProfileCard name="User 2" />, value: "user2" },
                   ]}
                   onSelect={handleAssigneeSelect}
-                >
-                  {assignee && <ProfileCard name={assignee} />}
-                </Dropdown>
+                />
               </SheetSection>
             </SheetSectionGroup>
             <SheetSection title="태그" zIndex={1}>

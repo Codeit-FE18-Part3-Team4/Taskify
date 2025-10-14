@@ -61,16 +61,16 @@ function DropdownContainer({ options, onSelect }: DropdownContainerProps) {
 }
 
 interface Props {
+  value?: ReactNode;
   placeholder?: string;
   options: DropdownOption[] | string[];
-  children: ReactNode;
   onSelect?: (index: string) => void;
 }
 
 export default function Dropdown({
+  value,
   placeholder,
   options,
-  children,
   onSelect,
 }: Props) {
   const [isShow, setShow] = useState(false);
@@ -109,8 +109,8 @@ export default function Dropdown({
         className={classnames(styles.anchor, isShow ? styles.showing : "")}
         onClick={handleAnchorClick}
       >
-        <span className={isShow || children ? styles.highlight : ""}>
-          {children || placeholder || ""}
+        <span className={isShow || value ? styles.highlight : ""}>
+          {value || placeholder || ""}
         </span>
         <ChevronIcon
           direction={isShow ? Direction.Up : Direction.Down}
