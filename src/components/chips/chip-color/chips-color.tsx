@@ -7,7 +7,7 @@ import {
 import { CommonSize } from "@/constants/common/common-size";
 
 interface ChipColorProps {
-  color?: ChipColor;
+  color: string;
   size?: CommonSize;
 }
 

@@ -82,6 +82,7 @@ export default function Main({ dashboards }: MainProps) {
             key={dashboard.id}
             active={currentDashboardId === dashboard.id}
             createdByMe={dashboard.createdByMe}
+            color={dashboard.color}
           >
             {dashboard.title}
           </DashboardButton>
