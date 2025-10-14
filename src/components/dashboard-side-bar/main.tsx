@@ -4,6 +4,7 @@ import Typography from "@/components/typography";
 import { useResponsiveValue } from "@/hooks/use-responsive-value";
 import { classnames } from "@/utils/classnames";
 import Image from "next/image";
+import { useRouter } from "next/router";
 import { useState } from "react";
 import DashboardButton from "./dashboard-button";
 import styles from "./dashboard-side-bar.module.css";
@@ -14,10 +15,11 @@ interface MainProps {
 }
 
 export default function Main({ dashboards }: MainProps) {
-  const [activeId, setActiveId] = useState<number | null>(null);
+  const router = useRouter();
+  const currentDashboardId = router.query.id ? Number(router.query.id) : null;
 
-  const handleClickActive = (id: number) => {
-    setActiveId(id);
+  const handleDashboardNavigate = (id: number) => {
+    router.push(`/dashboard/${id}`)
   };
 
   const dashboardAddText = useResponsiveValue({
@@ -50,9 +52,9 @@ export default function Main({ dashboards }: MainProps) {
       {dashboards.map((dashboard) => {
         return (
           <DashboardButton
-            onClick={() => handleClickActive(dashboard.id)}
+            onClick={() => handleDashboardNavigate(dashboard.id)}
             key={dashboard.id}
-            active={activeId === dashboard.id}
+            active={currentDashboardId === dashboard.id}
             createdByMe={dashboard.createdByMe}
           >
             {dashboard.title}
