@@ -6,9 +6,12 @@ import Input, { InputSize, InputVariant } from "@/components/input/input";
 import Typography from "@/components/typography";
 import { login } from "@/features/auth/apis/login";
 import { useDialog } from "@/hooks/use-dialog";
+import { getApiErrorMessage } from "@/services/api-error";
+import { AuthStorage } from "@/services/auth-storage";
 import { validateEmail, validatePassword } from "@/utils/validator";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import styles from "./index.module.css";
 
@@ -18,6 +21,8 @@ export default function LoginPage() {
   const [emailErrorMessage, setEmailErrorMessage] = useState("");
   const [passwordErrorMessage, setPasswordErrorMessage] = useState("");
   const [isLoginButtonDisabled, setIsLoginButtonDisabled] = useState(true);
+  const [dialogMessage, setDialogMessage] = useState("");
+  const router = useRouter();
   const DIALOG_KEY = "DIALOG_SAMPLE";
   const { isShowDialog, openDialog } = useDialog({
     key: DIALOG_KEY,
@@ -68,7 +73,11 @@ export default function LoginPage() {
     e.preventDefault();
     try {
       const data = await login({ email, password });
+      AuthStorage.setToken(data.accessToken);
+      router.push("/mydashboard");
     } catch (error: any) {
+      const msg = getApiErrorMessage(error, "로그인에 실패했습니다.");
+      setDialogMessage(msg);
       openDialog(true);
     } finally {
     }
@@ -143,7 +152,7 @@ export default function LoginPage() {
       {isShowDialog && (
         <Dialog
           dialogKey={DIALOG_KEY}
-          message="비밀번호가 일치하지 않습니다."
+          message={dialogMessage}
           onConfirm={() => openDialog(false)}
         />
       )}
