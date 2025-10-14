@@ -5,10 +5,10 @@ import {
 } from "@/constants/profile-random-color";
 import { ProfileSize } from "@/components/profile/profile-size";
 import { ProfileType } from "@/components/profile/profile-type";
-import typographyStyles from "@/components/typography/typography.module.css";
 import { classnames } from "@/utils/classnames";
 import { useMemo } from "react";
 import { colorFromString, localeLengthKR } from "@/utils/string-hashing";
+import Typography from "../typography";
 
 interface ProfileProps {
   size?: ProfileSize;
@@ -45,7 +45,7 @@ export default function Profile({
     styles.profile,
     type === ProfileType.NavigationBar ? styles.naviType : "",
     styles[size],
-    typographyStyles.xsSemiBold,
+    Typography.xsSemiBold,
   );
 
   return (

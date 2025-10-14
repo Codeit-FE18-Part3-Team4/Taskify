@@ -1,6 +1,6 @@
+import Typography from "@/components/typography";
 import styles from "./badge.module.css";
 import { BADGE_COLORS } from "@/components/chips/badge/badge-colors";
-import typographyStyles from "@/components/typography/typography.module.css";
 import { colorFromString } from "@/utils/string-hashing";
 import { CSSProperties, useMemo } from "react";
 
@@ -9,7 +9,7 @@ interface BadgeProps {
 }
 
 export default function Badge({ title }: BadgeProps) {
-  const badgeClasses = `${styles.badge} ${typographyStyles["sm-semibold"]}`;
+  const badgeClasses = `${styles.badge} ${Typography.smSemiBold}`;
 
   const trimmedTitle = title.trim();
   if (!trimmedTitle) return null;

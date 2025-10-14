@@ -2,12 +2,12 @@ import { CommonSize } from "@/constants/common/common-size";
 import styles from "./navigation-bar.module.css";
 import SettingSvg from "./setting-svg";
 import UserPlusSvg from "./user-plus-svg";
-import typographyStyles from "@/components/typography";
 import Link from "next/link";
 import { MemberInfo } from "@/types/member-info";
 import MemberList from "./member-list";
 import Modal from "@/components/modal";
 import { useModal } from "@/hooks/use-modal";
+import Typography from "@/components/typography";
 
 interface NavigationBarProps {
   size?: CommonSize;
@@ -23,7 +23,7 @@ export default function NavigationBar({
   const sizeName = CommonSize[size].toLowerCase();
   const navigationBarClasses = `${styles.navigationBar} ${styles[sizeName]}`;
   const iconColor = `var(--color-gray400)`;
-  const iconSpanClasses = `${styles.iconSpan} ${typographyStyles["lgMedium"]}`;
+  const iconSpanClasses = `${styles.iconSpan} ${Typography.lgMedium}`;
   const settingLink = dashboardId ? `/dashboard/${dashboardId}/edit` : "#";
 
   const MODAL_KEY_1 = "MODAL_SAMPLE_1";
