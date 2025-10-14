@@ -1,12 +1,15 @@
 import LoginImg from "@/assets/images/login-main.png";
 import LogoImg from "@/assets/images/taskify-logo.svg";
 import Button, { ButtonSize, ButtonVariant } from "@/components/button/button";
+import Dialog from "@/components/dialog";
 import Input, { InputSize, InputVariant } from "@/components/input/input";
 import Typography from "@/components/typography";
+import { login } from "@/features/auth/apis/login";
+import { useDialog } from "@/hooks/use-dialog";
 import { validateEmail, validatePassword } from "@/utils/validator";
 import Image from "next/image";
 import Link from "next/link";
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import styles from "./index.module.css";
 
 export default function LoginPage() {
@@ -15,6 +18,10 @@ export default function LoginPage() {
   const [emailErrorMessage, setEmailErrorMessage] = useState("");
   const [passwordErrorMessage, setPasswordErrorMessage] = useState("");
   const [isLoginButtonDisabled, setIsLoginButtonDisabled] = useState(true);
+  const DIALOG_KEY = "DIALOG_SAMPLE";
+  const { isShowDialog, openDialog } = useDialog({
+    key: DIALOG_KEY,
+  });
   const onEmailChange = (e: ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
   };
@@ -57,8 +64,14 @@ export default function LoginPage() {
     setPasswordErrorMessage("");
   };
 
-  const onSubmit = () => {
-    // TODO: 추후에 Api 요청 및 로그인 로직 추가
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+    try {
+      const data = await login({ email, password });
+    } catch (error: any) {
+      openDialog(true);
+    } finally {
+    }
   };
 
   useEffect(() => {
@@ -110,6 +123,7 @@ export default function LoginPage() {
               size={ButtonSize.Large}
               isWidthFull
               disabled={isLoginButtonDisabled}
+              onClick={handleSubmit}
             >
               로그인
             </Button>
@@ -126,6 +140,13 @@ export default function LoginPage() {
       <section className={styles.rightSection}>
         <Image src={LoginImg} alt="로그인 메인" width={900} height={920} />
       </section>
+      {isShowDialog && (
+        <Dialog
+          dialogKey={DIALOG_KEY}
+          message="비밀번호가 일치하지 않습니다."
+          onConfirm={() => openDialog(false)}
+        />
+      )}
     </main>
   );
 }
