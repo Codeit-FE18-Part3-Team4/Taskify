@@ -11,6 +11,7 @@ import Typography from "@/components/typography";
 import { CardStatus } from "@/constants/card/card-status";
 import { Direction, Menu, MenuItem } from "@/features/card/components/menu";
 import { getComments } from "@/features/comment/apis/comment";
+import { useModal } from "@/hooks/use-modal";
 import { useResponsive } from "@/hooks/use-responsive";
 import { Card } from "@/types/card";
 import { Comment } from "@/types/comment";
@@ -28,7 +29,7 @@ export const STATUS_TITLE = {
   [CardStatus.Done]: "Done",
 } as const;
 
-function Actions() {
+function Actions({ onClose }: { onClose: () => void }) {
   const handleEdit = () => {
     // TODO: Go to edit modal
   };
@@ -45,7 +46,7 @@ function Actions() {
       >
         <MoreIcon color={Color.Gray300} />
       </Menu>
-      <IconButton size={20}>
+      <IconButton size={20} onClick={onClose}>
         <XmarkIcon size={20} color={Color.Gray300} />
       </IconButton>
     </div>
@@ -78,16 +79,18 @@ function Sidebar({
   cardStatus,
   assignee,
   dueDate,
+  onClose,
 }: {
   dashboardTitle: string;
   cardStatus: CardStatus;
   assignee: string;
   dueDate: string;
+  onClose: () => void;
 }) {
   return (
     <div className={styles.sidebar}>
       <header className={styles.sidebarHeader}>
-        <Actions />
+        <Actions onClose={onClose} />
       </header>
       <section className={styles.sidebarSection}>
         <InfoTitle>프로젝트</InfoTitle>
@@ -111,10 +114,12 @@ function Main({
   card,
   dashboardTitle,
   showsCompact = false,
+  onClose,
 }: {
   card: Card;
   dashboardTitle: string;
   showsCompact?: boolean;
+  onClose: () => void;
 }) {
   const [comments, setComments] = useState<Comment[]>([]);
 
@@ -145,7 +150,7 @@ function Main({
             )}
           >
             {card.title}
-            {showsCompact && <Actions />}
+            {showsCompact && <Actions onClose={onClose} />}
           </h2>
           <div className={styles.tagsList}>
             {card.tags.map((tag) => (
@@ -194,18 +199,28 @@ export default function CardDetailModal({
   card,
   dashboardTitle,
 }: Props) {
+  const { openModal } = useModal({ key: modalKey });
   const { isDesktop, isMobile } = useResponsive();
+
+  const handleClose = () => {
+    openModal(false);
+  };
 
   return (
     <Modal modalKey={modalKey} isFullScreen={isMobile}>
       <div className={styles.cardDetailModal}>
-        <Main card={card} dashboardTitle={dashboardTitle} />
+        <Main
+          card={card}
+          dashboardTitle={dashboardTitle}
+          onClose={handleClose}
+        />
         {isDesktop && (
           <Sidebar
             dashboardTitle={dashboardTitle}
             cardStatus={card.columnId as CardStatus}
             assignee={card.assignee.nickname}
             dueDate={card.dueDate}
+            onClose={handleClose}
           />
         )}
       </div>
