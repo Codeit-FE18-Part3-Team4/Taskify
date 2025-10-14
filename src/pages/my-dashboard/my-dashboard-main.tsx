@@ -32,10 +32,10 @@ export default function MyDashboardMain({
 }: MyDashboardMainProps) {
   const router = useRouter();
   const myDashboards = dashboards.filter((item) => item.createdByMe);
-  const [searchList, setSearchList] = useState<string>("");
+  const [searchValue, setSearchValue] = useState<string>("");
 
-  const filterInvitations = invitations.filter((item) =>
-    item.dashboard.title.toLowerCase().includes(searchList.toLowerCase())
+  const filteredInvitations = invitations.filter((item) =>
+    item.dashboard.title.toLowerCase().includes(searchValue.toLowerCase())
   );
 
   const activeButton = myDashboards.length > 4 ? styles.active : "";
@@ -152,8 +152,8 @@ export default function MyDashboardMain({
               <Input
                 placeholder="검색"
                 variant={InputVariant.Search}
-                onChange={(e) => setSearchList(e.target.value)}
-                value={searchList}
+                onChange={(e) => setSearchValue(e.target.value)}
+                value={searchValue}
               />
             )}
           </div>
@@ -176,7 +176,7 @@ export default function MyDashboardMain({
                   <p className={Typography.lgSemiBold}>수락여부</p>
                 </div>
               </div>
-              {filterInvitations.map((item) => (
+              {filteredInvitations.map((item) => (
                 <div
                   key={item.id}
                   className={styles.invitationsDashboardSectionMain}
