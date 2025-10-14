@@ -4,21 +4,35 @@ import NotInvitedImg from "@/assets/images/ic-invite.svg";
 import EmptyDashboardImg from "@/assets/images/ic-my-dashboard.svg";
 import PlusIcon from "@/assets/images/ic-plus-circle.svg";
 import PlusSquareIcon from "@/assets/images/ic-plus-square.svg";
+import Button, { ButtonSize, ButtonVariant } from "@/components/button/button";
 import ColorChip from "@/components/chips/chip-color/chips-color";
+import Input, { InputVariant } from "@/components/input/input";
 import NavigationBar from "@/components/navigationBar/navigation-bar";
 import Typography from "@/components/typography";
 import { CommonSize } from "@/constants/common/common-size";
 import { useResponsiveValue } from "@/hooks/use-responsive-value";
 import Image from "next/image";
+import { useRouter } from "next/router";
 import styles from "./my-dashboard.module.css";
+import { classnames } from "@/utils/classnames";
 
 interface MyDashboardMainProps {
   dashboards: any[];
+  invitations: any[];
 }
 
-export default function MyDashboardMain({ dashboards }: MyDashboardMainProps) {
+function sliceUserName(userName: string) {
+  return userName.length > 1 ? userName.substring(1) : userName;
+}
+
+export default function MyDashboardMain({
+  dashboards,
+  invitations,
+}: MyDashboardMainProps) {
+  const router = useRouter();
   const myDashboards = dashboards.filter((item) => item.createdByMe);
   console.log(myDashboards);
+  console.log(invitations);
 
   const activeButton = myDashboards.length > 4 ? styles.active : "";
 
@@ -39,6 +53,10 @@ export default function MyDashboardMain({ dashboards }: MyDashboardMainProps) {
     tablet: Typography.lgBold,
     mobile: Typography.mdBold,
   });
+
+  const dashboardIdPage = (id: number) => {
+    router.push(`dashboard/${id}`);
+  };
 
   return (
     <div className={styles.myDashboardMainWrap}>
@@ -70,7 +88,9 @@ export default function MyDashboardMain({ dashboards }: MyDashboardMainProps) {
             <div className={styles.myDashboard}>
               <div className={styles.myDashboardBox}>
                 <button className={styles.myDashboardAddButton}>
-                  <span className={Typography.lg2SemiBold}>새로운 대시보드</span>
+                  <span className={Typography.lg2SemiBold}>
+                    새로운 대시보드
+                  </span>
                   <Image
                     src={PlusSquareIcon}
                     width={18}
@@ -79,7 +99,11 @@ export default function MyDashboardMain({ dashboards }: MyDashboardMainProps) {
                   />
                 </button>
                 {myDashboards.slice(0, 3).map((item) => (
-                  <button className={styles.myDashboardButton} key={item.id}>
+                  <button
+                    className={styles.myDashboardButton}
+                    key={item.id}
+                    onClick={() => dashboardIdPage(item.id)}
+                  >
                     <ColorChip size={CommonSize.Large} />
                     <span className={Typography.lg2SemiBold}>{item.title}</span>
                     <Image
@@ -118,16 +142,81 @@ export default function MyDashboardMain({ dashboards }: MyDashboardMainProps) {
           )}
         </div>
         <div className={styles.dashboardSection}>
-          <h2 className={sectionTitle}>초대 받은 대시보드</h2>
-          <div className={styles.emptyDashboard}>
-            <Image
-              src={NotInvitedImg}
-              width={100}
-              height={100}
-              alt="초대 받은 대시보드가 없다"
-            />
-            <p className={emptyText}>아직 초대받은 대시보드가 없습니다.</p>
+          <div className={styles.invitationsDashboardTop}>
+            <h2 className={sectionTitle}>초대 받은 대시보드</h2>
+            {invitations.length !== 0 && (
+              <Input placeholder="검색" variant={InputVariant.Search} />
+            )}
           </div>
+          {invitations.length === 0 ? (
+            <div className={styles.emptyDashboard}>
+              <Image
+                src={NotInvitedImg}
+                width={100}
+                height={100}
+                alt="초대 받은 대시보드가 없다"
+              />
+              <p className={emptyText}>아직 초대받은 대시보드가 없습니다.</p>
+            </div>
+          ) : (
+            <div className={styles.invitationsDashboardSection}>
+              <div className={styles.invitationsDashboardSectionTop}>
+                <p className={Typography.lgSemiBold}>이름</p>
+                <div>
+                  <p className={Typography.lgSemiBold}>초대자</p>
+                  <p className={Typography.lgSemiBold}>수락여부</p>
+                </div>
+              </div>
+              {invitations.map((item) => (
+                <div
+                  key={item.id}
+                  className={styles.invitationsDashboardSectionMain}
+                >
+                  <p className={Typography.lg2Bold}>{item.dashboard.title}</p>
+                  <div>
+                    <div
+                      className={styles.invitationsDashboardSectionMainProfile}
+                    >
+                      <div className={styles.userBox}>
+                        <div
+                          className={classnames(
+                            styles.userProfile,
+                            Typography.xsSemiBold
+                          )}
+                        >
+                          <span>{sliceUserName(item.invitee.nickname)}</span>
+                        </div>
+                        <p
+                          className={classnames(
+                            styles.userName,
+                            Typography.lg2Bold
+                          )}
+                        >
+                          {item.invitee.nickname}
+                        </p>
+                      </div>
+                    </div>
+                    <div
+                      className={
+                        styles.invitationsDashboardSectionMainButtonBox
+                      }
+                    >
+                      <Button
+                        isWidthFull
+                        variant={ButtonVariant.Secondary}
+                        size={ButtonSize.XSmall}
+                      >
+                        거절
+                      </Button>
+                      <Button isWidthFull size={ButtonSize.XSmall}>
+                        수락
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </div>
