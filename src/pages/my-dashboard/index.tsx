@@ -1,5 +1,6 @@
-import { getDashboards } from "@/components/dashboard-side-bar/api/dashboard";
+
 import DashboardSideBar from "@/components/dashboard-side-bar/dashboard-side-bar";
+import { getDashboards } from "@/features/my-dashboard/api/dashboards";
 import { useSsrResponsive } from "@/hooks/use-ssr-responsive";
 import { useEffect, useState } from "react";
 import { getInvitations } from "../../features/my-dashboard/api/invitations";
@@ -12,8 +13,9 @@ export default function MyDashboard() {
   useEffect(() => {
     const loadData = async () => {
       try {
-        const { dashboards } = await getDashboards();
+        const { dashboards } = await getDashboards({});
         setDashboards(dashboards);
+        console.log(dashboards);
       } catch (e) {
         console.error(e);
       }
@@ -21,7 +23,7 @@ export default function MyDashboard() {
 
     const loadInvitations = async () => {
       try {
-        const { invitations } = await getInvitations();
+        const { invitations } = await getInvitations({});
         setInvitations(invitations);
       } catch (e) {
         console.error(e);
