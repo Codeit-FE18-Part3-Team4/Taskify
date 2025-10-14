@@ -14,7 +14,7 @@ import { useResponsiveValue } from "@/hooks/use-responsive-value";
 import { classnames } from "@/utils/classnames";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import styles from "./my-dashboard.module.css";
 
 interface MyDashboardMainProps {
@@ -31,14 +31,44 @@ export default function MyDashboardMain({
   invitations,
 }: MyDashboardMainProps) {
   const router = useRouter();
-  const myDashboards = dashboards.filter((item) => item.createdByMe);
+  const [currentPage, setCurrentPage] = useState<number>(1);
   const [searchValue, setSearchValue] = useState<string>("");
+  const myDashboards = dashboards.filter((item) => item.createdByMe);
+  const responsivePageSize = useResponsiveValue({
+    desktop: 3,
+    tablet: 1,
+    mobile: 1,
+  });
+
+  const PAGE_SIZE = responsivePageSize;
+
+  const totalPages = useMemo(() => {
+    return Math.ceil(myDashboards.length / PAGE_SIZE);
+  }, [myDashboards]);
+
+  const isLastPages = totalPages - 1;
+
+  const currentDashboards = useMemo(() => {
+    const start = currentPage * PAGE_SIZE;
+    const end = start + PAGE_SIZE;
+    return myDashboards.slice(start, end);
+  }, [myDashboards, currentPage]);
+
+  const handlePrevPage = () => {
+    if (currentPage > 0) setCurrentPage((prev) => prev - 1);
+  };
+
+  const handleNextPage = () => {
+    if (currentPage < totalPages - 1) setCurrentPage((prev) => prev + 1);
+  };
 
   const filteredInvitations = invitations.filter((item) =>
     item.dashboard.title.toLowerCase().includes(searchValue.toLowerCase())
   );
 
-  const activeButton = myDashboards.length > 4 ? styles.active : "";
+  const nextActiveButton =
+    currentPage === isLastPages ? "" : styles.active;
+  const prevActiveButton = currentPage !== 0 ? styles.active : "";
 
   const homeText = useResponsiveValue({
     desktop: Typography.xl3Bold,
@@ -102,7 +132,7 @@ export default function MyDashboardMain({
                     alt="새로운 대시보드"
                   />
                 </button>
-                {myDashboards.slice(0, 3).map((item) => (
+                {currentDashboards.map((item) => (
                   <button
                     className={styles.myDashboardButton}
                     key={item.id}
@@ -121,10 +151,16 @@ export default function MyDashboardMain({
               </div>
               <div className={styles.myDashboardPagination}>
                 <div className={styles.myDashboardPaginationCount}>
-                  <span className={Typography.lgSemiBold}>1 of 3</span>
+                  <span className={Typography.lgSemiBold}>
+                    {currentPage + 1} of {totalPages}
+                  </span>
                 </div>
                 <div className={styles.myDashboardPaginationButton}>
-                  <button>
+                  <button
+                    onClick={handlePrevPage}
+                    disabled={currentPage === 0}
+                    className={prevActiveButton}
+                  >
                     <Image
                       src={ArrowLeft}
                       width={24}
@@ -132,7 +168,11 @@ export default function MyDashboardMain({
                       alt="왼쪽 활살표"
                     />
                   </button>
-                  <button className={activeButton}>
+                  <button
+                    onClick={handleNextPage}
+                    disabled={currentPage === isLastPages}
+                    className={nextActiveButton}
+                  >
                     <Image
                       src={ArrowRight}
                       width={24}

@@ -6,7 +6,6 @@ import { CHIP_COLORS } from "@/components/chips/chip-color/chip-colors";
 import ColorChip from "@/components/chips/chip-color/chips-color";
 import { ColorFrameSize } from "@/components/chips/color-frame/color-frame-size";
 import ColorPalette from "@/components/color-palette/color-palette";
-import { getDashboards } from "@/components/dashboard-side-bar/api/dashboard";
 import DashboardSideBar from "@/components/dashboard-side-bar/dashboard-side-bar";
 import Dialog from "@/components/dialog";
 import Input, { InputSize, InputVariant } from "@/components/input/input";
@@ -25,7 +24,7 @@ import { useAlert } from "@/hooks/use-alert";
 import { useDialog } from "@/hooks/use-dialog";
 import { useModal } from "@/hooks/use-modal";
 import { useSheet } from "@/hooks/use-sheet";
-import { ReactNode, useEffect, useState } from "react";
+import { ReactNode, useState } from "react";
 
 function Section({ title, children }: { title: string; children: ReactNode }) {
   return (
@@ -553,17 +552,6 @@ function ProfileSample() {
 
 export default function Page() {
   const [dashboards, setDashboards] = useState<any[]>([]);
-  useEffect(() => {
-    const loadData = async () => {
-      try {
-        const { dashboards } = await getDashboards();
-        setDashboards(dashboards);
-      } catch (e) {
-        console.error(e);
-      }
-    };
-    loadData();
-  }, []);
 
   return (
     <main style={{ padding: "24px" }}>
