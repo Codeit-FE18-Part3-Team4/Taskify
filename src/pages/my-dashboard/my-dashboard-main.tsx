@@ -6,9 +6,10 @@ import PlusIcon from "@/assets/images/ic-plus-circle.svg";
 import PlusSquareIcon from "@/assets/images/ic-plus-square.svg";
 import Button, { ButtonSize, ButtonVariant } from "@/components/button/button";
 import ColorChip from "@/components/chips/chip-color/chips-color";
-import { sliceUserName } from "@/components/dashboard-side-bar/user-profile";
 import Input, { InputVariant } from "@/components/input/input";
 import NavigationBar from "@/components/navigationBar/navigation-bar";
+import Profile from "@/components/profile/profile";
+import { ProfileSize } from "@/components/profile/profile-size";
 import Typography from "@/components/typography";
 import { CommonSize } from "@/constants/common/common-size";
 import {
@@ -16,7 +17,6 @@ import {
   putInvitationsAccepts,
 } from "@/features/my-dashboard/api/";
 import { useResponsiveValue } from "@/hooks/use-responsive-value";
-import { classnames } from "@/utils/classnames";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
@@ -329,22 +329,7 @@ export default function MyDashboardMain({
                       className={styles.invitationsDashboardSectionMainProfile}
                     >
                       <div className={styles.userBox}>
-                        <div
-                          className={classnames(
-                            styles.userProfile,
-                            Typography.xsSemiBold
-                          )}
-                        >
-                          <span>{sliceUserName(item.invitee.nickname)}</span>
-                        </div>
-                        <p
-                          className={classnames(
-                            styles.userName,
-                            Typography.lg2Bold
-                          )}
-                        >
-                          {item.invitee.nickname}
-                        </p>
+                        <Profile size={ProfileSize.Medium} name={item.inviter.nickname} showFullName/>
                       </div>
                     </div>
                     <div

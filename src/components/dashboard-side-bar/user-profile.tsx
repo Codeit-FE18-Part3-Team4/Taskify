@@ -3,6 +3,8 @@ import Typography from "@/components/typography";
 import { useResponsiveValue } from "@/hooks/use-responsive-value";
 import Image from "next/image";
 import styles from "./dashboard-side-bar.module.css";
+import Profile from "../profile/profile";
+import { ProfileSize } from "../profile/profile-size";
 
 interface UserProfileProps {
   name?: string;
@@ -33,21 +35,7 @@ export default function UserProfile({
 
   return (
     <div className={styles.footer}>
-      <div className={styles.userBox}>
-        <div className={`${styles.userProfile} ${Typography.xsSemiBold}`}>
-          {profileImageUrl ? (
-            <Image
-              src={profileImageUrl}
-              width={30}
-              height={30}
-              alt="유저 프로필"
-            />
-          ) : (
-            <span>{sliceUserName(name)}</span>
-          )}
-        </div>
-        <p className={userName}>{name}</p>
-      </div>
+      <Profile size={ProfileSize.Large} name={name} showFullName />
       <button onClick={handleMyPageUrlClick} className={styles.button}>
         <Image src={SettingIcon} width={20} height={20} alt="세팅 아이콘" />
       </button>

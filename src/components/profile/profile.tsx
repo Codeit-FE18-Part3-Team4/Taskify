@@ -62,9 +62,6 @@ export default function Profile({
           {name}
         </span>
       )}
-      <div className={profileClasses} style={{ backgroundColor }}>
-        <span className={spanClasses}>{name}</span>
-      </div>
     </div>
   );
 }

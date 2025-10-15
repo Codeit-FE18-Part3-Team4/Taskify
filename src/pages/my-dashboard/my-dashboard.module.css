@@ -274,21 +274,6 @@
   .dashboardSection
   .invitationsDashboardSection
   .invitationsDashboardSectionMain
-  .invitationsDashboardSectionMainProfile
-  > .userBox .userProfile {
-    width: 24px;
-    height: 24px;
-    border-radius: 100px;
-    background: #14588c;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 10px;
-  }
-.myDashboardMain
-  .dashboardSection
-  .invitationsDashboardSection
-  .invitationsDashboardSectionMain
   > div >
   div {
   width: 50%;
