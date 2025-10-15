@@ -1,8 +1,8 @@
-import { getDashboards } from "@/components/dashboard-side-bar/api/dashboard";
+import { getDashboards } from "@/features/my-dashboard/api/dashboards";
 import { useEffect, useState } from "react";
 
 export function useDashboard() {
-  const [dashboards, setDashboards] = useState<any[]>([]);
+  const [dashboards, setDashboards] = useState<any[] | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<Error | null>(null);
 
@@ -12,11 +12,12 @@ export function useDashboard() {
       setError(null);
 
       try {
-        const { dashboards } = await getDashboards();
-        setDashboards(dashboards);
+        const res = await getDashboards();
+        setDashboards(res?.dashboards ?? []);
       } catch (e) {
         console.error(e);
         setError(e as Error);
+        setDashboards(null);
       } finally {
         setIsLoading(false);
       }
