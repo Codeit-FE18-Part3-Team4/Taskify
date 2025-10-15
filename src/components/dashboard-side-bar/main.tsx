@@ -4,7 +4,8 @@ import Typography from "@/components/typography";
 import { useResponsiveValue } from "@/hooks/use-responsive-value";
 import { classnames } from "@/utils/classnames";
 import Image from "next/image";
-import { useState } from "react";
+import { useRouter } from "next/router";
+import { useMemo, useState } from "react";
 import DashboardButton from "./dashboard-button";
 import styles from "./dashboard-side-bar.module.css";
 import SidebarPageControl from "./sidebar-page-control";
@@ -13,11 +14,34 @@ interface MainProps {
   dashboards: any[];
 }
 
-export default function Main({ dashboards }: MainProps) {
-  const [activeId, setActiveId] = useState<number | null>(null);
+const PAGE_SIZE = 10;
 
-  const handleClickActive = (id: number) => {
-    setActiveId(id);
+export default function Main({ dashboards }: MainProps) {
+  const router = useRouter();
+  const [currentPage, setCurrentPage] = useState<number>(0);
+
+  const totalPages = useMemo(() => {
+    return Math.ceil(dashboards.length / PAGE_SIZE);
+  }, [dashboards]);
+
+  const currentDashboards = useMemo(() => {
+    const start = currentPage * PAGE_SIZE;
+    const end = start + PAGE_SIZE;
+    return dashboards.slice(start, end);
+  }, [dashboards, currentPage]);
+
+  const currentDashboardId = router.query.id ? Number(router.query.id) : null;
+
+  const handleDashboardNavigate = (id: number) => {
+    router.push(`/dashboard/${id}`);
+  };
+
+  const handlePrevPage = () => {
+    if (currentPage > 0) setCurrentPage((prev) => prev - 1);
+  };
+
+  const handleNextPage = () => {
+    if (currentPage < totalPages - 1) setCurrentPage((prev) => prev + 1);
   };
 
   const dashboardAddText = useResponsiveValue({
@@ -47,23 +71,24 @@ export default function Main({ dashboards }: MainProps) {
         <Image src={homeIcon} width={24} height={24} alt="홈 아이콘" />
         <span className={homeText}>홈</span>
       </button>
-      {dashboards.map((dashboard) => {
+      {currentDashboards.map((dashboard) => {
         return (
           <DashboardButton
-            onClick={() => handleClickActive(dashboard.id)}
+            onClick={() => handleDashboardNavigate(dashboard.id)}
             key={dashboard.id}
-            active={activeId === dashboard.id}
+            active={currentDashboardId === dashboard.id}
             createdByMe={dashboard.createdByMe}
+            color={dashboard.color}
           >
             {dashboard.title}
           </DashboardButton>
         );
       })}
       <SidebarPageControl
-        currentPage={0}
-        totalPages={2}
-        onPrev={() => {}}
-        onNext={() => {}}
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPrev={handlePrevPage}
+        onNext={handleNextPage}
       />
     </div>
   );
