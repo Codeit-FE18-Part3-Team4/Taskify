@@ -1,5 +1,6 @@
 import "@/components/color/color-variables.css";
 import ModalProvider from "@/components/modal/modal-provider";
+import TagsProvider from "@/features/card/components/tag-input/tags-provider";
 import "@/styles/global.css";
 import "@/styles/reset.css";
 import { NextPage } from "next";
@@ -12,7 +13,11 @@ const pretendardFont = localFont({
 });
 
 function Providers({ children }: { children: ReactNode }) {
-  return <ModalProvider>{children}</ModalProvider>;
+  return (
+    <ModalProvider>
+      <TagsProvider>{children}</TagsProvider>
+    </ModalProvider>
+  );
 }
 
 type NextPageWithLayout = NextPage & {

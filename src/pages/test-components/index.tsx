@@ -19,7 +19,8 @@ import SheetSection from "@/components/sheet/sheet-section";
 import Typography from "@/components/typography";
 import { CommonSize } from "@/constants/common/common-size";
 import { ProfileRandomColor } from "@/constants/profile-random-color";
-import ImageInput from "@/features/edit-task/components/image-input";
+import ImageInput from "@/features/card/components/image-input";
+import TagInput from "@/features/card/components/tag-input";
 import { useAlert } from "@/hooks/use-alert";
 import { useDialog } from "@/hooks/use-dialog";
 import { useModal } from "@/hooks/use-modal";
@@ -506,9 +507,14 @@ function SheetSample() {
     key: SHEET_KEY,
   });
   const [image, setImage] = useState<File | null>(null);
+  const [tags, setTags] = useState<string[]>([]);
 
   const handleImageChange = (file: File) => {
     setImage(file);
+  };
+
+  const handleTagChange = (tags: string[]) => {
+    setTags(tags);
   };
 
   return (
@@ -528,6 +534,9 @@ function SheetSample() {
             </SheetSection>
             <SheetSection title="설명" required>
               <input />
+            </SheetSection>
+            <SheetSection title="태그" zIndex={1}>
+              <TagInput tags={tags} onChange={handleTagChange} />
             </SheetSection>
             <SheetSection title="이미지">
               <ImageInput onChange={handleImageChange} />
