@@ -6,7 +6,7 @@ import UserProfile from "./user-profile";
 interface DashboardSideBarProps {
   dashboards: any[];
   onClick: () => void;
-  user: any;
+  user?: any;
 }
 
 export default function DashboardSideBar({

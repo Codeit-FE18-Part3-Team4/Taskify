@@ -6,33 +6,38 @@ import PlusIcon from "@/assets/images/ic-plus-circle.svg";
 import PlusSquareIcon from "@/assets/images/ic-plus-square.svg";
 import Button, { ButtonSize, ButtonVariant } from "@/components/button/button";
 import ColorChip from "@/components/chips/chip-color/chips-color";
+import { sliceUserName } from "@/components/dashboard-side-bar/user-profile";
 import Input, { InputVariant } from "@/components/input/input";
 import Typography from "@/components/typography";
 import { CommonSize } from "@/constants/common/common-size";
+import { getInvitations } from "@/features/my-dashboard/api/get-invitations";
 import { putInvitationsAccepts } from "@/features/my-dashboard/api/put-invitations-accept";
 import { useResponsiveValue } from "@/hooks/use-responsive-value";
 import { classnames } from "@/utils/classnames";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import styles from "./my-dashboard.module.css";
-import { sliceUserName } from "@/components/dashboard-side-bar/user-profile";
 
 interface MyDashboardMainProps {
   dashboards: any[];
-  invitations: any[];
   onClick: () => void;
 }
 
 export default function MyDashboardMain({
   dashboards,
-  invitations,
   onClick,
 }: MyDashboardMainProps) {
   const router = useRouter();
   const [currentPage, setCurrentPage] = useState<number>(0);
   const [searchValue, setSearchValue] = useState<string>("");
-  const myDashboards = dashboards.filter((item) => item.createdByMe);
+  const [invitations, setInvitations] = useState<any[]>([]);
+  const [isLoadingMore, setIsLoadingMore] = useState(false);
+  const [hasMore, setHasMore] = useState(true);
+  const [cursorId, setCursorId] = useState<number | undefined>(undefined);
+  const observerRef = useRef<IntersectionObserver | null>(null);
+  const loadMoreRef = useRef<HTMLDivElement | null>(null);
+
   const responsivePageSize = useResponsiveValue({
     desktop: 3,
     tablet: 1,
@@ -42,16 +47,16 @@ export default function MyDashboardMain({
   const PAGE_SIZE = responsivePageSize;
 
   const totalPages = useMemo(() => {
-    return Math.ceil(myDashboards.length / PAGE_SIZE);
-  }, [myDashboards]);
+    return Math.ceil(dashboards.length / PAGE_SIZE);
+  }, [dashboards]);
 
   const isLastPages = totalPages - 1;
 
   const currentDashboards = useMemo(() => {
     const start = currentPage * PAGE_SIZE;
     const end = start + PAGE_SIZE;
-    return myDashboards.slice(start, end);
-  }, [myDashboards, currentPage]);
+    return dashboards.slice(start, end);
+  }, [dashboards, currentPage]);
 
   const handlePrevPage = () => {
     if (currentPage > 0) setCurrentPage((prev) => prev - 1);
@@ -90,16 +95,75 @@ export default function MyDashboardMain({
     router.push(`dashboard/${id}`);
   };
 
-  const handleInvitationAccept = async (id: number) => {
+  const handleRemoveInvitation = (invitationId: number) => {
+    setInvitations((prev) => prev.filter((i) => i.id !== invitationId));
+  };
+
+  const loadInvitations = useCallback(
+    async (reset = false) => {
+      if (isLoadingMore && !reset) return;
+
+      try {
+        setIsLoadingMore(true);
+        const { invitations: newInvitations, cursorId: nextCursor } =
+          await getInvitations({
+            size: 10,
+            cursorId: reset ? undefined : cursorId,
+          });
+
+        if (reset) {
+          setInvitations(newInvitations);
+        } else {
+          setInvitations((prev) => [...prev, ...newInvitations]);
+        }
+
+        setCursorId(nextCursor);
+        setHasMore(newInvitations.length === 10); // size와 같으면 더 있을 가능성
+      } catch (e) {
+        console.error(e);
+      } finally {
+        setIsLoadingMore(false);
+      }
+    },
+    [cursorId, isLoadingMore]
+  );
+
+  useEffect(() => {
+    observerRef.current = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && hasMore && !isLoadingMore) {
+          loadInvitations();
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    if (loadMoreRef.current) {
+      observerRef.current.observe(loadMoreRef.current);
+    }
+
+    return () => {
+      if (observerRef.current) {
+        observerRef.current.disconnect();
+      }
+    };
+  }, [hasMore, isLoadingMore, loadInvitations]);
+
+  const handleInvitationAccept = async (id: number, action: boolean) => {
     try {
       await putInvitationsAccepts({
         invitationsId: id,
-        inviteAccepted: true,
+        inviteAccepted: action,
       });
+      handleRemoveInvitation(id);
     } catch (e) {
       console.error(e);
     }
   };
+
+  useEffect(() => {
+    loadInvitations(true);
+  }, []);
 
   return (
     <div className={styles.myDashboardMainWrap}>
@@ -108,7 +172,7 @@ export default function MyDashboardMain({
         <h1 className={homeText}>홈</h1>
         <div className={styles.dashboardSection}>
           <h2 className={sectionTitle}>내 대시보드</h2>
-          {myDashboards.length === 0 ? (
+          {dashboards.length === 0 ? (
             <div className={styles.emptyDashboard}>
               <Image
                 src={EmptyDashboardImg}
@@ -266,13 +330,14 @@ export default function MyDashboardMain({
                         isWidthFull
                         variant={ButtonVariant.Secondary}
                         size={ButtonSize.XSmall}
+                        onClick={() => handleInvitationAccept(item.id, false)}
                       >
                         거절
                       </Button>
                       <Button
                         isWidthFull
                         size={ButtonSize.XSmall}
-                        onClick={() => handleInvitationAccept(item.id)}
+                        onClick={() => handleInvitationAccept(item.id, true)}
                       >
                         수락
                       </Button>
@@ -280,6 +345,21 @@ export default function MyDashboardMain({
                   </div>
                 </div>
               ))}
+              {hasMore && (
+                <div
+                  ref={loadMoreRef}
+                  style={{ height: "20px", margin: "20px 0" }}
+                >
+                  {isLoadingMore && (
+                    <p
+                      className={Typography.mdBold}
+                      style={{ textAlign: "center" }}
+                    >
+                      로딩 중...
+                    </p>
+                  )}
+                </div>
+              )}
             </div>
           )}
         </div>

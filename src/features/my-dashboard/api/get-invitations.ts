@@ -1,9 +1,15 @@
 import axiosInstanceTest from '@/services/axios-instance-test';
 
-export async function getInvitations({ title = "", size = 10 } = {}) {
+export async function getInvitations({ size = 10, cursorId }: { size?: number; cursorId?: number } = {}) {
   try {
+    const params = new URLSearchParams();
+    params.append('size', size.toString());
+    if (cursorId) {
+      params.append('cursorId', cursorId.toString());
+    }
+    
     const res = await axiosInstanceTest.get(
-      `/invitations?size=${size}`,
+      `/invitations?${params.toString()}`,
     );
     const body = res.data;
     return body;

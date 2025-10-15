@@ -9,14 +9,13 @@ import { getUserInfo } from "@/features/my-dashboard/api/get-user-info";
 import { postDashboard } from "@/features/my-dashboard/api/post-dashboard";
 import { useSheet } from "@/hooks/use-sheet";
 import { useSsrResponsive } from "@/hooks/use-ssr-responsive";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { getInvitations } from "../../features/my-dashboard/api/get-invitations";
 import MyDashboardMain from "./my-dashboard-main";
 import styles from "./my-dashboard.module.css";
 
 export default function MyDashboard() {
   const [dashboards, setDashboards] = useState<any[]>([]);
-  const [invitations, setInvitations] = useState<any[]>([]);
   const [userInfo, setUserInfo] = useState<any[]>([]);
   const [dashboardValue, setDashboardValue] = useState<string>("");
   const [color, setColor] = useState<string>("");
@@ -43,43 +42,39 @@ export default function MyDashboard() {
     }
   };
 
-  useEffect(() => {
-    const loadData = async () => {
-      try {
-        const { dashboards } = await getDashboards();
-        const sortedDashboards = dashboards.sort(
-          (a: any, b: any) =>
-            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-        );
-
-        setDashboards(sortedDashboards);
-      } catch (e) {
-        console.error(e);
-      }
-    };
-
-    const loadInvitations = async () => {
-      try {
-        const { invitations } = await getInvitations();
-        setInvitations(invitations);
-      } catch (e) {
-        console.error(e);
-      }
-    };
-
-    const userInfoLoad = async () => {
-      try {
-        const user  = await getUserInfo();
-        setUserInfo(user);
-        console.log(userInfo);
-      } catch (e) {
-        console.error(e);
-      }
+  const loadDashboards = useCallback(async () => {
+    try {
+      const { dashboards } = await getDashboards();
+      const sortedDashboards = dashboards.sort(
+        (a: any, b: any) =>
+          new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+      );
+      setDashboards(sortedDashboards);
+    } catch (e) {
+      console.error(e);
     }
-    loadData();
-    loadInvitations();
-    userInfoLoad();
   }, []);
+
+  const loadUserInfo = useCallback(async () => {
+    try {
+      const user = await getUserInfo();
+      setUserInfo(user);
+      console.log(user);
+    } catch (e) {
+      console.error(e);
+    }
+  }, []);
+
+  useEffect(() => {
+    loadDashboards();
+    loadUserInfo();
+  }, [loadDashboards, loadUserInfo]);
+
+  // const handleRemoveInvitation = (invitationId: number) => {
+  //   setInvitations((prev) => prev.filter((i) => i.id !== invitationId));
+  //   loadDashboards();
+  // };
+
   const { isMobile } = useSsrResponsive();
 
   return (
@@ -93,8 +88,7 @@ export default function MyDashboard() {
       )}
       <MyDashboardMain
         onClick={() => openSheet(true)}
-        dashboards={dashboards}
-        invitations={invitations}
+        dashboards={dashboards} 
       />
       {isShowSheet && (
         <Sheet
