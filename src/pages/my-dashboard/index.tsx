@@ -4,7 +4,11 @@ import DashboardSideBar from "@/components/dashboard-side-bar/dashboard-side-bar
 import Input, { InputSize } from "@/components/input/input";
 import Sheet, { SheetActionType } from "@/components/sheet";
 import SheetSection from "@/components/sheet/sheet-section";
-import { getDashboards, getUserInfo, postDashboard } from "@/features/my-dashboard/api/";
+import {
+  getDashboards,
+  getUserInfo,
+  postDashboard,
+} from "@/features/my-dashboard/api/";
 import { useSheet } from "@/hooks/use-sheet";
 import { useSsrResponsive } from "@/hooks/use-ssr-responsive";
 import { useCallback, useEffect, useState } from "react";
@@ -32,7 +36,7 @@ export interface UserInfo {
 
 export default function MyDashboard() {
   const [dashboards, setDashboards] = useState<Dashboard[]>([]);
-  const [userInfo, setUserInfo] = useState<UserInfo[]>([]);
+  const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
   const [dashboardValue, setDashboardValue] = useState<string>("");
   const [color, setColor] = useState<string>("");
 
@@ -85,7 +89,7 @@ export default function MyDashboard() {
 
   return (
     <div className={styles.myDashboardWrap}>
-      {!isMobile && (
+      {!isMobile && userInfo && (
         <DashboardSideBar
           onClick={() => openSheet(true)}
           dashboards={dashboards}
