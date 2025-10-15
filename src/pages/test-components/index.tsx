@@ -6,7 +6,6 @@ import { CHIP_COLORS } from "@/components/chips/chip-color/chip-colors";
 import ColorChip from "@/components/chips/chip-color/chips-color";
 import { ColorFrameSize } from "@/components/chips/color-frame/color-frame-size";
 import ColorPalette from "@/components/color-palette/color-palette";
-import DashboardSideBar from "@/components/dashboard-side-bar/dashboard-side-bar";
 import Dialog from "@/components/dialog";
 import Input, { InputSize, InputVariant } from "@/components/input/input";
 import Textarea, { TextareaSize } from "@/components/input/textarea";
@@ -550,8 +549,8 @@ function SheetSample() {
 
 function ProfileSample() {
   return (
-    <>
-      <div style={{ display: "flex" }}>
+    <div style={{ background: "gray" }}>
+      <div style={{ display: "flex", gap: "20px" }}>
         {Array.from({ length: 7 }, (_, i) => (
           <Profile
             key={i}
@@ -561,18 +560,16 @@ function ProfileSample() {
           />
         ))}
       </div>
-      <div style={{ display: "flex" }}>
-        <Profile size={ProfileSize.XLarge} name="Lee" />
-        <Profile size={ProfileSize.XLarge} name="Lee" />
-        <Profile size={ProfileSize.XLarge} name="김아무개" />
+      <div style={{ display: "flex", gap: "20px" }}>
+        <Profile size={ProfileSize.XLarge} showFullName name="Lee" />
+        <Profile size={ProfileSize.XLarge} fullNameSize={Typography.lg2Bold} showFullName name="Lee" />
+        <Profile size={ProfileSize.XLarge} showFullName fullNameSize={Typography.xsSemiBold} name="김아무개" />
       </div>
-    </>
+    </div>
   );
 }
 
 export default function Page() {
-  const [dashboards, setDashboards] = useState<any[]>([]);
-
   return (
     <main style={{ padding: "24px" }}>
       <header>
@@ -624,9 +621,6 @@ export default function Page() {
       </Section>
       <Section title="Sheet">
         <SheetSample />
-      </Section>
-      <Section title="SideBar">
-        <DashboardSideBar onClick={() => { }} dashboards={dashboards} />
       </Section>
       <Section title="profile">
         <ProfileSample />
