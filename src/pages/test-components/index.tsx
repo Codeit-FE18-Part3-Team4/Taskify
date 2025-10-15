@@ -9,7 +9,7 @@ import ColorPalette from "@/components/color-palette/color-palette";
 import DashboardSideBar from "@/components/dashboard-side-bar/dashboard-side-bar";
 import Dialog from "@/components/dialog";
 import Input, { InputSize, InputVariant } from "@/components/input/input";
-import Textarea from "@/components/input/textarea";
+import Textarea, { TextareaSize } from "@/components/input/textarea";
 import Modal from "@/components/modal";
 import Profile from "@/components/profile/profile";
 import { ProfileSize } from "@/components/profile/profile-size";
@@ -397,10 +397,20 @@ function TextareaBox() {
   return (
     <div>
       <div style={{ marginBottom: "8px" }}>
-        <Textarea placeholder="Text" />
+        <Textarea placeholder="Large" size={TextareaSize.Large} />
       </div>
       <div style={{ marginBottom: "8px" }}>
-        <Textarea placeholder="Disabled" disabled />
+        <Textarea placeholder="Medium" size={TextareaSize.Medium} />
+      </div>
+      <div style={{ marginBottom: "8px" }}>
+        <Textarea placeholder="Auto" size={TextareaSize.Auto} />
+      </div>
+      <div style={{ marginBottom: "8px" }}>
+        <Textarea
+          placeholder="Disabled, Large"
+          size={TextareaSize.Large}
+          disabled
+        />
       </div>
     </div>
   );
