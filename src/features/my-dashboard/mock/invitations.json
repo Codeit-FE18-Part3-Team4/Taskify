@@ -1,0 +1,215 @@
+{
+  "cursorId": 10,
+  "invitations": [
+    {
+      "id": 1,
+      "inviter": {
+        "nickname": "송강",
+        "email": "송강.user@example.com",
+        "id": 101
+      },
+      "teamId": "team-theta",
+      "dashboard": {
+        "title": "프로젝트 관리 현황판",
+        "id": 501
+      },
+      "invitee": {
+        "nickname": "유인나",
+        "email": "유인나.user@example.com",
+        "id": 202
+      },
+      "inviteAccepted": false,
+      "createdAt": "2025-10-09T00:00:00Z",
+      "updatedAt": "2025-10-13T08:00:00Z"
+    },
+    {
+      "id": 2,
+      "inviter": {
+        "nickname": "김수현",
+        "email": "김수현.user@example.com",
+        "id": 102
+      },
+      "teamId": "team-eta",
+      "dashboard": {
+        "title": "제품 개발 트래킹",
+        "id": 502
+      },
+      "invitee": {
+        "nickname": "한소희",
+        "email": "한소희.user@example.com",
+        "id": 203
+      },
+      "inviteAccepted": true,
+      "createdAt": "2025-10-02T00:00:00Z",
+      "updatedAt": "2025-10-05T10:00:00Z"
+    },
+    {
+      "id": 3,
+      "inviter": {
+        "nickname": "오지훈",
+        "email": "오지훈.user@example.com",
+        "id": 103
+      },
+      "teamId": "team-kappa",
+      "dashboard": {
+        "title": "사용자 행동 분석",
+        "id": 503
+      },
+      "invitee": {
+        "nickname": "이영희",
+        "email": "이영희.user@example.com",
+        "id": 204
+      },
+      "inviteAccepted": false,
+      "createdAt": "2025-10-12T00:00:00Z",
+      "updatedAt": "2025-10-16T15:00:00Z"
+    },
+    {
+      "id": 4,
+      "inviter": {
+        "nickname": "이만수",
+        "email": "이만수.user@example.com",
+        "id": 104
+      },
+      "teamId": "team-gamma",
+      "dashboard": {
+        "title": "영업 파이프라인",
+        "id": 504
+      },
+      "invitee": {
+        "nickname": "이영희",
+        "email": "이영희.user@example.com",
+        "id": 205
+      },
+      "inviteAccepted": false,
+      "createdAt": "2025-09-08T00:00:00Z",
+      "updatedAt": "2025-09-11T09:00:00Z"
+    },
+    {
+      "id": 5,
+      "inviter": {
+        "nickname": "신민아",
+        "email": "신민아.user@example.com",
+        "id": 105
+      },
+      "teamId": "team-theta",
+      "dashboard": {
+        "title": "고객 서비스 지표",
+        "id": 505
+      },
+      "invitee": {
+        "nickname": "신민아",
+        "email": "신민아.user@example.com",
+        "id": 206
+      },
+      "inviteAccepted": false,
+      "createdAt": "2025-09-11T00:00:00Z",
+      "updatedAt": "2025-09-11T07:00:00Z"
+    },
+    {
+      "id": 6,
+      "inviter": {
+        "nickname": "강하늘",
+        "email": "강하늘.user@example.com",
+        "id": 106
+      },
+      "teamId": "team-iota",
+      "dashboard": {
+        "title": "재무 보고서 대시보드",
+        "id": 506
+      },
+      "invitee": {
+        "nickname": "최수정",
+        "email": "최수정.user@example.com",
+        "id": 207
+      },
+      "inviteAccepted": true,
+      "createdAt": "2025-09-01T00:00:00Z",
+      "updatedAt": "2025-09-05T11:00:00Z"
+    },
+    {
+      "id": 7,
+      "inviter": {
+        "nickname": "이정재",
+        "email": "이정재.user@example.com",
+        "id": 107
+      },
+      "teamId": "team-eta",
+      "dashboard": {
+        "title": "재무 보고서 대시보드",
+        "id": 507
+      },
+      "invitee": {
+        "nickname": "최은지",
+        "email": "최은지.user@example.com",
+        "id": 208
+      },
+      "inviteAccepted": true,
+      "createdAt": "2025-10-06T00:00:00Z",
+      "updatedAt": "2025-10-09T15:00:00Z"
+    },
+    {
+      "id": 8,
+      "inviter": {
+        "nickname": "김지은",
+        "email": "김지은.user@example.com",
+        "id": 108
+      },
+      "teamId": "team-gamma",
+      "dashboard": {
+        "title": "제품 개발 트래킹",
+        "id": 508
+      },
+      "invitee": {
+        "nickname": "박지성",
+        "email": "박지성.user@example.com",
+        "id": 209
+      },
+      "inviteAccepted": false,
+      "createdAt": "2025-09-30T00:00:00Z",
+      "updatedAt": "2025-10-03T02:00:00Z"
+    },
+    {
+      "id": 9,
+      "inviter": {
+        "nickname": "홍길동",
+        "email": "홍길동.user@example.com",
+        "id": 109
+      },
+      "teamId": "team-gamma",
+      "dashboard": {
+        "title": "영업 파이프라인",
+        "id": 509
+      },
+      "invitee": {
+        "nickname": "이정재",
+        "email": "이정재.user@example.com",
+        "id": 210
+      },
+      "inviteAccepted": false,
+      "createdAt": "2025-09-14T00:00:00Z",
+      "updatedAt": "2025-09-19T03:00:00Z"
+    },
+    {
+      "id": 10,
+      "inviter": {
+        "nickname": "최수정",
+        "email": "최수정.user@example.com",
+        "id": 110
+      },
+      "teamId": "team-iota",
+      "dashboard": {
+        "title": "매출 분석 리포트",
+        "id": 510
+      },
+      "invitee": {
+        "nickname": "최은지",
+        "email": "최은지.user@example.com",
+        "id": 211
+      },
+      "inviteAccepted": false,
+      "createdAt": "2025-09-09T00:00:00Z",
+      "updatedAt": "2025-09-10T00:00:00Z"
+    }
+  ]
+}

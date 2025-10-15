@@ -1,0 +1,41 @@
+.cardContainer {
+  background-color: var(--color-black700);
+  border: 1px solid var(--color-gray800);
+  border-radius: 20px;
+  padding: 20px;
+  color: var(--color-gray100);
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  cursor: pointer;
+}
+
+.cardImage {
+  position: relative;
+  width: 100%;
+}
+
+.cardImage img {
+  border-radius: 14px;
+}
+
+.title {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.badge {
+  display: inline-flex;
+  gap: 8px;
+  max-width: 100%;
+  flex-wrap: wrap;
+}
+
+.assignee {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
