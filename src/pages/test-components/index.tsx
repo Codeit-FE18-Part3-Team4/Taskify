@@ -5,6 +5,7 @@ import Badge from "@/components/chips/badge/badge";
 import { CHIP_COLORS } from "@/components/chips/chip-color/chip-colors";
 import ColorChip from "@/components/chips/chip-color/chips-color";
 import { ColorFrameSize } from "@/components/chips/color-frame/color-frame-size";
+import { Color } from "@/components/color";
 import ColorPalette from "@/components/color-palette/color-palette";
 import { getDashboards } from "@/features/dashboard-side-bar/api/dashboard";
 import DashboardSideBar from "@/components/dashboard-side-bar/dashboard-side-bar";
@@ -17,9 +18,11 @@ import { ProfileSize } from "@/components/profile/profile-size";
 import { ProfileType } from "@/components/profile/profile-type";
 import Sheet, { SheetActionType } from "@/components/sheet";
 import SheetSection from "@/components/sheet/sheet-section";
+import SheetSectionGroup from "@/components/sheet/sheet-section-group";
 import Typography from "@/components/typography";
 import { CommonSize } from "@/constants/common/common-size";
 import { ProfileRandomColor } from "@/constants/profile-random-color";
+import Dropdown, { DropdownOption } from "@/features/card/components/dropdown";
 import ImageInput from "@/features/card/components/image-input";
 import TagInput from "@/features/card/components/tag-input";
 import { useAlert } from "@/hooks/use-alert";
@@ -242,6 +245,57 @@ function ButtonBox() {
           </div>
         ))}
       </div>
+    </div>
+  );
+}
+
+function DropdownSample() {
+  const options1: DropdownOption[] = [
+    { element: "Option 1", value: "option1" },
+    { element: "Option 2", value: "option2" },
+    { element: "Option 3", value: "option3" },
+  ];
+  const options2: DropdownOption[] = [
+    { element: "Option 1", value: "option1" },
+    { element: "Option 2", value: "option2" },
+    { element: <div>"Option 3"</div>, value: "option3" },
+    { element: "Option 4", value: "option4" },
+    { element: "Option 5", value: "option5" },
+    { element: <div>"Option 6"</div>, value: "option6" },
+  ];
+
+  const [selectedValue1, setSelectedValue1] = useState<string>("");
+  const [selectedValue2, setSelectedValue2] = useState<string>("");
+
+  const handleSelect1 = (value: string) => {
+    setSelectedValue1(value);
+  };
+
+  const handleSelect2 = (value: string) => {
+    setSelectedValue2(value);
+  };
+
+  return (
+    <div
+      style={{
+        display: "flex",
+        gap: "16px",
+        backgroundColor: "#404040",
+        padding: "32px",
+      }}
+    >
+      <Dropdown
+        value={selectedValue1}
+        placeholder="Dropdown with 3 options"
+        options={options1}
+        onSelect={handleSelect1}
+      />
+      <Dropdown
+        value={selectedValue2}
+        placeholder="Dropdown with 6 options"
+        options={options2}
+        onSelect={handleSelect2}
+      />
     </div>
   );
 }
@@ -509,6 +563,8 @@ function SheetSample() {
   });
   const [image, setImage] = useState<File | null>(null);
   const [tags, setTags] = useState<string[]>([]);
+  const [column, setColumn] = useState<string>("");
+  const [assignee, setAssignee] = useState<string>("");
 
   const handleImageChange = (file: File) => {
     setImage(file);
@@ -517,6 +573,36 @@ function SheetSample() {
   const handleTagChange = (tags: string[]) => {
     setTags(tags);
   };
+
+  const handleColumnSelect = (value: string) => {
+    setColumn(value);
+  };
+
+  const handleAssigneeSelect = (value: string) => {
+    setAssignee(value);
+  };
+
+  function ProfileCard({ name }: { name: string }) {
+    return (
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          gap: "8px",
+        }}
+      >
+        <div
+          style={{
+            width: "24px",
+            height: "24px",
+            backgroundColor: Color.Green,
+            borderRadius: "50%",
+          }}
+        ></div>
+        <span>{name}</span>
+      </div>
+    );
+  }
 
   return (
     <>
@@ -536,6 +622,27 @@ function SheetSample() {
             <SheetSection title="설명" required>
               <input />
             </SheetSection>
+            <SheetSectionGroup zIndex={2}>
+              <SheetSection title="칼럼">
+                <Dropdown
+                  value={column}
+                  placeholder="칼럼 선택"
+                  options={["To do", "Progress", "Done"]}
+                  onSelect={handleColumnSelect}
+                />
+              </SheetSection>
+              <SheetSection title="담당자">
+                <Dropdown
+                  value={assignee && <ProfileCard name={assignee} />}
+                  placeholder="담당자 선택"
+                  options={[
+                    { element: <ProfileCard name="User 1" />, value: "user1" },
+                    { element: <ProfileCard name="User 2" />, value: "user2" },
+                  ]}
+                  onSelect={handleAssigneeSelect}
+                />
+              </SheetSection>
+            </SheetSectionGroup>
             <SheetSection title="태그" zIndex={1}>
               <TagInput tags={tags} onChange={handleTagChange} />
             </SheetSection>
@@ -613,6 +720,9 @@ export default function Page() {
         <ColorChipSample />
         <BadgeSample />
         <ColorPaletteSample />
+      </Section>
+      <Section title="Dropdown">
+        <DropdownSample />
       </Section>
       <Section title="Modal">
         <ModalSample />
