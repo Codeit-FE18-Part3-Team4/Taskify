@@ -14,10 +14,11 @@ interface MainProps {
   dashboards: any[];
 }
 
+const PAGE_SIZE = 10;
+
 export default function Main({ dashboards }: MainProps) {
   const router = useRouter();
   const [currentPage, setCurrentPage] = useState<number>(0);
-  const PAGE_SIZE = 10;
 
   const totalPages = useMemo(() => {
     return Math.ceil(dashboards.length / PAGE_SIZE);
