@@ -1,0 +1,16 @@
+import axiosInstanceTest from "@/services/axios-instance-test";
+
+export async function getMembers({ dashboardId }: { dashboardId: number }) {
+  if (!dashboardId) return [];
+
+  try {
+    const res = await axiosInstanceTest.get(
+      `/members?dashboardId=${dashboardId}`,
+    );
+    const body = res.data;
+    return body;
+  } catch (e) {
+    console.error(e);
+    throw e;
+  }
+}
