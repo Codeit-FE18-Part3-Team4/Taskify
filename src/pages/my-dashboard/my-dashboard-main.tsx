@@ -7,9 +7,9 @@ import PlusSquareIcon from "@/assets/images/ic-plus-square.svg";
 import Button, { ButtonSize, ButtonVariant } from "@/components/button/button";
 import ColorChip from "@/components/chips/chip-color/chips-color";
 import Input, { InputVariant } from "@/components/input/input";
-import NavigationBar from "@/components/navigationBar/navigation-bar";
 import Typography from "@/components/typography";
 import { CommonSize } from "@/constants/common/common-size";
+import { putInvitationsAccepts } from "@/features/my-dashboard/api/put-invitations-accept";
 import { useResponsiveValue } from "@/hooks/use-responsive-value";
 import { classnames } from "@/utils/classnames";
 import Image from "next/image";
@@ -68,8 +68,7 @@ export default function MyDashboardMain({
     item.dashboard.title.toLowerCase().includes(searchValue.toLowerCase())
   );
 
-  const nextActiveButton =
-    currentPage === isLastPages ? "" : styles.active;
+  const nextActiveButton = currentPage === isLastPages ? "" : styles.active;
   const prevActiveButton = currentPage !== 0 ? styles.active : "";
 
   const homeText = useResponsiveValue({
@@ -92,6 +91,17 @@ export default function MyDashboardMain({
 
   const dashboardIdPage = (id: number) => {
     router.push(`dashboard/${id}`);
+  };
+
+  const handleInvitationAccept = async (id: number) => {
+    try {
+      await putInvitationsAccepts({
+        invitationsId: id,
+        inviteAccepted: true,
+      });
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   return (
@@ -123,7 +133,10 @@ export default function MyDashboardMain({
           ) : (
             <div className={styles.myDashboard}>
               <div className={styles.myDashboardBox}>
-                <button onClick={onClick} className={styles.myDashboardAddButton}>
+                <button
+                  onClick={onClick}
+                  className={styles.myDashboardAddButton}
+                >
                   <span className={Typography.lg2SemiBold}>
                     새로운 대시보드
                   </span>
@@ -259,7 +272,11 @@ export default function MyDashboardMain({
                       >
                         거절
                       </Button>
-                      <Button isWidthFull size={ButtonSize.XSmall}>
+                      <Button
+                        isWidthFull
+                        size={ButtonSize.XSmall}
+                        onClick={() => handleInvitationAccept(item.id)}
+                      >
                         수락
                       </Button>
                     </div>

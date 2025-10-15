@@ -5,12 +5,15 @@ import Image from "next/image";
 import styles from "./dashboard-side-bar.module.css";
 
 interface UserProfileProps {
-  name: string;
+  name?: string;
   profileImageUrl: string | undefined;
 }
 
-function sliceUserName(userName: string) {
-  return userName.length > 1 ? userName.substring(1) : userName;
+function sliceUserName(userName: string | undefined): string {
+  if (!userName || userName.length <= 1) {
+    return userName || '';
+  }
+  return userName.substring(1);
 }
 
 export default function UserProfile({

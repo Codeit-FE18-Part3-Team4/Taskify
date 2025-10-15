@@ -6,9 +6,11 @@ import UserProfile from "./user-profile";
 interface DashboardSideBarProps {
   dashboards: any[];
   onClick: () => void;
-};
+  user: any;
+}
 
 export default function DashboardSideBar({
+  user,
   dashboards,
   onClick,
 }: DashboardSideBarProps) {
@@ -16,7 +18,7 @@ export default function DashboardSideBar({
     <div className={styles.sideBar}>
       <Header />
       <Main dashboards={dashboards} onClick={onClick} />
-      <UserProfile name={"박민영"} profileImageUrl="" />
+      <UserProfile name={user.nickname} profileImageUrl={user.profileImageUrl} />
     </div>
   );
 }
