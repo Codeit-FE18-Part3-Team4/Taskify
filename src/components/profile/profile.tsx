@@ -5,9 +5,10 @@ import {
 } from "@/constants/profile-random-color";
 import { ProfileSize } from "@/components/profile/profile-size";
 import { ProfileType } from "@/components/profile/profile-type";
-import typographyStyles from "@/components/typography/typography.module.css";
 import { classnames } from "@/utils/classnames";
 import { useMemo } from "react";
+import { colorFromString, localeLengthKR } from "@/utils/string-hashing";
+import Typography from "../typography";
 
 interface ProfileProps {
   size?: ProfileSize;
@@ -24,34 +25,19 @@ export default function Profile({
   name = "",
   isRemain = false,
 }: ProfileProps) {
-  const calculateColorIndex = useMemo(() => {
-    if (colorIndex !== undefined) {
-      return colorIndex % ProfileColorsArray.length;
+  const backgroundColor = useMemo(() => {
+    if (isRemain) {
+      return RemainProfileColor.backgroundColor;
     }
 
-    const hash = name.split("").reduce((acc, char, index) => {
-      return acc + char.charCodeAt(0) * (index + 1);
-    }, 0);
+    if (colorIndex !== undefined) {
+      return ProfileColorsArray[colorIndex % ProfileColorsArray.length];
+    }
 
-    return hash % ProfileColorsArray.length;
-  }, [colorIndex, name]);
+    return colorFromString(name, ProfileColorsArray);
+  }, [colorIndex, name, isRemain]);
 
-  const color = isRemain
-    ? RemainProfileColor.backgroundColor
-    : ProfileColorsArray[calculateColorIndex];
-
-  const getLength = (str: string) => {
-    return str.split("").reduce((acc, char) => {
-      const code = char.charCodeAt(0);
-      if (code >= 0xac00 && code <= 0xd7af) {
-        return acc + 2;
-      }
-      return acc + 1;
-    }, 0);
-  };
-
-  const visualLength = getLength(name);
-
+  const visualLength = localeLengthKR(name);
   const spanClasses =
     visualLength >= 5 ? styles.alignStart : styles.alignCenter;
 
@@ -59,11 +45,11 @@ export default function Profile({
     styles.profile,
     type === ProfileType.NavigationBar ? styles.naviType : "",
     styles[size],
-    typographyStyles.xsSemiBold
+    Typography.xsSemiBold,
   );
 
   return (
-    <div className={profileClasses} style={{ backgroundColor: color }}>
+    <div className={profileClasses} style={{ backgroundColor }}>
       <span className={spanClasses}>{name}</span>
     </div>
   );

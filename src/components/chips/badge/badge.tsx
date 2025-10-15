@@ -1,27 +1,25 @@
+import Typography from "@/components/typography";
 import styles from "./badge.module.css";
 import { BADGE_COLORS } from "@/components/chips/badge/badge-colors";
-import typographyStyles from "@/components/typography/typography.module.css";
-import { useMemo } from "react";
+import { colorFromString } from "@/utils/string-hashing";
+import { CSSProperties, useMemo } from "react";
 
 interface BadgeProps {
   title: string;
 }
 
 export default function Badge({ title }: BadgeProps) {
-  const badgeClasses = `${styles.badge} ${typographyStyles["sm-semibold"]}`;
+  const badgeClasses = `${styles.badge} ${Typography.smSemiBold}`;
 
   const trimmedTitle = title.trim();
   if (!trimmedTitle) return null;
 
-  const calculateColorIndex = useMemo(() => {
-    const hash = title.split("").reduce((acc, char, index) => {
-      return acc + char.charCodeAt(0) * (index + 1);
-    }, 0);
-    return hash % BADGE_COLORS.length;
+  const colorStyle = useMemo(() => {
+    return colorFromString(title, BADGE_COLORS) as CSSProperties;
   }, [title]);
 
   return (
-    <span className={badgeClasses} style={BADGE_COLORS[calculateColorIndex]}>
+    <span className={badgeClasses} style={colorStyle}>
       {title}
     </span>
   );
