@@ -447,9 +447,10 @@ function BadgeSample() {
           gap: `10px`,
         }}
       >
-        {Object.values(ProfileRandomColor).map((profile, index) => (
-          <Badge key={index} title={"태그내용"} />
-        ))}
+        {Object.values(ProfileRandomColor).map((profile, index) => {
+          const koreanConsonant = String.fromCharCode(0x3131 + index);
+          return <Badge key={index} title={`태그내용${koreanConsonant}`} />;
+        })}
       </div>
     </>
   );
@@ -458,7 +459,7 @@ function BadgeSample() {
 function ColorPaletteSample() {
   const sizes = Object.values(ColorFrameSize);
   const [selectedColors, setSelectedColors] = useState<string[]>(
-    sizes.map(() => "")
+    sizes.map(() => ""),
   );
 
   const handleSelect = (index: number, color: string) => {
