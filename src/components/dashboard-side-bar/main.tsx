@@ -5,7 +5,7 @@ import { useResponsiveValue } from "@/hooks/use-responsive-value";
 import { classnames } from "@/utils/classnames";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import DashboardButton from "./dashboard-button";
 import styles from "./dashboard-side-bar.module.css";
 import SidebarPageControl from "./sidebar-page-control";
@@ -17,15 +17,15 @@ interface MainProps {
 export default function Main({ dashboards }: MainProps) {
   const router = useRouter();
   const [currentPage, setCurrentPage] = useState<number>(0);
-  const pageSize = 10;
+  const PAGE_SIZE = 10;
 
   const totalPages = useMemo(() => {
-    return Math.ceil(dashboards.length / pageSize);
+    return Math.ceil(dashboards.length / PAGE_SIZE);
   }, [dashboards]);
 
   const currentDashboards = useMemo(() => {
-    const start = currentPage * pageSize;
-    const end = start + pageSize;
+    const start = currentPage * PAGE_SIZE;
+    const end = start + PAGE_SIZE;
     return dashboards.slice(start, end);
   }, [dashboards, currentPage]);
 
@@ -42,11 +42,6 @@ export default function Main({ dashboards }: MainProps) {
   const handleNextPage = () => {
     if (currentPage < totalPages - 1) setCurrentPage((prev) => prev + 1);
   };
-
-  useEffect(() => {
-    console.log(currentPage);
-    console.log("토탈", totalPages);
-  }, [currentPage]);
 
   const dashboardAddText = useResponsiveValue({
     desktop: Typography.lg2Bold,
