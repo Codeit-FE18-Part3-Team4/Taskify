@@ -4,18 +4,35 @@ import DashboardSideBar from "@/components/dashboard-side-bar/dashboard-side-bar
 import Input, { InputSize } from "@/components/input/input";
 import Sheet, { SheetActionType } from "@/components/sheet";
 import SheetSection from "@/components/sheet/sheet-section";
-import { getDashboards } from "@/features/my-dashboard/api/get-dashboards";
-import { getUserInfo } from "@/features/my-dashboard/api/get-user-info";
-import { postDashboard } from "@/features/my-dashboard/api/post-dashboard";
+import { getDashboards, getUserInfo, postDashboard } from "@/features/my-dashboard/api/";
 import { useSheet } from "@/hooks/use-sheet";
 import { useSsrResponsive } from "@/hooks/use-ssr-responsive";
 import { useCallback, useEffect, useState } from "react";
 import MyDashboardMain from "./my-dashboard-main";
 import styles from "./my-dashboard.module.css";
 
+export interface Dashboard {
+  id: number;
+  title: string;
+  color: string;
+  createdAt: string;
+  updatedAt: string;
+  createdByMe: boolean;
+  userId: number;
+}
+
+export interface UserInfo {
+  id: number;
+  email: string;
+  nickname: string;
+  profileImageUrl: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
 export default function MyDashboard() {
-  const [dashboards, setDashboards] = useState<any[]>([]);
-  const [userInfo, setUserInfo] = useState<any[]>([]);
+  const [dashboards, setDashboards] = useState<Dashboard[]>([]);
+  const [userInfo, setUserInfo] = useState<UserInfo[]>([]);
   const [dashboardValue, setDashboardValue] = useState<string>("");
   const [color, setColor] = useState<string>("");
 
@@ -41,32 +58,28 @@ export default function MyDashboard() {
     }
   };
 
-  const loadDashboards = useCallback(async () => {
+  const load = useCallback(async () => {
     try {
-      const { dashboards } = await getDashboards();
-      const sortedDashboards = dashboards.sort(
-        (a: any, b: any) =>
+      const [dashboardsRes, userRes] = await Promise.all([
+        getDashboards(),
+        getUserInfo(),
+      ]);
+
+      const sortedDashboards = dashboardsRes.dashboards.sort(
+        (a: Dashboard, b: Dashboard) =>
           new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
       );
-      setDashboards(sortedDashboards);
-    } catch (e) {
-      console.error(e);
-    }
-  }, []);
 
-  const loadUserInfo = useCallback(async () => {
-    try {
-      const user = await getUserInfo();
-      setUserInfo(user);
-    } catch (e) {
-      console.error(e);
+      setDashboards(sortedDashboards);
+      setUserInfo(userRes);
+    } catch (error) {
+      console.error(error);
     }
   }, []);
 
   useEffect(() => {
-    loadDashboards();
-    loadUserInfo();
-  }, [loadDashboards, loadUserInfo]);
+    load();
+  }, [load]);
 
   const { isMobile } = useSsrResponsive();
 
@@ -82,7 +95,6 @@ export default function MyDashboard() {
       <MyDashboardMain
         onClick={() => openSheet(true)}
         dashboards={dashboards}
-        reDashboards={loadDashboards}
       />
       {isShowSheet && (
         <Sheet

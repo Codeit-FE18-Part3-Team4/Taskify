@@ -8,32 +8,56 @@ import Button, { ButtonSize, ButtonVariant } from "@/components/button/button";
 import ColorChip from "@/components/chips/chip-color/chips-color";
 import { sliceUserName } from "@/components/dashboard-side-bar/user-profile";
 import Input, { InputVariant } from "@/components/input/input";
+import NavigationBar from "@/components/navigationBar/navigation-bar";
 import Typography from "@/components/typography";
 import { CommonSize } from "@/constants/common/common-size";
-import { getInvitations } from "@/features/my-dashboard/api/get-invitations";
-import { putInvitationsAccepts } from "@/features/my-dashboard/api/put-invitations-accept";
+import {
+  getInvitations,
+  putInvitationsAccepts,
+} from "@/features/my-dashboard/api/";
 import { useResponsiveValue } from "@/hooks/use-responsive-value";
 import { classnames } from "@/utils/classnames";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { Dashboard } from ".";
 import styles from "./my-dashboard.module.css";
 
 interface MyDashboardMainProps {
-  dashboards: any[];
+  dashboards: Dashboard[];
   onClick: () => void;
-  reDashboards: () => void;
+}
+
+interface Invitation {
+  id: number;
+  inviter: {
+    nickname: string;
+    email: string;
+    id: number;
+  };
+  teamId: string;
+  dashboard: {
+    title: string;
+    id: number;
+  };
+  invitee: {
+    nickname: string;
+    email: string;
+    id: number;
+  };
+  inviteAccepted: boolean;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export default function MyDashboardMain({
   dashboards,
   onClick,
-  reDashboards
 }: MyDashboardMainProps) {
   const router = useRouter();
   const [currentPage, setCurrentPage] = useState<number>(0);
   const [searchValue, setSearchValue] = useState<string>("");
-  const [invitations, setInvitations] = useState<any[]>([]);
+  const [invitations, setInvitations] = useState<Invitation[]>([]);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
   const [hasMore, setHasMore] = useState(true);
   const [cursorId, setCursorId] = useState<number | undefined>(undefined);
@@ -99,7 +123,6 @@ export default function MyDashboardMain({
 
   const handleRemoveInvitation = (invitationId: number) => {
     setInvitations((prev) => prev.filter((i) => i.id !== invitationId));
-    reDashboards();
   };
 
   const loadInvitations = useCallback(
@@ -121,7 +144,7 @@ export default function MyDashboardMain({
         }
 
         setCursorId(nextCursor);
-        setHasMore(newInvitations.length === 10); // size와 같으면 더 있을 가능성
+        setHasMore(newInvitations.length === 10);
       } catch (e) {
         console.error(e);
       } finally {
@@ -170,7 +193,7 @@ export default function MyDashboardMain({
 
   return (
     <div className={styles.myDashboardMainWrap}>
-      {/* <NavigationBar /> */}
+      <NavigationBar />
       <div className={styles.myDashboardMain}>
         <h1 className={homeText}>홈</h1>
         <div className={styles.dashboardSection}>
@@ -217,7 +240,7 @@ export default function MyDashboardMain({
                     key={item.id}
                     onClick={() => dashboardIdPage(item.id)}
                   >
-                    <ColorChip size={CommonSize.Large} />
+                    <ColorChip color={item.color} size={CommonSize.Large} />
                     <span className={Typography.lg2SemiBold}>{item.title}</span>
                     <Image
                       src={ArrowRight}

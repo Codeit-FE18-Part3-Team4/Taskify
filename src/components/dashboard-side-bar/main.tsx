@@ -9,15 +9,16 @@ import { useMemo, useState } from "react";
 import DashboardButton from "./dashboard-button";
 import styles from "./dashboard-side-bar.module.css";
 import SidebarPageControl from "./sidebar-page-control";
+import { Dashboard } from "@/pages/my-dashboard";
 
 interface MainProps {
-  dashboards: any[];
+  dashboards: Dashboard[];
   onClick: () => void;
 }
 
 const PAGE_SIZE = 10;
 
-export default function Main({ dashboards }: MainProps) {
+export default function Main({ dashboards, onClick }: MainProps) {
   const router = useRouter();
   const [currentPage, setCurrentPage] = useState<number>(0);
 
