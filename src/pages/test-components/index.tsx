@@ -24,6 +24,7 @@ import { CommonSize } from "@/constants/common/common-size";
 import { ProfileRandomColor } from "@/constants/profile-random-color";
 import Dropdown, { DropdownOption } from "@/features/card/components/dropdown";
 import ImageInput from "@/features/card/components/image-input";
+import { Direction, Menu, MenuItem } from "@/features/card/components/menu";
 import TagInput from "@/features/card/components/tag-input";
 import { useAlert } from "@/hooks/use-alert";
 import { useDialog } from "@/hooks/use-dialog";
@@ -515,7 +516,7 @@ function BadgeSample() {
 function ColorPaletteSample() {
   const sizes = Object.values(ColorFrameSize);
   const [selectedColors, setSelectedColors] = useState<string[]>(
-    sizes.map(() => ""),
+    sizes.map(() => "")
   );
 
   const handleSelect = (index: number, color: string) => {
@@ -678,6 +679,22 @@ function ProfileSample() {
   );
 }
 
+function MenuSample() {
+  const items = [
+    MenuItem.edit(() => console.log("Edit")),
+    MenuItem.delete(() => console.log("Delete")),
+  ];
+
+  return (
+    <div style={{ display: "flex", gap: "100px" }}>
+      <Menu items={items}>Menu on Left</Menu>
+      <Menu items={items} direction={Direction.Right}>
+        Menu on Right
+      </Menu>
+    </div>
+  );
+}
+
 export default function Page() {
   const [dashboards, setDashboards] = useState<any[]>([]);
 
@@ -735,6 +752,9 @@ export default function Page() {
       </Section>
       <Section title="Sheet">
         <SheetSample />
+      </Section>
+      <Section title="Menu">
+        <MenuSample />
       </Section>
       <Section title="SideBar">
         <DashboardSideBar dashboards={dashboards} />
