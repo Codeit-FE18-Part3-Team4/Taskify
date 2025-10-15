@@ -10,7 +10,6 @@ import { postDashboard } from "@/features/my-dashboard/api/post-dashboard";
 import { useSheet } from "@/hooks/use-sheet";
 import { useSsrResponsive } from "@/hooks/use-ssr-responsive";
 import { useCallback, useEffect, useState } from "react";
-import { getInvitations } from "../../features/my-dashboard/api/get-invitations";
 import MyDashboardMain from "./my-dashboard-main";
 import styles from "./my-dashboard.module.css";
 
@@ -59,7 +58,6 @@ export default function MyDashboard() {
     try {
       const user = await getUserInfo();
       setUserInfo(user);
-      console.log(user);
     } catch (e) {
       console.error(e);
     }
@@ -69,11 +67,6 @@ export default function MyDashboard() {
     loadDashboards();
     loadUserInfo();
   }, [loadDashboards, loadUserInfo]);
-
-  // const handleRemoveInvitation = (invitationId: number) => {
-  //   setInvitations((prev) => prev.filter((i) => i.id !== invitationId));
-  //   loadDashboards();
-  // };
 
   const { isMobile } = useSsrResponsive();
 
@@ -88,7 +81,8 @@ export default function MyDashboard() {
       )}
       <MyDashboardMain
         onClick={() => openSheet(true)}
-        dashboards={dashboards} 
+        dashboards={dashboards}
+        reDashboards={loadDashboards}
       />
       {isShowSheet && (
         <Sheet

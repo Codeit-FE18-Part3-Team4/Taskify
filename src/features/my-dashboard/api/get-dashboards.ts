@@ -6,7 +6,6 @@ export async function getDashboards({ page = 1, size = 10} = {}) {
       `/dashboards?navigationMethod=pagination&page=${page}&size=${size}`
     );
     const body = res.data;
-    console.log(body)
     return body;
   } catch (e) {
     console.error(e);

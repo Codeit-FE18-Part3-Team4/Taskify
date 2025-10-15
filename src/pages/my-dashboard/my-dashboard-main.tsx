@@ -22,11 +22,13 @@ import styles from "./my-dashboard.module.css";
 interface MyDashboardMainProps {
   dashboards: any[];
   onClick: () => void;
+  reDashboards: () => void;
 }
 
 export default function MyDashboardMain({
   dashboards,
   onClick,
+  reDashboards
 }: MyDashboardMainProps) {
   const router = useRouter();
   const [currentPage, setCurrentPage] = useState<number>(0);
@@ -97,6 +99,7 @@ export default function MyDashboardMain({
 
   const handleRemoveInvitation = (invitationId: number) => {
     setInvitations((prev) => prev.filter((i) => i.id !== invitationId));
+    reDashboards();
   };
 
   const loadInvitations = useCallback(
