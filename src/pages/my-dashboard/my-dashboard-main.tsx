@@ -20,6 +20,7 @@ import styles from "./my-dashboard.module.css";
 interface MyDashboardMainProps {
   dashboards: any[];
   invitations: any[];
+  onClick: () => void;
 }
 
 function sliceUserName(userName: string) {
@@ -29,6 +30,7 @@ function sliceUserName(userName: string) {
 export default function MyDashboardMain({
   dashboards,
   invitations,
+  onClick,
 }: MyDashboardMainProps) {
   const router = useRouter();
   const [currentPage, setCurrentPage] = useState<number>(0);
@@ -94,7 +96,7 @@ export default function MyDashboardMain({
 
   return (
     <div className={styles.myDashboardMainWrap}>
-      <NavigationBar />
+      {/* <NavigationBar /> */}
       <div className={styles.myDashboardMain}>
         <h1 className={homeText}>홈</h1>
         <div className={styles.dashboardSection}>
@@ -108,7 +110,7 @@ export default function MyDashboardMain({
                 alt="대시보드가 없다"
               />
               <p className={emptyText}>대시보드가 없습니다.</p>
-              <button>
+              <button onClick={onClick}>
                 <span className={Typography.lgBold}>생성하기</span>
                 <Image
                   src={PlusIcon}
@@ -121,7 +123,7 @@ export default function MyDashboardMain({
           ) : (
             <div className={styles.myDashboard}>
               <div className={styles.myDashboardBox}>
-                <button className={styles.myDashboardAddButton}>
+                <button onClick={onClick} className={styles.myDashboardAddButton}>
                   <span className={Typography.lg2SemiBold}>
                     새로운 대시보드
                   </span>

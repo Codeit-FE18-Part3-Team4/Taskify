@@ -5,15 +5,17 @@ import UserProfile from "./user-profile";
 
 interface DashboardSideBarProps {
   dashboards: any[];
+  onClick: () => void;
 };
 
 export default function DashboardSideBar({
   dashboards,
+  onClick,
 }: DashboardSideBarProps) {
   return (
     <div className={styles.sideBar}>
       <Header />
-      <Main dashboards={dashboards} />
+      <Main dashboards={dashboards} onClick={onClick} />
       <UserProfile name={"박민영"} profileImageUrl="" />
     </div>
   );

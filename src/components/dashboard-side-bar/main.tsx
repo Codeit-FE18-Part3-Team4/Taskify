@@ -11,9 +11,10 @@ import SidebarPageControl from "./sidebar-page-control";
 
 interface MainProps {
   dashboards: any[];
+  onClick: () => void;
 }
 
-export default function Main({ dashboards }: MainProps) {
+export default function Main({ dashboards, onClick }: MainProps) {
   const [activeId, setActiveId] = useState<number | null>(null);
 
   const handleClickActive = (id: number) => {
@@ -34,7 +35,10 @@ export default function Main({ dashboards }: MainProps) {
 
   return (
     <div className={styles.main}>
-      <button className={classnames(styles.dashboardAdd, styles.button)}>
+      <button
+        onClick={onClick}
+        className={classnames(styles.dashboardAdd, styles.button)}
+      >
         <span className={dashboardAddText}>대시보드 추가</span>
         <Image
           src={plusIcon}

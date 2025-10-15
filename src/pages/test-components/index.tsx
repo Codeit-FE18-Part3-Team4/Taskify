@@ -606,7 +606,7 @@ export default function Page() {
         <SheetSample />
       </Section>
       <Section title="SideBar">
-        <DashboardSideBar dashboards={dashboards} />
+        <DashboardSideBar onClick={() => { }} dashboards={dashboards} />
       </Section>
       <Section title="profile">
         <ProfileSample />
