@@ -8,7 +8,21 @@
   padding: 20px;
 }
 
+.dashboardTitle {
+  height: 76px;
+  display: flex;
+  gap: 8px;
+  padding-left: 50px;
+  padding-top: 25px;
+  margin-bottom: 4px;
+}
+
+.dashboardTitle h3 {
+  color: var(--color-gray100);
+}
+
 .columnWrapper {
   display: flex;
   gap: 60px;
+  padding: 10px 50px;
 }
