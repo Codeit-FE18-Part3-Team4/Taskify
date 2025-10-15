@@ -1,4 +1,3 @@
-// pages/dashboard/[id]/index.tsx
 import { ReactElement, useState, useEffect, useMemo } from "react";
 import { useRouter } from "next/router";
 import styles from "./index.module.css";
@@ -11,6 +10,12 @@ import { useModal } from "@/hooks/use-modal";
 import { useDashboard } from "@/hooks/use-dashboard";
 import { useColumn } from "@/hooks/use-column";
 import { useCards } from "@/hooks/use-cards";
+import ColorChip from "@/components/chips/chip-color/chips-color";
+import { classnames } from "@/utils/classnames";
+import Typography from "@/components/typography";
+import { CommonSize } from "@/constants/common/common-size";
+import { useMembers } from "@/hooks/use-members";
+import { MemberInfo } from "@/types/member-info";
 
 export default function DashboardPage() {
   const router = useRouter();
@@ -22,10 +27,16 @@ export default function DashboardPage() {
       : null;
 
   const { dashboards } = useDashboard();
+  const { members } = useMembers(dashboardId);
+
   const { columns, isLoading: isColumnsLoading } = useColumn(dashboardId);
 
+  const currentDashboard = useMemo(() => {
+    return dashboards?.find((dashboard) => dashboard.id === dashboardId);
+  }, [dashboards, dashboardId]);
+
   const columnIds = useMemo(
-    () => columns.map((column) => column.id),
+    () => columns?.map((column) => column.id) ?? [],
     [columns],
   );
 
@@ -46,7 +57,7 @@ export default function DashboardPage() {
   useEffect(() => {
     if (!router.isReady) return;
 
-    if (dashboardId === null && dashboards.length > 0) {
+    if (dashboardId === null && dashboards && dashboards.length > 0) {
       router.replace(`/dashboard/${dashboards[0].id}`);
     }
   }, [router.isReady, dashboardId, dashboards]);
@@ -55,17 +66,35 @@ export default function DashboardPage() {
 
   return (
     <div>
+      <NavigationBar
+        members={members ?? []}
+        dashboardId={dashboardId ?? null}
+      />
+
       <div className={styles.layoutContainer}>
-        <DashboardSideBar dashboards={dashboards} />
+        <DashboardSideBar dashboards={dashboards ?? []} />
         <main className={styles.main}>
+          <div
+            className={classnames(styles.dashboardTitle, Typography.xl3Bold)}
+          >
+            {currentDashboard && (
+              <>
+                <ColorChip
+                  color={currentDashboard?.color}
+                  size={CommonSize.Large}
+                />
+                <h3>{currentDashboard.title}</h3>
+              </>
+            )}
+          </div>
           <div className={styles.columnWrapper}>
             {isLoading ? (
               <div>컬럼 로딩중 넣을화면 들어갈 자리</div>
             ) : (
-              columns.map((column) => (
+              (columns?.map((column) => (
                 <Column
                   key={column.id}
-                  cards={cards[column.id]}
+                  cards={cards?.[column.id] ?? []}
                   onCardClick={handleCardClick}
                   columnTitle={column.title}
                   onClick={(type) => {
@@ -74,7 +103,7 @@ export default function DashboardPage() {
                     );
                   }}
                 />
-              ))
+              )) ?? [])
             )}
           </div>
         </main>
@@ -103,12 +132,3 @@ export default function DashboardPage() {
     </div>
   );
 }
-
-DashboardPage.getLayout = function getLayout(page: ReactElement) {
-  return (
-    <>
-      <NavigationBar />
-      {page}
-    </>
-  );
-};
