@@ -18,7 +18,6 @@
 .myDashboardMain .dashboardSection h2 {
   color: var(--color-gray100);
   padding: 8px 0;
-  margin-bottom: 20px;
 }
 .myDashboardMain .dashboardSection .emptyDashboard {
   background: var(--color-black800);
@@ -59,6 +58,251 @@
   padding: 70px 0;
 }
 
+/* 데이터 있을 때 */
+.myDashboardMain .dashboardSection .myDashboard .myDashboardBox {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.myDashboardMain .dashboardSection .myDashboard .myDashboardBox button {
+  background: none;
+  border: none;
+  color: var(--color-gray100);
+  width: 100%;
+  height: 80px;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 24px 0 20px;
+  cursor: pointer;
+}
+.myDashboardMain .dashboardSection .myDashboard .myDashboardBox button:nth-of-type(1){
+  padding: 0;
+}
+.myDashboardMain
+  .dashboardSection
+  .myDashboard
+  .myDashboardBox
+  button.myDashboardAddButton {
+  border: 2px dashed var(--color-gray700);
+  background: var(--color-black800);
+}
+.myDashboardMain
+  .dashboardSection
+  .myDashboard
+  .myDashboardBox
+  button.myDashboardAddButton
+  > img {
+  filter: invert(29%) sepia(7%) saturate(819%) hue-rotate(214deg)
+    brightness(95%) contrast(85%);
+  margin-left: 10px;
+}
+.myDashboardMain
+  .dashboardSection
+  .myDashboard
+  .myDashboardBox
+  button.myDashboardButton {
+  border: 1px solid var(--color-black500);
+  background: var(--color-black700);
+}
+.myDashboardMain
+  .dashboardSection
+  .myDashboard
+  .myDashboardBox
+  button.myDashboardButton
+  > span {
+  flex: 1;
+  text-align: left;
+}
+.myDashboardMain
+  .dashboardSection
+  .myDashboard
+  .myDashboardBox
+  button.myDashboardButton
+  > img {
+  filter: invert(64%) sepia(22%) saturate(178%) hue-rotate(212deg)
+    brightness(97%) contrast(88%);
+}
+.myDashboardMain .dashboardSection .myDashboard .myDashboardPagination {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 20px 20px 0;
+  gap: 20px;
+}
+.myDashboardMain
+  .dashboardSection
+  .myDashboard
+  .myDashboardPagination
+  .myDashboardPaginationCount {
+  color: var(--color-gray100);
+}
+.myDashboardMain
+  .dashboardSection
+  .myDashboard
+  .myDashboardPagination
+  .myDashboardPaginationButton {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.myDashboardMain
+  .dashboardSection
+  .myDashboard
+  .myDashboardPagination
+  .myDashboardPaginationButton
+  button {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+.myDashboardMain
+  .dashboardSection
+  .myDashboard
+  .myDashboardPagination
+  .myDashboardPaginationButton
+  button
+  > img {
+  filter: invert(50%) sepia(3%) saturate(1662%) hue-rotate(213deg)
+    brightness(90%) contrast(82%);
+}
+.myDashboardMain
+  .dashboardSection
+  .myDashboard
+  .myDashboardPagination
+  .myDashboardPaginationButton
+  button.active
+  > img {
+  filter: invert(100%) sepia(0%) saturate(6118%) hue-rotate(311deg)
+    brightness(92%) contrast(104%);
+}
+.myDashboardMain .dashboardSection .invitationsDashboardTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 20px;
+}
+/* .myDashboardMain .dashboardSection .invitationsDashboardSection{
+  
+} */
+.myDashboardMain
+  .dashboardSection
+  .invitationsDashboardSection
+  .invitationsDashboardSectionTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 30px;
+  border-bottom: 1px solid var(--color-black600);
+}
+.myDashboardMain
+  .dashboardSection
+  .invitationsDashboardSection
+  .invitationsDashboardSectionTop
+  > div {
+  width: 424px;
+  display: flex;
+  align-items: center;
+}
+.myDashboardMain
+  .dashboardSection
+  .invitationsDashboardSection
+  .invitationsDashboardSectionTop
+  p {
+  color: var(--color-gray400);
+}
+.myDashboardMain
+  .dashboardSection
+  .invitationsDashboardSection
+  .invitationsDashboardSectionTop
+  > div
+  p {
+  width: 50%;
+}
+.myDashboardMain
+  .dashboardSection
+  .invitationsDashboardSection
+  .invitationsDashboardSectionTop
+  > div
+  p:nth-of-type(2) {
+  padding-left: 100px;
+}
+.myDashboardMain
+  .dashboardSection
+  .invitationsDashboardSection
+  .invitationsDashboardSectionMain {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 30px;
+  border-bottom: 1px solid var(--color-black600);
+}
+.myDashboardMain
+  .dashboardSection
+  .invitationsDashboardSection
+  .invitationsDashboardSectionMain
+  > p {
+  color: var(--color-gray100);
+}
+.myDashboardMain
+  .dashboardSection
+  .invitationsDashboardSection
+  .invitationsDashboardSectionMain
+  > div {
+  display: flex;
+  align-items: center;
+  width: 424px;
+}
+.myDashboardMain
+  .dashboardSection
+  .invitationsDashboardSection
+  .invitationsDashboardSectionMain
+  .invitationsDashboardSectionMainProfile
+  > .userBox {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--color-gray100);
+}
+.myDashboardMain
+  .dashboardSection
+  .invitationsDashboardSection
+  .invitationsDashboardSectionMain
+  .invitationsDashboardSectionMainProfile
+  > .userBox .userProfile {
+    width: 24px;
+    height: 24px;
+    border-radius: 100px;
+    background: #14588c;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+  }
+.myDashboardMain
+  .dashboardSection
+  .invitationsDashboardSection
+  .invitationsDashboardSectionMain
+  > div >
+  div {
+  width: 50%;
+}
+.myDashboardMain
+  .dashboardSection
+  .invitationsDashboardSection
+  .invitationsDashboardSectionMain
+  > div
+  .invitationsDashboardSectionMainButtonBox {
+  display: flex;
+  padding-left: 100px;
+  gap: 12px;
+}
 /* Tablet */
 @media (max-width: 774px) {
   .myDashboardMain {
@@ -78,6 +322,9 @@
   .myDashboardMain .dashboardSection {
     padding-bottom: 20px;
   }
+  .myDashboardMain .dashboardSection .myDashboard .myDashboardBox button{
+    padding: 0 20px;
+  }
 }
 
 /* Mobile */
@@ -92,5 +339,8 @@
   .myDashboardMain .dashboardSection:nth-of-type(2) .emptyDashboard > img {
     width: 60px;
     height: 60px;
+  }
+  .myDashboardMain .dashboardSection .myDashboard .myDashboardBox{
+    flex-wrap: wrap;
   }
 }
