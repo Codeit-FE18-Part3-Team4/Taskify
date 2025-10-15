@@ -10,7 +10,7 @@ import { getDashboards } from "@/features/dashboard-side-bar/api/dashboard";
 import DashboardSideBar from "@/components/dashboard-side-bar/dashboard-side-bar";
 import Dialog from "@/components/dialog";
 import Input, { InputSize, InputVariant } from "@/components/input/input";
-import Textarea from "@/components/input/textarea";
+import Textarea, { TextareaSize } from "@/components/input/textarea";
 import Modal from "@/components/modal";
 import Profile from "@/components/profile/profile";
 import { ProfileSize } from "@/components/profile/profile-size";
@@ -20,7 +20,8 @@ import SheetSection from "@/components/sheet/sheet-section";
 import Typography from "@/components/typography";
 import { CommonSize } from "@/constants/common/common-size";
 import { ProfileRandomColor } from "@/constants/profile-random-color";
-import ImageInput from "@/features/edit-task/components/image-input";
+import ImageInput from "@/features/card/components/image-input";
+import TagInput from "@/features/card/components/tag-input";
 import { useAlert } from "@/hooks/use-alert";
 import { useDialog } from "@/hooks/use-dialog";
 import { useModal } from "@/hooks/use-modal";
@@ -398,10 +399,20 @@ function TextareaBox() {
   return (
     <div>
       <div style={{ marginBottom: "8px" }}>
-        <Textarea placeholder="Text" />
+        <Textarea placeholder="Large" size={TextareaSize.Large} />
       </div>
       <div style={{ marginBottom: "8px" }}>
-        <Textarea placeholder="Disabled" disabled />
+        <Textarea placeholder="Medium" size={TextareaSize.Medium} />
+      </div>
+      <div style={{ marginBottom: "8px" }}>
+        <Textarea placeholder="Auto" size={TextareaSize.Auto} />
+      </div>
+      <div style={{ marginBottom: "8px" }}>
+        <Textarea
+          placeholder="Disabled, Large"
+          size={TextareaSize.Large}
+          disabled
+        />
       </div>
     </div>
   );
@@ -438,9 +449,10 @@ function BadgeSample() {
           gap: `10px`,
         }}
       >
-        {Object.values(ProfileRandomColor).map((profile, index) => (
-          <Badge key={index} title={"태그내용"} />
-        ))}
+        {Object.values(ProfileRandomColor).map((profile, index) => {
+          const koreanConsonant = String.fromCharCode(0x3131 + index);
+          return <Badge key={index} title={`태그내용${koreanConsonant}`} />;
+        })}
       </div>
     </>
   );
@@ -449,7 +461,7 @@ function BadgeSample() {
 function ColorPaletteSample() {
   const sizes = Object.values(ColorFrameSize);
   const [selectedColors, setSelectedColors] = useState<string[]>(
-    sizes.map(() => "")
+    sizes.map(() => ""),
   );
 
   const handleSelect = (index: number, color: string) => {
@@ -496,9 +508,14 @@ function SheetSample() {
     key: SHEET_KEY,
   });
   const [image, setImage] = useState<File | null>(null);
+  const [tags, setTags] = useState<string[]>([]);
 
   const handleImageChange = (file: File) => {
     setImage(file);
+  };
+
+  const handleTagChange = (tags: string[]) => {
+    setTags(tags);
   };
 
   return (
@@ -518,6 +535,9 @@ function SheetSample() {
             </SheetSection>
             <SheetSection title="설명" required>
               <input />
+            </SheetSection>
+            <SheetSection title="태그" zIndex={1}>
+              <TagInput tags={tags} onChange={handleTagChange} />
             </SheetSection>
             <SheetSection title="이미지">
               <ImageInput onChange={handleImageChange} />
