@@ -1,6 +1,6 @@
 import axiosInstanceTest from "@/services/axios-instance-test";
 
-export async function getDashboards({ page = 1, size = 10 } = {}) {
+export async function getDashboards({ page = 1, size = 15 } = {}) {
   try {
     const res = await axiosInstanceTest.get(
       `/dashboards?navigationMethod=pagination&page=${page}&size=${size}`
