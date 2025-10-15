@@ -41,6 +41,14 @@
   height: 20px;
 }
 
+.columnTitleWrapper .buttonWrapper > button:first-child .icon {
+  color: var(--color-brand500);
+}
+
+.columnTitleWrapper .buttonWrapper > button:last-child .icon {
+  color: var(--color-gray400);
+}
+
 .columnTitle {
   display: flex;
   gap: 8px;

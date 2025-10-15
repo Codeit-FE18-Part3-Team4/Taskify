@@ -1,6 +1,4 @@
-import { useEffect, useState } from "react";
 import Card from "@/components/dashboard/card/card";
-import { getCards } from "@/components/dashboard/card/api/cards";
 import styles from "./column.module.css";
 import { Card as CardData } from "@/types/card";
 import SettingSvg from "@/components/navigationBar/setting-svg";
@@ -9,31 +7,17 @@ import PlusSvg from "./plus-svg";
 
 interface ColumnProps {
   columnTitle: string;
-  columnId: number;
+  cards: CardData[];
   onCardClick: (card: CardData) => void;
   onClick?: (type: "create" | "modify") => void;
 }
 
 export default function Column({
   columnTitle,
-  columnId,
+  cards = [],
   onCardClick,
   onClick,
 }: ColumnProps) {
-  const [cards, setCards] = useState<CardData[]>([]);
-
-  useEffect(() => {
-    const loadData = async () => {
-      try {
-        const { cards } = await getCards({ columnId });
-        setCards(cards);
-      } catch (e) {
-        console.error(e);
-      }
-    };
-    loadData();
-  }, [columnId]);
-
   return (
     <section className={styles.columnContainer}>
       <div className={styles.columnTitleWrapper}>
@@ -43,16 +27,16 @@ export default function Column({
         </div>
         <div className={styles.buttonWrapper}>
           <button onClick={() => onClick?.("create")}>
-            <PlusSvg className={styles.icon} color={"var(--color-brand500"} />
+            <PlusSvg className={styles.icon} />
           </button>
           <button onClick={() => onClick?.("modify")}>
-            <SettingSvg className={styles.icon} color={"var(--color-gray400"} />
+            <SettingSvg className={styles.icon} />
           </button>
         </div>
       </div>
-      {cards.map((card, index) => (
-        <div>
-          <Card key={index} card={card} onClick={() => onCardClick(card)} />
+      {cards.map((card) => (
+        <div key={card.id}>
+          <Card card={card} onClick={() => onCardClick(card)} />
         </div>
       ))}
     </section>
