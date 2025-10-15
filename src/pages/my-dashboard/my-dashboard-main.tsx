@@ -16,15 +16,12 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import { useMemo, useState } from "react";
 import styles from "./my-dashboard.module.css";
+import { sliceUserName } from "@/components/dashboard-side-bar/user-profile";
 
 interface MyDashboardMainProps {
   dashboards: any[];
   invitations: any[];
   onClick: () => void;
-}
-
-function sliceUserName(userName: string) {
-  return userName.length > 1 ? userName.substring(1) : userName;
 }
 
 export default function MyDashboardMain({
@@ -100,7 +97,7 @@ export default function MyDashboardMain({
         inviteAccepted: true,
       });
     } catch (e) {
-      console.log(e);
+      console.error(e);
     }
   };
 

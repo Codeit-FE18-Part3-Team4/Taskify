@@ -9,7 +9,7 @@ interface UserProfileProps {
   profileImageUrl: string | undefined;
 }
 
-function sliceUserName(userName: string | undefined): string {
+export function sliceUserName(userName: string | undefined): string {
   if (!userName || userName.length <= 1) {
     return userName || '';
   }
