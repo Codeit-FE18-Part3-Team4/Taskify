@@ -55,6 +55,10 @@
   background-color: var(--color-modalBackground);
 }
 
+.rightIcons .icon {
+  color: var(--color-gray400);
+}
+
 .iconLink {
   margin-right: 15px;
 }

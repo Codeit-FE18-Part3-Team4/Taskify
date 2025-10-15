@@ -22,7 +22,6 @@ export default function NavigationBar({
 }: NavigationBarProps) {
   const sizeName = CommonSize[size].toLowerCase();
   const navigationBarClasses = `${styles.navigationBar} ${styles[sizeName]}`;
-  const iconColor = `var(--color-gray400)`;
   const iconSpanClasses = `${styles.iconSpan} ${Typography.lgMedium}`;
   const settingLink = dashboardId ? `/dashboard/${dashboardId}/edit` : "#";
 
@@ -52,11 +51,11 @@ export default function NavigationBar({
       ></MemberList>
       <div className={styles.rightIcons}>
         <Link className={styles.iconLink} href={settingLink}>
-          <SettingSvg className={styles.icon} color={iconColor} />
+          <SettingSvg className={styles.icon} />
           <span className={iconSpanClasses}>관리</span>
         </Link>
         <button onClick={() => handleUserPlus()}>
-          <UserPlusSvg className={styles.icon} color={iconColor} />
+          <UserPlusSvg className={styles.icon} />
           <span className={iconSpanClasses}>공유</span>
         </button>
       </div>
