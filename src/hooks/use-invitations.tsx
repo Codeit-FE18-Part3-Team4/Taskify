@@ -1,9 +1,10 @@
+import { useEffectAuth } from "@/features/auth/components/auth-provider";
 import {
   getInvitations,
   putInvitationsAccepts,
 } from "@/features/my-dashboard/api/";
 import { Invitation } from "@/types/my-dashboard";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 
 export function useInvitations() {
   const [invitations, setInvitations] = useState<Invitation[]>([]);
@@ -63,7 +64,7 @@ export function useInvitations() {
     [removeInvitation]
   );
 
-  useEffect(() => {
+  useEffectAuth(() => {
     observerRef.current = new IntersectionObserver(
       (entries) => {
         if (entries[0].isIntersecting && hasMore && !isLoadingMore) {
@@ -84,7 +85,7 @@ export function useInvitations() {
     };
   }, [hasMore, isLoadingMore, loadInvitations]);
 
-  useEffect(() => {
+  useEffectAuth(() => {
     loadInvitations(true);
   }, []);
 
