@@ -87,7 +87,6 @@ export default function Sheet({
   };
 
   const handleActionClick = () => {
-    openSheet(false);
     onAction?.();
   };
 
