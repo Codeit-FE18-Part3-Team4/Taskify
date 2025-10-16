@@ -1,4 +1,4 @@
-import axiosInstanceTest from "@/services/axios-instance-test";
+import axiosInstance from "@/services/axios-instance";
 
 interface PostDashboardProps {
   title: string;
@@ -15,7 +15,7 @@ export async function getDashboards({
   size = 10,
 }: { page?: number; size?: number } = {}) {
   try {
-    const res = await axiosInstanceTest.get(
+    const res = await axiosInstance.get(
       `/dashboards?navigationMethod=pagination&page=${page}&size=${size}`
     );
     const body = res.data;
@@ -37,7 +37,7 @@ export async function getInvitations({
       params.append("cursorId", cursorId.toString());
     }
 
-    const res = await axiosInstanceTest.get(`/invitations?${params}`);
+    const res = await axiosInstance.get(`/invitations?${params}`);
     const body = res.data;
     return body;
   } catch (e) {
@@ -47,7 +47,7 @@ export async function getInvitations({
 
 export async function getUserInfo() {
   try {
-    const res = await axiosInstanceTest.get("/users/me");
+    const res = await axiosInstance.get("/users/me");
     const body = res.data;
     return body;
   } catch (e) {
@@ -57,7 +57,7 @@ export async function getUserInfo() {
 
 export async function postDashboard({ title, color }: PostDashboardProps) {
   try {
-    const res = await axiosInstanceTest.post(`/dashboards`, {
+    const res = await axiosInstance.post(`/dashboards`, {
       title,
       color,
     });
@@ -73,7 +73,7 @@ export async function putInvitationsAccepts({
   inviteAccepted,
 }: putInvitationsAcceptsProps) {
   try {
-    const res = await axiosInstanceTest.put(`/invitations/${invitationsId}`, {
+    const res = await axiosInstance.put(`/invitations/${invitationsId}`, {
       inviteAccepted,
     });
     const body = res.data;

@@ -1,6 +1,7 @@
 import { Dashboard } from "@/types/my-dashboard";
 import { getDashboards } from "@/features/my-dashboard/api/";
 import { useCallback, useEffect, useState } from "react";
+import { useEffectAuth } from "@/features/auth/components/auth-provider";
 
 export function useAllDashboards() {
   const [allDashboards, setAllDashboards] = useState<Dashboard[]>([]);
@@ -24,7 +25,7 @@ export function useAllDashboards() {
     }
   }, []);
 
-  useEffect(() => {
+  useEffectAuth(() => {
     loadAllDashboards();
   }, [loadAllDashboards]);
 
