@@ -1,21 +1,16 @@
-import { ReactElement, useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useRouter } from "next/router";
 import styles from "./index.module.css";
 import NavigationBar from "@/components/navigationBar/navigation-bar";
 import DashboardSideBar from "@/components/dashboard-side-bar/dashboard-side-bar";
-import Column from "@/components/dashboard/column/column";
 import { Card } from "@/types/card";
 import Modal from "@/components/modal";
 import { useModal } from "@/hooks/use-modal";
 import { useDashboard } from "@/hooks/use-dashboard";
 import { useColumn } from "@/hooks/use-column";
 import { useCards } from "@/hooks/use-cards";
-import ColorChip from "@/components/chips/chip-color/chips-color";
-import { classnames } from "@/utils/classnames";
-import Typography from "@/components/typography";
-import { CommonSize } from "@/constants/common/common-size";
 import { useMembers } from "@/hooks/use-members";
-import { MemberInfo } from "@/types/member-info";
+import DashboardContent from "./dashboard-content";
 
 export default function DashboardPage() {
   const router = useRouter();
@@ -65,7 +60,7 @@ export default function DashboardPage() {
   const isLoading = isColumnsLoading || isCardsLoading;
 
   return (
-    <div>
+    <div className={styles.page}>
       <NavigationBar
         members={members ?? []}
         dashboardId={dashboardId ?? null}
@@ -74,38 +69,14 @@ export default function DashboardPage() {
       <div className={styles.layoutContainer}>
         <DashboardSideBar dashboards={dashboards ?? []} />
         <main className={styles.main}>
-          <div
-            className={classnames(styles.dashboardTitle, Typography.xl3Bold)}
-          >
-            {currentDashboard && (
-              <>
-                <ColorChip
-                  color={currentDashboard?.color}
-                  size={CommonSize.Large}
-                />
-                <h3>{currentDashboard.title}</h3>
-              </>
-            )}
-          </div>
-          <div className={styles.columnWrapper}>
-            {isLoading ? (
-              <div>컬럼 로딩중 넣을화면 들어갈 자리</div>
-            ) : (
-              (columns?.map((column) => (
-                <Column
-                  key={column.id}
-                  cards={cards?.[column.id] ?? []}
-                  onCardClick={handleCardClick}
-                  columnTitle={column.title}
-                  onClick={(type) => {
-                    console.log(
-                      `----------------${column.title} 컬럼의 ${type} 클릭`,
-                    );
-                  }}
-                />
-              )) ?? [])
-            )}
-          </div>
+          {currentDashboard && (
+            <DashboardContent
+              dashboard={currentDashboard}
+              columns={columns ?? []}
+              cards={cards ?? {}}
+              isLoading={isLoading}
+            />
+          )}
         </main>
       </div>
 
