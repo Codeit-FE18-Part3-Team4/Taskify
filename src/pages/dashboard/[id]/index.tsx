@@ -67,7 +67,7 @@ export default function DashboardPage() {
       />
 
       <div className={styles.layoutContainer}>
-        <DashboardSideBar dashboards={dashboards ?? []} />
+        <DashboardSideBar onClick={() => {}} />
         <main className={styles.main}>
           {currentDashboard && (
             <DashboardContent
