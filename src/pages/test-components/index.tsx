@@ -657,9 +657,14 @@ function SheetSample() {
 }
 
 function ColumnEditSheetSample() {
-  const SHEET_KEY = "COLUMN_EDIT_SHEET_SAMPLE";
-  const { isShowSheet, openSheet } = useSheet({
-    key: SHEET_KEY,
+  const SHEET_KEY1 = "COLUMN_EDIT_SHEET_SAMPLE_1";
+  const { isShowSheet: isShowSheet1, openSheet: openSheet1 } = useSheet({
+    key: SHEET_KEY1,
+  });
+
+  const SHEET_KEY2 = "COLUMN_EDIT_SHEET_SAMPLE_2";
+  const { isShowSheet: isShowSheet2, openSheet: openSheet2 } = useSheet({
+    key: SHEET_KEY2,
   });
 
   const handleSubmit = (title: string) => {
@@ -669,21 +674,21 @@ function ColumnEditSheetSample() {
   return (
     <>
       <div>
-        <button onClick={() => openSheet(true)}>Open Sheet</button>
-        {isShowSheet && (
+        <button onClick={() => openSheet1(true)}>Open Sheet</button>
+        {isShowSheet1 && (
           <ColumnEditSheet
-            sheetKey={SHEET_KEY}
+            sheetKey={SHEET_KEY1}
             usedTitles={["To do", "Progress", "Done"]}
             onSubmit={handleSubmit}
           />
         )}
         <div>
-          <button onClick={() => openSheet(true)}>
+          <button onClick={() => openSheet2(true)}>
             Open Sheet with Column
           </button>
-          {isShowSheet && (
+          {isShowSheet2 && (
             <ColumnEditSheet
-              sheetKey={SHEET_KEY}
+              sheetKey={SHEET_KEY2}
               column={{
                 id: 1,
                 title: "In Progress",
