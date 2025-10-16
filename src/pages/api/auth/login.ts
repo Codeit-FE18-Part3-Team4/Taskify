@@ -25,10 +25,7 @@ export default async function handler(
   try {
     const response = await axiosInstance.post<LoginSuccess>(
       "/auth/login",
-      req.body,
-      {
-        headers: { "Content-Type": "application/json" },
-      }
+      req.body
     );
     const data: LoginSuccess = response.data;
     if (data.accessToken) {
