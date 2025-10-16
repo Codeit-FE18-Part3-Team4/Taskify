@@ -1,5 +1,6 @@
 import "@/components/color/color-variables.css";
 import ModalProvider from "@/components/modal/modal-provider";
+import { AuthProvider } from "@/features/auth/components/auth-provider";
 import TagsProvider from "@/features/card/components/tag-input/tags-provider";
 import "@/styles/global.css";
 import "@/styles/reset.css";
@@ -22,6 +23,11 @@ function Providers({ children }: { children: ReactNode }) {
         </DashboardProvider>
       </TagsProvider>
     </ModalProvider>
+    <AuthProvider>
+      <ModalProvider>
+        <TagsProvider>{children}</TagsProvider>
+      </ModalProvider>
+    </AuthProvider>
   );
 }
 
