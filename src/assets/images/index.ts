@@ -1,0 +1,10 @@
+export { default as ArrowRight } from "./ic-chevorn-right.svg";
+export { default as ArrowLeft } from "./ic-chevron-left.svg";
+export { default as HomeIcon } from "./ic-home.svg";
+export { default as NotInvitedImg } from "./ic-invite.svg";
+export { default as EmptyDashboardImg } from "./ic-my-dashboard.svg";
+export { default as PlusIcon } from "./ic-plus-circle.svg";
+export { default as PlusSquareIcon } from "./ic-plus-square.svg";
+export { default as PlusIconNomal } from "./ic-plus.svg";
+export { default as SettingIcon } from "./ic-setting.svg";
+export { default as LogoImg } from "./taskify-logo.svg";

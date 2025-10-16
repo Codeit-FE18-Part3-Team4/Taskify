@@ -1,8 +1,14 @@
-.profile {
+.profileSection{
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.profileSection .profile {
   border-radius: 50%;
 }
 
-.profile span {
+.profileSection .profile span {
   white-space: nowrap;
   display: flex;
   align-items: center;
@@ -10,7 +16,9 @@
   overflow: hidden;
   color: #ffffff;
 }
-
+.profileSection .showName{
+  color: var(--color-gray100);
+}
 .alignCenter {
   justify-content: center;
 }
