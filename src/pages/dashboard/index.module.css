@@ -70,6 +70,7 @@
 .main::-webkit-scrollbar,
 .columnContentWrapper::-webkit-scrollbar {
   height: 8px;
+  width: 8px;
 }
 
 .main::-webkit-scrollbar-thumb,
