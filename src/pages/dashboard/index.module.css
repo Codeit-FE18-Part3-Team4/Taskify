@@ -21,6 +21,7 @@
   min-width: 0;
   display: flex;
   flex-direction: column;
+  overflow-x: auto;
   overflow-y: auto;
 }
 
@@ -48,14 +49,13 @@
   display: flex;
   flex-direction: row;
   height: 100%;
+  padding-bottom: 60px;
 }
 
 .columnContentWrapper {
   display: flex;
   gap: 60px;
   padding: 10px 50px;
-  overflow-x: auto;
-  overflow-y: hidden;
   scroll-behavior: smooth;
   flex: 1;
   min-width: 0;
@@ -67,10 +67,12 @@
   min-width: 334px;
 }
 
+.main::-webkit-scrollbar,
 .columnContentWrapper::-webkit-scrollbar {
   height: 8px;
 }
 
+.main::-webkit-scrollbar-thumb,
 .columnContentWrapper::-webkit-scrollbar-thumb {
   background-color: var(--color-gray500);
   border-radius: 4px;
