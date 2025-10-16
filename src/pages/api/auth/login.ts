@@ -4,6 +4,7 @@ import { serialize } from "cookie";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 interface LoginSuccess {
+  accessToken: string;
   user: {
     id: number;
     email: string;
@@ -12,7 +13,6 @@ interface LoginSuccess {
     createdAt: string;
     updatedAt: string;
   };
-  accessToken: string;
 }
 
 export default async function handler(
@@ -37,7 +37,9 @@ export default async function handler(
         maxAge: 60 * 60,
       });
       res.setHeader("Set-Cookie", cookie);
-      return res.status(201).json({ user: data.user });
+      return res
+        .status(201)
+        .json({ accessToken: data.accessToken, user: data });
     }
 
     return res.status(401).json({ message: "Login failed" });
