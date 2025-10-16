@@ -77,7 +77,11 @@
   padding: 0 24px 0 20px;
   cursor: pointer;
 }
-.myDashboardMain .dashboardSection .myDashboard .myDashboardBox button:nth-of-type(1){
+.myDashboardMain
+  .dashboardSection
+  .myDashboard
+  .myDashboardBox
+  button:nth-of-type(1) {
   padding: 0;
 }
 .myDashboardMain
@@ -274,8 +278,8 @@
   .dashboardSection
   .invitationsDashboardSection
   .invitationsDashboardSectionMain
-  > div >
-  div {
+  > div
+  > div {
   width: 50%;
 }
 .myDashboardMain
@@ -288,6 +292,14 @@
   padding-left: 100px;
   gap: 12px;
 }
+.myDashboardMain
+  .dashboardSection
+  .invitationsDashboardSection
+  .infinityTrigger {
+  height: "20px";
+  margin: "20px 0";
+}
+
 /* Tablet */
 @media (max-width: 774px) {
   .myDashboardMain {
@@ -307,7 +319,7 @@
   .myDashboardMain .dashboardSection {
     padding-bottom: 20px;
   }
-  .myDashboardMain .dashboardSection .myDashboard .myDashboardBox button{
+  .myDashboardMain .dashboardSection .myDashboard .myDashboardBox button {
     padding: 0 20px;
   }
 }
@@ -325,7 +337,7 @@
     width: 60px;
     height: 60px;
   }
-  .myDashboardMain .dashboardSection .myDashboard .myDashboardBox{
+  .myDashboardMain .dashboardSection .myDashboard .myDashboardBox {
     flex-wrap: wrap;
   }
 }

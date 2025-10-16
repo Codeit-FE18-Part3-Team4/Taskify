@@ -1,15 +1,12 @@
-import SettingIcon from "@/assets/images/ic-setting.svg";
+import { SettingIcon } from "@/assets/images";
 import Typography from "@/components/typography";
 import { useResponsiveValue } from "@/hooks/use-responsive-value";
+import { UserProfileProps } from "@/types/dashboard-side-bar";
 import Image from "next/image";
+import { MouseEvent } from "react";
 import Profile from "../profile/profile";
 import { ProfileSize } from "../profile/profile-size";
 import styles from "./dashboard-side-bar.module.css";
-
-interface UserProfileProps {
-  name?: string;
-  profileImageUrl: string | undefined;
-}
 
 export default function UserProfile({
   name,
@@ -21,9 +18,9 @@ export default function UserProfile({
     mobile: Typography.mdBold,
   });
 
-  const handleMyPageUrlClick = (e: React.MouseEvent) => {
+  const handleMyPageUrlClick = (e: MouseEvent) => {
     e.preventDefault();
-    window.history.pushState(null, '', '/mypage');
+    window.history.pushState(null, "", "/mypage");
   };
 
   return (

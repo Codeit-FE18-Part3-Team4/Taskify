@@ -1,14 +1,8 @@
-import { Dashboard, UserInfo } from "@/pages/my-dashboard";
+import { DashboardSideBarProps } from "@/types/dashboard-side-bar";
 import styles from "./dashboard-side-bar.module.css";
 import Header from "./header";
 import Main from "./main";
 import UserProfile from "./user-profile";
-
-interface DashboardSideBarProps {
-  dashboards: Dashboard[];
-  onClick: () => void;
-  user: UserInfo;
-}
 
 export default function DashboardSideBar({
   user,

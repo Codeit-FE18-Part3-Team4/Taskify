@@ -11,28 +11,10 @@ import {
 } from "@/features/my-dashboard/api/";
 import { useSheet } from "@/hooks/use-sheet";
 import { useSsrResponsive } from "@/hooks/use-ssr-responsive";
+import { Dashboard, UserInfo } from "@/types/my-dashboard";
 import { useCallback, useEffect, useState } from "react";
 import MyDashboardMain from "./my-dashboard-main";
 import styles from "./my-dashboard.module.css";
-
-export interface Dashboard {
-  id: number;
-  title: string;
-  color: string;
-  createdAt: string;
-  updatedAt: string;
-  createdByMe: boolean;
-  userId: number;
-}
-
-export interface UserInfo {
-  id: number;
-  email: string;
-  nickname: string;
-  profileImageUrl: string;
-  createdAt: string;
-  updatedAt: string;
-}
 
 export default function MyDashboard() {
   const [dashboards, setDashboards] = useState<Dashboard[]>([]);

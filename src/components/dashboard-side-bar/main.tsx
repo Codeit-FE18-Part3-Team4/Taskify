@@ -1,7 +1,7 @@
-import homeIcon from "@/assets/images/ic-home.svg";
-import plusIcon from "@/assets/images/ic-plus.svg";
+import { HomeIcon, PlusIconNomal } from "@/assets/images";
 import Typography from "@/components/typography";
 import { useResponsiveValue } from "@/hooks/use-responsive-value";
+import { MainProps } from "@/types/dashboard-side-bar";
 import { classnames } from "@/utils/classnames";
 import Image from "next/image";
 import { useRouter } from "next/router";
@@ -9,12 +9,6 @@ import { useMemo, useState } from "react";
 import DashboardButton from "./dashboard-button";
 import styles from "./dashboard-side-bar.module.css";
 import SidebarPageControl from "./sidebar-page-control";
-import { Dashboard } from "@/pages/my-dashboard";
-
-interface MainProps {
-  dashboards: Dashboard[];
-  onClick: () => void;
-}
 
 const PAGE_SIZE = 10;
 
@@ -66,14 +60,14 @@ export default function Main({ dashboards, onClick }: MainProps) {
       >
         <span className={dashboardAddText}>대시보드 추가</span>
         <Image
-          src={plusIcon}
+          src={PlusIconNomal}
           width={16}
           height={16}
           alt="대시보드 추가 아이콘"
         />
       </button>
       <button className={`${styles.homeButton} ${styles.button}`}>
-        <Image src={homeIcon} width={24} height={24} alt="홈 아이콘" />
+        <Image src={HomeIcon} width={24} height={24} alt="홈 아이콘" />
         <span className={homeText}>홈</span>
       </button>
       {currentDashboards.map((dashboard) => {

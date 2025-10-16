@@ -1,9 +1,11 @@
-import ArrowRight from "@/assets/images/ic-chevorn-right.svg";
-import ArrowLeft from "@/assets/images/ic-chevron-left.svg";
-import NotInvitedImg from "@/assets/images/ic-invite.svg";
-import EmptyDashboardImg from "@/assets/images/ic-my-dashboard.svg";
-import PlusIcon from "@/assets/images/ic-plus-circle.svg";
-import PlusSquareIcon from "@/assets/images/ic-plus-square.svg";
+import {
+  ArrowLeft,
+  ArrowRight,
+  EmptyDashboardImg,
+  NotInvitedImg,
+  PlusIcon,
+  PlusSquareIcon,
+} from "@/assets/images";
 import Button, { ButtonSize, ButtonVariant } from "@/components/button/button";
 import ColorChip from "@/components/chips/chip-color/chips-color";
 import Input, { InputVariant } from "@/components/input/input";
@@ -17,38 +19,11 @@ import {
   putInvitationsAccepts,
 } from "@/features/my-dashboard/api/";
 import { useResponsiveValue } from "@/hooks/use-responsive-value";
+import { Invitation, MyDashboardMainProps } from "@/types/my-dashboard";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { Dashboard } from ".";
 import styles from "./my-dashboard.module.css";
-
-interface MyDashboardMainProps {
-  dashboards: Dashboard[];
-  onClick: () => void;
-}
-
-interface Invitation {
-  id: number;
-  inviter: {
-    nickname: string;
-    email: string;
-    id: number;
-  };
-  teamId: string;
-  dashboard: {
-    title: string;
-    id: number;
-  };
-  invitee: {
-    nickname: string;
-    email: string;
-    id: number;
-  };
-  inviteAccepted: boolean;
-  createdAt: string;
-  updatedAt: string;
-}
 
 export default function MyDashboardMain({
   dashboards,
@@ -329,7 +304,11 @@ export default function MyDashboardMain({
                       className={styles.invitationsDashboardSectionMainProfile}
                     >
                       <div className={styles.userBox}>
-                        <Profile size={ProfileSize.Medium} name={item.inviter.nickname} showFullName/>
+                        <Profile
+                          size={ProfileSize.Medium}
+                          name={item.inviter.nickname}
+                          showFullName
+                        />
                       </div>
                     </div>
                     <div
@@ -357,19 +336,7 @@ export default function MyDashboardMain({
                 </div>
               ))}
               {hasMore && (
-                <div
-                  ref={loadMoreRef}
-                  style={{ height: "20px", margin: "20px 0" }}
-                >
-                  {isLoadingMore && (
-                    <p
-                      className={Typography.mdBold}
-                      style={{ textAlign: "center" }}
-                    >
-                      로딩 중...
-                    </p>
-                  )}
-                </div>
+                <div className={styles.infinityTrigger} ref={loadMoreRef}></div>
               )}
             </div>
           )}
