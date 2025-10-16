@@ -1,13 +1,14 @@
 import { getColumn } from "@/components/dashboard/column/api/column";
+import { useEffectAuth } from "@/features/auth/components/auth-provider";
 import { Column } from "@/types/column";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 export function useColumn(dashboardId: number | null) {
   const [columns, setColumns] = useState<Column[] | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<Error | null>(null);
 
-  useEffect(() => {
+  useEffectAuth(() => {
     if (!dashboardId) {
       setColumns(null);
       return;
