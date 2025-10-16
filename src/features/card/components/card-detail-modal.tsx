@@ -22,19 +22,17 @@ import CommentInput from "../../comment/components/comment-input";
 import CommentList from "../../comment/components/comment-list";
 import styles from "./card-detail-modal.module.css";
 
-function Actions({ onClose }: { onClose: () => void }) {
-  const handleEdit = () => {
-    // TODO: Go to edit modal
-  };
+interface ActionsProps {
+  onEdit: () => void;
+  onDelete: () => void;
+  onClose: () => void;
+}
 
-  const handleDelete = () => {
-    // TODO: Delete card with modal (additional feature)
-  };
-
+function Actions({ onEdit, onDelete, onClose }: ActionsProps) {
   return (
     <div className={styles.actions}>
       <Menu
-        items={[MenuItem.edit(handleEdit), MenuItem.delete(handleDelete)]}
+        items={[MenuItem.edit(onEdit), MenuItem.delete(onDelete)]}
         direction={Direction.Right}
       >
         <MoreIcon color={Color.Gray300} />
@@ -96,23 +94,26 @@ function DueDateInfo({ dueDate }: { dueDate: string }) {
   );
 }
 
+interface SidebarProps extends ActionsProps {
+  dashboardTitle: string;
+  columnTitle: string;
+  assignee: string;
+  dueDate: string;
+}
+
 function Sidebar({
   dashboardTitle,
   columnTitle,
   assignee,
   dueDate,
+  onEdit,
+  onDelete,
   onClose,
-}: {
-  dashboardTitle: string;
-  columnTitle: string;
-  assignee: string;
-  dueDate: string;
-  onClose: () => void;
-}) {
+}: SidebarProps) {
   return (
     <div className={styles.sidebar}>
       <header className={styles.sidebarHeader}>
-        <Actions onClose={onClose} />
+        <Actions onEdit={onEdit} onDelete={onDelete} onClose={onClose} />
       </header>
       <section className={styles.sidebarSection}>
         <ProjectInfo
@@ -130,17 +131,20 @@ function Sidebar({
   );
 }
 
+interface MainProps extends ActionsProps {
+  card: Card;
+  dashboardTitle: string;
+  columnTitle: string;
+}
+
 function Main({
   card,
   dashboardTitle,
   columnTitle,
+  onEdit,
+  onDelete,
   onClose,
-}: {
-  card: Card;
-  dashboardTitle: string;
-  columnTitle: string;
-  onClose: () => void;
-}) {
+}: MainProps) {
   const [comments, setComments] = useState<Comment[]>([]);
   const { isDesktop } = useResponsive();
 
@@ -171,7 +175,9 @@ function Main({
             )}
           >
             {card.title}
-            {isDesktop || <Actions onClose={onClose} />}
+            {isDesktop || (
+              <Actions onEdit={onEdit} onDelete={onDelete} onClose={onClose} />
+            )}
           </h2>
           <div className={styles.tagsList}>
             {card.tags.map((tag) => (
@@ -223,6 +229,16 @@ export default function CardDetailModal({
   const { openModal } = useModal({ key: modalKey });
   const { isDesktop, isMobile } = useResponsive();
 
+  const handleEdit = () => {
+    // TODO: Move to edit modal
+    console.log("Edit card");
+  };
+
+  const handleDelete = () => {
+    // TODO: Delete card
+    console.log("Delete card");
+  };
+
   const handleClose = () => {
     openModal(false);
   };
@@ -234,6 +250,8 @@ export default function CardDetailModal({
           card={card}
           dashboardTitle={dashboardTitle}
           columnTitle={columnTitle}
+          onEdit={handleEdit}
+          onDelete={handleDelete}
           onClose={handleClose}
         />
         {isDesktop && (
@@ -242,6 +260,8 @@ export default function CardDetailModal({
             columnTitle={columnTitle}
             assignee={card.assignee.nickname}
             dueDate={card.dueDate}
+            onEdit={handleEdit}
+            onDelete={handleDelete}
             onClose={handleClose}
           />
         )}
