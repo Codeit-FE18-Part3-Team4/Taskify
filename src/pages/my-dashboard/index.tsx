@@ -35,6 +35,7 @@ export default function MyDashboard() {
       refreshSidebar();
       refreshDashboards();
     }
+    openSheet(false);
   };
 
   const { isMobile } = useSsrResponsive();
