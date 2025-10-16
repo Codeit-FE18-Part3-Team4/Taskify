@@ -20,6 +20,7 @@ import SheetSectionGroup from "@/components/sheet/sheet-section-group";
 import Typography from "@/components/typography";
 import { CommonSize } from "@/constants/common/common-size";
 import { ProfileRandomColor } from "@/constants/profile-random-color";
+import { logout } from "@/features/auth/apis/logout";
 import { getCard } from "@/features/card/apis";
 import CardDetailModal from "@/features/card/components/card-detail-modal";
 import Dropdown, { DropdownOption } from "@/features/card/components/dropdown";
@@ -757,6 +758,10 @@ function MenuSample() {
   );
 }
 
+function LogoutButton() {
+  return <button onClick={logout}>로그아웃</button>;
+}
+
 function CardDetailModalSample() {
   const modalKey = "card-detail";
   const { isShowModal, openModal } = useModal({ key: modalKey });
@@ -852,6 +857,9 @@ export default function Page() {
       </Section>
       <Section title="profile">
         <ProfileSample />
+      </Section>
+      <Section title="Logout">
+        <LogoutButton />
       </Section>
     </main>
   );
