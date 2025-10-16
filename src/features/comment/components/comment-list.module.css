@@ -1,0 +1,30 @@
+.listContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.commentContainer {
+  display: flex;
+  gap: 12px;
+}
+
+.avatar {
+  flex-shrink: 0;
+}
+
+.commentContent {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.commentHeader {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.commentHeader > span:last-child {
+  color: var(--color-gray400);
+}

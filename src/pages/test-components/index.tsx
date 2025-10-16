@@ -21,6 +21,8 @@ import Typography from "@/components/typography";
 import { CommonSize } from "@/constants/common/common-size";
 import { ProfileRandomColor } from "@/constants/profile-random-color";
 import { logout } from "@/features/auth/apis/logout";
+import { getCard } from "@/features/card/apis";
+import CardDetailModal from "@/features/card/components/card-detail-modal";
 import Dropdown, { DropdownOption } from "@/features/card/components/dropdown";
 import ImageInput from "@/features/card/components/image-input";
 import { Direction, Menu, MenuItem } from "@/features/card/components/menu";
@@ -30,7 +32,8 @@ import { useAlert } from "@/hooks/use-alert";
 import { useDialog } from "@/hooks/use-dialog";
 import { useModal } from "@/hooks/use-modal";
 import { useSheet } from "@/hooks/use-sheet";
-import { ReactNode, useState } from "react";
+import { Card } from "@/types/card";
+import { ReactNode, useEffect, useState } from "react";
 
 function Section({ title, children }: { title: string; children: ReactNode }) {
   return (
@@ -759,6 +762,34 @@ function LogoutButton() {
   return <button onClick={logout}>로그아웃</button>;
 }
 
+function CardDetailModalSample() {
+  const modalKey = "card-detail";
+  const { isShowModal, openModal } = useModal({ key: modalKey });
+  const [card, setCard] = useState<Card | null>(null);
+  useEffect(() => {
+    async function loadCard() {
+      const card = await getCard();
+      setCard(card);
+    }
+    loadCard();
+  }, []);
+
+  return (
+    <>
+      <div>
+        <button onClick={() => openModal(true)}>Open Modal</button>
+        {isShowModal && card && (
+          <CardDetailModal
+            modalKey={modalKey}
+            card={card}
+            dashboardTitle="포트폴리오"
+          />
+        )}
+      </div>
+    </>
+  );
+}
+
 export default function Page() {
   return (
     <main style={{ padding: "24px" }}>
@@ -820,6 +851,9 @@ export default function Page() {
       </Section>
       <Section title="Menu">
         <MenuSample />
+      </Section>
+      <Section title="Card Detail Modal">
+        <CardDetailModalSample />
       </Section>
       <Section title="profile">
         <ProfileSample />

@@ -6,10 +6,15 @@ import styles from "./modal.module.css";
 
 interface Props {
   modalKey: string;
+  isFullScreen?: boolean;
   children: ReactNode;
 }
 
-export default function Modal({ modalKey, children }: Props) {
+export default function Modal({
+  modalKey,
+  isFullScreen = false,
+  children,
+}: Props) {
   const { isOpenModal, openModal, onCloseModal } = useModal({ key: modalKey });
 
   const handleAnimationEnd = () => {
@@ -34,7 +39,13 @@ export default function Modal({ modalKey, children }: Props) {
       onAnimationEnd={handleAnimationEnd}
       onClick={handleClick}
     >
-      <div className={styles.content} onClick={handleContentClick}>
+      <div
+        className={classnames(
+          styles.content,
+          isFullScreen ? styles.fullscreen : ""
+        )}
+        onClick={handleContentClick}
+      >
         {children}
       </div>
     </div>
