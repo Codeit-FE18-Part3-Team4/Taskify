@@ -8,7 +8,6 @@ import Modal from "@/components/modal";
 import Profile from "@/components/profile/profile";
 import { ProfileSize } from "@/components/profile/profile-size";
 import Typography from "@/components/typography";
-import { CardStatus } from "@/constants/card/card-status";
 import { Direction, Menu, MenuItem } from "@/features/card/components/menu";
 import { getComments } from "@/features/comment/apis/comment";
 import { useModal } from "@/hooks/use-modal";
@@ -22,12 +21,6 @@ import { formatDueDate } from "../../../utils/date-formatter";
 import CommentInput from "../../comment/components/comment-input";
 import CommentList from "../../comment/components/comment-list";
 import styles from "./card-detail-modal.module.css";
-
-export const STATUS_TITLE = {
-  [CardStatus.ToDo]: "To Do",
-  [CardStatus.OnProgress]: "On Progress",
-  [CardStatus.Done]: "Done",
-} as const;
 
 function Actions({ onClose }: { onClose: () => void }) {
   const handleEdit = () => {
@@ -65,24 +58,53 @@ function InfoContent({ children }: { children: ReactNode }) {
   return <div className={Typography.lgMedium}>{children}</div>;
 }
 
+function ProjectInfo({
+  dashboardTitle,
+  columnTitle,
+}: {
+  dashboardTitle: string;
+  columnTitle: string;
+}) {
+  return (
+    <>
+      <InfoTitle>프로젝트</InfoTitle>
+      <InfoContent>
+        {dashboardTitle} / {columnTitle}
+      </InfoContent>
+    </>
+  );
+}
+
 function AssigneeInfo({ name }: { name: string }) {
   return (
-    <div className={classnames(styles.assigneeInfo, Typography.lgMedium)}>
-      <Profile size={ProfileSize.XSmall} name={name.slice(1)} />
-      <span>{name}</span>
-    </div>
+    <>
+      <InfoTitle>담당자</InfoTitle>
+      <div className={classnames(styles.assigneeInfo, Typography.lgMedium)}>
+        <Profile size={ProfileSize.XSmall} name={name.slice(1)} />
+        <span>{name}</span>
+      </div>
+    </>
+  );
+}
+
+function DueDateInfo({ dueDate }: { dueDate: string }) {
+  return (
+    <>
+      <InfoTitle>마감일</InfoTitle>
+      <InfoContent>{formatDueDate(dueDate)}</InfoContent>
+    </>
   );
 }
 
 function Sidebar({
   dashboardTitle,
-  cardStatus,
+  columnTitle,
   assignee,
   dueDate,
   onClose,
 }: {
   dashboardTitle: string;
-  cardStatus: CardStatus;
+  columnTitle: string;
   assignee: string;
   dueDate: string;
   onClose: () => void;
@@ -93,18 +115,16 @@ function Sidebar({
         <Actions onClose={onClose} />
       </header>
       <section className={styles.sidebarSection}>
-        <InfoTitle>프로젝트</InfoTitle>
-        <InfoContent>
-          {dashboardTitle} / {STATUS_TITLE[cardStatus]}
-        </InfoContent>
+        <ProjectInfo
+          dashboardTitle={dashboardTitle}
+          columnTitle={columnTitle}
+        />
       </section>
       <section className={classnames(styles.sidebarSection, styles.divider)}>
-        <InfoTitle>담당자</InfoTitle>
         <AssigneeInfo name={assignee} />
       </section>
       <section className={classnames(styles.sidebarSection, styles.divider)}>
-        <InfoTitle>마감일</InfoTitle>
-        <InfoContent>{formatDueDate(dueDate)}</InfoContent>
+        <DueDateInfo dueDate={dueDate} />
       </section>
     </div>
   );
@@ -113,10 +133,12 @@ function Sidebar({
 function Main({
   card,
   dashboardTitle,
+  columnTitle,
   onClose,
 }: {
   card: Card;
   dashboardTitle: string;
+  columnTitle: string;
   onClose: () => void;
 }) {
   const [comments, setComments] = useState<Comment[]>([]);
@@ -165,14 +187,12 @@ function Main({
         </article>
         {isDesktop || (
           <div className={styles.info}>
-            <InfoTitle>프로젝트</InfoTitle>
-            <InfoContent>
-              {dashboardTitle} / {STATUS_TITLE[card.columnId as CardStatus]}
-            </InfoContent>
-            <InfoTitle>담당자</InfoTitle>
+            <ProjectInfo
+              dashboardTitle={dashboardTitle}
+              columnTitle={columnTitle}
+            />
             <AssigneeInfo name={card.assignee.nickname} />
-            <InfoTitle>마감일</InfoTitle>
-            <InfoContent>{formatDueDate(card.dueDate)}</InfoContent>
+            <DueDateInfo dueDate={card.dueDate} />
           </div>
         )}
         <div className={styles.comments}>
@@ -191,12 +211,14 @@ interface Props {
   modalKey: string;
   card: Card;
   dashboardTitle: string;
+  columnTitle: string;
 }
 
 export default function CardDetailModal({
   modalKey,
   card,
   dashboardTitle,
+  columnTitle,
 }: Props) {
   const { openModal } = useModal({ key: modalKey });
   const { isDesktop, isMobile } = useResponsive();
@@ -211,12 +233,13 @@ export default function CardDetailModal({
         <Main
           card={card}
           dashboardTitle={dashboardTitle}
+          columnTitle={columnTitle}
           onClose={handleClose}
         />
         {isDesktop && (
           <Sidebar
             dashboardTitle={dashboardTitle}
-            cardStatus={card.columnId as CardStatus}
+            columnTitle={columnTitle}
             assignee={card.assignee.nickname}
             dueDate={card.dueDate}
             onClose={handleClose}

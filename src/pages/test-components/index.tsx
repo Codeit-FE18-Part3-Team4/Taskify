@@ -782,6 +782,7 @@ function CardDetailModalSample() {
           <CardDetailModal
             modalKey={modalKey}
             card={card}
+            columnTitle="Progress"
             dashboardTitle="포트폴리오"
           />
         )}
