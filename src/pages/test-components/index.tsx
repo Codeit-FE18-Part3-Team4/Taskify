@@ -7,7 +7,6 @@ import ColorChip from "@/components/chips/chip-color/chips-color";
 import { ColorFrameSize } from "@/components/chips/color-frame/color-frame-size";
 import { Color } from "@/components/color";
 import ColorPalette from "@/components/color-palette/color-palette";
-import { getDashboards } from "@/features/dashboard-side-bar/api/dashboard";
 import DashboardSideBar from "@/components/dashboard-side-bar/dashboard-side-bar";
 import Dialog from "@/components/dialog";
 import Input, { InputSize, InputVariant } from "@/components/input/input";
@@ -24,7 +23,9 @@ import { CommonSize } from "@/constants/common/common-size";
 import { ProfileRandomColor } from "@/constants/profile-random-color";
 import Dropdown, { DropdownOption } from "@/features/card/components/dropdown";
 import ImageInput from "@/features/card/components/image-input";
+import { Direction, Menu, MenuItem } from "@/features/card/components/menu";
 import TagInput from "@/features/card/components/tag-input";
+import ColumnEditSheet from "@/features/column/components/column-edit-sheet";
 import { useAlert } from "@/hooks/use-alert";
 import { useDialog } from "@/hooks/use-dialog";
 import { useModal } from "@/hooks/use-modal";
@@ -515,7 +516,7 @@ function BadgeSample() {
 function ColorPaletteSample() {
   const sizes = Object.values(ColorFrameSize);
   const [selectedColors, setSelectedColors] = useState<string[]>(
-    sizes.map(() => ""),
+    sizes.map(() => "")
   );
 
   const handleSelect = (index: number, color: string) => {
@@ -656,6 +657,56 @@ function SheetSample() {
   );
 }
 
+function ColumnEditSheetSample() {
+  const SHEET_KEY1 = "COLUMN_EDIT_SHEET_SAMPLE_1";
+  const { isShowSheet: isShowSheet1, openSheet: openSheet1 } = useSheet({
+    key: SHEET_KEY1,
+  });
+
+  const SHEET_KEY2 = "COLUMN_EDIT_SHEET_SAMPLE_2";
+  const { isShowSheet: isShowSheet2, openSheet: openSheet2 } = useSheet({
+    key: SHEET_KEY2,
+  });
+
+  const handleSubmit = (title: string) => {
+    console.log("Submitted title:", title);
+  };
+
+  return (
+    <>
+      <div>
+        <button onClick={() => openSheet1(true)}>Open Sheet</button>
+        {isShowSheet1 && (
+          <ColumnEditSheet
+            sheetKey={SHEET_KEY1}
+            usedTitles={["To do", "Progress", "Done"]}
+            onSubmit={handleSubmit}
+          />
+        )}
+        <div>
+          <button onClick={() => openSheet2(true)}>
+            Open Sheet with Column
+          </button>
+          {isShowSheet2 && (
+            <ColumnEditSheet
+              sheetKey={SHEET_KEY2}
+              column={{
+                id: 1,
+                title: "In Progress",
+                teamId: "18-4",
+                createdAt: "",
+                updatedAt: "",
+              }}
+              usedTitles={["To do", "Progress", "Done"]}
+              onSubmit={handleSubmit}
+            />
+          )}
+        </div>
+      </div>
+    </>
+  );
+}
+
 function ProfileSample() {
   return (
     <>
@@ -675,6 +726,22 @@ function ProfileSample() {
         <Profile size={ProfileSize.XLarge} name="김아무개" />
       </div>
     </>
+  );
+}
+
+function MenuSample() {
+  const items = [
+    MenuItem.edit(() => console.log("Edit")),
+    MenuItem.delete(() => console.log("Delete")),
+  ];
+
+  return (
+    <div style={{ display: "flex", gap: "100px" }}>
+      <Menu items={items}>Menu on Left</Menu>
+      <Menu items={items} direction={Direction.Right}>
+        Menu on Right
+      </Menu>
+    </div>
   );
 }
 
@@ -735,6 +802,12 @@ export default function Page() {
       </Section>
       <Section title="Sheet">
         <SheetSample />
+      </Section>
+      <Section title="ColumnEditSheet">
+        <ColumnEditSheetSample />
+      </Section>
+      <Section title="Menu">
+        <MenuSample />
       </Section>
       <Section title="SideBar">
         <DashboardSideBar dashboards={dashboards} />
