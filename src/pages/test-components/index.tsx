@@ -20,6 +20,7 @@ import SheetSectionGroup from "@/components/sheet/sheet-section-group";
 import Typography from "@/components/typography";
 import { CommonSize } from "@/constants/common/common-size";
 import { ProfileRandomColor } from "@/constants/profile-random-color";
+import { logout } from "@/features/auth/apis/logout";
 import Dropdown, { DropdownOption } from "@/features/card/components/dropdown";
 import ImageInput from "@/features/card/components/image-input";
 import { Direction, Menu, MenuItem } from "@/features/card/components/menu";
@@ -721,8 +722,18 @@ function ProfileSample() {
       </div>
       <div style={{ display: "flex", gap: "20px" }}>
         <Profile size={ProfileSize.XLarge} showFullName name="Lee" />
-        <Profile size={ProfileSize.XLarge} fullNameSize={Typography.lg2Bold} showFullName name="Lee" />
-        <Profile size={ProfileSize.XLarge} showFullName fullNameSize={Typography.xsSemiBold} name="김아무개" />
+        <Profile
+          size={ProfileSize.XLarge}
+          fullNameSize={Typography.lg2Bold}
+          showFullName
+          name="Lee"
+        />
+        <Profile
+          size={ProfileSize.XLarge}
+          showFullName
+          fullNameSize={Typography.xsSemiBold}
+          name="김아무개"
+        />
       </div>
     </div>
   );
@@ -742,6 +753,10 @@ function MenuSample() {
       </Menu>
     </div>
   );
+}
+
+function LogoutButton() {
+  return <button onClick={logout}>로그아웃</button>;
 }
 
 export default function Page() {
@@ -808,6 +823,9 @@ export default function Page() {
       </Section>
       <Section title="profile">
         <ProfileSample />
+      </Section>
+      <Section title="Logout">
+        <LogoutButton />
       </Section>
     </main>
   );
