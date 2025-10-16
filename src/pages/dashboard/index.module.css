@@ -1,13 +1,106 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background-color: var(--color-background);
+}
+
+.page > :first-child {
+  flex-shrink: 0;
+}
+
 .layoutContainer {
   display: flex;
-  background-color: var(--color-background);
+  flex: 1;
+  overflow: hidden;
 }
 
 .main {
   flex: 1;
   padding: 20px;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  overflow-x: auto;
+  overflow-y: auto;
+}
+
+.main section {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.dashboardTitle {
+  height: 76px;
+  display: flex;
+  gap: 8px;
+  padding-left: 50px;
+  padding-top: 25px;
+  margin-bottom: 4px;
+  flex-shrink: 0;
+}
+
+.dashboardTitle h3 {
+  color: var(--color-gray100);
 }
 
 .columnWrapper {
   display: flex;
+  flex-direction: row;
+  height: 100%;
+  padding-bottom: 60px;
+}
+
+.columnContentWrapper {
+  display: flex;
+  gap: 60px;
+  padding: 10px 50px;
+  scroll-behavior: smooth;
+  flex: 1;
+  min-width: 0;
+}
+
+.columnContentWrapper > * {
+  flex: 0 0 334px;
+  min-width: 334px;
+}
+
+
+.columnContentWrapper h2 {
+  color: #ffffff;
+}
+
+.main::-webkit-scrollbar,
+.columnContentWrapper::-webkit-scrollbar {
+  height: 8px;
+  width: 8px;
+}
+
+.main::-webkit-scrollbar-thumb,
+.columnContentWrapper::-webkit-scrollbar-thumb {
+  background-color: var(--color-gray500);
+  border-radius: 4px;
+}
+
+.createColumnButton {
+  width: 280px;
+  height: 60px;
+  background-color: var(--color-black700);
+  color: var(--color-gray400);
+  border: none;
+  border-radius: 18px;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  cursor: pointer;
+  padding-left: 14px;
+}
+
+.createColumnButton:hover {
+  background-color: var(--color-black600);
+}
+
+.createColumnButton:active {
+  background-color: var(--color-black800);
 }

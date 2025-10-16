@@ -12,13 +12,13 @@ import Typography from "@/components/typography";
 interface NavigationBarProps {
   size?: CommonSize;
   members?: MemberInfo[];
-  dashboardId?: number;
+  dashboardId?: number | null;
 }
 
 export default function NavigationBar({
   size = CommonSize.Large,
   members = [],
-  dashboardId,
+  dashboardId = null,
 }: NavigationBarProps) {
   const sizeName = CommonSize[size].toLowerCase();
   const navigationBarClasses = `${styles.navigationBar} ${styles[sizeName]}`;

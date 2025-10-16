@@ -1,15 +1,16 @@
 import axiosInstanceTest from "@/services/axios-instance-test";
 
-export async function getColumn({ dashboardId }: { dashboardId: number }) {
+export async function getMembers({ dashboardId }: { dashboardId: number }) {
   if (!dashboardId) return [];
 
   try {
     const res = await axiosInstanceTest.get(
-      `/columns?dashboardId=${dashboardId}`,
+      `/members?dashboardId=${dashboardId}`,
     );
-    return res.data;
+    const body = res.data;
+    return body;
   } catch (e) {
-    console.log(e);
+    console.error(e);
     throw e;
   }
 }

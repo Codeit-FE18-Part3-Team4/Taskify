@@ -1,5 +1,5 @@
 .columnContainer {
-  width: 334px;
+  width: 100%;
   gap: 20px;
   display: flex;
   flex-direction: column;

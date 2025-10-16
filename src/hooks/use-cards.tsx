@@ -3,13 +3,13 @@ import { Card } from "@/types/card";
 import { useEffect, useState } from "react";
 
 export function useCards(columnIds: number[]) {
-  const [cards, setCards] = useState<Record<number, Card[]>>({});
+  const [cards, setCards] = useState<Record<number, Card[]> | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<Error | null>(null);
 
   useEffect(() => {
     if (columnIds.length === 0) {
-      setCards({});
+      setCards(null);
       return;
     }
 
@@ -35,6 +35,8 @@ export function useCards(columnIds: number[]) {
       } catch (e) {
         console.log(e);
         setError(e as Error);
+        setCards(null);
+        throw e;
       } finally {
         setIsLoading(false);
       }

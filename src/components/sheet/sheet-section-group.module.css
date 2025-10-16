@@ -1,0 +1,9 @@
+.sheetSectionGroup {
+  display: flex;
+  gap: 8px;
+}
+
+.sheetSectionGroupItem {
+  flex-grow: 1;
+  width: 50%;
+}
