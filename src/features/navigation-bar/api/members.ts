@@ -1,4 +1,4 @@
-import axiosInstanceTest from "@/services/axios-instance-test";
+import axiosInstanceTest from "@/services/axios-instance";
 
 export async function getMembers({ dashboardId }: { dashboardId: number }) {
   if (!dashboardId) return [];
