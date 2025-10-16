@@ -7,7 +7,6 @@ import ColorChip from "@/components/chips/chip-color/chips-color";
 import { ColorFrameSize } from "@/components/chips/color-frame/color-frame-size";
 import { Color } from "@/components/color";
 import ColorPalette from "@/components/color-palette/color-palette";
-import { getDashboards } from "@/features/dashboard-side-bar/api/dashboard";
 import DashboardSideBar from "@/components/dashboard-side-bar/dashboard-side-bar";
 import Dialog from "@/components/dialog";
 import Input, { InputSize, InputVariant } from "@/components/input/input";
@@ -25,6 +24,7 @@ import { ProfileRandomColor } from "@/constants/profile-random-color";
 import Dropdown, { DropdownOption } from "@/features/card/components/dropdown";
 import ImageInput from "@/features/card/components/image-input";
 import TagInput from "@/features/card/components/tag-input";
+import ColumnEditSheet from "@/features/column/components/column-edit-sheet";
 import { useAlert } from "@/hooks/use-alert";
 import { useDialog } from "@/hooks/use-dialog";
 import { useModal } from "@/hooks/use-modal";
@@ -515,7 +515,7 @@ function BadgeSample() {
 function ColorPaletteSample() {
   const sizes = Object.values(ColorFrameSize);
   const [selectedColors, setSelectedColors] = useState<string[]>(
-    sizes.map(() => ""),
+    sizes.map(() => "")
   );
 
   const handleSelect = (index: number, color: string) => {
@@ -656,6 +656,51 @@ function SheetSample() {
   );
 }
 
+function ColumnEditSheetSample() {
+  const SHEET_KEY = "COLUMN_EDIT_SHEET_SAMPLE";
+  const { isShowSheet, openSheet } = useSheet({
+    key: SHEET_KEY,
+  });
+
+  const handleSubmit = (title: string) => {
+    console.log("Submitted title:", title);
+  };
+
+  return (
+    <>
+      <div>
+        <button onClick={() => openSheet(true)}>Open Sheet</button>
+        {isShowSheet && (
+          <ColumnEditSheet
+            sheetKey={SHEET_KEY}
+            usedTitles={["To do", "Progress", "Done"]}
+            onSubmit={handleSubmit}
+          />
+        )}
+        <div>
+          <button onClick={() => openSheet(true)}>
+            Open Sheet with Column
+          </button>
+          {isShowSheet && (
+            <ColumnEditSheet
+              sheetKey={SHEET_KEY}
+              column={{
+                id: 1,
+                title: "In Progress",
+                teamId: "18-4",
+                createdAt: "",
+                updatedAt: "",
+              }}
+              usedTitles={["To do", "Progress", "Done"]}
+              onSubmit={handleSubmit}
+            />
+          )}
+        </div>
+      </div>
+    </>
+  );
+}
+
 function ProfileSample() {
   return (
     <>
@@ -735,6 +780,9 @@ export default function Page() {
       </Section>
       <Section title="Sheet">
         <SheetSample />
+      </Section>
+      <Section title="ColumnEditSheet">
+        <ColumnEditSheetSample />
       </Section>
       <Section title="SideBar">
         <DashboardSideBar dashboards={dashboards} />
