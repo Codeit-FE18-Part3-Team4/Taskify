@@ -8,12 +8,24 @@ export default function DashboardSideBar({
   user,
   dashboards,
   onClick,
+  currentPage,
+  totalCount,
+  onPageChange,
 }: DashboardSideBarProps) {
   return (
     <div className={styles.sideBar}>
       <Header />
-      <Main dashboards={dashboards} onClick={onClick} />
-      <UserProfile name={user.nickname} profileImageUrl={user.profileImageUrl} />
+      <Main
+        dashboards={dashboards}
+        onClick={onClick}
+        currentPage={currentPage}
+        totalCount={totalCount}
+        onPageChange={onPageChange}
+      />
+      <UserProfile
+        name={user.nickname}
+        profileImageUrl={user.profileImageUrl}
+      />
     </div>
   );
 }

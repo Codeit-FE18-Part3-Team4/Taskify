@@ -18,6 +18,9 @@ import styles from "./my-dashboard.module.css";
 
 export default function MyDashboard() {
   const [dashboards, setDashboards] = useState<Dashboard[]>([]);
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [totalCount, setTotalCount] = useState<number>(0);
+  const [allDashboards, setAllDashboards] = useState<Dashboard[]>([]);
   const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
   const [dashboardValue, setDashboardValue] = useState<string>("");
   const [color, setColor] = useState<string>("");
@@ -35,7 +38,8 @@ export default function MyDashboard() {
       });
 
       if (result) {
-        setDashboards((prev) => [result, ...prev]);
+        setAllDashboards((prev) => [result, ...prev]);
+        setCurrentPage(1);
         setDashboardValue("");
         setColor("");
       }
@@ -44,19 +48,22 @@ export default function MyDashboard() {
     }
   };
 
-  const load = useCallback(async () => {
+  const load = useCallback(async (page: number = 1) => {
     try {
-      const [dashboardsRes, userRes] = await Promise.all([
-        getDashboards(),
+      const [dashboardsRes, allDashboardsRes, userRes] = await Promise.all([
+        getDashboards({ page, size: 10 }),
+        getDashboards({ page : 1, size: 1000 }),
         getUserInfo(),
       ]);
 
-      const sortedDashboards = dashboardsRes.dashboards.sort(
+      const sortedDashboards = allDashboardsRes.dashboards.sort(
         (a: Dashboard, b: Dashboard) =>
           new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
       );
 
-      setDashboards(sortedDashboards);
+      setDashboards(dashboardsRes.dashboards);
+      setTotalCount(dashboardsRes.totalCount);
+      setAllDashboards(sortedDashboards);
       setUserInfo(userRes);
     } catch (error) {
       console.error(error);
@@ -64,8 +71,8 @@ export default function MyDashboard() {
   }, []);
 
   useEffect(() => {
-    load();
-  }, [load]);
+    load(currentPage);
+  }, [currentPage, load]);
 
   const { isMobile } = useSsrResponsive();
 
@@ -76,11 +83,15 @@ export default function MyDashboard() {
           onClick={() => openSheet(true)}
           dashboards={dashboards}
           user={userInfo}
+          currentPage={currentPage}
+          totalCount={totalCount}
+          onPageChange={setCurrentPage}
         />
       )}
       <MyDashboardMain
         onClick={() => openSheet(true)}
-        dashboards={dashboards}
+        dashboards={allDashboards}
+        reLoad={load}
       />
       {isShowSheet && (
         <Sheet

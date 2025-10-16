@@ -28,6 +28,7 @@ import styles from "./my-dashboard.module.css";
 export default function MyDashboardMain({
   dashboards,
   onClick,
+  reLoad,
 }: MyDashboardMainProps) {
   const router = useRouter();
   const [currentPage, setCurrentPage] = useState<number>(0);
@@ -98,6 +99,7 @@ export default function MyDashboardMain({
 
   const handleRemoveInvitation = (invitationId: number) => {
     setInvitations((prev) => prev.filter((i) => i.id !== invitationId));
+    reLoad();
   };
 
   const loadInvitations = useCallback(

@@ -5,26 +5,25 @@ import { MainProps } from "@/types/dashboard-side-bar";
 import { classnames } from "@/utils/classnames";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import DashboardButton from "./dashboard-button";
 import styles from "./dashboard-side-bar.module.css";
 import SidebarPageControl from "./sidebar-page-control";
 
 const PAGE_SIZE = 10;
 
-export default function Main({ dashboards, onClick }: MainProps) {
+export default function Main({
+  dashboards,
+  onClick,
+  currentPage,
+  totalCount,
+  onPageChange,
+}: MainProps) {
   const router = useRouter();
-  const [currentPage, setCurrentPage] = useState<number>(0);
 
   const totalPages = useMemo(() => {
-    return Math.ceil(dashboards.length / PAGE_SIZE);
-  }, [dashboards]);
-
-  const currentDashboards = useMemo(() => {
-    const start = currentPage * PAGE_SIZE;
-    const end = start + PAGE_SIZE;
-    return dashboards.slice(start, end);
-  }, [dashboards, currentPage]);
+    return Math.ceil(totalCount / PAGE_SIZE);
+  }, [totalCount]);
 
   const currentDashboardId = router.query.id ? Number(router.query.id) : null;
 
@@ -33,11 +32,11 @@ export default function Main({ dashboards, onClick }: MainProps) {
   };
 
   const handlePrevPage = () => {
-    if (currentPage > 0) setCurrentPage((prev) => prev - 1);
+    if (currentPage > 1) onPageChange(currentPage - 1);
   };
 
   const handleNextPage = () => {
-    if (currentPage < totalPages - 1) setCurrentPage((prev) => prev + 1);
+    if (currentPage < totalPages) onPageChange(currentPage + 1);
   };
 
   const dashboardAddText = useResponsiveValue({
@@ -70,7 +69,7 @@ export default function Main({ dashboards, onClick }: MainProps) {
         <Image src={HomeIcon} width={24} height={24} alt="홈 아이콘" />
         <span className={homeText}>홈</span>
       </button>
-      {currentDashboards.map((dashboard) => {
+      {dashboards.map((dashboard) => {
         return (
           <DashboardButton
             onClick={() => handleDashboardNavigate(dashboard.id)}
