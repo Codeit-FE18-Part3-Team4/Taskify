@@ -59,7 +59,6 @@
   scroll-behavior: smooth;
   flex: 1;
   min-width: 0;
-  padding-right: 0;
 }
 
 .columnContentWrapper > * {
@@ -77,12 +76,6 @@
 .columnContentWrapper::-webkit-scrollbar-thumb {
   background-color: var(--color-gray500);
   border-radius: 4px;
-}
-
-.createColumnButtonWarpper {
-  width: 400px;
-  flex-shrink: 0;
-  padding: 10px 60px;
 }
 
 .createColumnButton {

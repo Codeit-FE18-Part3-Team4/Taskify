@@ -64,19 +64,19 @@ export default function DashboardContent({
                 />
               ))
             )}
-          </div>
-          <div className={styles.createColumnButtonWarpper}>
-            <button
-              type="button"
-              className={classnames(
-                styles.createColumnButton,
-                Typography.lg2Medium,
-              )}
-              onClick={handleCreatColumnClick}
-            >
-              <PlusCircleSvg className={styles.icon} />
-              <span>새로운 컬럼 추가</span>
-            </button>
+            <div>
+              <button
+                type="button"
+                className={classnames(
+                  styles.createColumnButton,
+                  Typography.lg2Medium,
+                )}
+                onClick={handleCreatColumnClick}
+              >
+                <PlusCircleSvg className={styles.icon} />
+                <span>새로운 컬럼 추가</span>
+              </button>
+            </div>
           </div>
         </div>
       </section>
