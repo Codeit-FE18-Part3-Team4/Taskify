@@ -1,0 +1,137 @@
+{
+  "cursorId": 10,
+  "comments": [
+    {
+      "id": 201,
+      "content": "OAuth 2.0 라이브러리 선택했습니다.",
+      "createdAt": "2025-10-12T02:15:30.123Z",
+      "updatedAt": "2025-10-12T02:15:30.123Z",
+      "cardId": 1001,
+      "author": {
+        "profileImageUrl": "",
+        "nickname": "김개발",
+        "id": 123
+      }
+    },
+    {
+      "id": 202,
+      "content": "좋은 선택입니다! 테스트 환경도 함께 구성해주세요. 로컬 개발 환경에서 먼저 테스트하겠습니다.",
+      "createdAt": "2025-10-12T06:45:22.456Z",
+      "updatedAt": "2025-10-12T06:45:22.456Z",
+      "cardId": 1001,
+      "author": {
+        "profileImageUrl": "",
+        "nickname": "이리뷰",
+        "id": 456
+      }
+    },
+    {
+      "id": 203,
+      "content": "DB 스키마 설계가 완료되었습니다.\n\n테이블 구조:\n- users (id, email, nickname, created_at)\n- sessions (id, user_id, token, expires_at)\n- oauth_accounts (id, user_id, provider, provider_id)\n\n자세한 내용은 Wiki를 참고해주세요.",
+      "createdAt": "2025-10-12T08:20:47.789Z",
+      "updatedAt": "2025-10-12T10:15:33.012Z",
+      "cardId": 1001,
+      "author": {
+        "profileImageUrl": "",
+        "nickname": "박데이터",
+        "id": 789
+      }
+    },
+    {
+      "id": 204,
+      "content": "@김개발 JWT 토큰 유효기간은 어떻게 설정할건가요? Access token과 Refresh token 분리가 필요할 것 같은데요.",
+      "createdAt": "2025-10-12T10:30:15.234Z",
+      "updatedAt": "2025-10-12T10:30:15.234Z",
+      "cardId": 1001,
+      "author": {
+        "profileImageUrl": "",
+        "nickname": "최보안",
+        "id": 321
+      }
+    },
+    {
+      "id": 205,
+      "content": "완료!",
+      "createdAt": "2025-10-12T12:05:48.567Z",
+      "updatedAt": "2025-10-12T12:05:48.567Z",
+      "cardId": 1001,
+      "author": {
+        "profileImageUrl": "",
+        "nickname": "김개발",
+        "id": 123
+      }
+    },
+    {
+      "id": 206,
+      "content": "프론트엔드 구현 상황 공유합니다.\n\n현재 진행중:\n✓ 로그인 페이지 UI 완성\n✓ Google OAuth 연동 테스트 완료\n- GitHub OAuth 연동 진행중\n- 에러 핸들링 추가 필요\n\n예상 완료일: 10월 18일",
+      "createdAt": "2025-10-12T14:22:10.891Z",
+      "updatedAt": "2025-10-12T14:22:10.891Z",
+      "cardId": 1001,
+      "author": {
+        "profileImageUrl": "",
+        "nickname": "정프론트",
+        "id": 654
+      }
+    },
+    {
+      "id": 207,
+      "content": "좋은 진행 상황입니다. 다만 에러 핸들링 부분은 보안팀과 함께 검토해야 합니다.",
+      "createdAt": "2025-10-12T15:45:33.012Z",
+      "updatedAt": "2025-10-12T15:45:33.012Z",
+      "cardId": 1001,
+      "author": {
+        "profileImageUrl": "",
+        "nickname": "신팀장",
+        "id": 987
+      }
+    },
+    {
+      "id": 208,
+      "content": "API 엔드포인트 문서화 완료했습니다.\n\nGET /api/auth/oauth/google\nGET /api/auth/oauth/github\nPOST /api/auth/logout\nGET /api/auth/user\n\n모두 Swagger에서 확인 가능합니다.",
+      "createdAt": "2025-10-12T17:18:55.345Z",
+      "updatedAt": "2025-10-12T17:18:55.345Z",
+      "cardId": 1001,
+      "author": {
+        "profileImageUrl": "",
+        "nickname": "김개발",
+        "id": 123
+      }
+    },
+    {
+      "id": 209,
+      "content": "테스트 케이스 30개 모두 통과했습니다! 🎉",
+      "createdAt": "2025-10-12T19:35:20.678Z",
+      "updatedAt": "2025-10-12T19:35:20.678Z",
+      "cardId": 1001,
+      "author": {
+        "profileImageUrl": "",
+        "nickname": "이리뷰",
+        "id": 456
+      }
+    },
+    {
+      "id": 210,
+      "content": "코드 리뷰 완료.\n\n개선 사항:\n- 토큰 만료 시간 설정 변경 (30분 -> 15분)\n- 에러 메시지 한글화\n- 로깅 추가\n\nPR #456에 댓글 달았습니다.",
+      "createdAt": "2025-10-12T21:50:42.901Z",
+      "updatedAt": "2025-10-12T21:50:42.901Z",
+      "cardId": 1001,
+      "author": {
+        "profileImageUrl": "",
+        "nickname": "최보안",
+        "id": 321
+      }
+    },
+    {
+      "id": 211,
+      "content": "모든 작업이 완료되었습니다. 프로덕션 배포 준비 완료!",
+      "createdAt": "2025-10-12T23:59:15.999Z",
+      "updatedAt": "2025-10-12T23:59:15.999Z",
+      "cardId": 1001,
+      "author": {
+        "profileImageUrl": "",
+        "nickname": "신팀장",
+        "id": 987
+      }
+    }
+  ]
+}
