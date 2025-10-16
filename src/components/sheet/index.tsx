@@ -17,10 +17,11 @@ export enum SheetActionType {
 
 interface SheetActionProps {
   type: SheetActionType;
+  disabled?: boolean;
   onClick: MouseEventHandler<HTMLButtonElement>;
 }
 
-function SheetAction({ type, onClick }: SheetActionProps) {
+function SheetAction({ type, onClick, disabled }: SheetActionProps) {
   const { isMobile } = useResponsive();
 
   const buttonVariant = useMemo(() => {
@@ -47,6 +48,7 @@ function SheetAction({ type, onClick }: SheetActionProps) {
       size={buttonSize}
       isWidthFull
       onClick={handleClick}
+      disabled={disabled}
     >
       {type}
     </Button>
@@ -57,6 +59,7 @@ interface Props {
   sheetKey: string;
   title: string;
   actionType: SheetActionType;
+  canSubmit?: boolean;
   children: ReactNode;
   onCancel?: () => void;
   onAction?: () => void;
@@ -66,6 +69,7 @@ export default function Sheet({
   sheetKey,
   title,
   actionType,
+  canSubmit = true,
   children,
   onCancel,
   onAction,
@@ -107,7 +111,11 @@ export default function Sheet({
               type={SheetActionType.Cancel}
               onClick={handleCancelClick}
             />
-            <SheetAction type={actionType} onClick={handleActionClick} />
+            <SheetAction
+              type={actionType}
+              onClick={handleActionClick}
+              disabled={!canSubmit}
+            />
           </div>
         </form>
       </div>
