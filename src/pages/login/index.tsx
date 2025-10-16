@@ -7,6 +7,7 @@ import Typography from "@/components/typography";
 import { login } from "@/features/auth/apis/login";
 import { useDialog } from "@/hooks/use-dialog";
 import { validateEmail, validatePassword } from "@/utils/validator";
+import { AxiosError } from "axios";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -71,9 +72,9 @@ export default function LoginPage() {
     try {
       await login({ email, password });
       router.push("/my-dashboard");
-    } catch (err: any) {
-      const message: string =
-        err?.response?.data?.message ?? "로그인에 실패했습니다.";
+    } catch (err) {
+      const error = err as AxiosError<{ message?: string }>;
+      const message = error.response?.data?.message ?? "로그인에 실패했습니다.";
 
       setDialogMessage(message);
       openDialog(true);
