@@ -1,9 +1,11 @@
 import axiosInstanceTest from "@/services/axios-instance-test";
 
-export async function getDashboards({ page = 1, size = 10 } = {}) {
+export async function getMembers({ dashboardId }: { dashboardId: number }) {
+  if (!dashboardId) return [];
+
   try {
     const res = await axiosInstanceTest.get(
-      `/dashboards?navigationMethod=pagination&page=${page}&size=${size}`,
+      `/members?dashboardId=${dashboardId}`,
     );
     const body = res.data;
     return body;
