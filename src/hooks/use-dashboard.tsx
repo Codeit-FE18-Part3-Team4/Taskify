@@ -1,8 +1,9 @@
 import { getDashboards } from "@/features/my-dashboard/api/dashboards";
+import { Dashboard } from "@/types/dashboard";
 import { useEffect, useState } from "react";
 
 export function useDashboard() {
-  const [dashboards, setDashboards] = useState<any[] | null>(null);
+  const [dashboards, setDashboards] = useState<Dashboard[] | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<Error | null>(null);
 
