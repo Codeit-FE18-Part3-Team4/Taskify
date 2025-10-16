@@ -1,6 +1,4 @@
 import { SettingIcon } from "@/assets/images";
-import Typography from "@/components/typography";
-import { useResponsiveValue } from "@/hooks/use-responsive-value";
 import { UserProfileProps } from "@/types/dashboard-side-bar";
 import Image from "next/image";
 import { MouseEvent } from "react";
@@ -12,11 +10,6 @@ export default function UserProfile({
   name,
   profileImageUrl,
 }: UserProfileProps) {
-  const userName = useResponsiveValue({
-    desktop: Typography.lgBold,
-    tablet: Typography.mdBold,
-    mobile: Typography.mdBold,
-  });
 
   const handleMyPageUrlClick = (e: MouseEvent) => {
     e.preventDefault();
