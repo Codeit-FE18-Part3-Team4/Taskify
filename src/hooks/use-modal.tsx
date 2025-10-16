@@ -1,5 +1,5 @@
 import { ModalContext } from "@/components/modal/modal-provider";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 
 const INITIAL_MODAL_STATE = { isMount: false, isOpen: false };
 
@@ -48,6 +48,10 @@ export function useModal({ key }: Props) {
       },
     }));
   };
+
+  useEffect(() => {
+    document.body.style.overflow = isMount ? "hidden" : "auto";
+  }, [isMount]);
 
   return {
     isShowModal: isMount,
