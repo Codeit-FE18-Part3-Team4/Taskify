@@ -1,8 +1,8 @@
-
 import DashboardSideBar from "@/components/dashboard-side-bar/dashboard-side-bar";
+import { useEffectAuth } from "@/features/auth/components/auth-provider";
 import { getDashboards } from "@/features/my-dashboard/api/dashboards";
 import { useSsrResponsive } from "@/hooks/use-ssr-responsive";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { getInvitations } from "../../features/my-dashboard/api/invitations";
 import MyDashboardMain from "./my-dashboard-main";
 import styles from "./my-dashboard.module.css";
@@ -10,7 +10,8 @@ import styles from "./my-dashboard.module.css";
 export default function MyDashboard() {
   const [dashboards, setDashboards] = useState<any[]>([]);
   const [invitations, setInvitations] = useState<any[]>([]);
-  useEffect(() => {
+
+  useEffectAuth(() => {
     const loadData = async () => {
       try {
         const { dashboards } = await getDashboards();
@@ -28,7 +29,7 @@ export default function MyDashboard() {
       } catch (e) {
         console.error(e);
       }
-    }
+    };
     loadData();
     loadInvitations();
   }, []);
@@ -37,7 +38,7 @@ export default function MyDashboard() {
   return (
     <div className={styles.myDashboardWrap}>
       {!isMobile && <DashboardSideBar dashboards={dashboards} />}
-      <MyDashboardMain dashboards={dashboards} invitations={invitations}/>
+      <MyDashboardMain dashboards={dashboards} invitations={invitations} />
     </div>
   );
 }
