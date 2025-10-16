@@ -22,6 +22,7 @@ export async function getDashboards({
     return body;
   } catch (e) {
     console.error(e);
+    throw e;
   }
 }
 

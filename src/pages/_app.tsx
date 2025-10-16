@@ -16,16 +16,11 @@ const pretendardFont = localFont({
 
 function Providers({ children }: { children: ReactNode }) {
   return (
-    <ModalProvider>
-      <TagsProvider>
-        <DashboardProvider>
-          {children}
-        </DashboardProvider>
-      </TagsProvider>
-    </ModalProvider>
     <AuthProvider>
       <ModalProvider>
-        <TagsProvider>{children}</TagsProvider>
+        <TagsProvider>
+          <DashboardProvider>{children}</DashboardProvider>
+        </TagsProvider>
       </ModalProvider>
     </AuthProvider>
   );
