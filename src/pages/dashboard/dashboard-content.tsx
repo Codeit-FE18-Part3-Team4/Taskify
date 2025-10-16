@@ -36,6 +36,7 @@ export default function DashboardContent({
   };
 
   const handleCreatColumnClick = () => {
+    setSelectedCard(null);
     openModal(true);
   };
 
@@ -50,7 +51,7 @@ export default function DashboardContent({
         <div className={styles.columnWrapper}>
           <div className={styles.columnContentWrapper}>
             {isLoading ? (
-              <div>컬럼 로딩중 넣을화면 들어갈 자리</div>
+              <h2>컬럼 로딩중...</h2>
             ) : (
               columns.map((column) => (
                 <Column
@@ -97,7 +98,13 @@ export default function DashboardContent({
           >
             <h2 style={{ color: "white" }}>Modal 1 Title</h2>
             <div>{selectedCard && JSON.stringify(selectedCard, null, 2)}</div>
-            <button onClick={() => openModal(false)}>Close Modal 1</button>
+            <button
+              onClick={() => {
+                (openModal(false), selectedCard ?? setSelectedCard(null));
+              }}
+            >
+              Close Modal 1
+            </button>
           </div>
         </Modal>
       )}
