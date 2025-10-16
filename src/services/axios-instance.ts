@@ -9,8 +9,6 @@ const axiosInstance = axios.create({
 });
 
 axiosInstance.interceptors.request.use((config) => {
-  console.log("Request Interceptor Triggered , auth token:", auth.token);
-
   if (!auth.token) {
     delete config.headers.Authorization;
     return config;

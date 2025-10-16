@@ -74,9 +74,6 @@ export default function LoginPage() {
     try {
       const response = await login({ email, password });
       auth.token = response.accessToken;
-      console.log("login succes@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-      console.log("Login successful, response token:", response.accessToken);
-      console.log("Login successful, auth token:", auth.token);
       router.push("/my-dashboard");
     } catch (err) {
       const error = err as AxiosError<{ message?: string }>;

@@ -18,7 +18,5 @@ export default async function handler(
     accessToken = null;
   }
 
-  console.log("Access Token from cookies:", accessToken);
-
   return res.status(200).json({ accessToken });
 }
