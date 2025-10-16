@@ -14,7 +14,11 @@ export function useDashboard() {
 
       try {
         const res = await getDashboards();
-        setDashboards(res?.dashboards ?? []);
+        const sortedDashboards = (res?.dashboards ?? []).sort(
+          (a: Dashboard, b: Dashboard) =>
+            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
+        );
+        setDashboards(sortedDashboards);
       } catch (e) {
         console.error(e);
         setError(e as Error);
