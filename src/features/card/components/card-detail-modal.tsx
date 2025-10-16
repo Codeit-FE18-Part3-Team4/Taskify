@@ -113,15 +113,14 @@ function Sidebar({
 function Main({
   card,
   dashboardTitle,
-  showsCompact = false,
   onClose,
 }: {
   card: Card;
   dashboardTitle: string;
-  showsCompact?: boolean;
   onClose: () => void;
 }) {
   const [comments, setComments] = useState<Comment[]>([]);
+  const { isDesktop } = useResponsive();
 
   useEffect(() => {
     async function loadComments() {
@@ -145,12 +144,12 @@ function Main({
         <header className={styles.header}>
           <h2
             className={classnames(
-              showsCompact ? styles.compact : "",
+              isDesktop ? "" : styles.compact,
               Typography.xl2SemiBold
             )}
           >
             {card.title}
-            {showsCompact && <Actions onClose={onClose} />}
+            {isDesktop || <Actions onClose={onClose} />}
           </h2>
           <div className={styles.tagsList}>
             {card.tags.map((tag) => (
@@ -164,7 +163,7 @@ function Main({
             <Image src={SampleImage} alt="카드에 등록된 이미지" fill />
           </div>
         </article>
-        {showsCompact && (
+        {isDesktop || (
           <div className={styles.info}>
             <InfoTitle>프로젝트</InfoTitle>
             <InfoContent>
