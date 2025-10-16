@@ -20,7 +20,6 @@ export interface UserInfo {
 export interface MyDashboardMainProps {
   dashboards: Dashboard[];
   onClick: () => void;
-  reLoad: () => void;
 }
 
 export interface Invitation {

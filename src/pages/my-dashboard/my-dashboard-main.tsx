@@ -14,66 +14,42 @@ import Profile from "@/components/profile/profile";
 import { ProfileSize } from "@/components/profile/profile-size";
 import Typography from "@/components/typography";
 import { CommonSize } from "@/constants/common/common-size";
-import {
-  getInvitations,
-  putInvitationsAccepts,
-} from "@/features/my-dashboard/api/";
+import { useDashboardPagination } from "@/hooks/use-dashboard-pagination";
+import { useInvitationSearch } from "@/hooks/use-invitation-search";
+import { useInvitations } from "@/hooks/use-invitations";
 import { useResponsiveValue } from "@/hooks/use-responsive-value";
-import { Invitation, MyDashboardMainProps } from "@/types/my-dashboard";
+import { MyDashboardMainProps } from "@/types/my-dashboard";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useDashboardContext } from "./dashboard-provider";
 import styles from "./my-dashboard.module.css";
 
 export default function MyDashboardMain({
   dashboards,
   onClick,
-  reLoad,
 }: MyDashboardMainProps) {
   const router = useRouter();
-  const [currentPage, setCurrentPage] = useState<number>(0);
-  const [searchValue, setSearchValue] = useState<string>("");
-  const [invitations, setInvitations] = useState<Invitation[]>([]);
-  const [isLoadingMore, setIsLoadingMore] = useState(false);
-  const [hasMore, setHasMore] = useState(true);
-  const [cursorId, setCursorId] = useState<number | undefined>(undefined);
-  const observerRef = useRef<IntersectionObserver | null>(null);
-  const loadMoreRef = useRef<HTMLDivElement | null>(null);
+  const { refreshSidebar } = useDashboardContext();
 
-  const responsivePageSize = useResponsiveValue({
-    desktop: 3,
-    tablet: 1,
-    mobile: 1,
-  });
+  const {
+    currentPage,
+    totalPages,
+    currentDashboards,
+    handlePrevPage,
+    handleNextPage,
+    isFirstPage,
+    isLastPage,
+  } = useDashboardPagination(dashboards);
 
-  const PAGE_SIZE = responsivePageSize;
+  const {
+    invitations,
+    hasMore,
+    loadMoreRef,
+    handleInvitationAccept: acceptInvitation,
+  } = useInvitations();
 
-  const totalPages = useMemo(() => {
-    return Math.ceil(dashboards.length / PAGE_SIZE);
-  }, [dashboards]);
-
-  const isLastPages = totalPages - 1;
-
-  const currentDashboards = useMemo(() => {
-    const start = currentPage * PAGE_SIZE;
-    const end = start + PAGE_SIZE;
-    return dashboards.slice(start, end);
-  }, [dashboards, currentPage]);
-
-  const handlePrevPage = () => {
-    if (currentPage > 0) setCurrentPage((prev) => prev - 1);
-  };
-
-  const handleNextPage = () => {
-    if (currentPage < totalPages - 1) setCurrentPage((prev) => prev + 1);
-  };
-
-  const filteredInvitations = invitations.filter((item) =>
-    item.dashboard.title.toLowerCase().includes(searchValue.toLowerCase())
-  );
-
-  const nextActiveButton = currentPage === isLastPages ? "" : styles.active;
-  const prevActiveButton = currentPage !== 0 ? styles.active : "";
+  const { searchValue, setSearchValue, filteredInvitations } =
+    useInvitationSearch(invitations);
 
   const homeText = useResponsiveValue({
     desktop: Typography.xl3Bold,
@@ -97,76 +73,15 @@ export default function MyDashboardMain({
     router.push(`dashboard/${id}`);
   };
 
-  const handleRemoveInvitation = (invitationId: number) => {
-    setInvitations((prev) => prev.filter((i) => i.id !== invitationId));
-    reLoad();
-  };
-
-  const loadInvitations = useCallback(
-    async (reset = false) => {
-      if (isLoadingMore && !reset) return;
-
-      try {
-        setIsLoadingMore(true);
-        const { invitations: newInvitations, cursorId: nextCursor } =
-          await getInvitations({
-            size: 10,
-            cursorId: reset ? undefined : cursorId,
-          });
-
-        if (reset) {
-          setInvitations(newInvitations);
-        } else {
-          setInvitations((prev) => [...prev, ...newInvitations]);
-        }
-
-        setCursorId(nextCursor);
-        setHasMore(newInvitations.length === 10);
-      } catch (e) {
-        console.error(e);
-      } finally {
-        setIsLoadingMore(false);
-      }
-    },
-    [cursorId, isLoadingMore]
-  );
-
-  useEffect(() => {
-    observerRef.current = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting && hasMore && !isLoadingMore) {
-          loadInvitations();
-        }
-      },
-      { threshold: 0.1 }
-    );
-
-    if (loadMoreRef.current) {
-      observerRef.current.observe(loadMoreRef.current);
-    }
-
-    return () => {
-      if (observerRef.current) {
-        observerRef.current.disconnect();
-      }
-    };
-  }, [hasMore, isLoadingMore, loadInvitations]);
-
-  const handleInvitationAccept = async (id: number, action: boolean) => {
-    try {
-      await putInvitationsAccepts({
-        invitationsId: id,
-        inviteAccepted: action,
-      });
-      handleRemoveInvitation(id);
-    } catch (e) {
-      console.error(e);
+  const handleInvitationAction = async (id: number, action: boolean) => {
+    const success = await acceptInvitation(id, action);
+    if (success) {
+      refreshSidebar();
     }
   };
 
-  useEffect(() => {
-    loadInvitations(true);
-  }, []);
+  const nextActiveButton = isLastPage ? "" : styles.active;
+  const prevActiveButton = !isFirstPage ? styles.active : "";
 
   return (
     <div className={styles.myDashboardMainWrap}>
@@ -237,7 +152,7 @@ export default function MyDashboardMain({
                 <div className={styles.myDashboardPaginationButton}>
                   <button
                     onClick={handlePrevPage}
-                    disabled={currentPage === 0}
+                    disabled={isFirstPage}
                     className={prevActiveButton}
                   >
                     <Image
@@ -249,7 +164,7 @@ export default function MyDashboardMain({
                   </button>
                   <button
                     onClick={handleNextPage}
-                    disabled={currentPage === isLastPages}
+                    disabled={isLastPage}
                     className={nextActiveButton}
                   >
                     <Image
@@ -322,14 +237,14 @@ export default function MyDashboardMain({
                         isWidthFull
                         variant={ButtonVariant.Secondary}
                         size={ButtonSize.XSmall}
-                        onClick={() => handleInvitationAccept(item.id, false)}
+                        onClick={() => handleInvitationAction(item.id, false)}
                       >
                         거절
                       </Button>
                       <Button
                         isWidthFull
                         size={ButtonSize.XSmall}
-                        onClick={() => handleInvitationAccept(item.id, true)}
+                        onClick={() => handleInvitationAction(item.id, true)}
                       >
                         수락
                       </Button>

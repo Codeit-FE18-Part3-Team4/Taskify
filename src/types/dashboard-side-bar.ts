@@ -1,12 +1,7 @@
 import { Dashboard, UserInfo } from "./my-dashboard";
 
 export interface DashboardSideBarProps {
-  dashboards: Dashboard[];
   onClick: () => void;
-  user: UserInfo;
-  currentPage: number;
-  totalCount: number;
-  onPageChange: (page: number) => void;
 }
 
 export interface MainProps {
@@ -15,6 +10,7 @@ export interface MainProps {
   currentPage: number;
   totalCount: number;
   onPageChange: (page: number) => void;
+  isLoading?: boolean;
 }
 
 export interface UserProfileProps {

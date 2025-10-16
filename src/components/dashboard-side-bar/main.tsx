@@ -69,8 +69,8 @@ export default function Main({
         <Image src={HomeIcon} width={24} height={24} alt="홈 아이콘" />
         <span className={homeText}>홈</span>
       </button>
-      {dashboards.map((dashboard) => {
-        return (
+      {dashboards && dashboards.length > 0 ? (
+        dashboards.map((dashboard) => (
           <DashboardButton
             onClick={() => handleDashboardNavigate(dashboard.id)}
             key={dashboard.id}
@@ -80,14 +80,20 @@ export default function Main({
           >
             {dashboard.title}
           </DashboardButton>
-        );
-      })}
-      <SidebarPageControl
-        currentPage={currentPage}
-        totalPages={totalPages}
-        onPrev={handlePrevPage}
-        onNext={handleNextPage}
-      />
+        ))
+      ) : (
+        <div>대시보드가 없습니다.</div>
+      )}
+      {dashboards.length < 10 ? (
+        ""
+      ) : (
+        <SidebarPageControl
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPrev={handlePrevPage}
+          onNext={handleNextPage}
+        />
+      )}
     </div>
   );
 }
