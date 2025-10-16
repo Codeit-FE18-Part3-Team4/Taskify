@@ -48,7 +48,6 @@
   display: flex;
   flex-direction: row;
   height: 100%;
-  gap: 10px;
 }
 
 .columnContentWrapper {
@@ -59,7 +58,8 @@
   overflow-y: hidden;
   scroll-behavior: smooth;
   flex: 1;
-  min-height: 0;
+  min-width: 0;
+  padding-right: 0;
 }
 
 .columnContentWrapper > * {
@@ -77,11 +77,13 @@
 }
 
 .createColumnButtonWarpper {
-  width: 280px;
+  width: 400px;
+  flex-shrink: 0;
+  padding: 10px 60px;
 }
 
 .createColumnButton {
-  width: 100%;
+  width: 280px;
   height: 60px;
   background-color: var(--color-black700);
   color: var(--color-gray400);
@@ -90,8 +92,8 @@
   display: flex;
   gap: 8px;
   align-items: center;
-  padding-left: 14px;
   cursor: pointer;
+  padding-left: 14px;
 }
 
 .createColumnButton:hover {
