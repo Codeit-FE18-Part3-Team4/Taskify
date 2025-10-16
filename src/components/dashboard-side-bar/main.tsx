@@ -1,34 +1,29 @@
-import homeIcon from "@/assets/images/ic-home.svg";
-import plusIcon from "@/assets/images/ic-plus.svg";
+import { HomeIcon, PlusIconNomal } from "@/assets/images";
 import Typography from "@/components/typography";
 import { useResponsiveValue } from "@/hooks/use-responsive-value";
+import { MainProps } from "@/types/dashboard-side-bar";
 import { classnames } from "@/utils/classnames";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import DashboardButton from "./dashboard-button";
 import styles from "./dashboard-side-bar.module.css";
 import SidebarPageControl from "./sidebar-page-control";
 
-interface MainProps {
-  dashboards: any[];
-}
-
 const PAGE_SIZE = 10;
 
-export default function Main({ dashboards }: MainProps) {
+export default function Main({
+  dashboards,
+  onClick,
+  currentPage,
+  totalCount,
+  onPageChange,
+}: MainProps) {
   const router = useRouter();
-  const [currentPage, setCurrentPage] = useState<number>(0);
 
   const totalPages = useMemo(() => {
-    return Math.ceil(dashboards.length / PAGE_SIZE);
-  }, [dashboards]);
-
-  const currentDashboards = useMemo(() => {
-    const start = currentPage * PAGE_SIZE;
-    const end = start + PAGE_SIZE;
-    return dashboards.slice(start, end);
-  }, [dashboards, currentPage]);
+    return Math.ceil(totalCount / PAGE_SIZE);
+  }, [totalCount]);
 
   const currentDashboardId = router.query.id ? Number(router.query.id) : null;
 
@@ -37,11 +32,11 @@ export default function Main({ dashboards }: MainProps) {
   };
 
   const handlePrevPage = () => {
-    if (currentPage > 0) setCurrentPage((prev) => prev - 1);
+    if (currentPage > 1) onPageChange(currentPage - 1);
   };
 
   const handleNextPage = () => {
-    if (currentPage < totalPages - 1) setCurrentPage((prev) => prev + 1);
+    if (currentPage < totalPages) onPageChange(currentPage + 1);
   };
 
   const dashboardAddText = useResponsiveValue({
@@ -58,21 +53,24 @@ export default function Main({ dashboards }: MainProps) {
 
   return (
     <div className={styles.main}>
-      <button className={classnames(styles.dashboardAdd, styles.button)}>
+      <button
+        onClick={onClick}
+        className={classnames(styles.dashboardAdd, styles.button)}
+      >
         <span className={dashboardAddText}>대시보드 추가</span>
         <Image
-          src={plusIcon}
+          src={PlusIconNomal}
           width={16}
           height={16}
           alt="대시보드 추가 아이콘"
         />
       </button>
       <button className={`${styles.homeButton} ${styles.button}`}>
-        <Image src={homeIcon} width={24} height={24} alt="홈 아이콘" />
+        <Image src={HomeIcon} width={24} height={24} alt="홈 아이콘" />
         <span className={homeText}>홈</span>
       </button>
-      {currentDashboards.map((dashboard) => {
-        return (
+      {dashboards && dashboards.length > 0 ? (
+        dashboards.map((dashboard) => (
           <DashboardButton
             onClick={() => handleDashboardNavigate(dashboard.id)}
             key={dashboard.id}
@@ -82,14 +80,20 @@ export default function Main({ dashboards }: MainProps) {
           >
             {dashboard.title}
           </DashboardButton>
-        );
-      })}
-      <SidebarPageControl
-        currentPage={currentPage}
-        totalPages={totalPages}
-        onPrev={handlePrevPage}
-        onNext={handleNextPage}
-      />
+        ))
+      ) : (
+        <div>대시보드가 없습니다.</div>
+      )}
+      {dashboards.length < 10 ? (
+        ""
+      ) : (
+        <SidebarPageControl
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPrev={handlePrevPage}
+          onNext={handleNextPage}
+        />
+      )}
     </div>
   );
 }

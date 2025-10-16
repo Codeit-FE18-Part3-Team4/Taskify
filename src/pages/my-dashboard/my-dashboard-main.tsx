@@ -1,74 +1,55 @@
-import ArrowRight from "@/assets/images/ic-chevorn-right.svg";
-import ArrowLeft from "@/assets/images/ic-chevron-left.svg";
-import NotInvitedImg from "@/assets/images/ic-invite.svg";
-import EmptyDashboardImg from "@/assets/images/ic-my-dashboard.svg";
-import PlusIcon from "@/assets/images/ic-plus-circle.svg";
-import PlusSquareIcon from "@/assets/images/ic-plus-square.svg";
+import {
+  ArrowLeft,
+  ArrowRight,
+  EmptyDashboardImg,
+  NotInvitedImg,
+  PlusIcon,
+  PlusSquareIcon,
+} from "@/assets/images";
 import Button, { ButtonSize, ButtonVariant } from "@/components/button/button";
 import ColorChip from "@/components/chips/chip-color/chips-color";
 import Input, { InputVariant } from "@/components/input/input";
 import NavigationBar from "@/components/navigationBar/navigation-bar";
+import Profile from "@/components/profile/profile";
+import { ProfileSize } from "@/components/profile/profile-size";
 import Typography from "@/components/typography";
 import { CommonSize } from "@/constants/common/common-size";
+import { useDashboardPagination } from "@/hooks/use-dashboard-pagination";
+import { useInvitationSearch } from "@/hooks/use-invitation-search";
+import { useInvitations } from "@/hooks/use-invitations";
 import { useResponsiveValue } from "@/hooks/use-responsive-value";
-import { classnames } from "@/utils/classnames";
+import { MyDashboardMainProps } from "@/types/my-dashboard";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { useMemo, useState } from "react";
+import { useDashboardContext } from "./dashboard-provider";
 import styles from "./my-dashboard.module.css";
-
-interface MyDashboardMainProps {
-  dashboards: any[];
-  invitations: any[];
-}
-
-function sliceUserName(userName: string) {
-  return userName.length > 1 ? userName.substring(1) : userName;
-}
 
 export default function MyDashboardMain({
   dashboards,
-  invitations,
+  onClick,
 }: MyDashboardMainProps) {
   const router = useRouter();
-  const [currentPage, setCurrentPage] = useState<number>(0);
-  const [searchValue, setSearchValue] = useState<string>("");
-  const myDashboards = dashboards.filter((item) => item.createdByMe);
-  const responsivePageSize = useResponsiveValue({
-    desktop: 3,
-    tablet: 1,
-    mobile: 1,
-  });
+  const { refreshSidebar } = useDashboardContext();
 
-  const PAGE_SIZE = responsivePageSize;
+  const {
+    currentPage,
+    totalPages,
+    currentDashboards,
+    handlePrevPage,
+    handleNextPage,
+    isFirstPage,
+    isLastPage,
+  } = useDashboardPagination(dashboards);
 
-  const totalPages = useMemo(() => {
-    return Math.ceil(myDashboards.length / PAGE_SIZE);
-  }, [myDashboards]);
+  const {
+    invitations,
+    hasMore,
+    loadMoreRef,
+    handleInvitationAccept: acceptInvitation,
+  } = useInvitations();
 
-  const isLastPages = totalPages - 1;
-
-  const currentDashboards = useMemo(() => {
-    const start = currentPage * PAGE_SIZE;
-    const end = start + PAGE_SIZE;
-    return myDashboards.slice(start, end);
-  }, [myDashboards, currentPage]);
-
-  const handlePrevPage = () => {
-    if (currentPage > 0) setCurrentPage((prev) => prev - 1);
-  };
-
-  const handleNextPage = () => {
-    if (currentPage < totalPages - 1) setCurrentPage((prev) => prev + 1);
-  };
-
-  const filteredInvitations = invitations.filter((item) =>
-    item.dashboard.title.toLowerCase().includes(searchValue.toLowerCase())
-  );
-
-  const nextActiveButton =
-    currentPage === isLastPages ? "" : styles.active;
-  const prevActiveButton = currentPage !== 0 ? styles.active : "";
+  const { searchValue, setSearchValue, filteredInvitations } =
+    useInvitationSearch(invitations);
 
   const homeText = useResponsiveValue({
     desktop: Typography.xl3Bold,
@@ -92,6 +73,16 @@ export default function MyDashboardMain({
     router.push(`dashboard/${id}`);
   };
 
+  const handleInvitationAction = async (id: number, action: boolean) => {
+    const success = await acceptInvitation(id, action);
+    if (success) {
+      refreshSidebar();
+    }
+  };
+
+  const nextActiveButton = isLastPage ? "" : styles.active;
+  const prevActiveButton = !isFirstPage ? styles.active : "";
+
   return (
     <div className={styles.myDashboardMainWrap}>
       <NavigationBar />
@@ -99,7 +90,7 @@ export default function MyDashboardMain({
         <h1 className={homeText}>홈</h1>
         <div className={styles.dashboardSection}>
           <h2 className={sectionTitle}>내 대시보드</h2>
-          {myDashboards.length === 0 ? (
+          {dashboards.length === 0 ? (
             <div className={styles.emptyDashboard}>
               <Image
                 src={EmptyDashboardImg}
@@ -108,7 +99,7 @@ export default function MyDashboardMain({
                 alt="대시보드가 없다"
               />
               <p className={emptyText}>대시보드가 없습니다.</p>
-              <button>
+              <button onClick={onClick}>
                 <span className={Typography.lgBold}>생성하기</span>
                 <Image
                   src={PlusIcon}
@@ -121,7 +112,10 @@ export default function MyDashboardMain({
           ) : (
             <div className={styles.myDashboard}>
               <div className={styles.myDashboardBox}>
-                <button className={styles.myDashboardAddButton}>
+                <button
+                  onClick={onClick}
+                  className={styles.myDashboardAddButton}
+                >
                   <span className={Typography.lg2SemiBold}>
                     새로운 대시보드
                   </span>
@@ -138,7 +132,7 @@ export default function MyDashboardMain({
                     key={item.id}
                     onClick={() => dashboardIdPage(item.id)}
                   >
-                    <ColorChip size={CommonSize.Large} />
+                    <ColorChip color={item.color} size={CommonSize.Large} />
                     <span className={Typography.lg2SemiBold}>{item.title}</span>
                     <Image
                       src={ArrowRight}
@@ -158,7 +152,7 @@ export default function MyDashboardMain({
                 <div className={styles.myDashboardPaginationButton}>
                   <button
                     onClick={handlePrevPage}
-                    disabled={currentPage === 0}
+                    disabled={isFirstPage}
                     className={prevActiveButton}
                   >
                     <Image
@@ -170,7 +164,7 @@ export default function MyDashboardMain({
                   </button>
                   <button
                     onClick={handleNextPage}
-                    disabled={currentPage === isLastPages}
+                    disabled={isLastPage}
                     className={nextActiveButton}
                   >
                     <Image
@@ -227,22 +221,11 @@ export default function MyDashboardMain({
                       className={styles.invitationsDashboardSectionMainProfile}
                     >
                       <div className={styles.userBox}>
-                        <div
-                          className={classnames(
-                            styles.userProfile,
-                            Typography.xsSemiBold
-                          )}
-                        >
-                          <span>{sliceUserName(item.invitee.nickname)}</span>
-                        </div>
-                        <p
-                          className={classnames(
-                            styles.userName,
-                            Typography.lg2Bold
-                          )}
-                        >
-                          {item.invitee.nickname}
-                        </p>
+                        <Profile
+                          size={ProfileSize.Medium}
+                          name={item.inviter.nickname}
+                          showFullName
+                        />
                       </div>
                     </div>
                     <div
@@ -254,16 +237,24 @@ export default function MyDashboardMain({
                         isWidthFull
                         variant={ButtonVariant.Secondary}
                         size={ButtonSize.XSmall}
+                        onClick={() => handleInvitationAction(item.id, false)}
                       >
                         거절
                       </Button>
-                      <Button isWidthFull size={ButtonSize.XSmall}>
+                      <Button
+                        isWidthFull
+                        size={ButtonSize.XSmall}
+                        onClick={() => handleInvitationAction(item.id, true)}
+                      >
                         수락
                       </Button>
                     </div>
                   </div>
                 </div>
               ))}
+              {hasMore && (
+                <div className={styles.infinityTrigger} ref={loadMoreRef}></div>
+              )}
             </div>
           )}
         </div>
