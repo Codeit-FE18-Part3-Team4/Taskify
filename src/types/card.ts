@@ -1,14 +1,16 @@
+export interface CardAssignee {
+  profileImageUrl: string;
+  nickname: string;
+  id: number;
+}
+
 export interface Card {
   id: number;
   title: string;
   description: string;
   tags: string[];
   dueDate: string;
-  assignee: {
-    profileImageUrl: string;
-    nickname: string;
-    id: number;
-  };
+  assignee: CardAssignee;
   imageUrl: string;
   teamId: string;
   columnId: number;
