@@ -9,5 +9,6 @@ export async function getDashboards({ page = 1, size = 10 } = {}) {
     return body;
   } catch (e) {
     console.error(e);
+    throw e;
   }
 }

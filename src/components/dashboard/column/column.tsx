@@ -5,11 +5,16 @@ import SettingSvg from "@/components/navigationBar/setting-svg";
 import Typography from "@/components/typography";
 import PlusSvg from "./plus-svg";
 
+export enum ColumnActionType {
+  Create = "create",
+  Modify = "modify",
+}
+
 interface ColumnProps {
   columnTitle: string;
   cards: CardData[];
   onCardClick: (card: CardData) => void;
-  onClick?: (type: "create" | "modify") => void;
+  onClick?: (type: ColumnActionType) => void;
 }
 
 export default function Column({
@@ -26,10 +31,10 @@ export default function Column({
           <h3 className={Typography.lgSemiBold}>{cards.length}</h3>
         </div>
         <div className={styles.buttonWrapper}>
-          <button onClick={() => onClick?.("create")}>
+          <button onClick={() => onClick?.(ColumnActionType.Create)}>
             <PlusSvg className={styles.icon} />
           </button>
-          <button onClick={() => onClick?.("modify")}>
+          <button onClick={() => onClick?.(ColumnActionType.Modify)}>
             <SettingSvg className={styles.icon} />
           </button>
         </div>

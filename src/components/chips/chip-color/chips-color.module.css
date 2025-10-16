@@ -1,17 +1,33 @@
+.color_chip {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
 .color_chip_small {
-  padding: 3.73px 3.89px;
   width: 20px;
   height: 20px;
 }
 
 .color_chip_medium {
-  padding: 4.48px 4.67px;
   width: 24px;
   height: 24px;
 }
 
 .color_chip_large {
-  padding: 6.72px 7px;
   width: 36px;
   height: 36px;
+}
+
+.color_chip svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.color_chip svg path {
+  transform: scale(1.15);
+  transform-origin: center;
 }

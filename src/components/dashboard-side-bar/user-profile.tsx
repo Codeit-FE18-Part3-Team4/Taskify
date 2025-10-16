@@ -20,8 +20,13 @@ export default function UserProfile({
   const userName = useResponsiveValue({
     desktop: Typography.lgBold,
     tablet: Typography.mdBold,
-    mobile: Typography.mdBold
-  })
+    mobile: Typography.mdBold,
+  });
+
+  const handleMyPageUrlClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    window.history.pushState(null, '', '/mypage');
+  };
 
   return (
     <div className={styles.footer}>
@@ -40,7 +45,7 @@ export default function UserProfile({
         </div>
         <p className={userName}>{name}</p>
       </div>
-      <button className={styles.button}>
+      <button onClick={handleMyPageUrlClick} className={styles.button}>
         <Image src={SettingIcon} width={20} height={20} alt="세팅 아이콘" />
       </button>
     </div>
