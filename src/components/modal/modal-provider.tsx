@@ -16,6 +16,8 @@ export interface ModalState {
 interface ContextValue {
   modalState: ModalState | null;
   setModalState: Dispatch<SetStateAction<ModalState | null>>;
+  modalStack: string[];
+  setModalStack: Dispatch<SetStateAction<string[]>>;
 }
 
 export const ModalContext = createContext<ContextValue | null>(null);
@@ -26,9 +28,12 @@ interface Props {
 
 export default function ModalProvider({ children }: Props) {
   const [modalState, setModalState] = useState<ModalState | null>(null);
+  const [modalStack, setModalStack] = useState<string[]>([]);
 
   return (
-    <ModalContext value={{ modalState, setModalState }}>
+    <ModalContext
+      value={{ modalState, setModalState, modalStack, setModalStack }}
+    >
       {children}
     </ModalContext>
   );
