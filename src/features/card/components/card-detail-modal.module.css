@@ -1,0 +1,143 @@
+.cardDetailModal {
+  display: flex;
+  color: var(--color-gray100);
+}
+
+.main {
+  max-width: 644px;
+  height: 880px;
+  padding-right: 14px;
+}
+
+.scrollContainer {
+  width: 100%;
+  height: 100%;
+  padding: 30px;
+  padding-right: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  overflow-y: scroll;
+}
+.scrollContainer::-webkit-scrollbar {
+  width: 6px;
+}
+.scrollContainer::-webkit-scrollbar-thumb {
+  background-color: #5e5e66;
+  border-radius: 3px;
+}
+.scrollContainer::-webkit-scrollbar-track {
+  margin: 28px 0;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--color-gray800);
+  position: relative;
+}
+.header > h2.compact {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.tagsList {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.image {
+  position: relative;
+  width: 361px;
+  aspect-ratio: 361 / 219;
+}
+
+.info {
+  display: grid;
+  grid-template-columns: fit-content(100%) 1fr;
+  grid-template-rows: repeat(3, 44px);
+  row-gap: 1px;
+  background-color: var(--color-black600);
+}
+.info > div {
+  width: 100%;
+  height: 100%;
+  background-color: var(--color-modalBackground);
+  display: flex;
+  align-items: center;
+}
+.info > div:nth-child(odd) {
+  padding-right: 12px;
+}
+
+.comments {
+  padding-top: 30px;
+  border-top: 1px solid var(--color-gray800);
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.sidebar {
+  width: 230px;
+  padding: 30px 20px;
+  background-color: #2f2f33;
+}
+
+.sidebarHeader {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.sidebarSection {
+  margin-top: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.sidebarSection.divider {
+  padding-top: 22px;
+  border-top: 1px solid #696773;
+}
+
+.assigneeInfo {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.infoTitle {
+  color: var(--color-gray300);
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+@media (max-width: 375px) {
+  .main {
+    width: 100%;
+    height: 100vh;
+    padding-right: 10px;
+  }
+
+  .image {
+    width: 100%;
+  }
+
+  .actions {
+    display: none;
+  }
+}

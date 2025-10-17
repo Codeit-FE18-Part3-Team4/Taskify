@@ -1,4 +1,4 @@
-export type Card = {
+export interface Card {
   id: number;
   title: string;
   description: string;
@@ -14,4 +14,4 @@ export type Card = {
   columnId: number;
   createdAt: string;
   updatedAt: string;
-};
+}

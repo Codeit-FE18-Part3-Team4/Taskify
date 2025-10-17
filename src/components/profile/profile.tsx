@@ -1,20 +1,22 @@
-import styles from "./profile.module.css";
+import { ProfileSize } from "@/components/profile/profile-size";
+import { ProfileType } from "@/components/profile/profile-type";
 import {
   ProfileColorsArray,
   RemainProfileColor,
 } from "@/constants/profile-random-color";
-import { ProfileSize } from "@/components/profile/profile-size";
-import { ProfileType } from "@/components/profile/profile-type";
 import { classnames } from "@/utils/classnames";
-import { useMemo } from "react";
 import { colorFromString, localeLengthKR } from "@/utils/string-hashing";
+import { useMemo } from "react";
 import Typography from "../typography";
+import styles from "./profile.module.css";
 
 interface ProfileProps {
   size?: ProfileSize;
   type?: ProfileType;
   colorIndex?: number;
   name?: string;
+  showFullName?: boolean;
+  fullNameSize?: string;
   isRemain?: boolean;
 }
 
@@ -23,6 +25,8 @@ export default function Profile({
   type = ProfileType.Normal,
   colorIndex,
   name = "",
+  showFullName = false,
+  fullNameSize = Typography.lgBold,
   isRemain = false,
 }: ProfileProps) {
   const backgroundColor = useMemo(() => {
@@ -45,12 +49,19 @@ export default function Profile({
     styles.profile,
     type === ProfileType.NavigationBar ? styles.naviType : "",
     styles[size],
-    Typography.xsSemiBold,
+    Typography.xsSemiBold
   );
 
   return (
-    <div className={profileClasses} style={{ backgroundColor }}>
-      <span className={spanClasses}>{name}</span>
+    <div className={styles.profileSection}>
+      <div className={profileClasses} style={{ backgroundColor }}>
+        <span className={spanClasses}>{name}</span>
+      </div>
+      {showFullName && (
+        <span className={classnames(fullNameSize, styles.showName)}>
+          {name}
+        </span>
+      )}
     </div>
   );
 }

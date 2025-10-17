@@ -1,5 +1,6 @@
 import "@/components/color/color-variables.css";
 import ModalProvider from "@/components/modal/modal-provider";
+import { AuthProvider } from "@/features/auth/components/auth-provider";
 import TagsProvider from "@/features/card/components/tag-input/tags-provider";
 import "@/styles/global.css";
 import "@/styles/reset.css";
@@ -7,6 +8,7 @@ import { NextPage } from "next";
 import type { AppProps } from "next/app";
 import localFont from "next/font/local";
 import { ReactNode } from "react";
+import { DashboardProvider } from "./my-dashboard/dashboard-provider";
 
 const pretendardFont = localFont({
   src: "../assets/fonts/pretendard/PretendardVariable.woff2",
@@ -14,9 +16,13 @@ const pretendardFont = localFont({
 
 function Providers({ children }: { children: ReactNode }) {
   return (
-    <ModalProvider>
-      <TagsProvider>{children}</TagsProvider>
-    </ModalProvider>
+    <AuthProvider>
+      <ModalProvider>
+        <TagsProvider>
+          <DashboardProvider>{children}</DashboardProvider>
+        </TagsProvider>
+      </ModalProvider>
+    </AuthProvider>
   );
 }
 

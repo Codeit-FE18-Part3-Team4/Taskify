@@ -12,18 +12,20 @@ import Typography from "@/components/typography";
 interface NavigationBarProps {
   size?: CommonSize;
   members?: MemberInfo[];
-  dashboardId?: number;
+  dashboardId?: number | null;
 }
 
 export default function NavigationBar({
   size = CommonSize.Large,
   members = [],
-  dashboardId,
+  dashboardId = null,
 }: NavigationBarProps) {
   const sizeName = CommonSize[size].toLowerCase();
   const navigationBarClasses = `${styles.navigationBar} ${styles[sizeName]}`;
   const iconSpanClasses = `${styles.iconSpan} ${Typography.lgMedium}`;
-  const settingLink = dashboardId ? `/dashboard/${dashboardId}/edit` : "#";
+  const settingLink = dashboardId
+    ? `/dashboard/${dashboardId}/edit?tab=edit`
+    : "#";
 
   const MODAL_KEY_1 = "MODAL_SAMPLE_1";
   const { isShowModal: isShowModal1, openModal: openModal } = useModal({
@@ -45,10 +47,12 @@ export default function NavigationBar({
 
   return (
     <div className={navigationBarClasses}>
-      <MemberList
-        hideMembers={hideMembers}
-        showMembers={showMembers}
-      ></MemberList>
+      {showMembers.length > 0 && (
+        <MemberList
+          hideMembers={hideMembers}
+          showMembers={showMembers}
+        ></MemberList>
+      )}
       <div className={styles.rightIcons}>
         <Link className={styles.iconLink} href={settingLink}>
           <SettingSvg className={styles.icon} />

@@ -1,34 +1,47 @@
 import LoginImg from "@/assets/images/login-main.png";
 import LogoImg from "@/assets/images/taskify-logo.svg";
 import Button, { ButtonSize, ButtonVariant } from "@/components/button/button";
+import Dialog from "@/components/dialog";
 import Input, { InputSize, InputVariant } from "@/components/input/input";
 import Typography from "@/components/typography";
+import { login } from "@/features/auth/apis/login";
+import { auth } from "@/features/auth/components/auth-provider";
+import { useDialog } from "@/hooks/use-dialog";
 import { validateEmail, validatePassword } from "@/utils/validator";
+import { AxiosError } from "axios";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { ChangeEvent, useEffect, useState } from "react";
 import styles from "./index.module.css";
 
 export default function LoginPage() {
-  const [id, setId] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [idErrorMessage, setIdErrorMessage] = useState("");
+  const [emailErrorMessage, setEmailErrorMessage] = useState("");
   const [passwordErrorMessage, setPasswordErrorMessage] = useState("");
   const [isLoginButtonDisabled, setIsLoginButtonDisabled] = useState(true);
-  const onIdChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setId(e.target.value);
+  const router = useRouter();
+  const [dialogMessage, setDialogMessage] = useState("");
+  const DIALOG_KEY = "DIALOG_SAMPLE";
+  const { isShowDialog, openDialog } = useDialog({
+    key: DIALOG_KEY,
+  });
+
+  const onEmailChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setEmail(e.target.value);
   };
 
-  const onIdBlur = () => {
-    if (!id) {
-      setIdErrorMessage("");
+  const onEmailBlur = () => {
+    if (!email) {
+      setEmailErrorMessage("");
       return;
     }
 
-    if (validateEmail(id)) {
-      setIdErrorMessage("");
+    if (validateEmail(email)) {
+      setEmailErrorMessage("");
     } else {
-      setIdErrorMessage("이메일 형식으로 작성해주세요");
+      setEmailErrorMessage("이메일 형식으로 작성해주세요");
     }
   };
 
@@ -49,24 +62,37 @@ export default function LoginPage() {
     }
   };
 
-  const onIdFocus = () => {
-    setIdErrorMessage("");
+  const onEmailFocus = () => {
+    setEmailErrorMessage("");
   };
 
   const onPasswordFocus = () => {
     setPasswordErrorMessage("");
   };
 
-  const onSubmit = () => {
-    // TODO: 추후에 Api 요청 및 로그인 로직 추가
+  const handleSubmit = async () => {
+    try {
+      const response = await login({ email, password });
+      auth.token = response.accessToken;
+      router.push("/my-dashboard");
+    } catch (err) {
+      const error = err as AxiosError<{ message?: string }>;
+      const message = error.response?.data?.message ?? "로그인에 실패했습니다.";
+
+      setDialogMessage(message);
+      openDialog(true);
+    }
   };
 
   useEffect(() => {
     const isFormValid =
-      !!id && validateEmail(id) && !!password && validatePassword(password);
+      !!email &&
+      validateEmail(email) &&
+      !!password &&
+      validatePassword(password);
 
     setIsLoginButtonDisabled(!isFormValid);
-  }, [id, password]);
+  }, [email, password]);
 
   return (
     <main className={styles.main}>
@@ -83,11 +109,11 @@ export default function LoginPage() {
               variant={InputVariant.Default}
               size={InputSize.Auto}
               placeholder="아이디를 입력해주세요"
-              onChange={onIdChange}
-              onBlur={onIdBlur}
-              errorMessage={idErrorMessage}
-              value={id}
-              onFocus={onIdFocus}
+              onChange={onEmailChange}
+              onBlur={onEmailBlur}
+              errorMessage={emailErrorMessage}
+              value={email}
+              onFocus={onEmailFocus}
             />
             <p>비밀번호</p>
             <Input
@@ -107,6 +133,7 @@ export default function LoginPage() {
               size={ButtonSize.Large}
               isWidthFull
               disabled={isLoginButtonDisabled}
+              onClick={handleSubmit}
             >
               로그인
             </Button>
@@ -123,6 +150,13 @@ export default function LoginPage() {
       <section className={styles.rightSection}>
         <Image src={LoginImg} alt="로그인 메인" width={900} height={920} />
       </section>
+      {isShowDialog && (
+        <Dialog
+          dialogKey={DIALOG_KEY}
+          message={dialogMessage}
+          onConfirm={() => openDialog(false)}
+        />
+      )}
     </main>
   );
 }
