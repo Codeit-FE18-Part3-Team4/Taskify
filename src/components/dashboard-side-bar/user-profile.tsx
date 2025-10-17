@@ -1,17 +1,11 @@
 import { SettingIcon } from "@/assets/images";
+import Profile from "@/components/profile/profile";
+import { ProfileSize } from "@/components/profile/profile-size";
 import { UserProfileProps } from "@/types/dashboard-side-bar";
 import Image from "next/image";
-import { MouseEvent } from "react";
-import Profile from "../profile/profile";
-import { ProfileSize } from "../profile/profile-size";
 import styles from "./dashboard-side-bar.module.css";
 
-export default function UserProfile({
-  name,
-  profileImageUrl,
-  onClick
-}: UserProfileProps) {
-
+export default function UserProfile({ name, onClick }: UserProfileProps) {
   return (
     <div className={styles.footer}>
       <Profile size={ProfileSize.Large} name={name} showFullName />

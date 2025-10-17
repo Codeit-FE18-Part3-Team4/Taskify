@@ -1,8 +1,6 @@
 import axios from "axios";
 import {
   createContext,
-  DependencyList,
-  EffectCallback,
   PropsWithChildren,
   useContext,
   useEffect,
@@ -23,19 +21,19 @@ class Auth {
 
 export const auth = new Auth();
 
-const AuthContext = createContext<boolean>(true);
+interface AuthContextValue {
+  isLoadingToken: boolean;
+}
 
-export function useEffectAuth(effect: EffectCallback, deps?: DependencyList) {
-  const isLoadingAuth = useContext(AuthContext);
+const AuthContext = createContext<AuthContextValue>({ isLoadingToken: true });
 
-  useEffect(() => {
-    if (isLoadingAuth) return;
-    return effect();
-  }, [isLoadingAuth, ...(deps ?? [])]);
+export function useAuth() {
+  const { isLoadingToken } = useContext(AuthContext);
+  return { isLoadingToken };
 }
 
 export function AuthProvider({ children }: PropsWithChildren) {
-  const [isLoadingAuth, setIsLoadingAuth] = useState(true);
+  const [isLoadingToken, setIsLoadingToken] = useState(true);
 
   useEffect(() => {
     async function load() {
@@ -45,10 +43,10 @@ export function AuthProvider({ children }: PropsWithChildren) {
         auth.token = accessToken;
       }
 
-      setIsLoadingAuth(false);
+      setIsLoadingToken(false);
     }
     load();
   }, []);
 
-  return <AuthContext value={isLoadingAuth}>{children}</AuthContext>;
+  return <AuthContext value={{ isLoadingToken }}>{children}</AuthContext>;
 }

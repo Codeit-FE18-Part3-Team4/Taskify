@@ -97,7 +97,7 @@ export function useFileDragAndDrop<Element extends HTMLElement>({
       target.removeEventListener("dragenter", handleTargetDragOver);
       target.removeEventListener("dragleave", handleTargetDragOver);
     };
-  }, [targetRef.current, fileType]);
+  }, [targetRef, onDrop, fileType]);
 
   return { targetRef: targetRef as RefObject<Element>, isDraggingOnTarget };
 }

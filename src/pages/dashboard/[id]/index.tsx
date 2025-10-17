@@ -1,16 +1,16 @@
-import { useState, useEffect, useMemo } from "react";
-import { useRouter } from "next/router";
-import styles from "./index.module.css";
-import NavigationBar from "@/components/navigationBar/navigation-bar";
 import DashboardSideBar from "@/components/dashboard-side-bar/dashboard-side-bar";
-import { Card } from "@/types/card";
 import Modal from "@/components/modal";
-import { useModal } from "@/hooks/use-modal";
-import { useDashboardById } from "@/hooks/use-dashboard";
-import { useColumn } from "@/hooks/use-column";
+import NavigationBar from "@/components/navigationBar/navigation-bar";
 import { useCards } from "@/hooks/use-cards";
+import { useColumn } from "@/hooks/use-column";
+import { useDashboardById } from "@/hooks/use-dashboard";
 import { useMembers } from "@/hooks/use-members";
+import { useModal } from "@/hooks/use-modal";
+import { Card } from "@/types/card";
+import { useRouter } from "next/router";
+import { useEffect, useMemo, useState } from "react";
 import DashboardContent from "./dashboard-content";
+import styles from "./index.module.css";
 
 export default function DashboardPage() {
   const router = useRouter();
@@ -26,7 +26,7 @@ export default function DashboardPage() {
   const { columns, isLoading: isColumnsLoading } = useColumn(dashboardId);
   const columnIds = useMemo(
     () => columns?.map((column) => column.id) ?? [],
-    [columns],
+    [columns]
   );
   const { cards, isLoading: isCardsLoading } = useCards(columnIds);
 
@@ -59,11 +59,11 @@ export default function DashboardPage() {
     if (dashboardId === null && dashboard) {
       router.replace(`/dashboard/${dashboard.id}`);
     }
-  }, [router.isReady, dashboardId, dashboard]);
+  }, [router, router.isReady, dashboardId, dashboard]);
 
   return (
     <div className={styles.page}>
-      <DashboardSideBar onClick={() => {}} />
+      <DashboardSideBar />
       <div className={styles.layoutContainer}>
         <NavigationBar
           members={members ?? []}
