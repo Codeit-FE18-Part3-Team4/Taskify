@@ -3,9 +3,8 @@ import {
   PostColumn,
   updateColumnTitle,
 } from "@/components/dashboard/column/api/column";
-import { useEffectAuth } from "@/features/auth/components/auth-provider";
 import { Column } from "@/types/column";
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { useMutation } from "./use-mutation";
 
 export type ColumnOperationStatus = {
@@ -42,7 +41,7 @@ export function useColumn(dashboardId: number | null) {
     }
   }, [dashboardId]);
 
-  useEffectAuth(() => {
+  useEffect(() => {
     loadColumns();
   }, [dashboardId, loadColumns]);
 
