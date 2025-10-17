@@ -66,7 +66,10 @@ export default function Main({
           alt="대시보드 추가 아이콘"
         />
       </button>
-      <Link href={'/my-dashboard'} className={`${styles.homeButton} ${styles.button}`}>
+      <Link
+        href={"/my-dashboard"}
+        className={`${styles.homeButton} ${styles.button}`}
+      >
         <Image src={HomeIcon} width={24} height={24} alt="홈 아이콘" />
         <span className={homeText}>홈</span>
       </Link>
