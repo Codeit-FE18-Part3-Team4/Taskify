@@ -14,7 +14,6 @@
   left: 106px;
   border-radius: 100%;
 }
-
 .mainWrap::before {
   content: "";
   width: 344px;
@@ -26,7 +25,6 @@
   left: 1244px;
   border-radius: 100%;
 }
-
 .header {
   padding: 24px 120px;
   display: flex;
@@ -49,14 +47,13 @@
   color: var(--color-gray300);
 }
 .mainSectionTopWrap {
-  min-width: 1365px;
+  width: 1365px;
   padding: 159px 0 159px 240px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 100px;
   z-index: 10;
-  overflow: hidden;
   position: relative;
 }
 .mainSectionTopWrap > .mainSectionTopMain {
@@ -81,10 +78,10 @@
   align-items: center;
   gap: 20px;
 }
-.mainSection .mainSectionCardBg:nth-of-type(2){
+.mainSection .mainSectionCardBg:nth-of-type(2) {
   position: relative;
 }
-.mainSection .mainSectionCardBg:nth-of-type(2)::before{
+.mainSection .mainSectionCardBg:nth-of-type(2)::before {
   content: "";
   position: absolute;
   left: 0;
@@ -93,7 +90,7 @@
   height: 400px;
   background: no-repeat center/100% url("../assets/images/main-bg-02.png");
 }
-.mainSection .mainSectionCardBg:nth-of-type(2)::after{
+.mainSection .mainSectionCardBg:nth-of-type(2)::after {
   content: "";
   position: absolute;
   right: 0;
@@ -190,7 +187,8 @@
   gap: 14px;
 }
 .footer .snsBox > button > img {
-  filter: invert(75%) sepia(14%) saturate(281%) hue-rotate(212deg) brightness(85%) contrast(84%);
+  filter: invert(75%) sepia(14%) saturate(281%) hue-rotate(212deg)
+    brightness(85%) contrast(84%);
 }
 /* Tablet */
 @media (max-width: 744px) {
@@ -233,19 +231,19 @@
     width: 317px;
     height: 461px;
   }
-  .mainSection .mainSectionCardBg:nth-of-type(2)::before{
-  content: "";
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  width: 200px;
-  height: 200px;
-  transform: scaleX(-1);
-  background: no-repeat center/100% url("../assets/images/main-bg-01.png");
-}
-.mainSection .mainSectionCardBg:nth-of-type(2)::after{
-  display: none;
-}
+  .mainSection .mainSectionCardBg:nth-of-type(2)::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 200px;
+    height: 200px;
+    transform: scaleX(-1);
+    background: no-repeat center/100% url("../assets/images/main-bg-01.png");
+  }
+  .mainSection .mainSectionCardBg:nth-of-type(2)::after {
+    display: none;
+  }
   .mainSection .mainSectionCardBg .mainSectionCard {
     width: 535px;
     padding: 100px 0;
@@ -253,20 +251,30 @@
   .mainSection .mainSectionCardBg:nth-of-type(2) .mainSectionCard {
     padding: 100px 0;
   }
-  .mainSection .mainSectionCardBg:nth-of-type(2) .mainSectionCard .flexBox::before{
+  .mainSection
+    .mainSectionCardBg:nth-of-type(2)
+    .mainSectionCard
+    .flexBox::before {
     position: relative;
   }
-  .mainSection .mainSectionCardBg:nth-of-type(2) .mainSectionCard .flexBox::before{
+  .mainSection
+    .mainSectionCardBg:nth-of-type(2)
+    .mainSectionCard
+    .flexBox::before {
     content: "";
-    position:absolute;
+    position: absolute;
     z-index: 1;
     left: -15px;
-    bottom: 220px; 
+    bottom: 220px;
     width: 535px;
     height: 134px;
-    background: linear-gradient(transparent, #17161A);
+    background: linear-gradient(transparent, #17161a);
   }
-  .mainSection .mainSectionCardBg:nth-of-type(2) .mainSectionCard .flexBox > img{
+  .mainSection
+    .mainSectionCardBg:nth-of-type(2)
+    .mainSectionCard
+    .flexBox
+    > img {
     width: 375px;
     height: 524px;
   }
@@ -278,7 +286,11 @@
     gap: 50px;
     padding-top: 30px;
   }
-  .mainSection .mainSectionCardBg:nth-of-type(3) .mainSectionCard .flexBox .box {
+  .mainSection
+    .mainSectionCardBg:nth-of-type(3)
+    .mainSectionCard
+    .flexBox
+    .box {
     width: 100%;
   }
   .mainSection .mainSectionCardBg .mainSectionCard .flexBox {
@@ -357,28 +369,35 @@
   .mainSectionTopWrap .buttonBox > button {
     width: 151px;
   }
-  .mainSection .mainSectionCardBg:nth-of-type(2)::before{
-  width: 200px;
-  height: 200px;
-  transform: scaleX(1);
-  background: no-repeat center/100% url("../assets/images/main-bg-02.png");
-}
+  .mainSection .mainSectionCardBg:nth-of-type(2)::before {
+    width: 200px;
+    height: 200px;
+    transform: scaleX(1);
+    background: no-repeat center/100% url("../assets/images/main-bg-02.png");
+  }
   .mainSection .mainSectionCardBg .mainSectionCard {
     width: 375px;
     padding: 20px 30px 60px;
   }
-  .mainSection .mainSectionCardBg:nth-of-type(2) .mainSectionCard{
+  .mainSection .mainSectionCardBg:nth-of-type(2) .mainSectionCard {
     padding: 40px 30px 60px;
   }
-  .mainSection .mainSectionCardBg:nth-of-type(2) .mainSectionCard .flexBox{
+  .mainSection .mainSectionCardBg:nth-of-type(2) .mainSectionCard .flexBox {
     position: relative;
   }
-  .mainSection .mainSectionCardBg:nth-of-type(2) .mainSectionCard .flexBox > img{
+  .mainSection
+    .mainSectionCardBg:nth-of-type(2)
+    .mainSectionCard
+    .flexBox
+    > img {
     width: 315px;
     height: 640px;
   }
-  .mainSection .mainSectionCardBg:nth-of-type(2) .mainSectionCard .flexBox::before{
-    bottom: 160px; 
+  .mainSection
+    .mainSectionCardBg:nth-of-type(2)
+    .mainSectionCard
+    .flexBox::before {
+    bottom: 160px;
     width: 343px;
     height: 342px;
   }
@@ -390,20 +409,43 @@
     gap: 44px;
     padding-top: 40px;
   }
-  .mainSection .mainSectionCardBg:nth-of-type(3) .mainSectionCard .flexBox .box {
+  .mainSection
+    .mainSectionCardBg:nth-of-type(3)
+    .mainSectionCard
+    .flexBox
+    .box {
     width: 100%;
   }
-  .mainSection .mainSectionCardBg:nth-of-type(3) .mainSectionCard .flexBox .box .imgBox {
+  .mainSection
+    .mainSectionCardBg:nth-of-type(3)
+    .mainSectionCard
+    .flexBox
+    .box
+    .imgBox {
     padding: 25px 26px 0;
   }
-  .mainSection .mainSectionCardBg:nth-of-type(3) .mainSectionCard .flexBox .box .imgBox > img {
+  .mainSection
+    .mainSectionCardBg:nth-of-type(3)
+    .mainSectionCard
+    .flexBox
+    .box
+    .imgBox
+    > img {
     width: 262px;
     height: 170px;
   }
-  .mainSection .mainSectionCardBg:nth-of-type(3) .mainSectionCard .textBox > span {
+  .mainSection
+    .mainSectionCardBg:nth-of-type(3)
+    .mainSectionCard
+    .textBox
+    > span {
     font-size: 16px;
   }
-  .mainSection .mainSectionCardBg:nth-of-type(3) .mainSectionCard .textBox > h3 {
+  .mainSection
+    .mainSectionCardBg:nth-of-type(3)
+    .mainSectionCard
+    .textBox
+    > h3 {
     font-size: 24px;
     padding: 12px 0;
   }
