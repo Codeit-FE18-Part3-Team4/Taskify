@@ -39,8 +39,6 @@ export default function Modal({
       className = hasNestedModal ? "nested" : styles.close;
     }
 
-    console.log(`Root modalClassName for ${modalKey} : ${className}`);
-
     return classnames(base, className);
   }
 
