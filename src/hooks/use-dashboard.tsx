@@ -1,5 +1,5 @@
 import { useEffectAuth } from "@/features/auth/components/auth-provider";
-import { getDashboards } from "@/features/my-dashboard/api/";
+import { getDashboards, getDashboardById } from "@/features/my-dashboard/api/";
 import { Dashboard } from "@/types/dashboard";
 import { useState } from "react";
 
@@ -32,4 +32,41 @@ export function useDashboard() {
   }, []);
 
   return { dashboards, isLoading, error };
+}
+
+export function useDashboardById(dashboardId: number | null) {
+  const [dashboard, setDashboard] = useState<Dashboard | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<Error | null>(null);
+
+  const loadDashboard = async () => {
+    if (!dashboardId) {
+      setDashboard(null);
+      return;
+    }
+
+    setIsLoading(true);
+    setError(null);
+
+    try {
+      const res = await getDashboardById({ dashboardId });
+      setDashboard(res);
+    } catch (e) {
+      console.error(e);
+      setError(e as Error);
+      setDashboard(null);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffectAuth(() => {
+    loadDashboard();
+  }, [dashboardId]);
+
+  const refetch = () => {
+    return loadDashboard();
+  };
+
+  return { dashboard, isLoading, error, refetch };
 }
