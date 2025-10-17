@@ -11,6 +11,12 @@ import { classnames } from "@/utils/classnames";
 import styles from "./index.module.css";
 import PlusCircleSvg from "./plus-circle-svg";
 
+export async function getServerSideProps() {
+  return {
+    props: {},
+  };
+}
+
 interface DashboardContentProps {
   dashboard: Dashboard;
   columns: ColumnData[];
