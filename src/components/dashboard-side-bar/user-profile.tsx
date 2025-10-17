@@ -1,39 +1,25 @@
-import SettingIcon from "@/assets/images/ic-setting.svg";
-import Typography from "@/components/typography";
+import { SettingIcon } from "@/assets/images";
+import { UserProfileProps } from "@/types/dashboard-side-bar";
 import Image from "next/image";
+import { MouseEvent } from "react";
+import Profile from "../profile/profile";
+import { ProfileSize } from "../profile/profile-size";
 import styles from "./dashboard-side-bar.module.css";
-
-interface UserProfileProps {
-  name: string;
-  profileImageUrl: string | undefined;
-}
-
-function sliceUserName(userName: string) {
-  return userName.length > 1 ? userName.substring(1) : userName;
-}
 
 export default function UserProfile({
   name,
   profileImageUrl,
 }: UserProfileProps) {
+
+  const handleMyPageUrlClick = (e: MouseEvent) => {
+    e.preventDefault();
+    window.history.pushState(null, "", "/mypage");
+  };
+
   return (
     <div className={styles.footer}>
-      <div className={styles.userBox}>
-        <div className={`${styles.userProfile} ${Typography.xsSemiBold}`}>
-          {profileImageUrl ? (
-            <Image
-              src={profileImageUrl}
-              width={30}
-              height={30}
-              alt="유저 프로필"
-            />
-          ) : (
-            <span>{sliceUserName(name)}</span>
-          )}
-        </div>
-        <p className={Typography.lgBold}>{name}</p>
-      </div>
-      <button className={styles.button}>
+      <Profile size={ProfileSize.Large} name={name} showFullName />
+      <button onClick={handleMyPageUrlClick} className={styles.button}>
         <Image src={SettingIcon} width={20} height={20} alt="세팅 아이콘" />
       </button>
     </div>

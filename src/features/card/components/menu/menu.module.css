@@ -1,0 +1,27 @@
+.container {
+  position: relative;
+}
+
+.anchor {
+  all: unset;
+  cursor: pointer;
+}
+
+.menu {
+  position: absolute;
+  top: calc(100% + 4px);
+  width: fit-content;
+  border: 1px solid var(--color-stroke);
+  border-radius: 12px;
+  background-color: #2f2f33;
+  padding: 12px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.menu.directionLeft {
+  left: 0;
+}
+.menu.directionRight {
+  right: 0;
+}

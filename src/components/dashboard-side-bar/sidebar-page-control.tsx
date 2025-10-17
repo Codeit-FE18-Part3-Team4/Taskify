@@ -1,15 +1,9 @@
 import ArrowRightIcon from "@/assets/images/ic-chevorn-right.svg";
 import ArrowLeftIcon from "@/assets/images/ic-chevron-left.svg";
 import Typography from "@/components/typography";
+import { SidebarPageControlProps } from "@/types/dashboard-side-bar";
 import Image from "next/image";
 import styles from "./dashboard-side-bar.module.css";
-
-interface SidebarPageControlProps {
-  onPrev: () => void;
-  onNext: () => void;
-  currentPage: number;
-  totalPages: number;
-}
 
 export default function SidebarPageControl({
   onPrev,
@@ -17,8 +11,9 @@ export default function SidebarPageControl({
   currentPage,
   totalPages,
 }: SidebarPageControlProps) {
-  const prevDisabled = currentPage === 0 ? styles.disabled : "";
-  const nextDisabled = totalPages > 1 ? "" : styles.disabled;
+  const isLastPage = totalPages - 1;
+  const prevDisabled = currentPage === 1 ? styles.disabled : "";
+  const nextDisabled = currentPage === isLastPage ? styles.disabled : "";
 
   return (
     <div className={styles.dashboardPagenation}>
@@ -37,7 +32,7 @@ export default function SidebarPageControl({
       </button>
       <button
         onClick={onNext}
-        disabled={totalPages < 2}
+        disabled={currentPage === isLastPage}
         className={`${styles.button} ${nextDisabled}`}
       >
         <span className={Typography.lgMedium}>다음</span>

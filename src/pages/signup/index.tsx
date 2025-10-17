@@ -1,15 +1,21 @@
 import LogoImg from "@/assets/images/taskify-logo.svg";
 import Button, { ButtonSize, ButtonVariant } from "@/components/button/button";
 import Checkbox from "@/components/checkbox";
+import Dialog from "@/components/dialog";
 import Input, { InputSize, InputVariant } from "@/components/input/input";
 import Typography from "@/components/typography";
+import { DIALOG_MESSAGES } from "@/constants/signup/dialog-messages";
+import { signup } from "@/features/user/apis/signup";
+import { useDialog } from "@/hooks/use-dialog";
 import {
   validateEmail,
   validateNickname,
   validatePassword,
 } from "@/utils/validator";
+import { AxiosError } from "axios";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { ChangeEvent, useEffect, useState } from "react";
 import styles from "./index.module.css";
 
@@ -25,6 +31,12 @@ export default function SignupPage() {
     useState("");
   const [hasAgreedCheckbox, setHasAgreedCheckbox] = useState(false);
   const [isSignupButtonDisabled, setIsSignupButtonDisabled] = useState(true);
+  const router = useRouter();
+  const [dialogMessage, setDialogMessage] = useState("");
+  const DIALOG_KEY = "DIALOG_SIGNUP";
+  const { isShowDialog, openDialog } = useDialog({
+    key: DIALOG_KEY,
+  });
 
   const onEmailChange = (e: ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
@@ -125,8 +137,18 @@ export default function SignupPage() {
     setIsSignupButtonDisabled(!isFormValid);
   }, [email, nickname, password, passwordCheck, hasAgreedCheckbox]);
 
-  const onSubmit = () => {
-    // TODO: 추후에 Api 요청 및 회원가입 로직 추가
+  const handleSubmit = async () => {
+    try {
+      const response = await signup({ email, nickname, password });
+      setDialogMessage(DIALOG_MESSAGES.SIGNUP_SUCCESS);
+    } catch (err) {
+      const error = err as AxiosError<{ message?: string }>;
+      const message =
+        error.response?.data?.message ?? DIALOG_MESSAGES.SIGNUP_FAIL;
+      setDialogMessage(message);
+    } finally {
+      openDialog(true);
+    }
   };
 
   return (
@@ -196,6 +218,7 @@ export default function SignupPage() {
             size={ButtonSize.Large}
             isWidthFull
             disabled={isSignupButtonDisabled}
+            onClick={handleSubmit}
           >
             가입하기
           </Button>
@@ -207,6 +230,17 @@ export default function SignupPage() {
           </p>
         </div>
       </div>
+      {isShowDialog && (
+        <Dialog
+          dialogKey={DIALOG_KEY}
+          message={dialogMessage}
+          onConfirm={() => {
+            if (dialogMessage === DIALOG_MESSAGES.SIGNUP_SUCCESS) {
+              router.push("/login");
+            }
+          }}
+        />
+      )}
     </main>
   );
 }

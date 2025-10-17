@@ -1,0 +1,20 @@
+.menuItem {
+  all: unset;
+  padding: 10px 22px;
+  cursor: pointer;
+  color: var(--color-gray200);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.menuItem:hover {
+  background-color: var(--color-black500);
+}
+
+.menuItem > span {
+  white-space: nowrap;
+}
+
+.delete {
+  color: var(--color-red500);
+}
