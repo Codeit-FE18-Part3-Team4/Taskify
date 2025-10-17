@@ -24,12 +24,12 @@ axiosInstance.interceptors.request.use((config) => {
 axiosInstance.interceptors.response.use(
   (response) => response,
   (error) => {
-    if (
-      error.response?.status === 401 &&
-      typeof window !== "undefined" &&
-      !window.location.pathname.includes("/login")
-    ) {
-      window.location.href = "/login";
+    if (error.response?.status === 401 && typeof window !== "undefined") {
+      const publicPaths = ["/", "/login", "/signup"];
+      const currentPath = window.location.pathname;
+      if (!publicPaths.includes(currentPath)) {
+        window.location.href = "/login";
+      }
     }
     return Promise.reject(error);
   }
