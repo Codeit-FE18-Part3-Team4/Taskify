@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
+import styles from "./index.module.css";
 import Column, { ColumnActionType } from "@/components/dashboard/column/column";
 import ColorChip from "@/components/chips/chip-color/chips-color";
+import { classnames } from "@/utils/classnames";
 import Typography from "@/components/typography";
 import { CommonSize } from "@/constants/common/common-size";
 import { useModal } from "@/hooks/use-modal";
@@ -53,7 +55,7 @@ export default function DashboardContent({
   });
 
   const ALERT_KEY = "ALERT_SAMPLE";
-  const { openAlert } = useAlert({
+  const { isShowAlert, openAlert } = useAlert({
     key: ALERT_KEY,
   });
 
@@ -73,12 +75,32 @@ export default function DashboardContent({
   const isLoading = propsLoading || fetchingColumns;
 
   useEffect(() => {
+    console.log("🔔 status 변경:", status);
     if (status.type !== "idle") {
+      console.log("✅ statusMessage 설정 & Alert 열기:", status);
       setStatusMessage(status);
-      openAlert(true);
+      openAlert(true); // 👈 Alert 열기!
       clearStatus();
     }
   }, [status, clearStatus, openAlert]);
+
+  // statusMessage가 설정되면 3초 후 제거
+  useEffect(() => {
+    console.log("💬 statusMessage 변경:", statusMessage);
+    if (statusMessage) {
+      console.log("⏰ 3초 타이머 시작");
+      const timer = setTimeout(() => {
+        console.log("⏰ 3초 경과 - statusMessage 제거 & Alert 닫기");
+        setStatusMessage(null);
+        openAlert(false); // 👈 Alert 닫기!
+      }, 3000);
+
+      return () => {
+        console.log("🧹 타이머 정리");
+        clearTimeout(timer);
+      };
+    }
+  }, [statusMessage, openAlert]);
 
   const handleCreateColumnClick = () => {
     setSelectedColumn(null);
@@ -110,8 +132,9 @@ export default function DashboardContent({
   };
 
   const handleAlertClose = () => {
+    console.log("❌ Alert 닫기 핸들러 호출");
     setStatusMessage(null);
-    openAlert(false);
+    openAlert(false); // 👈 Alert 상태도 닫기
   };
 
   return (

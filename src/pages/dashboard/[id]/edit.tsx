@@ -12,6 +12,9 @@ import XIcon from "@/components/icon/x-gray-icon";
 import { classnames } from "@/utils/classnames";
 import ModifyMembers from "@/features/dashboard/edit/components/modify-members";
 
+const MEMBERS_PER_PAGE = 6;
+const INVITATIONS_PER_PAGE = 6;
+
 export default function DashboardEditPage() {
   const router = useRouter();
   const { id, tab } = router.query;
