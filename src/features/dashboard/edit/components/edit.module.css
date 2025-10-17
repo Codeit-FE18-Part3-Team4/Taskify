@@ -1,8 +1,5 @@
 .topContainer {
   padding: 30px 50px;
-  display: flex;
-  flex-direction: row;
-  gap: 50px;
 }
 
 .topContainer .formContents {
@@ -37,29 +34,4 @@
 
 .topContainer .textInput {
   width: 100%;
-}
-
-.topContainer .backButton {
-  background-color: transparent;
-  border: none;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  align-items: center;
-  cursor: pointer;
-}
-
-.topContainer .backButton span {
-  color: var(--color-gray300);
-  cursor: pointer;
-}
-
-.topContainer .backButton .xIcon {
-  width: 40px;
-  height: 40px;
-  color: transparent;
-}
-
-.topContainer .backButton:hover .xIcon {
-  color: var(--color-black500);
 }

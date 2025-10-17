@@ -87,12 +87,6 @@ export default function Edit({ dashboard, onUpdate }: EditProps) {
           </Button>
         </div>
       </form>
-      <div>
-        <Link href={`/dashboard/${dashboard.id}`} className={styles.backButton}>
-          <XIcon className={styles.xIcon} />
-          <span className={classnames(Typography.mdSemiBold)}>돌아가기</span>
-        </Link>
-      </div>
     </div>
   );
 }
