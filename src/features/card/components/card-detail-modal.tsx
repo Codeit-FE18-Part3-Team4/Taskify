@@ -1,4 +1,5 @@
 import SampleImage from "@/assets/images/dashboard-gui.png";
+import Alert, { AlertActionType } from "@/components/alert";
 import IconButton from "@/components/button/icon-button";
 import Badge from "@/components/chips/badge/badge";
 import { Color } from "@/components/color";
@@ -9,19 +10,20 @@ import Modal from "@/components/modal";
 import Profile from "@/components/profile/profile";
 import { ProfileSize } from "@/components/profile/profile-size";
 import Typography from "@/components/typography";
+import { deleteCard } from "@/features/card/apis";
 import { Direction, Menu, MenuItem } from "@/features/card/components/menu";
-import { getComments } from "@/features/comment/apis/comment";
+import { getComments } from "@/features/comment/apis/mock";
+import { CommentInput, CommentList } from "@/features/comment/components";
+import { useAlert } from "@/hooks/use-alert";
 import { useDialog } from "@/hooks/use-dialog";
 import { useModal } from "@/hooks/use-modal";
 import { useResponsive } from "@/hooks/use-responsive";
 import { Card } from "@/types/card";
 import { Comment } from "@/types/comment";
 import { classnames } from "@/utils/classnames";
+import { formatDueDate } from "@/utils/date-formatter";
 import Image from "next/image";
 import { ReactNode, useEffect, useState } from "react";
-import { formatDueDate } from "../../../utils/date-formatter";
-import CommentInput from "../../comment/components/comment-input";
-import CommentList from "../../comment/components/comment-list";
 import styles from "./card-detail-modal.module.css";
 
 interface ActionsProps {
@@ -231,19 +233,33 @@ export default function CardDetailModal({
   const { openModal } = useModal({ key: modalKey });
   const { isDesktop, isMobile } = useResponsive();
 
-  // TODO: CardEditSheet로 교체
-  const { isShowDialog, openDialog } = useDialog({
-    key: "dialog-from-card-detail-modal",
-  });
+  const alertKey = "alert-from-card-detail-modal";
+  const { isShowAlert, openAlert } = useAlert({ key: alertKey });
+
+  const dialogKey = "dialog-from-card-detail-modal";
+  const { isShowDialog, openDialog } = useDialog({ key: dialogKey });
+  const [dialogMessage, setDialogMessage] = useState("");
 
   const handleEdit = () => {
-    // TODO: Move to edit modal
-    openDialog(true);
+    // TODO: Show CardEditSheet
   };
 
-  const handleDelete = () => {
-    // TODO: Delete card
-    openDialog(true);
+  const handleDelete = async () => {
+    if (!isShowAlert) {
+      openAlert(true);
+      return;
+    }
+
+    try {
+      await deleteCard({ cardId: card.id });
+      openModal(false);
+    } catch (error) {
+      if (error instanceof Error) {
+        console.log(error);
+        setDialogMessage(error.message);
+        openDialog(true);
+      }
+    }
   };
 
   const handleClose = () => {
@@ -273,12 +289,16 @@ export default function CardDetailModal({
           />
         )}
       </div>
-      {isShowDialog && (
-        <Dialog
-          dialogKey="dialog-from-card-detail-modal"
-          message="Dialog from CardDetailModal"
+      {isShowAlert && (
+        <Alert
+          alertKey={alertKey}
+          title="할 일을 삭제하시겠습니까?"
+          message="삭제된 할 일은 복구할 수 없습니다."
+          actionType={AlertActionType.Delete}
+          onAction={handleDelete}
         />
       )}
+      {isShowDialog && <Dialog dialogKey={dialogKey} message={dialogMessage} />}
     </Modal>
   );
 }

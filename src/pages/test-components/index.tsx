@@ -21,7 +21,7 @@ import Typography from "@/components/typography";
 import { CommonSize } from "@/constants/common/common-size";
 import { ProfileRandomColor } from "@/constants/profile-random-color";
 import { logout } from "@/features/auth/apis/logout";
-import { getCard } from "@/features/card/apis";
+import { getCard } from "@/features/card/apis/mock";
 import CardDetailModal from "@/features/card/components/card-detail-modal";
 import Dropdown, { DropdownOption } from "@/features/card/components/dropdown";
 import ImageInput from "@/features/card/components/image-input";

@@ -1,4 +1,4 @@
-import { Dashboard, UserInfo } from "./my-dashboard";
+import { Dashboard } from "./my-dashboard";
 
 export interface DashboardSideBarProps {
   onClick: () => void;
@@ -16,6 +16,7 @@ export interface MainProps {
 export interface UserProfileProps {
   name?: string;
   profileImageUrl: string | undefined;
+  onClick: () => void;
 }
 
 export interface SidebarPageControlProps {
