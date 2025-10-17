@@ -1,7 +1,9 @@
 import { getCards } from "@/components/dashboard/card/api/cards";
-import { useAuth } from "@/features/auth/components/auth-provider";
+import { getComments as fetchComments } from "@/features/comment/comment";
+import { useEffectAuth } from "@/features/auth/components/auth-provider";
 import { Card } from "@/types/card";
 import { useEffect, useState } from "react";
+import { Comment, FetchCommentsResponse } from "@/types/comment";
 
 export function useCards(columnIds: number[]) {
   const [cards, setCards] = useState<Record<number, Card[]> | null>(null);
@@ -50,4 +52,34 @@ export function useCards(columnIds: number[]) {
   }, [columnIds, isLoadingToken]);
 
   return { cards, isLoading, error };
+}
+
+export function useComments(cardId: number, size?: number) {
+  const [comments, setComments] = useState<Comment[] | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<Error | null>(null);
+
+  const loadComments = async () => {
+    setIsLoading(true);
+    setError(null);
+    try {
+      const res = await fetchComments({ cardId, size });
+      setComments(res.comments);
+    } catch (e) {
+      setError(e as Error);
+      setComments(null);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffectAuth(() => {
+    loadComments();
+  }, [cardId]);
+
+  const refetch = () => {
+    return loadComments();
+  };
+
+  return { comments, isLoading, error, refetch };
 }

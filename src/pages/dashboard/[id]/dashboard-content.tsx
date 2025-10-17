@@ -1,6 +1,8 @@
+import { useEffect, useState } from "react";
+import styles from "./index.module.css";
+import Column, { ColumnActionType } from "@/components/dashboard/column/column";
 import ColorChip from "@/components/chips/chip-color/chips-color";
-import Column from "@/components/dashboard/column/column";
-import Modal from "@/components/modal";
+import { classnames } from "@/utils/classnames";
 import Typography from "@/components/typography";
 import { CommonSize } from "@/constants/common/common-size";
 import { useModal } from "@/hooks/use-modal";
@@ -10,6 +12,10 @@ import { Dashboard } from "@/types/dashboard";
 import { classnames } from "@/utils/classnames";
 import styles from "./index.module.css";
 import PlusCircleSvg from "./plus-circle-svg";
+import dynamic from "next/dynamic";
+import { ColumnOperationStatus, useColumn } from "@/hooks/use-column";
+import Alert, { AlertActionType } from "@/components/alert";
+import { useAlert } from "@/hooks/use-alert";
 
 export async function getServerSideProps() {
   return {
@@ -22,21 +28,92 @@ interface DashboardContentProps {
   columns: ColumnData[];
   cards: Record<number, Card[]>;
   isLoading: boolean;
-  onCardClick: (card: Card) => void;
+  onCardClick: (card: Card, columnTitle: string) => void;
 }
+
+const ColumnEditSheet = dynamic(
+  () => import("@/features/column/components/column-edit-sheet"),
+  {
+    ssr: false,
+  },
+);
 
 export default function DashboardContent({
   dashboard,
-  columns,
+  columns: propsColumns,
   cards,
-  isLoading,
+  isLoading: propsLoading,
   onCardClick,
 }: DashboardContentProps) {
-  const CREATE_COLUMN_MODAL_KEY = "CREATE_COLUMN_MODAL";
-  const { isShowModal, openModal } = useModal({ key: CREATE_COLUMN_MODAL_KEY });
+  const [selectedColumn, setSelectedColumn] = useState<ColumnData | null>(null);
+  const [statusMessage, setStatusMessage] =
+    useState<ColumnOperationStatus | null>(null);
+
+  const COLUMN_SHEET_KEY = "COLUMN_SHEET";
+  const { isShowModal, openModal } = useModal({
+    key: COLUMN_SHEET_KEY,
+  });
+
+  const ALERT_KEY = "ALERT_SAMPLE";
+  const { openAlert } = useAlert({
+    key: ALERT_KEY,
+  });
+
+  const {
+    columns: fetchedColumns,
+    isLoading: fetchingColumns,
+    createColumn,
+    updateColumn,
+    isCreating,
+    isUpdating,
+    status,
+    clearStatus,
+    refetch,
+  } = useColumn(dashboard.id);
+
+  const columns = fetchedColumns ?? propsColumns;
+  const isLoading = propsLoading || fetchingColumns;
+
+  useEffect(() => {
+    if (status.type !== "idle") {
+      setStatusMessage(status);
+      openAlert(true);
+      clearStatus();
+    }
+  }, [status, clearStatus, openAlert]);
 
   const handleCreateColumnClick = () => {
+    setSelectedColumn(null);
     openModal(true);
+  };
+
+  const handleEditColumnClick = (column: ColumnData) => {
+    setSelectedColumn(column);
+    openModal(true);
+  };
+
+  const columnTitleSubmit = async (title: string) => {
+    if (!title) return;
+
+    const result = selectedColumn
+      ? await updateColumn({
+          columnTitle: title,
+          columnId: selectedColumn.id,
+        })
+      : await createColumn({
+          columnTitle: title,
+          dashboardId: dashboard.id,
+        });
+
+    if (result.success) {
+      openModal(false);
+      await refetch();
+    }
+  };
+
+  const handleAlertClose = () => {
+    setStatusMessage(null);
+    openAlert(false);
   };
 
   return (
@@ -56,10 +133,14 @@ export default function DashboardContent({
                 <Column
                   key={column.id}
                   cards={cards[column.id] ?? []}
-                  onCardClick={onCardClick}
+                  onCardClick={(card) => {
+                    onCardClick(card, column.title);
+                  }}
                   columnTitle={column.title}
                   onClick={(type) => {
-                    console.log(`${column.title} 컬럼의 ${type} 클릭`);
+                    if (type === ColumnActionType.Modify) {
+                      handleEditColumnClick(column);
+                    }
                   }}
                 />
               ))
@@ -72,6 +153,7 @@ export default function DashboardContent({
                   Typography.lg2Medium
                 )}
                 onClick={handleCreateColumnClick}
+                disabled={isCreating || isUpdating}
               >
                 <PlusCircleSvg className={styles.icon} />
                 <span>새로운 컬럼 추가</span>
@@ -82,23 +164,21 @@ export default function DashboardContent({
       </section>
 
       {isShowModal && (
-        <Modal modalKey={CREATE_COLUMN_MODAL_KEY}>
-          <div
-            style={{
-              width: "600px",
-              height: "600px",
-              backgroundColor: "#242429",
-              borderRadius: "24px",
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <h2 style={{ color: "white" }}>새컬럼만들기모달</h2>
-            <button onClick={() => openModal(false)}>Close Modal 1</button>
-          </div>
-        </Modal>
+        <ColumnEditSheet
+          sheetKey={COLUMN_SHEET_KEY}
+          onSubmit={columnTitleSubmit}
+          column={selectedColumn ?? undefined}
+        />
+      )}
+
+      {statusMessage && (
+        <Alert
+          actionType={AlertActionType.Confirm}
+          alertKey={ALERT_KEY}
+          message={statusMessage.message}
+          title={statusMessage.type}
+          onCancel={handleAlertClose}
+        />
       )}
     </>
   );

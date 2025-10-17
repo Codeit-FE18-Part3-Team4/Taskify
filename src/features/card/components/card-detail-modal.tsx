@@ -12,7 +12,7 @@ import { ProfileSize } from "@/components/profile/profile-size";
 import Typography from "@/components/typography";
 import { deleteCard } from "@/features/card/apis";
 import { Direction, Menu, MenuItem } from "@/features/card/components/menu";
-import { getComments } from "@/features/comment/apis/mock";
+import { getComments } from "@/features/comment/comment";
 import { CommentInput, CommentList } from "@/features/comment/components";
 import { useAlert } from "@/hooks/use-alert";
 import { useDialog } from "@/hooks/use-dialog";
@@ -25,6 +25,7 @@ import { formatDueDate } from "@/utils/date-formatter";
 import Image from "next/image";
 import { ReactNode, useEffect, useState } from "react";
 import styles from "./card-detail-modal.module.css";
+import { useComments } from "@/hooks/use-cards";
 
 interface ActionsProps {
   onEdit: () => void;
@@ -149,21 +150,8 @@ function Main({
   onDelete,
   onClose,
 }: MainProps) {
-  const [comments, setComments] = useState<Comment[]>([]);
   const { isDesktop } = useResponsive();
-
-  useEffect(() => {
-    async function loadComments() {
-      try {
-        const data = await getComments();
-        setComments(data);
-      } catch (error) {
-        // TODO: Error handling
-        console.error(error);
-      }
-    }
-    loadComments();
-  }, []);
+  const { comments, error, isLoading, refetch } = useComments(card.id);
 
   const handleCommentSubmit = (value: string) => {
     // TODO: Add comment
@@ -177,7 +165,7 @@ function Main({
           <h2
             className={classnames(
               isDesktop ? "" : styles.compact,
-              Typography.xl2SemiBold
+              Typography.xl2SemiBold,
             )}
           >
             {card.title}
@@ -194,7 +182,9 @@ function Main({
         <article className={styles.content}>
           <p className={Typography.lgMedium160}>{card.description}</p>
           <div className={styles.image}>
-            <Image src={SampleImage} alt="카드에 등록된 이미지" fill />
+            {card.imageUrl && (
+              <Image src={card.imageUrl} alt="카드에 등록된 이미지" fill />
+            )}
           </div>
         </article>
         {isDesktop || (
@@ -212,7 +202,7 @@ function Main({
             authorName={card.assignee.nickname}
             onSubmit={handleCommentSubmit}
           />
-          <CommentList comments={comments} />
+          {comments && <CommentList comments={comments} />}
         </div>
       </div>
     </div>
