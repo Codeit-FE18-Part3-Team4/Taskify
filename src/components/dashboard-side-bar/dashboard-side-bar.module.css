@@ -64,7 +64,7 @@
   align-items: center;
   gap: 8px;
 }
-.dashboardButton:hover{
+.dashboardButton:hover {
   background: var(--color-black700);
   border-radius: 10px;
 }

@@ -357,13 +357,13 @@
     width: 237px;
   }
   .myDashboardMain
-  .dashboardSection
-  .invitationsDashboardSection
-  .invitationsDashboardSectionTop
-  > div
-  p:nth-of-type(2) {
-  padding-left: 0px;
-}
+    .dashboardSection
+    .invitationsDashboardSection
+    .invitationsDashboardSectionTop
+    > div
+    p:nth-of-type(2) {
+    padding-left: 0px;
+  }
 }
 
 /* Mobile */
