@@ -23,7 +23,7 @@ export default function LoginPage() {
   const [isLoginButtonDisabled, setIsLoginButtonDisabled] = useState(true);
   const router = useRouter();
   const [dialogMessage, setDialogMessage] = useState("");
-  const DIALOG_KEY = "DIALOG_SAMPLE";
+  const DIALOG_KEY = "DIALOG_LOGIN";
   const { isShowDialog, openDialog } = useDialog({
     key: DIALOG_KEY,
   });

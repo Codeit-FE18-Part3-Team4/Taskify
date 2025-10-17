@@ -32,7 +32,7 @@ export default function SignupPage() {
   const [isSignupButtonDisabled, setIsSignupButtonDisabled] = useState(true);
   const router = useRouter();
   const [dialogMessage, setDialogMessage] = useState("");
-  const DIALOG_KEY = "DIALOG_SAMPLE";
+  const DIALOG_KEY = "DIALOG_SIGNUP";
   const { isShowDialog, openDialog } = useDialog({
     key: DIALOG_KEY,
   });
@@ -139,7 +139,6 @@ export default function SignupPage() {
   const handleSubmit = async () => {
     try {
       const response = await signup({ email, nickname, password });
-      console.log(response);
       setDialogMessage("가입이 완료되었습니다!");
       openDialog(true);
     } catch (err) {
