@@ -15,8 +15,6 @@ export async function getDashboardById({
 }: {
   dashboardId: number;
 }) {
-  if (!dashboardId) return [];
-
   try {
     const res = await axiosInstance.get(`/dashboards/${dashboardId}`);
     return res.data;
@@ -35,8 +33,6 @@ export async function updateDashboard({
   color,
   dashboardId,
 }: UpdateDashboardProps) {
-  if (!dashboardId) return;
-
   try {
     const res = await axiosInstance.put(`/dashboards/${dashboardId}`, {
       title,
