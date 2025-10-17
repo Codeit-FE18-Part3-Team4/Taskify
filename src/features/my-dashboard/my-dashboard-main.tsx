@@ -18,11 +18,11 @@ import { useDashboardPagination } from "@/hooks/use-dashboard-pagination";
 import { useInvitationSearch } from "@/hooks/use-invitation-search";
 import { useInvitations } from "@/hooks/use-invitations";
 import { useResponsiveValue } from "@/hooks/use-responsive-value";
+import styles from "@/styles/my-dashboard.module.css";
 import { MyDashboardMainProps } from "@/types/my-dashboard";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { useDashboardContext } from "./dashboard-provider";
-import styles from "./my-dashboard.module.css";
 
 export async function getServerSideProps() {
   return {
