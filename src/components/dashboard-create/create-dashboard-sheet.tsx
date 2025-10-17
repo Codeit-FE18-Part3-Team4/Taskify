@@ -9,7 +9,7 @@ import SheetSection from "../sheet/sheet-section";
 
 const SHEET_KEY = "SHEET_DASHBOARD_ADD";
 
-export default function DashoardCreate() {
+export default function CreateDashboardSheet() {
   const {
     dashboardValue,
     setDashboardValue,

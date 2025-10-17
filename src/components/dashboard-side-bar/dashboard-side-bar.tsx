@@ -1,9 +1,8 @@
-import { useAllDashboards } from "@/hooks/use-all-dashboards";
 import { useDashboardSidebar } from "@/hooks/use-dashboard-side-bar";
 import { useSheet } from "@/hooks/use-sheet";
 import { useDashboardContext } from "@/pages/my-dashboard/dashboard-provider";
 import { useEffect } from "react";
-import DashoardCreate from "../dashboard-create/dashoard-create";
+import CreateDashboardSheet from "../dashboard-create/create-dashboard-sheet";
 import styles from "./dashboard-side-bar.module.css";
 import Header from "./header";
 import Main from "./main";
@@ -51,7 +50,7 @@ export default function DashboardSideBar() {
         profileImageUrl={userInfo?.profileImageUrl}
         onClick={handleMyPageUrlClick}
       />
-      <DashoardCreate />
+      <CreateDashboardSheet />
     </div>
   );
 }

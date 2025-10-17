@@ -42,7 +42,7 @@ export function useDashboardPagination(dashboards: Dashboard[]) {
 
   useEffect(() => {
     if (totalPages > 0 && currentDashboardPage >= totalPages) {
-      setCurrentDashboardPage(Math.max(0, totalPages - 1));
+      setCurrentDashboardPage(totalPages - 1);
     }
   }, [totalPages, currentDashboardPage, setCurrentDashboardPage]);
 
