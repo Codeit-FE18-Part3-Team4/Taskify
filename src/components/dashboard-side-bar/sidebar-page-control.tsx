@@ -11,7 +11,7 @@ export default function SidebarPageControl({
   currentPage,
   totalPages,
 }: SidebarPageControlProps) {
-  const isLastPage = totalPages - 1;
+  const isLastPage = totalPages;
   const prevDisabled = currentPage === 1 ? styles.disabled : "";
   const nextDisabled = currentPage === isLastPage ? styles.disabled : "";
 

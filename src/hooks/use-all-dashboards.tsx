@@ -1,7 +1,7 @@
-import { Dashboard } from "@/types/my-dashboard";
-import { getDashboards } from "@/features/my-dashboard/api/";
-import { useCallback, useEffect, useState } from "react";
 import { useEffectAuth } from "@/features/auth/components/auth-provider";
+import { getDashboards } from "@/features/my-dashboard/api/";
+import { Dashboard } from "@/types/my-dashboard";
+import { useCallback, useState } from "react";
 
 export function useAllDashboards() {
   const [allDashboards, setAllDashboards] = useState<Dashboard[]>([]);
@@ -11,13 +11,8 @@ export function useAllDashboards() {
     setIsLoading(true);
     try {
       const dashboardsRes = await getDashboards({ page: 1, size: 1000 });
-      
-      const sortedDashboards = dashboardsRes.dashboards.sort(
-        (a: Dashboard, b: Dashboard) =>
-          new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-      );
-      
-      setAllDashboards(sortedDashboards);
+
+      setAllDashboards(dashboardsRes.dashboards);
     } catch (error) {
       console.error("Failed to load all dashboards:", error);
     } finally {
@@ -33,7 +28,7 @@ export function useAllDashboards() {
     setAllDashboards((prev) => [dashboard, ...prev]);
   }, []);
 
-  const refreshDashboards = useCallback(() => {
+  const refreshAllDashboards = useCallback(() => {
     loadAllDashboards();
   }, [loadAllDashboards]);
 
@@ -41,6 +36,6 @@ export function useAllDashboards() {
     allDashboards,
     isLoading,
     addDashboard,
-    refreshDashboards,
+    refreshAllDashboards,
   };
 }
