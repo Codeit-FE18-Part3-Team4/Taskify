@@ -63,13 +63,12 @@ export default function DashboardPage() {
 
   return (
     <div className={styles.page}>
-      <NavigationBar
-        members={members ?? []}
-        dashboardId={dashboardId ?? null}
-      />
-
+      <DashboardSideBar onClick={() => {}} />
       <div className={styles.layoutContainer}>
-        <DashboardSideBar onClick={() => {}} />
+        <NavigationBar
+          members={members ?? []}
+          dashboardId={dashboardId ?? null}
+        />
         <main className={styles.main}>
           {dashboard && (
             <DashboardContent

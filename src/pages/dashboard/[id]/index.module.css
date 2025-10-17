@@ -1,8 +1,7 @@
 .page {
-  display: flex;
-  flex-direction: column;
   height: 100vh;
   background-color: var(--color-background);
+  display: flex;
 }
 
 .page > :first-child {
@@ -11,8 +10,8 @@
 
 .layoutContainer {
   display: flex;
-  flex: 1;
   overflow: hidden;
+  flex-direction: column;
 }
 
 .main {
@@ -65,7 +64,6 @@
   flex: 0 0 334px;
   min-width: 334px;
 }
-
 
 .columnContentWrapper h2 {
   color: #ffffff;
