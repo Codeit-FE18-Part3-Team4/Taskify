@@ -1,27 +1,59 @@
-import { createContext, ReactNode, useCallback, useContext, useState } from "react";
+import { createContext, ReactNode, useCallback, useContext, useRef, useState } from "react";
 
-interface DashboardContextType {
+interface DashboardContextValue {
   refreshSidebar: () => void;
-  registerRefresh: (fn: () => void) => void;
+  registerRefresh: (callback: () => void) => void;
+  refreshMainDashboards: () => void;
+  registerMainRefresh: (callback: () => void) => void;
+  currentDashboardPage: number;
+  setCurrentDashboardPage: (page: number) => void;
+  currentSidebarPage: number;
+  setCurrentSidebarPage: (page: number) => void;
 }
 
-const DashboardContext = createContext<DashboardContextType | undefined>(undefined);
+interface DashboardProviderProps {
+  children: ReactNode;
+}
 
-export function DashboardProvider({ children }: { children: ReactNode }) {
-  const [refreshFn, setRefreshFn] = useState<(() => void) | null>(null);
+const DashboardContext = createContext<DashboardContextValue | null>(null);
 
-  const registerRefresh = useCallback((fn: () => void) => {
-    setRefreshFn(() => fn);
+export function DashboardProvider({ children }: DashboardProviderProps) {
+  const sidebarRefreshRef = useRef<(() => void) | null>(null);
+  const mainRefreshRef = useRef<(() => void) | null>(null);
+  
+  const [currentDashboardPage, setCurrentDashboardPage] = useState<number>(0);
+  
+  const [currentSidebarPage, setCurrentSidebarPage] = useState<number>(1);
+
+  const registerRefresh = useCallback((callback: () => void) => {
+    sidebarRefreshRef.current = callback;
   }, []);
 
   const refreshSidebar = useCallback(() => {
-    if (refreshFn) {
-      refreshFn();
-    }
-  }, [refreshFn]);
+    sidebarRefreshRef.current?.();
+  }, []);
+
+  const registerMainRefresh = useCallback((callback: () => void) => {
+    mainRefreshRef.current = callback;
+  }, []);
+
+  const refreshMainDashboards = useCallback(() => {
+    mainRefreshRef.current?.();
+  }, []);
 
   return (
-    <DashboardContext.Provider value={{ refreshSidebar, registerRefresh }}>
+    <DashboardContext.Provider
+      value={{
+        refreshSidebar,
+        registerRefresh,
+        refreshMainDashboards,
+        registerMainRefresh,
+        currentDashboardPage,
+        setCurrentDashboardPage,
+        currentSidebarPage,
+        setCurrentSidebarPage,
+      }}
+    >
       {children}
     </DashboardContext.Provider>
   );
@@ -30,7 +62,9 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
 export function useDashboardContext() {
   const context = useContext(DashboardContext);
   if (!context) {
-    throw new Error("useDashboardContext must be used within DashboardProvider");
+    throw new Error(
+      "useDashboardContext must be used within DashboardProvider"
+    );
   }
   return context;
 }

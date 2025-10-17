@@ -19,7 +19,9 @@ function Providers({ children }: { children: ReactNode }) {
     <AuthProvider>
       <ModalProvider>
         <TagsProvider>
-          <DashboardProvider>{children}</DashboardProvider>
+          <DashboardProvider>
+            <DashboardProvider>{children}</DashboardProvider>
+          </DashboardProvider>
         </TagsProvider>
       </ModalProvider>
     </AuthProvider>

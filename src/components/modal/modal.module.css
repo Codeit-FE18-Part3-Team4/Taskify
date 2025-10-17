@@ -10,6 +10,10 @@
   justify-content: center;
 }
 
+.transparent {
+  background-color: transparent;
+}
+
 .content {
   background-color: var(--color-modalBackground);
   border-radius: 24px;
@@ -30,7 +34,10 @@
   }
 }
 .open {
-  animation: fadeIn 0.1s ease-out forwards;
+  animation: fadeIn 0.2s ease-out forwards;
+}
+.openWithoutAnimation {
+  opacity: 1;
 }
 
 @keyframes fadeOut {
@@ -42,5 +49,8 @@
   }
 }
 .close {
-  animation: fadeOut 0.1s ease-out forwards;
+  animation: fadeOut 0.15s ease-out forwards;
+}
+.closeWithoutAnimation {
+  opacity: 0;
 }

@@ -88,7 +88,7 @@ export default function Main({
       ) : (
         <div>대시보드가 없습니다.</div>
       )}
-      {dashboards.length < 10 ? (
+      {totalPages < 1 ? (
         ""
       ) : (
         <SidebarPageControl
