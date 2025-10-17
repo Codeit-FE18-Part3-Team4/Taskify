@@ -1,6 +1,6 @@
+import { useDashboardContext } from "@/features/my-dashboard/dashboard-provider";
 import { useDashboardForm } from "@/hooks/use-dashboard-form";
 import { useSheet } from "@/hooks/use-sheet";
-import { useDashboardContext } from "@/pages/my-dashboard/dashboard-provider";
 import { ColorFrameSize } from "../chips/color-frame/color-frame-size";
 import ColorPalette from "../color-palette/color-palette";
 import Input, { InputSize } from "../input/input";

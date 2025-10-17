@@ -1,6 +1,6 @@
 import { useAuth } from "@/features/auth/components/auth-provider";
 import { getDashboards, getUserInfo } from "@/features/my-dashboard/api/";
-import { useDashboardContext } from "@/pages/my-dashboard/dashboard-provider";
+import { useDashboardContext } from "@/features/my-dashboard/dashboard-provider";
 import { Dashboard, UserInfo } from "@/types/my-dashboard";
 import { useCallback, useEffect, useState } from "react";
 

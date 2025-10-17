@@ -3,8 +3,8 @@ import { useAllDashboards } from "@/hooks/use-all-dashboards";
 import { useSheet } from "@/hooks/use-sheet";
 import { useSsrResponsive } from "@/hooks/use-ssr-responsive";
 import { useEffect } from "react";
-import { useDashboardContext } from "./dashboard-provider";
-import MyDashboardMain from "./my-dashboard-main";
+import { useDashboardContext } from "../../features/my-dashboard/dashboard-provider";
+import MyDashboardMain from "../../features/my-dashboard/my-dashboard-main";
 import styles from "./my-dashboard.module.css";
 
 const SHEET_KEY = "SHEET_DASHBOARD_ADD";
