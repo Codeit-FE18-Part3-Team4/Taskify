@@ -4,6 +4,7 @@ import Checkbox from "@/components/checkbox";
 import Dialog from "@/components/dialog";
 import Input, { InputSize, InputVariant } from "@/components/input/input";
 import Typography from "@/components/typography";
+import { DIALOG_MESSAGES } from "@/constants/signup/dialog-messages";
 import { signup } from "@/features/user/apis/signup";
 import { useDialog } from "@/hooks/use-dialog";
 import {
@@ -139,13 +140,13 @@ export default function SignupPage() {
   const handleSubmit = async () => {
     try {
       const response = await signup({ email, nickname, password });
-      setDialogMessage("가입이 완료되었습니다!");
-      openDialog(true);
+      setDialogMessage(DIALOG_MESSAGES.SIGNUP_SUCCESS);
     } catch (err) {
       const error = err as AxiosError<{ message?: string }>;
       const message =
-        error.response?.data?.message ?? "회원가입에 실패했습니다.";
+        error.response?.data?.message ?? DIALOG_MESSAGES.SIGNUP_FAIL;
       setDialogMessage(message);
+    } finally {
       openDialog(true);
     }
   };
@@ -234,8 +235,7 @@ export default function SignupPage() {
           dialogKey={DIALOG_KEY}
           message={dialogMessage}
           onConfirm={() => {
-            openDialog(false);
-            if (dialogMessage === "가입이 완료되었습니다!") {
+            if (dialogMessage === DIALOG_MESSAGES.SIGNUP_SUCCESS) {
               router.push("/login");
             }
           }}

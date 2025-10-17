@@ -151,11 +151,7 @@ export default function LoginPage() {
         <Image src={LoginImg} alt="로그인 메인" width={900} height={920} />
       </section>
       {isShowDialog && (
-        <Dialog
-          dialogKey={DIALOG_KEY}
-          message={dialogMessage}
-          onConfirm={() => openDialog(false)}
-        />
+        <Dialog dialogKey={DIALOG_KEY} message={dialogMessage} />
       )}
     </main>
   );
