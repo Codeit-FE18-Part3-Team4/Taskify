@@ -7,7 +7,15 @@ interface Props {
   key: string;
 }
 
-export function useModal({ key }: Props) {
+interface UseModalReturn {
+  isShowModal: boolean;
+  isOpenModal: boolean;
+  openModal: (isOpen: boolean) => void;
+  onCloseModal: () => void;
+  modalStack: string[];
+}
+
+export function useModal({ key }: Props): UseModalReturn {
   const contextValue = useContext(ModalContext);
   if (!contextValue) {
     throw new Error("useModal must be used within a ModalProvider");
@@ -90,5 +98,6 @@ export function useModal({ key }: Props) {
     isOpenModal: isOpen,
     openModal,
     onCloseModal: onClose,
+    modalStack,
   };
 }

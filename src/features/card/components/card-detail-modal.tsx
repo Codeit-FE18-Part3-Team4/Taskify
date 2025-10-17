@@ -2,6 +2,7 @@ import SampleImage from "@/assets/images/dashboard-gui.png";
 import IconButton from "@/components/button/icon-button";
 import Badge from "@/components/chips/badge/badge";
 import { Color } from "@/components/color";
+import Dialog from "@/components/dialog";
 import MoreIcon from "@/components/icon/more-icon";
 import XmarkIcon from "@/components/icon/xmark-icon";
 import Modal from "@/components/modal";
@@ -10,6 +11,7 @@ import { ProfileSize } from "@/components/profile/profile-size";
 import Typography from "@/components/typography";
 import { Direction, Menu, MenuItem } from "@/features/card/components/menu";
 import { getComments } from "@/features/comment/apis/comment";
+import { useDialog } from "@/hooks/use-dialog";
 import { useModal } from "@/hooks/use-modal";
 import { useResponsive } from "@/hooks/use-responsive";
 import { Card } from "@/types/card";
@@ -229,14 +231,19 @@ export default function CardDetailModal({
   const { openModal } = useModal({ key: modalKey });
   const { isDesktop, isMobile } = useResponsive();
 
+  // TODO: CardEditSheet로 교체
+  const { isShowDialog, openDialog } = useDialog({
+    key: "dialog-from-card-detail-modal",
+  });
+
   const handleEdit = () => {
     // TODO: Move to edit modal
-    console.log("Edit card");
+    openDialog(true);
   };
 
   const handleDelete = () => {
     // TODO: Delete card
-    console.log("Delete card");
+    openDialog(true);
   };
 
   const handleClose = () => {
@@ -266,6 +273,12 @@ export default function CardDetailModal({
           />
         )}
       </div>
+      {isShowDialog && (
+        <Dialog
+          dialogKey="dialog-from-card-detail-modal"
+          message="Dialog from CardDetailModal"
+        />
+      )}
     </Modal>
   );
 }
