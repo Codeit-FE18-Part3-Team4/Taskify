@@ -1,16 +1,18 @@
-import EmailIcon from "@/assets/images/email.svg";
-import FacebookIcon from "@/assets/images/facebook.svg";
-import InstaIcon from "@/assets/images/instagram.svg";
-import MainTabletImg from "@/assets/images/main-01-tablet.png";
-import MainImg from "@/assets/images/main-01.png";
-import FirstCardImg from "@/assets/images/main-02.png";
-import SecondCardMobileImg from "@/assets/images/main-03-mobile.png";
-import SecondCardTabletImg from "@/assets/images/main-03-tablet.png";
-import SecondCardImg from "@/assets/images/main-03.png";
-import CardInFirstImg from "@/assets/images/main-04.png";
-import CardInSeconImg from "@/assets/images/main-05.png";
-import CardInThirdImg from "@/assets/images/main-06.png";
-import Logo from "@/assets/images/taskify-logo.svg";
+import {
+  CardInFirstImg,
+  CardInSeconImg,
+  CardInThirdImg,
+  EmailIcon,
+  FacebookIcon,
+  FirstCardImg,
+  InstaIcon,
+  Logo,
+  MainImg,
+  MainTabletImg,
+  SecondCardImg,
+  SecondCardMobileImg,
+  SecondCardTabletImg,
+} from "@/assets/images";
 import Button, { ButtonSize, ButtonVariant } from "@/components/button/button";
 import Typography from "@/components/typography";
 import { useResponsiveValue } from "@/hooks/use-responsive-value";
