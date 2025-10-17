@@ -7,7 +7,7 @@ import { ProfileSize } from "@/components/profile/profile-size";
 import ChevronIcon, { Direction } from "@/components/icon/chevron-icon";
 import { useState } from "react";
 import { MemberInfo } from "@/types/member-info";
-import UserPlusSvg from "@/components/navigationBar/user-plus-svg";
+import UserPlusSvg from "@/components/icon/user-plus-svg";
 
 enum ButtonColorRange {
   Disabled = 500,

@@ -1,5 +1,5 @@
 import Typography from "@/components/typography";
-import styles from "./edit.module.css";
+import styles from "@/pages/dashboard/[id]/edit.module.css";
 import { classnames } from "@/utils/classnames";
 import TrashIcon from "@/components/icon/trash-icon";
 

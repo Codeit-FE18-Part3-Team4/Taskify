@@ -5,11 +5,9 @@ import Typography from "@/components/typography";
 import ColorPalette from "@/components/color-palette/color-palette";
 import { Dashboard } from "@/types/dashboard";
 import { useState } from "react";
-import Input, { InputSize } from "@/components/input/input";
+import Input from "@/components/input/input";
 import { updateDashboard } from "@/features/my-dashboard/api";
 import { ColorFrameSize } from "@/components/chips/color-frame/color-frame-size";
-import XIcon from "@/components/icon/x-gray-icon";
-import Link from "next/link";
 
 interface EditProps {
   dashboard: Dashboard;
@@ -68,7 +66,6 @@ export default function Edit({ dashboard, onUpdate }: EditProps) {
           <span className={Typography.lgSemiBold}>이름</span>
           <Input
             className={styles.textInput}
-            size={InputSize.Large}
             value={dashboardTitle}
             onChange={handleTitleChange}
           />

@@ -8,8 +8,8 @@ import { Card } from "@/types/card";
 import { Column as ColumnData } from "@/types/column";
 import { Dashboard } from "@/types/dashboard";
 import { classnames } from "@/utils/classnames";
-import styles from "./index.module.css";
-import PlusCircleSvg from "./plus-circle-svg";
+import styles from "@/pages/dashboard/[id]/index.module.css";
+import PlusCircleSvg from "@/components/icon/plus-circle-svg";
 import dynamic from "next/dynamic";
 import { ColumnOperationStatus, useColumn } from "@/hooks/use-column";
 import Alert, { AlertActionType } from "@/components/alert";
@@ -53,7 +53,7 @@ export default function DashboardContent({
   });
 
   const ALERT_KEY = "ALERT_SAMPLE";
-  const { isShowAlert, openAlert } = useAlert({
+  const { openAlert } = useAlert({
     key: ALERT_KEY,
   });
 

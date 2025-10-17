@@ -7,7 +7,7 @@ import { useModal } from "@/hooks/use-modal";
 import { Card } from "@/types/card";
 import { useRouter } from "next/router";
 import { useEffect, useMemo, useState } from "react";
-import DashboardContent from "./dashboard-content";
+import DashboardContent from "@/features/dashboard/components/dashboard-content";
 import CardDetailModal from "@/features/card/components/card-detail-modal";
 import NavigationBar from "@/components/navigationBar/navigation-bar";
 import styles from "./index.module.css";

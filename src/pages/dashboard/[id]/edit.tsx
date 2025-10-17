@@ -3,17 +3,18 @@ import { useEffect } from "react";
 import styles from "./edit.module.css";
 import NavigationBar from "@/components/navigationBar/navigation-bar";
 import Typography from "@/components/typography";
-import EditSidebar, { TabType } from "./edit-sidebar";
+import EditSidebar, {
+  TabType,
+} from "@/features/dashboard/edit/components/edit-sidebar";
 import Edit from "@/features/dashboard/edit/components/edit";
 import { useDashboardById } from "@/hooks/use-dashboard";
-import { Dashboard } from "@/types/dashboard";
 import Link from "next/link";
 import XIcon from "@/components/icon/x-gray-icon";
 import { classnames } from "@/utils/classnames";
 import ModifyMembers from "@/features/dashboard/edit/components/modify-members";
 
-const MEMBERS_PER_PAGE = 6;
-const INVITATIONS_PER_PAGE = 6;
+// const MEMBERS_PER_PAGE = 6;
+// const INVITATIONS_PER_PAGE = 6;
 
 export default function DashboardEditPage() {
   const router = useRouter();
@@ -33,10 +34,10 @@ export default function DashboardEditPage() {
   const tabValue = Array.isArray(tab) ? tab[0] : tab;
   const activeTab = (tabValue as TabType) ?? TabType.Edit;
 
-  useEffect(() => {
-    console.log(router.query);
-    console.log("Editing dashboard:", id);
-  }, [id]);
+  // useEffect(() => {
+  //   console.log(router.query);
+  //   console.log("Editing dashboard:", id);
+  // }, [id]);
 
   useEffect(() => {
     if (router.isReady) {
@@ -66,7 +67,6 @@ export default function DashboardEditPage() {
 
   return (
     <div className={styles.page}>
-      {/* <div className={styles.topBar}>정체모를영역</div> */}
       <NavigationBar />
       <main className={styles.main}>
         <EditSidebar onTabChange={handleTabChange} activeTab={activeTab} />
