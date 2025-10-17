@@ -24,6 +24,12 @@ import { useRouter } from "next/router";
 import { useDashboardContext } from "./dashboard-provider";
 import styles from "./my-dashboard.module.css";
 
+export async function getServerSideProps() {
+  return {
+    props: {},
+  };
+}
+
 export default function MyDashboardMain({
   dashboards,
   onClick,
@@ -79,7 +85,7 @@ export default function MyDashboardMain({
     desktop: Typography.lg2Bold,
     tablet: Typography.lgBold,
     mobile: Typography.lgSemiBold,
-  })
+  });
 
   const dashboardIdPage = (id: number) => {
     router.push(`dashboard/${id}`);
@@ -198,7 +204,7 @@ export default function MyDashboardMain({
               <Input
                 placeholder="검색"
                 variant={InputVariant.Search}
-                size={inputSize}
+                $size={inputSize}
                 onChange={(e) => setSearchValue(e.target.value)}
                 value={searchValue}
               />

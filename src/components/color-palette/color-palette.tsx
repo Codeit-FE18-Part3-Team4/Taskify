@@ -1,8 +1,7 @@
-import React, { useState } from "react";
-import styles from "./color-palette.module.css";
+import { CHIP_COLORS } from "@/components/chips/chip-color/chip-colors";
 import ColorFrame from "@/components/chips/color-frame/color-frame";
 import { ColorFrameSize } from "@/components/chips/color-frame/color-frame-size";
-import { CHIP_COLORS } from "@/components/chips/chip-color/chip-colors";
+import styles from "./color-palette.module.css";
 
 interface ColorPaletteProps {
   selectedColor?: string | null;
@@ -15,10 +14,12 @@ export default function ColorPalette({
   onSelect,
   size = ColorFrameSize.XSmall,
 }: ColorPaletteProps) {
-  const handleClick = (color: string) => {
-    selectedColor !== color && onSelect(color);
-  };
   const colorFrameClasses = `${styles.palleteContainer} ${styles[size]}`;
+
+  const handleClick = (color: string) => {
+    if (selectedColor === color) return;
+    onSelect(color);
+  };
 
   return (
     <div className={colorFrameClasses}>

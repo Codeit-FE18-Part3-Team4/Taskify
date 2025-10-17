@@ -57,7 +57,7 @@ export default function ColumnEditSheet({
         <Input
           value={title}
           placeholder="칼럼 이름"
-          size={InputSize.Auto}
+          $size={InputSize.Auto}
           errorMessage={errorMessage}
           onChange={handleTitleChange}
         />

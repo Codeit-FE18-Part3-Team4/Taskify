@@ -46,7 +46,7 @@ export default function CreateDashboardSheet() {
             <Input
               value={dashboardValue}
               onChange={(e) => setDashboardValue(e.target.value)}
-              size={InputSize.Auto}
+              $size={InputSize.Auto}
               placeholder="새로운 대시보드"
             />
           </SheetSection>
