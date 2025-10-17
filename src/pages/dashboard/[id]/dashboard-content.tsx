@@ -17,6 +17,7 @@ interface DashboardContentProps {
   columns: ColumnData[];
   cards: Record<number, Card[]>;
   isLoading: boolean;
+  onCardClick: (card: Card) => void;
 }
 
 export default function DashboardContent({
@@ -24,19 +25,12 @@ export default function DashboardContent({
   columns,
   cards,
   isLoading,
+  onCardClick,
 }: DashboardContentProps) {
-  const [selectedCard, setSelectedCard] = useState<Card | null>(null);
+  const CREATE_COLUMN_MODAL_KEY = "CREATE_COLUMN_MODAL";
+  const { isShowModal, openModal } = useModal({ key: CREATE_COLUMN_MODAL_KEY });
 
-  const MODAL_KEY = "CARD_DETAIL_MODAL";
-  const { isShowModal, openModal } = useModal({ key: MODAL_KEY });
-
-  const handleCardClick = (card: Card) => {
-    setSelectedCard(card);
-    openModal(true);
-  };
-
-  const handleCreatColumnClick = () => {
-    setSelectedCard(null);
+  const handleCreateColumnClick = () => {
     openModal(true);
   };
 
@@ -57,7 +51,7 @@ export default function DashboardContent({
                 <Column
                   key={column.id}
                   cards={cards[column.id] ?? []}
-                  onCardClick={handleCardClick}
+                  onCardClick={onCardClick}
                   columnTitle={column.title}
                   onClick={(type) => {
                     console.log(`${column.title} 컬럼의 ${type} 클릭`);
@@ -72,7 +66,7 @@ export default function DashboardContent({
                   styles.createColumnButton,
                   Typography.lg2Medium,
                 )}
-                onClick={handleCreatColumnClick}
+                onClick={handleCreateColumnClick}
               >
                 <PlusCircleSvg className={styles.icon} />
                 <span>새로운 컬럼 추가</span>
@@ -83,7 +77,7 @@ export default function DashboardContent({
       </section>
 
       {isShowModal && (
-        <Modal modalKey={MODAL_KEY}>
+        <Modal modalKey={CREATE_COLUMN_MODAL_KEY}>
           <div
             style={{
               width: "600px",
@@ -96,15 +90,8 @@ export default function DashboardContent({
               alignItems: "center",
             }}
           >
-            <h2 style={{ color: "white" }}>Modal 1 Title</h2>
-            <div>{selectedCard && JSON.stringify(selectedCard, null, 2)}</div>
-            <button
-              onClick={() => {
-                (openModal(false), selectedCard ?? setSelectedCard(null));
-              }}
-            >
-              Close Modal 1
-            </button>
+            <h2 style={{ color: "white" }}>새컬럼만들기모달</h2>
+            <button onClick={() => openModal(false)}>Close Modal 1</button>
           </div>
         </Modal>
       )}
