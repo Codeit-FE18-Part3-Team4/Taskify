@@ -1,7 +1,7 @@
 .navigationBar {
   width: 100%;
   background-color: var(--color-background);
-  border-bottom: 2px solid var(--color-stroke);
+  border-bottom: 2px solid var(--color-black700);
   display: flex;
   justify-content: flex-end;
   align-items: center;
