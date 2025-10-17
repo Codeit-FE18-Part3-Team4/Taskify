@@ -1,7 +1,7 @@
 import { useEffectAuth } from "@/features/auth/components/auth-provider";
 import { getDashboards, getUserInfo } from "@/features/my-dashboard/api/";
 import { Dashboard, UserInfo } from "@/types/my-dashboard";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 
 export function useDashboardSidebar() {
   const [dashboards, setDashboards] = useState<Dashboard[]>([]);
