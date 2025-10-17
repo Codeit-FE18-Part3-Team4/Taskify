@@ -1,4 +1,4 @@
-import axiosInstanceTest from "@/services/axios-instance";
+import axiosInstance from "@/services/axios-instance";
 
 export async function getCards({
   columnId,
@@ -16,7 +16,7 @@ export async function getCards({
       params.append("size", size.toString());
     }
 
-    const res = await axiosInstanceTest.get(`/cards?${params.toString()}`);
+    const res = await axiosInstance.get(`/cards?${params.toString()}`);
     return res.data;
   } catch (e) {
     console.error(e);
