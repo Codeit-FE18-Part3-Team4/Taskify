@@ -1,4 +1,11 @@
-import { createContext, ReactNode, useCallback, useContext, useRef, useState } from "react";
+import {
+  createContext,
+  ReactNode,
+  useCallback,
+  useContext,
+  useRef,
+  useState,
+} from "react";
 
 interface DashboardContextValue {
   refreshSidebar: () => void;
@@ -17,12 +24,14 @@ interface DashboardProviderProps {
 
 const DashboardContext = createContext<DashboardContextValue | null>(null);
 
-export function DashboardProvider({ children }: DashboardProviderProps) {
+export default function DashboardProvider({
+  children,
+}: DashboardProviderProps) {
   const sidebarRefreshRef = useRef<(() => void) | null>(null);
   const mainRefreshRef = useRef<(() => void) | null>(null);
-  
+
   const [currentDashboardPage, setCurrentDashboardPage] = useState<number>(0);
-  
+
   const [currentSidebarPage, setCurrentSidebarPage] = useState<number>(1);
 
   const registerRefresh = useCallback((callback: () => void) => {

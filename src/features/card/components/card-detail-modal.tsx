@@ -159,6 +159,7 @@ function Main({
         setComments(data);
       } catch (error) {
         // TODO: Error handling
+        console.error(error);
       }
     }
     loadComments();
@@ -166,6 +167,7 @@ function Main({
 
   const handleCommentSubmit = (value: string) => {
     // TODO: Add comment
+    console.log("Submit comment:", value);
   };
 
   return (

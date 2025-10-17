@@ -1,15 +1,14 @@
-import { useState } from "react";
-import styles from "./index.module.css";
+import ColorChip from "@/components/chips/chip-color/chips-color";
 import Column from "@/components/dashboard/column/column";
 import Modal from "@/components/modal";
-import ColorChip from "@/components/chips/chip-color/chips-color";
-import { classnames } from "@/utils/classnames";
 import Typography from "@/components/typography";
 import { CommonSize } from "@/constants/common/common-size";
 import { useModal } from "@/hooks/use-modal";
 import { Card } from "@/types/card";
-import { Dashboard } from "@/types/dashboard";
 import { Column as ColumnData } from "@/types/column";
+import { Dashboard } from "@/types/dashboard";
+import { classnames } from "@/utils/classnames";
+import styles from "./index.module.css";
 import PlusCircleSvg from "./plus-circle-svg";
 
 interface DashboardContentProps {
@@ -64,7 +63,7 @@ export default function DashboardContent({
                 type="button"
                 className={classnames(
                   styles.createColumnButton,
-                  Typography.lg2Medium,
+                  Typography.lg2Medium
                 )}
                 onClick={handleCreateColumnClick}
               >

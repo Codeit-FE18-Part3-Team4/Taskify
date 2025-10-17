@@ -4,7 +4,6 @@ import { classnames } from "@/utils/classnames";
 import {
   InputHTMLAttributes,
   FocusEvent as ReactFocusEvent,
-  ReactNode,
   useMemo,
   useState,
 } from "react";
@@ -24,14 +23,10 @@ export enum InputSize {
   Auto = "auto",
 }
 
-export type IconPosition = "left" | "right";
-
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   errorMessage?: string;
   $size?: InputSize;
-  icon?: ReactNode;
   variant?: InputVariant;
-  iconPosition?: IconPosition;
 }
 
 export default function Input({
@@ -44,10 +39,8 @@ export default function Input({
   className,
   errorMessage,
   $size = InputSize.Large,
-  icon,
   disabled,
   variant = InputVariant.Default,
-  iconPosition,
   ...props
 }: InputProps) {
   const hasError = !disabled && Boolean(errorMessage);

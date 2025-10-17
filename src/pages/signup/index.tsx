@@ -139,7 +139,7 @@ export default function SignupPage() {
 
   const handleSubmit = async () => {
     try {
-      const response = await signup({ email, nickname, password });
+      await signup({ email, nickname, password });
       setDialogMessage(DIALOG_MESSAGES.SIGNUP_SUCCESS);
     } catch (err) {
       const error = err as AxiosError<{ message?: string }>;

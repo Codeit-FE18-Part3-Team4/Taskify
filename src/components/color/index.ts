@@ -59,7 +59,7 @@ export enum Color {
   Violet = "#593ea5",
   Cyan = "#1f6a83",
   Rose = "#ae2e24",
-  CobaltBlue = "#1458bc",
+  CobaltBlue = Blue,
   Yellow = "#bd8c00",
   Orange = "#9f4b00",
 }

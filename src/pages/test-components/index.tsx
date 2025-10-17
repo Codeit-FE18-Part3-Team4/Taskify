@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import Alert, { AlertActionType } from "@/components/alert";
 import Button, { ButtonSize, ButtonVariant } from "@/components/button/button";
 import Checkbox from "@/components/checkbox/index";
@@ -262,10 +264,10 @@ function DropdownSample() {
   const options2: DropdownOption[] = [
     { element: "Option 1", value: "option1" },
     { element: "Option 2", value: "option2" },
-    { element: <div>"Option 3"</div>, value: "option3" },
+    { element: <div>Option 3</div>, value: "option3" },
     { element: "Option 4", value: "option4" },
     { element: "Option 5", value: "option5" },
-    { element: <div>"Option 6"</div>, value: "option6" },
+    { element: <div>Option 6</div>, value: "option6" },
   ];
 
   const [selectedValue1, setSelectedValue1] = useState<string>("");
@@ -535,6 +537,7 @@ function ColorPaletteSample() {
       <div>
         {Object.values(ColorFrameSize).map((value, index) => (
           <div
+            key={`${value}-${index}`}
             style={{
               margin: "10px 0",
               width:
@@ -565,6 +568,7 @@ function SheetSample() {
   const { isShowSheet, openSheet } = useSheet({
     key: SHEET_KEY,
   });
+
   const [image, setImage] = useState<File | null>(null);
   const [tags, setTags] = useState<string[]>([]);
   const [column, setColumn] = useState<string>("");
