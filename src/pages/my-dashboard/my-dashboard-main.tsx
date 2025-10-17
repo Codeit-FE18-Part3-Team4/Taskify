@@ -79,7 +79,7 @@ export default function MyDashboardMain({
     desktop: Typography.lg2Bold,
     tablet: Typography.lgBold,
     mobile: Typography.lgSemiBold,
-  })
+  });
 
   const dashboardIdPage = (id: number) => {
     router.push(`dashboard/${id}`);
@@ -198,7 +198,7 @@ export default function MyDashboardMain({
               <Input
                 placeholder="검색"
                 variant={InputVariant.Search}
-                size={inputSize}
+                $size={inputSize}
                 onChange={(e) => setSearchValue(e.target.value)}
                 value={searchValue}
               />
