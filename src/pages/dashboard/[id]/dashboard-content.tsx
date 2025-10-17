@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
-import styles from "./index.module.css";
 import Column, { ColumnActionType } from "@/components/dashboard/column/column";
 import ColorChip from "@/components/chips/chip-color/chips-color";
-import { classnames } from "@/utils/classnames";
 import Typography from "@/components/typography";
 import { CommonSize } from "@/constants/common/common-size";
 import { useModal } from "@/hooks/use-modal";
@@ -150,7 +148,7 @@ export default function DashboardContent({
                 type="button"
                 className={classnames(
                   styles.createColumnButton,
-                  Typography.lg2Medium
+                  Typography.lg2Medium,
                 )}
                 onClick={handleCreateColumnClick}
                 disabled={isCreating || isUpdating}

@@ -1,6 +1,6 @@
 import { getCards } from "@/components/dashboard/card/api/cards";
 import { getComments as fetchComments } from "@/features/comment/comment";
-import { useEffectAuth } from "@/features/auth/components/auth-provider";
+import { useAuth } from "@/features/auth/components/auth-provider";
 import { Card } from "@/types/card";
 import { useEffect, useState } from "react";
 import { Comment, FetchCommentsResponse } from "@/types/comment";
@@ -25,7 +25,7 @@ export function useCards(columnIds: number[]) {
 
       try {
         const cardsPromises = columnIds.map((columnId) =>
-          getCards({ columnId })
+          getCards({ columnId }),
         );
         const cardsDataList = await Promise.all(cardsPromises);
 
@@ -34,7 +34,7 @@ export function useCards(columnIds: number[]) {
             acc[columnId] = cardsDataList[index].cards;
             return acc;
           },
-          {}
+          {},
         );
 
         setCards(cardsMap);
@@ -73,7 +73,7 @@ export function useComments(cardId: number, size?: number) {
     }
   };
 
-  useEffectAuth(() => {
+  useEffect(() => {
     loadComments();
   }, [cardId]);
 

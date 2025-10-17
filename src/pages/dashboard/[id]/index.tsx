@@ -1,8 +1,4 @@
 import DashboardSideBar from "@/components/dashboard-side-bar/dashboard-side-bar";
-import { Card } from "@/types/card";
-import { useModal } from "@/hooks/use-modal";
-import { useDashboardById } from "@/hooks/use-dashboard";
-import { useColumn } from "@/hooks/use-column";
 import { useCards } from "@/hooks/use-cards";
 import { useColumn } from "@/hooks/use-column";
 import { useDashboardById } from "@/hooks/use-dashboard";
@@ -13,6 +9,8 @@ import { useRouter } from "next/router";
 import { useEffect, useMemo, useState } from "react";
 import DashboardContent from "./dashboard-content";
 import CardDetailModal from "@/features/card/components/card-detail-modal";
+import NavigationBar from "@/components/navigationBar/navigation-bar";
+import styles from "./index.module.css";
 
 interface SelectedCardInfo {
   card: Card;
@@ -33,7 +31,7 @@ export default function DashboardPage() {
   const { columns, isLoading: isColumnsLoading } = useColumn(dashboardId);
   const columnIds = useMemo(
     () => columns?.map((column) => column.id) ?? [],
-    [columns]
+    [columns],
   );
   const { cards, isLoading: isCardsLoading } = useCards(columnIds);
 
