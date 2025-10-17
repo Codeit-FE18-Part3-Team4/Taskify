@@ -1,13 +1,14 @@
 import { getCards } from "@/components/dashboard/card/api/cards";
+import { useEffectAuth } from "@/features/auth/components/auth-provider";
 import { Card } from "@/types/card";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 export function useCards(columnIds: number[]) {
   const [cards, setCards] = useState<Record<number, Card[]> | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<Error | null>(null);
 
-  useEffect(() => {
+  useEffectAuth(() => {
     if (columnIds.length === 0) {
       setCards(null);
       return;

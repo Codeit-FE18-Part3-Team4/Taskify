@@ -1,13 +1,14 @@
-import { getDashboards } from "@/features/my-dashboard/api/dashboards";
+import { useEffectAuth } from "@/features/auth/components/auth-provider";
+import { getDashboards } from "@/features/my-dashboard/api/";
 import { Dashboard } from "@/types/dashboard";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 export function useDashboard() {
   const [dashboards, setDashboards] = useState<Dashboard[] | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<Error | null>(null);
 
-  useEffect(() => {
+  useEffectAuth(() => {
     const loadDashboards = async () => {
       setIsLoading(true);
       setError(null);
