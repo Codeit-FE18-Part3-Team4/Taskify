@@ -1,9 +1,10 @@
 import { useResponsiveValue } from "@/hooks/use-responsive-value";
+import { useDashboardContext } from "@/pages/my-dashboard/dashboard-provider";
 import { Dashboard } from "@/types/my-dashboard";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo } from "react";
 
 export function useDashboardPagination(dashboards: Dashboard[]) {
-  const [currentPage, setCurrentPage] = useState<number>(0);
+  const { currentDashboardPage, setCurrentDashboardPage } = useDashboardContext();
 
   const responsivePageSize = useResponsiveValue({
     desktop: 3,
@@ -14,32 +15,42 @@ export function useDashboardPagination(dashboards: Dashboard[]) {
   const PAGE_SIZE = responsivePageSize;
 
   useEffect(() => {
-    setCurrentPage(0);
-  }, [PAGE_SIZE]);
+    setCurrentDashboardPage(0);
+  }, [PAGE_SIZE, setCurrentDashboardPage]);
 
   const totalPages = useMemo(() => {
     return Math.ceil(dashboards.length / PAGE_SIZE);
-  }, [dashboards.length, PAGE_SIZE]);
+  }, [dashboards, PAGE_SIZE]);
 
   const currentDashboards = useMemo(() => {
-    const start = currentPage * PAGE_SIZE;
+    const start = currentDashboardPage * PAGE_SIZE;
     const end = start + PAGE_SIZE;
     return dashboards.slice(start, end);
-  }, [dashboards, currentPage, PAGE_SIZE]);
+  }, [dashboards, currentDashboardPage, PAGE_SIZE]);
 
   const handlePrevPage = () => {
-    if (currentPage > 0) setCurrentPage((prev) => prev - 1);
+    if (currentDashboardPage > 0) {
+      setCurrentDashboardPage(currentDashboardPage - 1);
+    }
   };
 
   const handleNextPage = () => {
-    if (currentPage < totalPages - 1) setCurrentPage((prev) => prev + 1);
+    if (currentDashboardPage < totalPages - 1) {
+      setCurrentDashboardPage(currentDashboardPage + 1);
+    }
   };
 
-  const isFirstPage = currentPage === 0;
-  const isLastPage = currentPage === totalPages - 1;
+  useEffect(() => {
+    if (totalPages > 0 && currentDashboardPage >= totalPages) {
+      setCurrentDashboardPage(Math.max(0, totalPages - 1));
+    }
+  }, [totalPages, currentDashboardPage, setCurrentDashboardPage]);
+
+  const isFirstPage = currentDashboardPage === 0;
+  const isLastPage = currentDashboardPage === totalPages - 1;
 
   return {
-    currentPage,
+    currentPage: currentDashboardPage,
     totalPages,
     currentDashboards,
     handlePrevPage,
