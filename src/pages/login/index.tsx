@@ -23,7 +23,7 @@ export default function LoginPage() {
   const [isLoginButtonDisabled, setIsLoginButtonDisabled] = useState(true);
   const router = useRouter();
   const [dialogMessage, setDialogMessage] = useState("");
-  const DIALOG_KEY = "DIALOG_SAMPLE";
+  const DIALOG_KEY = "DIALOG_LOGIN";
   const { isShowDialog, openDialog } = useDialog({
     key: DIALOG_KEY,
   });
@@ -151,11 +151,7 @@ export default function LoginPage() {
         <Image src={LoginImg} alt="로그인 메인" width={900} height={920} />
       </section>
       {isShowDialog && (
-        <Dialog
-          dialogKey={DIALOG_KEY}
-          message={dialogMessage}
-          onConfirm={() => openDialog(false)}
-        />
+        <Dialog dialogKey={DIALOG_KEY} message={dialogMessage} />
       )}
     </main>
   );

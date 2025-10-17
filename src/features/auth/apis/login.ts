@@ -1,11 +1,11 @@
 import axios from "axios";
 
-export interface LoginRequest {
+interface LoginRequest {
   email: string;
   password: string;
 }
 
-export interface LoginResponse {
+interface LoginResponse {
   accessToken: string;
   user: {
     id: number;

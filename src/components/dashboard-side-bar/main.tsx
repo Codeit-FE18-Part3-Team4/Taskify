@@ -4,6 +4,7 @@ import { useResponsiveValue } from "@/hooks/use-responsive-value";
 import { MainProps } from "@/types/dashboard-side-bar";
 import { classnames } from "@/utils/classnames";
 import Image from "next/image";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import { useMemo } from "react";
 import DashboardButton from "./dashboard-button";
@@ -65,10 +66,13 @@ export default function Main({
           alt="대시보드 추가 아이콘"
         />
       </button>
-      <button className={`${styles.homeButton} ${styles.button}`}>
+      <Link
+        href={"/my-dashboard"}
+        className={`${styles.homeButton} ${styles.button}`}
+      >
         <Image src={HomeIcon} width={24} height={24} alt="홈 아이콘" />
         <span className={homeText}>홈</span>
-      </button>
+      </Link>
       {dashboards && dashboards.length > 0 ? (
         dashboards.map((dashboard) => (
           <DashboardButton
