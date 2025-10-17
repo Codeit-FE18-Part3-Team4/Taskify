@@ -192,9 +192,6 @@
   justify-content: space-between;
   padding-bottom: 20px;
 }
-/* .myDashboardMain .dashboardSection .invitationsDashboardSection{
-  
-} */
 .myDashboardMain
   .dashboardSection
   .invitationsDashboardSection
@@ -322,6 +319,51 @@
   .myDashboardMain .dashboardSection .myDashboard .myDashboardBox button {
     padding: 0 20px;
   }
+  .myDashboardMain .dashboardSection .invitationsDashboardTop {
+    flex-direction: column;
+    align-items: start;
+  }
+  .myDashboardMain
+    .dashboardSection
+    .invitationsDashboardSection
+    .invitationsDashboardSectionMain
+    > div {
+    width: 237px;
+  }
+  .myDashboardMain
+    .dashboardSection
+    .invitationsDashboardSection
+    .invitationsDashboardSectionMain
+    > div
+    .invitationsDashboardSectionMainButtonBox {
+    padding: 0;
+  }
+  .myDashboardMain
+    .dashboardSection
+    .invitationsDashboardSection
+    .invitationsDashboardSectionMain
+    > p {
+    width: 180px;
+    word-wrap: break-word;
+    /* white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden; */
+  }
+  .myDashboardMain
+    .dashboardSection
+    .invitationsDashboardSection
+    .invitationsDashboardSectionTop
+    > div {
+    width: 237px;
+  }
+  .myDashboardMain
+  .dashboardSection
+  .invitationsDashboardSection
+  .invitationsDashboardSectionTop
+  > div
+  p:nth-of-type(2) {
+  padding-left: 0px;
+}
 }
 
 /* Mobile */
@@ -339,5 +381,44 @@
   }
   .myDashboardMain .dashboardSection .myDashboard .myDashboardBox {
     flex-wrap: wrap;
+  }
+  .myDashboardMain
+    .dashboardSection
+    .invitationsDashboardSection
+    .invitationsDashboardSectionTop {
+    display: none;
+  }
+  .myDashboardMain
+    .dashboardSection
+    .invitationsDashboardSection
+    .invitationsDashboardSectionMain {
+    flex-direction: column;
+    align-items: start;
+    padding: 14px 10px;
+  }
+  .myDashboardMain
+    .dashboardSection
+    .invitationsDashboardSection
+    .invitationsDashboardSectionMain
+    > p {
+    padding-bottom: 4px;
+    width: 100%;
+  }
+  .myDashboardMain
+    .dashboardSection
+    .invitationsDashboardSection
+    .invitationsDashboardSectionMain
+    > div {
+    width: 315px;
+    justify-content: space-between;
+  }
+  .myDashboardMain
+    .dashboardSection
+    .invitationsDashboardSection
+    .invitationsDashboardSectionMain
+    > div
+    .invitationsDashboardSectionMainButtonBox {
+    width: 115px;
+    padding: 0;
   }
 }

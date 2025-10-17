@@ -8,7 +8,7 @@ import {
 } from "@/assets/images";
 import Button, { ButtonSize, ButtonVariant } from "@/components/button/button";
 import ColorChip from "@/components/chips/chip-color/chips-color";
-import Input, { InputVariant } from "@/components/input/input";
+import Input, { InputSize, InputVariant } from "@/components/input/input";
 import NavigationBar from "@/components/navigationBar/navigation-bar";
 import Profile from "@/components/profile/profile";
 import { ProfileSize } from "@/components/profile/profile-size";
@@ -68,6 +68,18 @@ export default function MyDashboardMain({
     tablet: Typography.lgBold,
     mobile: Typography.mdBold,
   });
+
+  const inputSize = useResponsiveValue({
+    desktop: InputSize.Medium,
+    tablet: InputSize.Auto,
+    mobile: InputSize.Auto,
+  });
+
+  const invitationTitle = useResponsiveValue({
+    desktop: Typography.lg2Bold,
+    tablet: Typography.lgBold,
+    mobile: Typography.lgSemiBold,
+  })
 
   const dashboardIdPage = (id: number) => {
     router.push(`dashboard/${id}`);
@@ -132,7 +144,7 @@ export default function MyDashboardMain({
                     key={item.id}
                     onClick={() => dashboardIdPage(item.id)}
                   >
-                    <ColorChip color={item.color} size={CommonSize.Large} />
+                    <ColorChip color={item.color} size={CommonSize.Medium} />
                     <span className={Typography.lg2SemiBold}>{item.title}</span>
                     <Image
                       src={ArrowRight}
@@ -186,6 +198,7 @@ export default function MyDashboardMain({
               <Input
                 placeholder="검색"
                 variant={InputVariant.Search}
+                size={inputSize}
                 onChange={(e) => setSearchValue(e.target.value)}
                 value={searchValue}
               />
@@ -215,7 +228,7 @@ export default function MyDashboardMain({
                   key={item.id}
                   className={styles.invitationsDashboardSectionMain}
                 >
-                  <p className={Typography.lg2Bold}>{item.dashboard.title}</p>
+                  <p className={invitationTitle}>{item.dashboard.title}</p>
                   <div>
                     <div
                       className={styles.invitationsDashboardSectionMainProfile}

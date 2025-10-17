@@ -1,12 +1,11 @@
 import CrownIcon from "@/assets/images/ic-crown.svg";
+import ColorChip from "@/components/chips/chip-color/chips-color";
 import Typography from "@/components/typography";
-import { CHIP_COLORS } from "@/components/chips/chip-color/chip-colors";
 import { CommonSize } from "@/constants/common/common-size";
+import { useResponsiveValue } from "@/hooks/use-responsive-value";
 import Image from "next/image";
 import { MouseEventHandler, ReactNode } from "react";
-import ColorChip from "@/components/chips/chip-color/chips-color";
 import styles from "./dashboard-side-bar.module.css";
-import { useResponsiveValue } from "@/hooks/use-responsive-value";
 
 interface DashboardButtonProps {
   children: ReactNode;
@@ -31,12 +30,18 @@ export default function DashboardButton({
     mobile: Typography.lgBold,
   })
 
+  const colorChipSize = useResponsiveValue({
+    desktop: CommonSize.Medium,
+    tablet: CommonSize.Small,
+    mobile: CommonSize.Small,
+  })
+
   return (
     <button
       onClick={onClick}
       className={`${styles.button} ${styles.dashboardButton} ${activeButton}`}
     >
-      <ColorChip size={CommonSize.Small} color={color} />
+      <ColorChip size={colorChipSize} color={color} />
       <span
         className={buttonText}
       >
