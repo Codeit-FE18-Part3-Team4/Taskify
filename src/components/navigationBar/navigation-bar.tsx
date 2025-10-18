@@ -1,4 +1,3 @@
-import AccountSettingModal from "@/components/account-setting-modal";
 import Modal from "@/components/modal";
 import Typography from "@/components/typography";
 import { CommonSize } from "@/constants/common/common-size";
@@ -6,8 +5,9 @@ import { useModal } from "@/hooks/use-modal";
 import { MemberInfo } from "@/types/member-info";
 import MemberList from "./member-list";
 import styles from "./navigation-bar.module.css";
-import SettingSvg from "./setting-svg";
-import UserPlusSvg from "./user-plus-svg";
+import SettingSvg from "@/components/icon/setting-svg";
+import UserPlusSvg from "@/components/icon/user-plus-svg";
+import Link from "next/link";
 
 interface NavigationBarProps {
   size?: CommonSize;
@@ -30,13 +30,6 @@ export default function NavigationBar({
   const MODAL_KEY_1 = "MODAL_SAMPLE_1";
   const { isShowModal: isShowModal1, openModal: openModal } = useModal({
     key: MODAL_KEY_1,
-  });
-  const ACCOUNT_SETTING_MODAL_KEY = "ACCOUNT_SETTING_MODAL";
-  const {
-    isShowModal: isShowAccountSettingModal,
-    openModal: openAccountSettingModal,
-  } = useModal({
-    key: ACCOUNT_SETTING_MODAL_KEY,
   });
   const handleUserPlus = () => {
     openModal(true);

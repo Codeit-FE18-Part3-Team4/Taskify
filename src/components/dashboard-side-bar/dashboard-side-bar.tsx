@@ -7,6 +7,8 @@ import styles from "./dashboard-side-bar.module.css";
 import Header from "./header";
 import Main from "./main";
 import UserProfile from "./user-profile";
+import { useModal } from "@/hooks/use-modal";
+import AccountSettingModal from "../account-setting-modal";
 
 const SHEET_KEY = "SHEET_DASHBOARD_ADD";
 
@@ -30,8 +32,17 @@ export default function DashboardSideBar() {
     key: SHEET_KEY,
   });
 
+  const ACCOUNT_SETTING_MODAL_KEY = "ACCOUNT_SETTING_MODAL";
+  const {
+    isShowModal: isShowAccountSettingModal,
+    openModal: openAccountSettingModal,
+  } = useModal({
+    key: ACCOUNT_SETTING_MODAL_KEY,
+  });
+
   const handleMyPageUrlClick = () => {
-    window.history.pushState(null, "", "/mypage");
+    // window.history.pushState(null, "", "/mypage");
+    openAccountSettingModal(true);
   };
 
   return (
@@ -51,6 +62,10 @@ export default function DashboardSideBar() {
         onClick={handleMyPageUrlClick}
       />
       <CreateDashboardSheet />
+
+      {isShowAccountSettingModal && (
+        <AccountSettingModal modalKey={ACCOUNT_SETTING_MODAL_KEY} />
+      )}
     </div>
   );
 }
