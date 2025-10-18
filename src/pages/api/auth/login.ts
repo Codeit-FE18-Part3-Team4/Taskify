@@ -39,7 +39,7 @@ export default async function handler(
       res.setHeader("Set-Cookie", cookie);
       return res
         .status(201)
-        .json({ accessToken: data.accessToken, user: data });
+        .json({ accessToken: data.accessToken, user: data.user });
     }
 
     return res.status(401).json({ message: "Login failed" });
