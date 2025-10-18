@@ -1,27 +1,25 @@
 import { getCards } from "@/components/dashboard/card/api/cards";
 import { useAuth } from "@/features/auth/components/auth-provider";
 import { Card } from "@/types/card";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 export function useCards(columnIds: number[]) {
   const [cards, setCards] = useState<Record<number, Card[]> | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoadingCards, setIsLoading] = useState(false);
   const [error, setError] = useState<Error | null>(null);
   const { isLoadingToken } = useAuth();
 
-  useEffect(() => {
-    if (isLoadingToken) return;
-
-    if (columnIds.length === 0) {
-      setCards(null);
-      return;
-    }
-
-    const getCardData = async () => {
-      setIsLoading(true);
+  const getCardData = useCallback(
+    async ({ loading }: { loading: boolean } = { loading: true }) => {
+      setIsLoading(loading);
       setError(null);
 
       try {
+        if (columnIds.length === 0) {
+          setCards(null);
+          return;
+        }
+
         const cardsPromises = columnIds.map((columnId) =>
           getCards({ columnId })
         );
@@ -44,10 +42,14 @@ export function useCards(columnIds: number[]) {
       } finally {
         setIsLoading(false);
       }
-    };
+    },
+    [columnIds]
+  );
 
+  useEffect(() => {
+    if (isLoadingToken) return;
     getCardData();
-  }, [columnIds, isLoadingToken]);
+  }, [isLoadingToken, getCardData]);
 
-  return { cards, isLoading, error };
+  return { cards, isLoadingCards, error, reloadCards: getCardData };
 }

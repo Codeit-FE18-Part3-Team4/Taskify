@@ -1,27 +1,25 @@
 import { getColumn } from "@/components/dashboard/column/api/column";
 import { useAuth } from "@/features/auth/components/auth-provider";
 import { Column } from "@/types/column";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 export function useColumn(dashboardId: number | null) {
   const [columns, setColumns] = useState<Column[] | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoadingColumns, setIsLoading] = useState(false);
   const [error, setError] = useState<Error | null>(null);
   const { isLoadingToken } = useAuth();
 
-  useEffect(() => {
-    if (isLoadingToken) return;
-
-    if (!dashboardId) {
-      setColumns(null);
-      return;
-    }
-
-    const loadColumns = async () => {
-      setIsLoading(true);
+  const loadColumns = useCallback(
+    async ({ loading }: { loading: boolean } = { loading: true }) => {
+      setIsLoading(loading);
       setError(null);
 
       try {
+        if (!dashboardId) {
+          setColumns(null);
+          return;
+        }
+
         const res = await getColumn({ dashboardId });
         setColumns(res?.data ?? []);
       } catch (e) {
@@ -32,9 +30,19 @@ export function useColumn(dashboardId: number | null) {
       } finally {
         setIsLoading(false);
       }
-    };
-    loadColumns();
-  }, [dashboardId, isLoadingToken]);
+    },
+    [dashboardId]
+  );
 
-  return { columns, isLoading, error };
+  useEffect(() => {
+    if (isLoadingToken) return;
+    loadColumns();
+  }, [isLoadingToken, loadColumns]);
+
+  return {
+    columns,
+    isLoadingColumns,
+    error,
+    reloadColumns: loadColumns,
+  };
 }

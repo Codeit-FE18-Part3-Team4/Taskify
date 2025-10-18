@@ -22,7 +22,7 @@ export default function Textarea({
       {...props}
       className={`${styles.textarea}
                   ${styles[size]} 
-                  ${Typography.lgMedium} 
+                  ${Typography.lgMedium160} 
                   ${className ?? ""} `}
     />
   );

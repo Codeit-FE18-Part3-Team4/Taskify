@@ -1,0 +1,105 @@
+{
+  "members": [
+    {
+      "id": 1,
+      "userId": 101,
+      "email": "shin.teamlead@company.com",
+      "nickname": "신팀장",
+      "profileImageUrl": "https://api.example.com/avatars/user-987.jpg",
+      "createdAt": "2025-09-15T09:00:00.000Z",
+      "updatedAt": "2025-09-15T09:00:00.000Z",
+      "isOwner": true
+    },
+    {
+      "id": 2,
+      "userId": 102,
+      "email": "kim.dev@company.com",
+      "nickname": "김개발",
+      "profileImageUrl": "https://api.example.com/avatars/user-123.jpg",
+      "createdAt": "2025-09-15T09:15:30.123Z",
+      "updatedAt": "2025-10-14T11:20:45.678Z",
+      "isOwner": false
+    },
+    {
+      "id": 3,
+      "userId": 103,
+      "email": "lee.review@company.com",
+      "nickname": "이리뷰",
+      "profileImageUrl": "https://api.example.com/avatars/user-456.jpg",
+      "createdAt": "2025-09-16T10:30:45.234Z",
+      "updatedAt": "2025-09-16T10:30:45.234Z",
+      "isOwner": false
+    },
+    {
+      "id": 4,
+      "userId": 104,
+      "email": "park.data@company.com",
+      "nickname": "박데이터",
+      "profileImageUrl": "https://api.example.com/avatars/user-789.jpg",
+      "createdAt": "2025-09-17T14:20:15.456Z",
+      "updatedAt": "2025-10-12T08:15:30.234Z",
+      "isOwner": false
+    },
+    {
+      "id": 5,
+      "userId": 105,
+      "email": "choi.security@company.com",
+      "nickname": "최보안",
+      "profileImageUrl": "https://api.example.com/avatars/user-321.jpg",
+      "createdAt": "2025-09-18T08:45:22.567Z",
+      "updatedAt": "2025-09-18T08:45:22.567Z",
+      "isOwner": false
+    },
+    {
+      "id": 6,
+      "userId": 106,
+      "email": "jung.frontend@company.com",
+      "nickname": "정프론트",
+      "profileImageUrl": "https://api.example.com/avatars/user-654.jpg",
+      "createdAt": "2025-09-20T11:12:33.678Z",
+      "updatedAt": "2025-09-20T11:12:33.678Z",
+      "isOwner": false
+    },
+    {
+      "id": 7,
+      "userId": 107,
+      "email": "han.design@company.com",
+      "nickname": "한디자인",
+      "profileImageUrl": "https://api.example.com/avatars/user-432.jpg",
+      "createdAt": "2025-09-22T15:30:44.789Z",
+      "updatedAt": "2025-10-15T16:40:22.345Z",
+      "isOwner": false
+    },
+    {
+      "id": 8,
+      "userId": 108,
+      "email": "oh.devops@company.com",
+      "nickname": "오데브옵스",
+      "profileImageUrl": "https://api.example.com/avatars/user-876.jpg",
+      "createdAt": "2025-09-25T13:25:55.890Z",
+      "updatedAt": "2025-09-25T13:25:55.890Z",
+      "isOwner": false
+    },
+    {
+      "id": 9,
+      "userId": 109,
+      "email": "kang.qa@company.com",
+      "nickname": "강QA",
+      "profileImageUrl": "https://api.example.com/avatars/user-543.jpg",
+      "createdAt": "2025-10-01T09:50:11.234Z",
+      "updatedAt": "2025-10-01T09:50:11.234Z",
+      "isOwner": false
+    },
+    {
+      "id": 10,
+      "userId": 110,
+      "email": "lim.backend@company.com",
+      "nickname": "임백엔드",
+      "profileImageUrl": "https://api.example.com/avatars/user-765.jpg",
+      "createdAt": "2025-10-05T16:38:26.345Z",
+      "updatedAt": "2025-10-16T09:15:44.123Z",
+      "isOwner": false
+    }
+  ],
+  "totalCount": 10
+}

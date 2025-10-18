@@ -1,8 +1,8 @@
 import Card from "@/components/dashboard/card/card";
-import styles from "./column.module.css";
-import { Card as CardData } from "@/types/card";
 import SettingSvg from "@/components/navigationBar/setting-svg";
 import Typography from "@/components/typography";
+import { Card as CardData } from "@/types/card";
+import styles from "./column.module.css";
 import PlusSvg from "./plus-svg";
 
 export enum ColumnActionType {
@@ -13,6 +13,7 @@ export enum ColumnActionType {
 interface ColumnProps {
   columnTitle: string;
   cards: CardData[];
+  isLoadingCards: boolean;
   onCardClick: (card: CardData) => void;
   onClick?: (type: ColumnActionType) => void;
 }
@@ -20,6 +21,7 @@ interface ColumnProps {
 export default function Column({
   columnTitle,
   cards = [],
+  isLoadingCards,
   onCardClick,
   onClick,
 }: ColumnProps) {
@@ -39,11 +41,15 @@ export default function Column({
           </button>
         </div>
       </div>
-      {cards.map((card) => (
-        <div key={card.id}>
-          <Card card={card} onClick={() => onCardClick(card)} />
-        </div>
-      ))}
+      {isLoadingCards ? (
+        <div>카드 로딩중...</div>
+      ) : (
+        cards.map((card) => (
+          <div key={card.id}>
+            <Card card={card} onClick={() => onCardClick(card)} />
+          </div>
+        ))
+      )}
     </section>
   );
 }
