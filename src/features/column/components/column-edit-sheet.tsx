@@ -23,7 +23,7 @@ export default function ColumnEditSheet({
   const [errorMessage, setErrorMessage] = useState<string | undefined>();
 
   const sheetTitle = column ? "칼럼 관리" : "새 칼럼 생성";
-  const actionType = column ? SheetActionType.Modify : SheetActionType.Create;
+  const actionType = column ? SheetActionType.Update : SheetActionType.Create;
   const canSubmit = title.length > 0 && column?.title !== title;
 
   const handleTitleChange = (event: ChangeEvent<HTMLInputElement>) => {

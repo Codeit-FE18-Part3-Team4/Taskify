@@ -1,8 +1,8 @@
 import Card from "@/components/dashboard/card/card";
-import styles from "./column.module.css";
-import { Card as CardData } from "@/types/card";
 import SettingSvg from "@/components/navigationBar/setting-svg";
 import Typography from "@/components/typography";
+import { Card as CardData } from "@/types/card";
+import styles from "./column.module.css";
 import PlusSvg from "./plus-svg";
 
 export enum ColumnActionType {

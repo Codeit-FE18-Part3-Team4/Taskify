@@ -1,4 +1,3 @@
-import SampleImage from "@/assets/images/dashboard-gui.png";
 import Alert, { AlertActionType } from "@/components/alert";
 import IconButton from "@/components/button/icon-button";
 import Badge from "@/components/chips/badge/badge";
@@ -10,7 +9,7 @@ import Modal from "@/components/modal";
 import Profile from "@/components/profile/profile";
 import { ProfileSize } from "@/components/profile/profile-size";
 import Typography from "@/components/typography";
-import { deleteCard } from "@/features/card/apis";
+import { CardParams, deleteCard, updateCard } from "@/features/card/apis";
 import { Direction, Menu, MenuItem } from "@/features/card/components/menu";
 import { getComments } from "@/features/comment/apis/mock";
 import { CommentInput, CommentList } from "@/features/comment/components";
@@ -18,13 +17,14 @@ import { useAlert } from "@/hooks/use-alert";
 import { useDialog } from "@/hooks/use-dialog";
 import { useModal } from "@/hooks/use-modal";
 import { useResponsive } from "@/hooks/use-responsive";
-import { Card } from "@/types/card";
-import { Comment } from "@/types/comment";
+import { useSheet } from "@/hooks/use-sheet";
+import type { Card, Column, Comment, MemberInfo } from "@/types";
 import { classnames } from "@/utils/classnames";
 import { formatDueDate } from "@/utils/date-formatter";
 import Image from "next/image";
 import { ReactNode, useEffect, useState } from "react";
 import styles from "./card-detail-modal.module.css";
+import CardEditSheet from "./card-edit-sheet";
 
 interface ActionsProps {
   onEdit: () => void;
@@ -185,17 +185,21 @@ function Main({
               <Actions onEdit={onEdit} onDelete={onDelete} onClose={onClose} />
             )}
           </h2>
-          <div className={styles.tagsList}>
-            {card.tags.map((tag) => (
-              <Badge key={tag} title={tag} />
-            ))}
-          </div>
+          {card.tags.length > 0 && (
+            <div className={styles.tagsList}>
+              {card.tags.map((tag) => (
+                <Badge key={tag} title={tag} />
+              ))}
+            </div>
+          )}
         </header>
         <article className={styles.content}>
           <p className={Typography.lgMedium160}>{card.description}</p>
-          <div className={styles.image}>
-            <Image src={SampleImage} alt="카드에 등록된 이미지" fill />
-          </div>
+          {card.imageUrl && (
+            <div className={styles.image}>
+              <Image src={card.imageUrl} alt="카드에 등록된 이미지" fill />
+            </div>
+          )}
         </article>
         {isDesktop || (
           <div className={styles.info}>
@@ -223,15 +227,21 @@ interface Props {
   modalKey: string;
   card: Card;
   dashboardTitle: string;
-  columnTitle: string;
+  columns: Column[];
+  members: MemberInfo[];
+  onDelete: () => void;
 }
 
 export default function CardDetailModal({
   modalKey,
-  card,
+  card: initialCard,
   dashboardTitle,
-  columnTitle,
+  columns,
+  members,
+  onDelete,
 }: Props) {
+  const [card, setCard] = useState<Card>(initialCard);
+
   const { openModal } = useModal({ key: modalKey });
   const { isDesktop, isMobile } = useResponsive();
 
@@ -242,8 +252,16 @@ export default function CardDetailModal({
   const { isShowDialog, openDialog } = useDialog({ key: dialogKey });
   const [dialogMessage, setDialogMessage] = useState("");
 
+  const sheetKey = "card-edit-sheet-from-card-detail-modal";
+  const { isShowSheet, openSheet } = useSheet({
+    key: sheetKey,
+  });
+
+  const columnTitle =
+    columns?.find((column) => card.columnId === column.id)?.title ?? "";
+
   const handleEdit = () => {
-    // TODO: Show CardEditSheet
+    openSheet(true);
   };
 
   const handleDelete = async () => {
@@ -254,10 +272,10 @@ export default function CardDetailModal({
 
     try {
       await deleteCard({ cardId: card.id });
+      onDelete();
       openModal(false);
     } catch (error) {
       if (error instanceof Error) {
-        console.log(error);
         setDialogMessage(error.message);
         openDialog(true);
       }
@@ -266,6 +284,12 @@ export default function CardDetailModal({
 
   const handleClose = () => {
     openModal(false);
+  };
+
+  const handleCardUpdate = async (params: CardParams) => {
+    const newCard = await updateCard({ cardId: card.id, params });
+    setCard(newCard);
+    openSheet(false);
   };
 
   return (
@@ -301,6 +325,15 @@ export default function CardDetailModal({
         />
       )}
       {isShowDialog && <Dialog dialogKey={dialogKey} message={dialogMessage} />}
+      {isShowSheet && (
+        <CardEditSheet
+          sheetKey={sheetKey}
+          card={card}
+          columns={columns}
+          members={members}
+          onUpdate={handleCardUpdate}
+        />
+      )}
     </Modal>
   );
 }
