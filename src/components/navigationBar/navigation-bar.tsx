@@ -23,9 +23,7 @@ export default function NavigationBar({
   const sizeName = CommonSize[size].toLowerCase();
   const navigationBarClasses = `${styles.navigationBar} ${styles[sizeName]}`;
   const iconSpanClasses = `${styles.iconSpan} ${Typography.lgMedium}`;
-  const settingLink = dashboardId
-    ? `/dashboard/${dashboardId}/edit?tab=edit`
-    : "#";
+  const settingLink = `/dashboard/${dashboardId}/edit?tab=edit`;
 
   const MODAL_KEY_1 = "MODAL_SAMPLE_1";
   const { isShowModal: isShowModal1, openModal: openModal } = useModal({
@@ -47,22 +45,26 @@ export default function NavigationBar({
 
   return (
     <div className={navigationBarClasses}>
-      {showMembers.length > 0 && (
-        <MemberList
-          hideMembers={hideMembers}
-          showMembers={showMembers}
-        ></MemberList>
+      {dashboardId && (
+        <>
+          {showMembers.length > 0 && (
+            <MemberList
+              hideMembers={hideMembers}
+              showMembers={showMembers}
+            ></MemberList>
+          )}
+          <div className={styles.rightIcons}>
+            <Link href={settingLink} className={styles.iconLink}>
+              <SettingSvg className={styles.icon} />
+              <span className={iconSpanClasses}>관리</span>
+            </Link>
+            <button onClick={() => handleUserPlus()}>
+              <UserPlusSvg className={styles.icon} />
+              <span className={iconSpanClasses}>공유</span>
+            </button>
+          </div>
+        </>
       )}
-      <div className={styles.rightIcons}>
-        <Link href={settingLink} className={styles.iconLink}>
-          <SettingSvg className={styles.icon} />
-          <span className={iconSpanClasses}>관리</span>
-        </Link>
-        <button onClick={() => handleUserPlus()}>
-          <UserPlusSvg className={styles.icon} />
-          <span className={iconSpanClasses}>공유</span>
-        </button>
-      </div>
 
       {isShowModal1 && (
         <Modal modalKey={MODAL_KEY_1}>
