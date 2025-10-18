@@ -14,6 +14,7 @@ export function useInvitations() {
   const observerRef = useRef<IntersectionObserver | null>(null);
   const loadMoreRef = useRef<HTMLDivElement | null>(null);
   const { isLoadingToken } = useAuth();
+  const isInitialLoadRef = useRef(true);
 
   const loadInvitations = useCallback(
     async (reset = false) => {
@@ -21,10 +22,12 @@ export function useInvitations() {
 
       try {
         setIsLoadingMore(true);
+        const currentCursorId = reset ? undefined : cursorId;
+
         const { invitations: newInvitations, cursorId: nextCursor } =
           await getInvitations({
             size: 10,
-            cursorId: reset ? undefined : cursorId,
+            cursorId: currentCursorId,
           });
 
         if (reset) {
@@ -66,6 +69,13 @@ export function useInvitations() {
   );
 
   useEffect(() => {
+    if (isLoadingToken || !isInitialLoadRef.current) return;
+
+    isInitialLoadRef.current = false;
+    loadInvitations(true);
+  }, [isLoadingToken]);
+
+  useEffect(() => {
     if (isLoadingToken) return;
 
     observerRef.current = new IntersectionObserver(
@@ -87,11 +97,6 @@ export function useInvitations() {
       }
     };
   }, [hasMore, isLoadingMore, loadInvitations, isLoadingToken]);
-
-  useEffect(() => {
-    if (isLoadingToken) return;
-    loadInvitations(true);
-  }, [loadInvitations, isLoadingToken]);
 
   return {
     invitations,
