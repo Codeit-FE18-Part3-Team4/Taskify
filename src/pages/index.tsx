@@ -78,7 +78,7 @@ export default function Home() {
     <div className={styles.mainWrap}>
       <header className={styles.header}>
         <button role="link" className={styles.logo}>
-          <Image src={Logo} width={186} height={48} alt="로고" />
+          <Image src={Logo} width={186} height={48} quality={100} alt="로고" />
         </button>
         <div className={styles.headerButtonBox}>
           <button
@@ -120,6 +120,7 @@ export default function Home() {
                 width={1078}
                 height={682}
                 alt="메인 페이지 이미지"
+                quality={100}
               />
             </div>
           )}
@@ -133,6 +134,7 @@ export default function Home() {
                   width={736}
                   height={613}
                   alt="메인 페이지 카드 이미지"
+                  quality={100}
                 />
                 <div className={styles.textBox}>
                   <span className={mainSectionTabTypography}>Point 1</span>
@@ -158,6 +160,7 @@ export default function Home() {
                   width={736}
                   height={613}
                   alt="메인 페이지 카드 이미지"
+                  quality={100}
                 />
                 <div className={styles.textBox}>
                   <span className={mainSectionTabTypography}>Point 2</span>
@@ -197,6 +200,7 @@ export default function Home() {
                       width={368}
                       height={192}
                       alt="사용 예시 이미지"
+                      quality={100}
                     />
                   </div>
                   <p
@@ -223,6 +227,7 @@ export default function Home() {
                       width={368}
                       height={192}
                       alt="사용 예시 이미지"
+                      quality={100}
                     />
                   </div>
                   <p
@@ -249,6 +254,7 @@ export default function Home() {
                       width={368}
                       height={192}
                       alt="사용 예시 이미지"
+                      quality={100}
                     />
                   </div>
                   <p
@@ -276,7 +282,13 @@ export default function Home() {
       <footer className={styles.footer}>
         <div className={styles.logo}>
           <button>
-            <Image src={Logo} width={186} height={48} alt="로고" />
+            <Image
+              src={Logo}
+              width={186}
+              height={48}
+              quality={100}
+              alt="로고"
+            />
           </button>
         </div>
         <div className={styles.faqBox}>
@@ -286,7 +298,13 @@ export default function Home() {
         <div className={styles.snsBox}>
           {[EmailIcon, FacebookIcon, InstaIcon].map((icon, index) => (
             <button key={index}>
-              <Image src={icon} width={20} height={20} alt="SNS" />
+              <Image
+                src={icon}
+                width={20}
+                height={20}
+                alt="SNS"
+                quality={100}
+              />
             </button>
           ))}
         </div>
