@@ -120,17 +120,12 @@ export default function CardEditSheet({
       imageUrl,
     };
 
-    console.log(members);
-    console.log(assignee);
-
     switch (sheetActionType) {
       case SheetActionType.Create:
         onCreate?.(editValues);
-        console.log("CardEditSheet - handleAction - Create", editValues);
         break;
       case SheetActionType.Update:
         onUpdate?.(editValues);
-        console.log("CardEditSheet - handleAction - Update", editValues);
         break;
     }
   };

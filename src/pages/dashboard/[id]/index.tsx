@@ -89,11 +89,11 @@ export default function DashboardPage() {
           )}
         </main>
       </div>
-      {isShowModal && selectedCard !== null && (
+      {isShowModal && selectedCard !== null && dashboard !== null && (
         <CardDetailModal
           modalKey={CARD_DETAIL_MODAL_KEY}
           card={selectedCard}
-          dashboardTitle={dashboard?.title ?? ""}
+          dashboard={dashboard}
           columns={columns ?? []}
           members={members ?? []}
           onDelete={handleCardDelete}

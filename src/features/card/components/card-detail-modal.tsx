@@ -11,14 +11,14 @@ import { ProfileSize } from "@/components/profile/profile-size";
 import Typography from "@/components/typography";
 import { CardParams, deleteCard, updateCard } from "@/features/card/apis";
 import { Direction, Menu, MenuItem } from "@/features/card/components/menu";
-import { getComments } from "@/features/comment/apis/mock";
+import { createComment, getComments } from "@/features/comment/apis";
 import { CommentInput, CommentList } from "@/features/comment/components";
 import { useAlert } from "@/hooks/use-alert";
 import { useDialog } from "@/hooks/use-dialog";
 import { useModal } from "@/hooks/use-modal";
 import { useResponsive } from "@/hooks/use-responsive";
 import { useSheet } from "@/hooks/use-sheet";
-import type { Card, Column, Comment, MemberInfo } from "@/types";
+import type { Card, Column, Comment, Dashboard, MemberInfo } from "@/types";
 import { classnames } from "@/utils/classnames";
 import { formatDueDate } from "@/utils/date-formatter";
 import Image from "next/image";
@@ -137,13 +137,13 @@ function Sidebar({
 
 interface MainProps extends ActionsProps {
   card: Card;
-  dashboardTitle: string;
+  dashboard: Dashboard;
   columnTitle: string;
 }
 
 function Main({
   card,
-  dashboardTitle,
+  dashboard,
   columnTitle,
   onEdit,
   onDelete,
@@ -152,22 +152,39 @@ function Main({
   const [comments, setComments] = useState<Comment[]>([]);
   const { isDesktop } = useResponsive();
 
+  const FAIL_DIALOG_KEY = "fail-dialog-from-card-detail-modal";
+  const { isShowDialog, openDialog } = useDialog({ key: FAIL_DIALOG_KEY });
+  const [failMessage, setFailMessage] = useState("");
+
   useEffect(() => {
     async function loadComments() {
       try {
-        const data = await getComments();
-        setComments(data);
-      } catch (error) {
-        // TODO: Error handling
-        console.error(error);
+        const comments = await getComments({ cardId: card.id });
+        setComments(comments);
+      } catch {
+        setComments([]);
       }
     }
     loadComments();
-  }, []);
+  }, [card]);
 
-  const handleCommentSubmit = (value: string) => {
-    // TODO: Add comment
-    console.log("Submit comment:", value);
+  const handleCommentSubmit = async (value: string) => {
+    try {
+      const newComment = await createComment({
+        params: {
+          cardId: card.id,
+          columnId: card.columnId,
+          dashboardId: dashboard.id,
+          content: value,
+        },
+      });
+      setComments((prevComments) => [...prevComments, newComment]);
+    } catch (error) {
+      if (error instanceof Error) {
+        setFailMessage(error.message);
+        openDialog(true);
+      }
+    }
   };
 
   return (
@@ -204,7 +221,7 @@ function Main({
         {isDesktop || (
           <div className={styles.info}>
             <ProjectInfo
-              dashboardTitle={dashboardTitle}
+              dashboardTitle={dashboard.title}
               columnTitle={columnTitle}
             />
             <AssigneeInfo name={card.assignee.nickname} />
@@ -219,6 +236,9 @@ function Main({
           <CommentList comments={comments} />
         </div>
       </div>
+      {isShowDialog && (
+        <Dialog dialogKey={FAIL_DIALOG_KEY} message={failMessage} />
+      )}
     </div>
   );
 }
@@ -226,7 +246,7 @@ function Main({
 interface Props {
   modalKey: string;
   card: Card;
-  dashboardTitle: string;
+  dashboard: Dashboard;
   columns: Column[];
   members: MemberInfo[];
   onDelete: () => void;
@@ -235,7 +255,7 @@ interface Props {
 export default function CardDetailModal({
   modalKey,
   card: initialCard,
-  dashboardTitle,
+  dashboard,
   columns,
   members,
   onDelete,
@@ -297,7 +317,7 @@ export default function CardDetailModal({
       <div className={styles.cardDetailModal}>
         <Main
           card={card}
-          dashboardTitle={dashboardTitle}
+          dashboard={dashboard}
           columnTitle={columnTitle}
           onEdit={handleEdit}
           onDelete={handleDelete}
@@ -305,7 +325,7 @@ export default function CardDetailModal({
         />
         {isDesktop && (
           <Sidebar
-            dashboardTitle={dashboardTitle}
+            dashboardTitle={dashboard.title}
             columnTitle={columnTitle}
             assignee={card.assignee.nickname}
             dueDate={card.dueDate}
