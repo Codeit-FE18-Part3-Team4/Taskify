@@ -1,22 +1,18 @@
 import {
   getColumn,
-  PostColumn,
-  updateColumnTitle,
+  postColumn,
+  putColumnTitle,
 } from "@/components/dashboard/column/api/column";
 import { Column } from "@/types/column";
 import { useState, useCallback, useEffect } from "react";
 import { useMutation } from "./use-mutation";
-
-export type ColumnOperationStatus = {
-  type: "success" | "error" | "idle";
-  message: string;
-};
+import { OperationStatus } from "@/types/operation-status";
 
 export function useColumn(dashboardId: number | null) {
   const [columns, setColumns] = useState<Column[] | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<Error | null>(null);
-  const [status, setStatus] = useState<ColumnOperationStatus>({
+  const [status, setStatus] = useState<OperationStatus>({
     type: "idle",
     message: "",
   });
@@ -45,8 +41,8 @@ export function useColumn(dashboardId: number | null) {
     loadColumns();
   }, [dashboardId, loadColumns]);
 
-  const { mutate: rawCreateColumn, isLoading: isCreating } = useMutation(
-    PostColumn,
+  const { mutate: mutCreateColumn, isLoading: isCreating } = useMutation(
+    postColumn,
     {
       onSuccess: () => {
         setStatus({
@@ -66,7 +62,7 @@ export function useColumn(dashboardId: number | null) {
   );
 
   const { mutate: rawUpdateColumn, isLoading: isUpdating } = useMutation(
-    updateColumnTitle,
+    putColumnTitle,
     {
       onSuccess: () => {
         setStatus({
@@ -85,9 +81,9 @@ export function useColumn(dashboardId: number | null) {
     },
   );
 
-  const createColumn = async (payload: Parameters<typeof PostColumn>[0]) => {
+  const createColumn = async (payload: Parameters<typeof postColumn>[0]) => {
     try {
-      const result = await rawCreateColumn(payload);
+      const result = await mutCreateColumn(payload);
       return { success: true as const, result };
     } catch (err) {
       return { success: false as const, error: err };
@@ -95,7 +91,7 @@ export function useColumn(dashboardId: number | null) {
   };
 
   const updateColumn = async (
-    payload: Parameters<typeof updateColumnTitle>[0],
+    payload: Parameters<typeof putColumnTitle>[0],
   ) => {
     try {
       const result = await rawUpdateColumn(payload);
