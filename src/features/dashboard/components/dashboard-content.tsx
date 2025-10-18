@@ -11,9 +11,10 @@ import { classnames } from "@/utils/classnames";
 import styles from "@/pages/dashboard/[id]/index.module.css";
 import PlusCircleSvg from "@/components/icon/plus-circle-svg";
 import dynamic from "next/dynamic";
-import { ColumnOperationStatus, useColumn } from "@/hooks/use-column";
+import { useColumn } from "@/hooks/use-column";
 import Alert, { AlertActionType } from "@/components/alert";
 import { useAlert } from "@/hooks/use-alert";
+import { OperationStatus } from "@/types/operation-status";
 
 export async function getServerSideProps() {
   return {
@@ -26,7 +27,7 @@ interface DashboardContentProps {
   columns: ColumnData[];
   cards: Record<number, Card[]>;
   isLoading: boolean;
-  onCardClick: (card: Card, columnTitle: string) => void;
+  onCardClick: (card: Card, columnTitle: string, columnid: number) => void;
 }
 
 const ColumnEditSheet = dynamic(
@@ -44,8 +45,9 @@ export default function DashboardContent({
   onCardClick,
 }: DashboardContentProps) {
   const [selectedColumn, setSelectedColumn] = useState<ColumnData | null>(null);
-  const [statusMessage, setStatusMessage] =
-    useState<ColumnOperationStatus | null>(null);
+  const [statusMessage, setStatusMessage] = useState<OperationStatus | null>(
+    null,
+  );
 
   const COLUMN_SHEET_KEY = "COLUMN_SHEET";
   const { isShowModal, openModal } = useModal({
@@ -132,7 +134,7 @@ export default function DashboardContent({
                   key={column.id}
                   cards={cards[column.id] ?? []}
                   onCardClick={(card) => {
-                    onCardClick(card, column.title);
+                    onCardClick(card, column.title, column.id);
                   }}
                   columnTitle={column.title}
                   onClick={(type) => {

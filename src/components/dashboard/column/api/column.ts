@@ -20,7 +20,7 @@ export async function getColumn({ dashboardId }: { dashboardId: number }) {
   }
 }
 
-export async function updateColumnTitle({
+export async function putColumnTitle({
   columnId,
   columnTitle,
 }: UpdateColumnProps) {
@@ -35,7 +35,7 @@ export async function updateColumnTitle({
   }
 }
 
-export async function PostColumn({
+export async function postColumn({
   columnTitle,
   dashboardId,
 }: PostColumnProps) {

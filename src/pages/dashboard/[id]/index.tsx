@@ -15,6 +15,7 @@ import styles from "./index.module.css";
 interface SelectedCardInfo {
   card: Card;
   columnTitle: string;
+  columnId: number;
 }
 
 export default function DashboardPage() {
@@ -53,8 +54,12 @@ export default function DashboardPage() {
     key: CARD_SHEET,
   });
 
-  const handleCardClick = (card: Card, columnTitle: string) => {
-    setSelectedCardInfo({ card, columnTitle });
+  const handleCardClick = (
+    card: Card,
+    columnTitle: string,
+    columnId: number,
+  ) => {
+    setSelectedCardInfo({ card, columnTitle, columnId });
     openCardSheet(true);
   };
 
@@ -91,6 +96,7 @@ export default function DashboardPage() {
         <CardDetailModal
           modalKey={CARD_SHEET}
           card={selectedCardInfo.card}
+          columnId={selectedCardInfo.columnId}
           columnTitle={selectedCardInfo.columnTitle}
           dashboardTitle={dashboard.title}
         />
