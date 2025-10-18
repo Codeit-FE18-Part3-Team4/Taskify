@@ -20,7 +20,7 @@ export function useDashboard() {
         const res = await getDashboards();
         const sortedDashboards = (res?.dashboards ?? []).sort(
           (a: Dashboard, b: Dashboard) =>
-            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
         );
         setDashboards(sortedDashboards);
       } catch (e) {
@@ -70,7 +70,7 @@ export function useDashboardById(dashboardId: number | null) {
   }, [dashboardId, isLoadingToken]);
 
   const refetch = () => {
-    return loadDashboard();
+    return loadDashboard(dashboardId);
   };
 
   return { dashboard, isLoading, error, refetch };
