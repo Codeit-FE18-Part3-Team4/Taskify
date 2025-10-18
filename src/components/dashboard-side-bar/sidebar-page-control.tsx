@@ -17,32 +17,37 @@ export default function SidebarPageControl({
 
   return (
     <div className={styles.dashboardPagenation}>
-      <button
-        onClick={onPrev}
-        disabled={currentPage === 0}
-        className={`${styles.button} ${prevDisabled}`}
-      >
-        <Image
-          src={ArrowLeftIcon}
-          width={20}
-          height={20}
-          alt="이전 버튼 아이콘"
-        />
-        <span className={Typography.lgMedium}>이전</span>
-      </button>
-      <button
-        onClick={onNext}
-        disabled={currentPage === isLastPage}
-        className={`${styles.button} ${nextDisabled}`}
-      >
-        <span className={Typography.lgMedium}>다음</span>
-        <Image
-          src={ArrowRightIcon}
-          width={20}
-          height={20}
-          alt="다음 버튼 아이콘"
-        />
-      </button>
+      {!prevDisabled && (
+        <button
+          onClick={onPrev}
+          disabled={currentPage === 0}
+          className={`${styles.button} ${prevDisabled}`}
+        >
+          <Image
+            src={ArrowLeftIcon}
+            width={20}
+            height={20}
+            alt="이전 버튼 아이콘"
+          />
+          <span className={Typography.lgMedium}>이전</span>
+        </button>
+      )}
+      <div></div>
+      {!nextDisabled && (
+        <button
+          onClick={onNext}
+          disabled={currentPage === isLastPage}
+          className={`${styles.button} ${nextDisabled}`}
+        >
+          <span className={Typography.lgMedium}>다음</span>
+          <Image
+            src={ArrowRightIcon}
+            width={20}
+            height={20}
+            alt="다음 버튼 아이콘"
+          />
+        </button>
+      )}
     </div>
   );
 }

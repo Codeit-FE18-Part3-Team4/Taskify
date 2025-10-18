@@ -23,7 +23,12 @@
 }
 .main {
   padding: 0 24px;
-  min-height: 812px;
+  min-height: 720px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+.main .mainDashboard {
   flex: 1;
 }
 .dashboardAdd {
