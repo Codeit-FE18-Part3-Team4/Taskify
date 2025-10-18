@@ -1,16 +1,18 @@
-import EmailIcon from "@/assets/images/email.svg";
-import FacebookIcon from "@/assets/images/facebook.svg";
-import InstaIcon from "@/assets/images/instagram.svg";
-import MainTabletImg from "@/assets/images/main-01-tablet.png";
-import MainImg from "@/assets/images/main-01.png";
-import FirstCardImg from "@/assets/images/main-02.png";
-import SecondCardMobileImg from "@/assets/images/main-03-mobile.png";
-import SecondCardTabletImg from "@/assets/images/main-03-tablet.png";
-import SecondCardImg from "@/assets/images/main-03.png";
-import CardInFirstImg from "@/assets/images/main-04.png";
-import CardInSeconImg from "@/assets/images/main-05.png";
-import CardInThirdImg from "@/assets/images/main-06.png";
-import Logo from "@/assets/images/taskify-logo.svg";
+import {
+  CardInFirstImg,
+  CardInSeconImg,
+  CardInThirdImg,
+  EmailIcon,
+  FacebookIcon,
+  FirstCardImg,
+  InstaIcon,
+  Logo,
+  MainImg,
+  MainTabletImg,
+  SecondCardImg,
+  SecondCardMobileImg,
+  SecondCardTabletImg,
+} from "@/assets/images";
 import Button, { ButtonSize, ButtonVariant } from "@/components/button/button";
 import Typography from "@/components/typography";
 import { useResponsiveValue } from "@/hooks/use-responsive-value";
@@ -76,7 +78,7 @@ export default function Home() {
     <div className={styles.mainWrap}>
       <header className={styles.header}>
         <button role="link" className={styles.logo}>
-          <Image src={Logo} width={186} height={48} alt="로고" />
+          <Image src={Logo} width={186} height={48} quality={100} alt="로고" />
         </button>
         <div className={styles.headerButtonBox}>
           <button
@@ -118,6 +120,7 @@ export default function Home() {
                 width={1078}
                 height={682}
                 alt="메인 페이지 이미지"
+                quality={100}
               />
             </div>
           )}
@@ -131,6 +134,7 @@ export default function Home() {
                   width={736}
                   height={613}
                   alt="메인 페이지 카드 이미지"
+                  quality={100}
                 />
                 <div className={styles.textBox}>
                   <span className={mainSectionTabTypography}>Point 1</span>
@@ -156,6 +160,7 @@ export default function Home() {
                   width={736}
                   height={613}
                   alt="메인 페이지 카드 이미지"
+                  quality={100}
                 />
                 <div className={styles.textBox}>
                   <span className={mainSectionTabTypography}>Point 2</span>
@@ -195,6 +200,7 @@ export default function Home() {
                       width={368}
                       height={192}
                       alt="사용 예시 이미지"
+                      quality={100}
                     />
                   </div>
                   <p
@@ -221,6 +227,7 @@ export default function Home() {
                       width={368}
                       height={192}
                       alt="사용 예시 이미지"
+                      quality={100}
                     />
                   </div>
                   <p
@@ -247,6 +254,7 @@ export default function Home() {
                       width={368}
                       height={192}
                       alt="사용 예시 이미지"
+                      quality={100}
                     />
                   </div>
                   <p
@@ -274,7 +282,13 @@ export default function Home() {
       <footer className={styles.footer}>
         <div className={styles.logo}>
           <button>
-            <Image src={Logo} width={186} height={48} alt="로고" />
+            <Image
+              src={Logo}
+              width={186}
+              height={48}
+              quality={100}
+              alt="로고"
+            />
           </button>
         </div>
         <div className={styles.faqBox}>
@@ -284,7 +298,13 @@ export default function Home() {
         <div className={styles.snsBox}>
           {[EmailIcon, FacebookIcon, InstaIcon].map((icon, index) => (
             <button key={index}>
-              <Image src={icon} width={20} height={20} alt="SNS" />
+              <Image
+                src={icon}
+                width={20}
+                height={20}
+                alt="SNS"
+                quality={100}
+              />
             </button>
           ))}
         </div>
