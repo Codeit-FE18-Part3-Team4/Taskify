@@ -8,7 +8,7 @@ import { NextPage } from "next";
 import type { AppProps } from "next/app";
 import localFont from "next/font/local";
 import { ReactNode } from "react";
-import DashboardProvider from "./my-dashboard/dashboard-provider";
+import DashboardProvider from "../features/my-dashboard/dashboard-provider";
 
 const pretendardFont = localFont({
   src: "../assets/fonts/pretendard/PretendardVariable.woff2",

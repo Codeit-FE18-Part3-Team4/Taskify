@@ -1,10 +1,11 @@
+import { useDashboardContext } from "@/features/my-dashboard/dashboard-provider";
 import { useResponsiveValue } from "@/hooks/use-responsive-value";
-import { useDashboardContext } from "@/pages/my-dashboard/dashboard-provider";
 import { Dashboard } from "@/types/my-dashboard";
 import { useEffect, useMemo } from "react";
 
 export function useDashboardPagination(dashboards: Dashboard[]) {
-  const { currentDashboardPage, setCurrentDashboardPage } = useDashboardContext();
+  const { currentDashboardPage, setCurrentDashboardPage } =
+    useDashboardContext();
 
   const responsivePageSize = useResponsiveValue({
     desktop: 3,

@@ -1,6 +1,6 @@
+import { useDashboardContext } from "@/features/my-dashboard/dashboard-provider";
 import { useDashboardSidebar } from "@/hooks/use-dashboard-side-bar";
 import { useSheet } from "@/hooks/use-sheet";
-import { useDashboardContext } from "@/pages/my-dashboard/dashboard-provider";
 import { useEffect } from "react";
 import CreateDashboardSheet from "../dashboard-create/create-dashboard-sheet";
 import styles from "./dashboard-side-bar.module.css";

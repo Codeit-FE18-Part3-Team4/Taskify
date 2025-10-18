@@ -22,7 +22,7 @@ import { MyDashboardMainProps } from "@/types/my-dashboard";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { useDashboardContext } from "./dashboard-provider";
-import styles from "./my-dashboard.module.css";
+import styles from "@/styles/my-dashboard.module.css";
 
 export async function getServerSideProps() {
   return {

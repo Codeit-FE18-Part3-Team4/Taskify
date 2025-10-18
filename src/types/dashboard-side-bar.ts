@@ -15,7 +15,7 @@ export interface MainProps {
 
 export interface UserProfileProps {
   name?: string;
-  profileImageUrl: string | undefined;
+  profileImageUrl?: string;
   onClick: () => void;
 }
 
