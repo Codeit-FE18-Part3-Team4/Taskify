@@ -9,6 +9,7 @@ import ColorChip from "@/components/chips/chip-color/chips-color";
 import { ColorFrameSize } from "@/components/chips/color-frame/color-frame-size";
 import { Color } from "@/components/color";
 import ColorPalette from "@/components/color-palette/color-palette";
+import { getColumn } from "@/components/dashboard/column/mock";
 import Dialog from "@/components/dialog";
 import Input, { InputSize, InputVariant } from "@/components/input/input";
 import Textarea, { TextareaSize } from "@/components/input/textarea";
@@ -25,15 +26,18 @@ import { ProfileRandomColor } from "@/constants/profile-random-color";
 import { logout } from "@/features/auth/apis/logout";
 import { getCard } from "@/features/card/apis/mock";
 import CardDetailModal from "@/features/card/components/card-detail-modal";
+import CardEditSheet from "@/features/card/components/card-edit-sheet";
 import Dropdown, { DropdownOption } from "@/features/card/components/dropdown";
 import ImageInput from "@/features/card/components/image-input";
 import { Direction, Menu, MenuItem } from "@/features/card/components/menu";
 import TagInput from "@/features/card/components/tag-input";
 import ColumnEditSheet from "@/features/column/components/column-edit-sheet";
+import { getMembers } from "@/features/member/apis/mock";
 import { useAlert } from "@/hooks/use-alert";
 import { useDialog } from "@/hooks/use-dialog";
 import { useModal } from "@/hooks/use-modal";
 import { useSheet } from "@/hooks/use-sheet";
+import { Column, MemberInfo } from "@/types";
 import { Card } from "@/types/card";
 import { ReactNode, useEffect, useState } from "react";
 
@@ -664,6 +668,64 @@ function SheetSample() {
   );
 }
 
+function CardEditSheetSample() {
+  const SHEET_KEY = "card-edit-sheet-sample";
+  const { isShowSheet, openSheet } = useSheet({
+    key: SHEET_KEY,
+  });
+
+  const SHEET_KEY_WITH_CARD = "card-edit-sheet-sample-with-card";
+  const { isShowSheet: isShowSheetWithCard, openSheet: openSheetWithCard } =
+    useSheet({
+      key: SHEET_KEY_WITH_CARD,
+    });
+
+  const [card, setCard] = useState<Card | null>(null);
+  const [columns, setColumns] = useState<Column[]>([]);
+  const [members, setMembers] = useState<MemberInfo[]>([]);
+
+  useEffect(() => {
+    async function loadCard() {
+      const [card, columns, members] = await Promise.all([
+        getCard(),
+        getColumn({ dashboardId: 1234 }),
+        getMembers(),
+      ]);
+
+      setCard(card);
+      setColumns(columns);
+      setMembers(members);
+    }
+    loadCard();
+  }, []);
+
+  return (
+    <>
+      <div>
+        <button onClick={() => openSheet(true)}>Open Sheet</button>
+        <button onClick={() => openSheetWithCard(true)}>
+          Open Sheet with Card
+        </button>
+        {isShowSheet && (
+          <CardEditSheet
+            sheetKey={SHEET_KEY}
+            columns={columns}
+            members={members}
+          />
+        )}
+        {isShowSheetWithCard && (
+          <CardEditSheet
+            sheetKey={SHEET_KEY_WITH_CARD}
+            card={card || undefined}
+            columns={columns}
+            members={members}
+          />
+        )}
+      </div>
+    </>
+  );
+}
+
 function ColumnEditSheetSample() {
   const SHEET_KEY1 = "COLUMN_EDIT_SHEET_SAMPLE_1";
   const { isShowSheet: isShowSheet1, openSheet: openSheet1 } = useSheet({
@@ -769,11 +831,22 @@ function LogoutButton() {
 function CardDetailModalSample() {
   const modalKey = "card-detail";
   const { isShowModal, openModal } = useModal({ key: modalKey });
+
   const [card, setCard] = useState<Card | null>(null);
+  const [columns, setColumns] = useState<Column[]>([]);
+  const [members, setMembers] = useState<MemberInfo[]>([]);
+
   useEffect(() => {
     async function loadCard() {
-      const card = await getCard();
+      const [card, columns, members] = await Promise.all([
+        getCard(),
+        getColumn({ dashboardId: 1234 }),
+        getMembers(),
+      ]);
+
       setCard(card);
+      setColumns(columns);
+      setMembers(members);
     }
     loadCard();
   }, []);
@@ -788,6 +861,9 @@ function CardDetailModalSample() {
             card={card}
             columnTitle="Progress"
             dashboardTitle="포트폴리오"
+            columns={columns}
+            members={members}
+            onDelete={() => console.log("Delete Card")}
           />
         )}
       </div>
@@ -850,6 +926,9 @@ export default function Page() {
       </Section>
       <Section title="Sheet">
         <SheetSample />
+      </Section>
+      <Section title="CardEditSheet">
+        <CardEditSheetSample />
       </Section>
       <Section title="ColumnEditSheet">
         <ColumnEditSheetSample />

@@ -1,0 +1,93 @@
+.topContainer {
+  padding: 30px 50px;
+}
+
+.topContainer .contents {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  width: 840px;
+}
+
+.topContainer .contents .title,
+.topContainer .contents span {
+  color: var(--color-gray100);
+}
+
+.topContainer .contents .memberListTitle {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.topContainer .contents .memberListTitle .countAndButtons {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 20px;
+}
+
+.topContainer
+  .contents
+  .memberListTitle
+  .countAndButtons
+  .arrowButtonWrapper
+  button {
+  background-color: transparent;
+  border: none;
+  border-radius: 50%;
+  padding: 5px;
+  cursor: pointer;
+}
+
+.topContainer
+  .contents
+  .memberListTitle
+  .countAndButtons
+  .arrowButtonWrapper
+  button:hover {
+  background-color: var(--color-black800);
+}
+
+.topContainer .contents .usersContainer {
+  padding-top: 10px;
+  padding-bottom: 30px;
+}
+
+.topContainer .contents .usersContainer .usersList {
+  height: 59px;
+  border-bottom: 1px solid #383a42;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.topContainer .contents .usersContainer .usersList:hover {
+  background-color: var(--color-black800);
+}
+
+.topContainer .contents .usersContainer .usersList.member {
+  padding: 0 10px;
+}
+
+.topContainer .contents .usersContainer .usersList:last-child {
+  border-bottom: none;
+}
+
+.topContainer .contents .memberListTitle .icon {
+  width: 20px;
+  height: 20px;
+}
+
+.topContainer .contents .memberListTitle .titleAndButton {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.topContainer .contents .memberListTitle .titleAndButton button span {
+  display: flex;
+  align-items: flex-end;
+}

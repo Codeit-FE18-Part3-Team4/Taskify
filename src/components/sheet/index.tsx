@@ -12,7 +12,7 @@ export enum SheetActionType {
   Cancel = "취소",
   Create = "생성",
   Done = "완료",
-  Modify = "변경",
+  Update = "변경",
 }
 
 interface SheetActionProps {
@@ -29,7 +29,7 @@ function SheetAction({ type, onClick, disabled }: SheetActionProps) {
       [SheetActionType.Cancel]: ButtonVariant.Secondary,
       [SheetActionType.Create]: ButtonVariant.Primary,
       [SheetActionType.Done]: ButtonVariant.Primary,
-      [SheetActionType.Modify]: ButtonVariant.Primary,
+      [SheetActionType.Update]: ButtonVariant.Primary,
     }[type];
   }, [type]);
 
