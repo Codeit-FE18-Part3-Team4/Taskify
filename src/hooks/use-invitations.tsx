@@ -1,10 +1,10 @@
-import { useEffectAuth } from "@/features/auth/components/auth-provider";
+import { useAuth } from "@/features/auth/components/auth-provider";
 import {
   getInvitations,
   putInvitationsAccepts,
 } from "@/features/my-dashboard/api/";
 import { Invitation } from "@/types/my-dashboard";
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 export function useInvitations() {
   const [invitations, setInvitations] = useState<Invitation[]>([]);
@@ -13,6 +13,8 @@ export function useInvitations() {
   const [cursorId, setCursorId] = useState<number | undefined>(undefined);
   const observerRef = useRef<IntersectionObserver | null>(null);
   const loadMoreRef = useRef<HTMLDivElement | null>(null);
+  const { isLoadingToken } = useAuth();
+  const isInitialLoadRef = useRef(true);
 
   const loadInvitations = useCallback(
     async (reset = false) => {
@@ -20,10 +22,12 @@ export function useInvitations() {
 
       try {
         setIsLoadingMore(true);
+        const currentCursorId = reset ? undefined : cursorId;
+
         const { invitations: newInvitations, cursorId: nextCursor } =
           await getInvitations({
             size: 10,
-            cursorId: reset ? undefined : cursorId,
+            cursorId: currentCursorId,
           });
 
         if (reset) {
@@ -64,7 +68,16 @@ export function useInvitations() {
     [removeInvitation]
   );
 
-  useEffectAuth(() => {
+  useEffect(() => {
+    if (isLoadingToken || !isInitialLoadRef.current) return;
+
+    isInitialLoadRef.current = false;
+    loadInvitations(true);
+  }, [isLoadingToken]);
+
+  useEffect(() => {
+    if (isLoadingToken) return;
+
     observerRef.current = new IntersectionObserver(
       (entries) => {
         if (entries[0].isIntersecting && hasMore && !isLoadingMore) {
@@ -83,11 +96,7 @@ export function useInvitations() {
         observerRef.current.disconnect();
       }
     };
-  }, [hasMore, isLoadingMore, loadInvitations]);
-
-  useEffectAuth(() => {
-    loadInvitations(true);
-  }, []);
+  }, [hasMore, isLoadingMore, loadInvitations, isLoadingToken]);
 
   return {
     invitations,

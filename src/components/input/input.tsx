@@ -4,7 +4,6 @@ import { classnames } from "@/utils/classnames";
 import {
   InputHTMLAttributes,
   FocusEvent as ReactFocusEvent,
-  ReactNode,
   useMemo,
   useState,
 } from "react";
@@ -24,14 +23,10 @@ export enum InputSize {
   Auto = "auto",
 }
 
-export type IconPosition = "left" | "right";
-
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   errorMessage?: string;
-  size?: InputSize;
-  icon?: ReactNode;
+  $size?: InputSize;
   variant?: InputVariant;
-  iconPosition?: IconPosition;
 }
 
 export default function Input({
@@ -43,17 +38,15 @@ export default function Input({
   type = "text",
   className,
   errorMessage,
-  size = InputSize.Large,
-  icon,
+  $size = InputSize.Large,
   disabled,
   variant = InputVariant.Default,
-  iconPosition,
   ...props
 }: InputProps) {
   const hasError = !disabled && Boolean(errorMessage);
   const [isFocused, setIsFocused] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-  const iconSize = `${size}Icon`;
+  const iconSize = `${$size}Icon`;
   const resolvedIcon = useMemo(() => {
     switch (variant) {
       case InputVariant.Search:
@@ -115,7 +108,7 @@ export default function Input({
           disabled={disabled}
           className={classnames(
             styles.input,
-            styles[size],
+            styles[$size],
             Typography.lgMedium,
             hasError ? styles.error : "",
             variant === InputVariant.Search ? styles.withLeftIcon : "",

@@ -1,9 +1,10 @@
 import { InputHTMLAttributes } from "react";
 import styles from "./checkbox.module.css";
 
-interface CheckboxProps extends InputHTMLAttributes<HTMLInputElement> {}
-
-export default function Checkbox({ className, ...props }: CheckboxProps) {
+export default function Checkbox({
+  className,
+  ...props
+}: InputHTMLAttributes<HTMLInputElement>) {
   return (
     <input
       {...props}

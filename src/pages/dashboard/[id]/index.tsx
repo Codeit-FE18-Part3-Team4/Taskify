@@ -1,16 +1,16 @@
-import { useState, useEffect, useMemo } from "react";
-import { useRouter } from "next/router";
-import styles from "./index.module.css";
-import NavigationBar from "@/components/navigationBar/navigation-bar";
 import DashboardSideBar from "@/components/dashboard-side-bar/dashboard-side-bar";
-import { Card } from "@/types/card";
 import Modal from "@/components/modal";
-import { useModal } from "@/hooks/use-modal";
-import { useDashboard } from "@/hooks/use-dashboard";
-import { useColumn } from "@/hooks/use-column";
+import NavigationBar from "@/components/navigationBar/navigation-bar";
 import { useCards } from "@/hooks/use-cards";
+import { useColumn } from "@/hooks/use-column";
+import { useDashboardById } from "@/hooks/use-dashboard";
 import { useMembers } from "@/hooks/use-members";
+import { useModal } from "@/hooks/use-modal";
+import { Card } from "@/types/card";
+import { useRouter } from "next/router";
+import { useEffect, useMemo, useState } from "react";
 import DashboardContent from "./dashboard-content";
+import styles from "./index.module.css";
 
 export default function DashboardPage() {
   const router = useRouter();
@@ -21,25 +21,29 @@ export default function DashboardPage() {
       ? Number(id)
       : null;
 
-  const { dashboards } = useDashboard();
+  const { dashboard } = useDashboardById(dashboardId);
   const { members } = useMembers(dashboardId);
-
   const { columns, isLoading: isColumnsLoading } = useColumn(dashboardId);
-
-  const currentDashboard = useMemo(() => {
-    return dashboards?.find((dashboard) => dashboard.id === dashboardId);
-  }, [dashboards, dashboardId]);
-
   const columnIds = useMemo(
     () => columns?.map((column) => column.id) ?? [],
-    [columns],
+    [columns]
   );
-
   const { cards, isLoading: isCardsLoading } = useCards(columnIds);
 
-  const [selectedCard, setSelectedCard] = useState<Card | null>(null);
+  const [stillLoading, setStillLoading] = useState(false);
 
-  const MODAL_KEY_1 = "MODAL_SAMPLE_1";
+  useEffect(() => {
+    if (isColumnsLoading || isCardsLoading) {
+      setStillLoading(true);
+    } else {
+      setStillLoading(false);
+    }
+  }, [isColumnsLoading, isCardsLoading]);
+
+  const isLoading = stillLoading || isColumnsLoading || isCardsLoading;
+
+  const [selectedCard, setSelectedCard] = useState<Card | null>(null);
+  const MODAL_KEY_1 = "CARD_MODAL";
   const { isShowModal: isShowModal1, openModal: openModal1 } = useModal({
     key: MODAL_KEY_1,
   });
@@ -52,29 +56,27 @@ export default function DashboardPage() {
   useEffect(() => {
     if (!router.isReady) return;
 
-    if (dashboardId === null && dashboards && dashboards.length > 0) {
-      router.replace(`/dashboard/${dashboards[0].id}`);
+    if (dashboardId === null && dashboard) {
+      router.replace(`/dashboard/${dashboard.id}`);
     }
-  }, [router.isReady, dashboardId, dashboards]);
-
-  const isLoading = isColumnsLoading || isCardsLoading;
+  }, [router, router.isReady, dashboardId, dashboard]);
 
   return (
     <div className={styles.page}>
-      <NavigationBar
-        members={members ?? []}
-        dashboardId={dashboardId ?? null}
-      />
-
+      <DashboardSideBar />
       <div className={styles.layoutContainer}>
-        <DashboardSideBar onClick={() => {}} />
+        <NavigationBar
+          members={members ?? []}
+          dashboardId={dashboardId ?? null}
+        />
         <main className={styles.main}>
-          {currentDashboard && (
+          {dashboard && (
             <DashboardContent
-              dashboard={currentDashboard}
+              dashboard={dashboard}
               columns={columns ?? []}
               cards={cards ?? {}}
               isLoading={isLoading}
+              onCardClick={handleCardClick}
             />
           )}
         </main>

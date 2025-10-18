@@ -1,4 +1,4 @@
-.profileSection{
+.profileSection {
   display: flex;
   align-items: center;
   gap: 6px;
@@ -16,9 +16,15 @@
   overflow: hidden;
   color: #ffffff;
 }
-.profileSection .showName{
+
+.profileSection .showName {
   color: var(--color-gray100);
 }
+
+.profileSection .profileImg > img {
+  border-radius: 100px;
+}
+
 .alignCenter {
   justify-content: center;
 }

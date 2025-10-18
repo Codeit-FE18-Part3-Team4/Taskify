@@ -10,13 +10,48 @@ interface putInvitationsAcceptsProps {
   inviteAccepted: boolean;
 }
 
+export async function getDashboardById({
+  dashboardId,
+}: {
+  dashboardId: number;
+}) {
+  try {
+    const res = await axiosInstance.get(`/dashboards/${dashboardId}`);
+    return res.data;
+  } catch (e) {
+    console.log(e);
+    throw e;
+  }
+}
+
+export interface UpdateDashboardProps extends PostDashboardProps {
+  dashboardId: number;
+}
+
+export async function updateDashboard({
+  title,
+  color,
+  dashboardId,
+}: UpdateDashboardProps) {
+  try {
+    const res = await axiosInstance.put(`/dashboards/${dashboardId}`, {
+      title,
+      color,
+    });
+    return res;
+  } catch (e) {
+    console.log(e);
+    throw e;
+  }
+}
+
 export async function getDashboards({
   page = 1,
   size = 10,
 }: { page?: number; size?: number } = {}) {
   try {
     const res = await axiosInstance.get(
-      `/dashboards?navigationMethod=pagination&page=${page}&size=${size}`
+      `/dashboards?navigationMethod=pagination&page=${page}&size=${size}`,
     );
     const body = res.data;
     return body;

@@ -82,7 +82,6 @@ interface Props {
 
 export default function ImageInput({ imageUrl, onChange }: Props) {
   const [previewUrl, setPreviewUrl] = useState<string | null>(imageUrl || null);
-  const { isMobile } = useResponsive();
 
   const handleChange = (file: File) => {
     if (previewUrl) {
