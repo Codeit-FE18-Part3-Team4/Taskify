@@ -139,6 +139,7 @@ export default function AccountSettingModal({
             $size={InputSize.Auto}
             disabled={true}
             placeholder={userData?.email || ""}
+            type="email"
           />
         </section>
         <section className={styles.nicknameSection}>
