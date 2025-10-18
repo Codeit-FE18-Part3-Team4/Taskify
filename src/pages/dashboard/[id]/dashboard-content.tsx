@@ -1,17 +1,17 @@
 import ColorChip from "@/components/chips/chip-color/chips-color";
 import Column, { ColumnActionType } from "@/components/dashboard/column/column";
 import Dialog from "@/components/dialog";
-import Modal from "@/components/modal";
 import { MemberInfo } from "@/components/profile/member-info";
 import Typography from "@/components/typography";
 import { CommonSize } from "@/constants/common/common-size";
 import { CardParams, createCard, CreateCardParams } from "@/features/card/apis";
 import CardEditSheet from "@/features/card/components/card-edit-sheet";
+import { createColumn, updateColumn } from "@/features/column/apis";
+import ColumnEditSheet from "@/features/column/components/column-edit-sheet";
 import { useDialog } from "@/hooks/use-dialog";
-import { useModal } from "@/hooks/use-modal";
 import { useSheet } from "@/hooks/use-sheet";
 import { Card } from "@/types/card";
-import { Column as ColumnData } from "@/types/column";
+import { Column as ColumnType } from "@/types/column";
 import { Dashboard } from "@/types/dashboard";
 import { classnames } from "@/utils/classnames";
 import { useState } from "react";
@@ -26,7 +26,7 @@ export async function getServerSideProps() {
 
 interface DashboardContentProps {
   dashboard: Dashboard;
-  columns: ColumnData[];
+  columns: ColumnType[];
   members: MemberInfo[];
   cards: Record<number, Card[]>;
   isLoading: boolean;
@@ -43,8 +43,10 @@ export default function DashboardContent({
   onCardClick,
   onCardCreate,
 }: DashboardContentProps) {
-  const CREATE_COLUMN_MODAL_KEY = "CREATE_COLUMN_MODAL";
-  const { isShowModal, openModal } = useModal({ key: CREATE_COLUMN_MODAL_KEY });
+  const CREATE_COLUMN_SHEET_KEY = "CREATE_COLUMN_SHEET_KEY";
+  const { isShowSheet: isShowColumnEditSheet, openSheet: openColumnEditSheet } =
+    useSheet({ key: CREATE_COLUMN_SHEET_KEY });
+  const [editingColumn, setEditingColumn] = useState<ColumnType>();
 
   const CREATE_CARD_SHEET_KEY = "CREATE_CARD_SHEET";
   const { isShowSheet, openSheet } = useSheet({ key: CREATE_CARD_SHEET_KEY });
@@ -54,7 +56,12 @@ export default function DashboardContent({
   const [failMessage, setFailMessage] = useState("");
 
   const handleCreateColumnClick = () => {
-    openModal(true);
+    openColumnEditSheet(true);
+  };
+
+  const handleEditColumnClick = (column: ColumnType) => {
+    openColumnEditSheet(true);
+    setEditingColumn(column);
   };
 
   const handleCardCreate = async (params?: CardParams) => {
@@ -79,8 +86,24 @@ export default function DashboardContent({
     }
   };
 
-  const handleColumnUpdate = () => {
-    console.log("컬럼 수정 처리");
+  const handleColumnEdit = async (title: string) => {
+    try {
+      if (editingColumn) {
+        await updateColumn({ columnId: editingColumn.id, title });
+      } else {
+        await createColumn({ dashboardId: dashboard.id, title });
+      }
+      setEditingColumn(undefined);
+    } catch (error) {
+      if (error instanceof Error) {
+        openDialog(true);
+        setFailMessage(error.message);
+      }
+    }
+  };
+
+  const handleDialogConfirm = () => {
+    openDialog(false);
   };
 
   return (
@@ -108,10 +131,9 @@ export default function DashboardContent({
                         handleCardCreate();
                         break;
                       case ColumnActionType.Modify:
-                        handleColumnUpdate();
+                        handleEditColumnClick(column);
                         break;
                     }
-                    console.log(`${column.title} 컬럼의 ${type} 클릭`);
                   }}
                 />
               ))
@@ -132,25 +154,13 @@ export default function DashboardContent({
           </div>
         </div>
       </section>
-
-      {isShowModal && (
-        <Modal modalKey={CREATE_COLUMN_MODAL_KEY}>
-          <div
-            style={{
-              width: "600px",
-              height: "600px",
-              backgroundColor: "#242429",
-              borderRadius: "24px",
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <h2 style={{ color: "white" }}>새컬럼만들기모달</h2>
-            <button onClick={() => openModal(false)}>Close Modal 1</button>
-          </div>
-        </Modal>
+      {isShowColumnEditSheet && (
+        <ColumnEditSheet
+          sheetKey={CREATE_COLUMN_SHEET_KEY}
+          column={editingColumn}
+          usedTitles={[]}
+          onSubmit={handleColumnEdit}
+        />
       )}
       {isShowSheet && (
         <CardEditSheet
@@ -161,7 +171,11 @@ export default function DashboardContent({
         />
       )}
       {isShowDialog && (
-        <Dialog dialogKey={FAIL_DIALOG_KEY} message={failMessage} />
+        <Dialog
+          dialogKey={FAIL_DIALOG_KEY}
+          message={failMessage}
+          onConfirm={handleDialogConfirm}
+        />
       )}
     </>
   );

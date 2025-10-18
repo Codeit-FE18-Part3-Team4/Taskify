@@ -57,7 +57,7 @@ export default function DashboardPage() {
 
   const handleCardCreate = (newCard: Card) => {
     console.log("카드 생성 처리", newCard);
-  }
+  };
 
   useEffect(() => {
     if (!router.isReady) return;
@@ -89,7 +89,6 @@ export default function DashboardPage() {
           )}
         </main>
       </div>
-
       {isShowModal && selectedCard !== null && (
         <CardDetailModal
           modalKey={CARD_DETAIL_MODAL_KEY}
