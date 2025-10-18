@@ -31,12 +31,9 @@ export default function NavigationBar({
   const { isShowModal: isShowModal1, openModal: openModal } = useModal({
     key: MODAL_KEY_1,
   });
+
   const handleUserPlus = () => {
     openModal(true);
-  };
-
-  const handleAccountSetting = () => {
-    openAccountSettingModal(true);
   };
 
   let showMembers: MemberInfo[] = [];
@@ -57,10 +54,10 @@ export default function NavigationBar({
         ></MemberList>
       )}
       <div className={styles.rightIcons}>
-        <button onClick={handleAccountSetting} className={styles.iconLink}>
+        <Link href={settingLink} className={styles.iconLink}>
           <SettingSvg className={styles.icon} />
           <span className={iconSpanClasses}>관리</span>
-        </button>
+        </Link>
         <button onClick={() => handleUserPlus()}>
           <UserPlusSvg className={styles.icon} />
           <span className={iconSpanClasses}>공유</span>
@@ -85,9 +82,6 @@ export default function NavigationBar({
             <button onClick={() => openModal(false)}>Close Modal 1</button>
           </div>
         </Modal>
-      )}
-      {isShowAccountSettingModal && (
-        <AccountSettingModal modalKey={ACCOUNT_SETTING_MODAL_KEY} />
       )}
     </div>
   );
