@@ -7,6 +7,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useMemo } from "react";
+import Spinner from "../spinner";
 import DashboardButton from "./dashboard-button";
 import styles from "./dashboard-side-bar.module.css";
 import SidebarPageControl from "./sidebar-page-control";
@@ -73,21 +74,23 @@ export default function Main({
         <Image src={HomeIcon} width={24} height={24} alt="홈 아이콘" />
         <span className={homeText}>홈</span>
       </Link>
-      {dashboards && dashboards.length > 0 ? (
-        dashboards.map((dashboard) => (
-          <DashboardButton
-            onClick={() => handleDashboardNavigate(dashboard.id)}
-            key={dashboard.id}
-            active={currentDashboardId === dashboard.id}
-            createdByMe={dashboard.createdByMe}
-            color={dashboard.color}
-          >
-            {dashboard.title}
-          </DashboardButton>
-        ))
-      ) : (
-        <div>대시보드가 없습니다.</div>
-      )}
+      <div className={styles.mainDashboard}>
+        {dashboards && dashboards.length > 0 ? (
+          dashboards.map((dashboard) => (
+            <DashboardButton
+              onClick={() => handleDashboardNavigate(dashboard.id)}
+              key={dashboard.id}
+              active={currentDashboardId === dashboard.id}
+              createdByMe={dashboard.createdByMe}
+              color={dashboard.color}
+            >
+              {dashboard.title}
+            </DashboardButton>
+          ))
+        ) : (
+          <Spinner />
+        )}
+      </div>
       {totalPages < 1 ? (
         ""
       ) : (
