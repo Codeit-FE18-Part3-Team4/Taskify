@@ -250,6 +250,7 @@ interface Props {
   columns: Column[];
   members: MemberInfo[];
   onDelete: () => void;
+  onUpdate: () => void;
 }
 
 export default function CardDetailModal({
@@ -259,6 +260,7 @@ export default function CardDetailModal({
   columns,
   members,
   onDelete,
+  onUpdate,
 }: Props) {
   const [card, setCard] = useState<Card>(initialCard);
 
@@ -309,6 +311,7 @@ export default function CardDetailModal({
   const handleCardUpdate = async (params: CardParams) => {
     const newCard = await updateCard({ cardId: card.id, params });
     setCard(newCard);
+    onUpdate();
     openSheet(false);
   };
 

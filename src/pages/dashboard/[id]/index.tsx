@@ -23,40 +23,29 @@ export default function DashboardPage() {
 
   const { dashboard } = useDashboardById(dashboardId);
   const { members } = useMembers(dashboardId);
-  const { columns, isLoading: isColumnsLoading } = useColumn(dashboardId);
+  const { columns, isLoadingColumns, reloadColumns } = useColumn(dashboardId);
   const columnIds = useMemo(
     () => columns?.map((column) => column.id) ?? [],
     [columns]
   );
-  const { cards, isLoading: isCardsLoading } = useCards(columnIds);
-
-  const [stillLoading, setStillLoading] = useState(false);
-
-  useEffect(() => {
-    if (isColumnsLoading || isCardsLoading) {
-      setStillLoading(true);
-    } else {
-      setStillLoading(false);
-    }
-  }, [isColumnsLoading, isCardsLoading]);
-
-  const isLoading = stillLoading || isColumnsLoading || isCardsLoading;
+  const { cards, isLoadingCards, reloadCards } = useCards(columnIds);
 
   const [selectedCard, setSelectedCard] = useState<Card | null>(null);
+
   const CARD_DETAIL_MODAL_KEY = "card-detail-modal";
   const { isShowModal, openModal } = useModal({ key: CARD_DETAIL_MODAL_KEY });
+
+  const handleColumnChange = () => {
+    reloadColumns({ loading: false });
+  };
 
   const handleCardClick = (card: Card) => {
     setSelectedCard(card);
     openModal(true);
   };
 
-  const handleCardDelete = () => {
-    console.log("카드 삭제 처리");
-  };
-
-  const handleCardCreate = (newCard: Card) => {
-    console.log("카드 생성 처리", newCard);
+  const handleCardChange = () => {
+    reloadCards({ loading: false });
   };
 
   useEffect(() => {
@@ -82,9 +71,11 @@ export default function DashboardPage() {
               columns={columns ?? []}
               members={members ?? []}
               cards={cards ?? {}}
-              isLoading={isLoading}
+              isLoadingColumns={isLoadingColumns}
+              isLoadingCards={isLoadingCards}
               onCardClick={handleCardClick}
-              onCardCreate={handleCardCreate}
+              onCardChange={handleCardChange}
+              onColumnChange={handleColumnChange}
             />
           )}
         </main>
@@ -96,7 +87,8 @@ export default function DashboardPage() {
           dashboard={dashboard}
           columns={columns ?? []}
           members={members ?? []}
-          onDelete={handleCardDelete}
+          onDelete={handleCardChange}
+          onUpdate={handleCardChange}
         />
       )}
     </div>

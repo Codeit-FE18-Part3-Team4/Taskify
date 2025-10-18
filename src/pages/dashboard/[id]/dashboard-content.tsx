@@ -29,9 +29,11 @@ interface DashboardContentProps {
   columns: ColumnType[];
   members: MemberInfo[];
   cards: Record<number, Card[]>;
-  isLoading: boolean;
+  isLoadingColumns: boolean;
+  isLoadingCards: boolean;
+  onColumnChange: () => void;
   onCardClick: (card: Card) => void;
-  onCardCreate: (newCard: Card) => void;
+  onCardChange: () => void;
 }
 
 export default function DashboardContent({
@@ -39,9 +41,11 @@ export default function DashboardContent({
   columns,
   members,
   cards,
-  isLoading,
+  isLoadingColumns,
+  isLoadingCards,
+  onColumnChange,
   onCardClick,
-  onCardCreate,
+  onCardChange,
 }: DashboardContentProps) {
   const CREATE_COLUMN_SHEET_KEY = "CREATE_COLUMN_SHEET_KEY";
   const { isShowSheet: isShowColumnEditSheet, openSheet: openColumnEditSheet } =
@@ -75,8 +79,8 @@ export default function DashboardContent({
         ...params,
         dashboardId: dashboard.id,
       };
-      const newCard = await createCard({ params: createParams });
-      onCardCreate(newCard);
+      await createCard({ params: createParams });
+      onCardChange();
       openSheet(false);
     } catch (error) {
       if (error instanceof Error) {
@@ -93,6 +97,7 @@ export default function DashboardContent({
       } else {
         await createColumn({ dashboardId: dashboard.id, title });
       }
+      onColumnChange();
       setEditingColumn(undefined);
     } catch (error) {
       if (error instanceof Error) {
@@ -116,13 +121,14 @@ export default function DashboardContent({
 
         <div className={styles.columnWrapper}>
           <div className={styles.columnContentWrapper}>
-            {isLoading ? (
+            {isLoadingColumns ? (
               <h2>컬럼 로딩중...</h2>
             ) : (
               columns.map((column) => (
                 <Column
                   key={column.id}
                   cards={cards[column.id] ?? []}
+                  isLoadingCards={isLoadingCards}
                   onCardClick={onCardClick}
                   columnTitle={column.title}
                   onClick={(type) => {

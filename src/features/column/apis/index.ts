@@ -1,5 +1,6 @@
 import axiosInstance from "@/services/axios-instance";
 import { withThrowingAxiosError } from "@/services/with-throwing-axios-error";
+import { Column } from "@/types";
 
 export async function createColumn({
   dashboardId,
@@ -9,7 +10,7 @@ export async function createColumn({
   title: string;
 }) {
   return withThrowingAxiosError(async () => {
-    const response = await axiosInstance.post(`/columns`, {
+    const response = await axiosInstance.post<Column>(`/columns`, {
       title,
       dashboardId,
     });
@@ -25,7 +26,9 @@ export async function updateColumn({
   title: string;
 }) {
   return withThrowingAxiosError(async () => {
-    const response = await axiosInstance.put(`/columns/${columnId}`, { title });
+    const response = await axiosInstance.put<Column>(`/columns/${columnId}`, {
+      title,
+    });
     return response.data;
   });
 }
