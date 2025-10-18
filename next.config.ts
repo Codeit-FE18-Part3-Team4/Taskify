@@ -5,11 +5,7 @@ const nextConfig: NextConfig = {
   reactStrictMode: true,
   images: {
     remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "picsum.photos",
-        pathname: "/**",
-      },
+      new URL("https://sprint-fe-project.s3.ap-northeast-2.amazonaws.com/**"),
     ],
   },
 };

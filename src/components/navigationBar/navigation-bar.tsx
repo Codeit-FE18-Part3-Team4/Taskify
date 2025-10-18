@@ -1,13 +1,13 @@
+import AccountSettingModal from "@/components/account-setting-modal";
+import Modal from "@/components/modal";
+import Typography from "@/components/typography";
 import { CommonSize } from "@/constants/common/common-size";
+import { useModal } from "@/hooks/use-modal";
+import { MemberInfo } from "@/types/member-info";
+import MemberList from "./member-list";
 import styles from "./navigation-bar.module.css";
 import SettingSvg from "./setting-svg";
 import UserPlusSvg from "./user-plus-svg";
-import Link from "next/link";
-import { MemberInfo } from "@/types/member-info";
-import MemberList from "./member-list";
-import Modal from "@/components/modal";
-import { useModal } from "@/hooks/use-modal";
-import Typography from "@/components/typography";
 
 interface NavigationBarProps {
   size?: CommonSize;
@@ -31,9 +31,19 @@ export default function NavigationBar({
   const { isShowModal: isShowModal1, openModal: openModal } = useModal({
     key: MODAL_KEY_1,
   });
-
+  const ACCOUNT_SETTING_MODAL_KEY = "ACCOUNT_SETTING_MODAL";
+  const {
+    isShowModal: isShowAccountSettingModal,
+    openModal: openAccountSettingModal,
+  } = useModal({
+    key: ACCOUNT_SETTING_MODAL_KEY,
+  });
   const handleUserPlus = () => {
     openModal(true);
+  };
+
+  const handleAccountSetting = () => {
+    openAccountSettingModal(true);
   };
 
   let showMembers: MemberInfo[] = [];
@@ -54,10 +64,10 @@ export default function NavigationBar({
         ></MemberList>
       )}
       <div className={styles.rightIcons}>
-        <Link className={styles.iconLink} href={settingLink}>
+        <button onClick={handleAccountSetting} className={styles.iconLink}>
           <SettingSvg className={styles.icon} />
           <span className={iconSpanClasses}>관리</span>
-        </Link>
+        </button>
         <button onClick={() => handleUserPlus()}>
           <UserPlusSvg className={styles.icon} />
           <span className={iconSpanClasses}>공유</span>
@@ -82,6 +92,9 @@ export default function NavigationBar({
             <button onClick={() => openModal(false)}>Close Modal 1</button>
           </div>
         </Modal>
+      )}
+      {isShowAccountSettingModal && (
+        <AccountSettingModal modalKey={ACCOUNT_SETTING_MODAL_KEY} />
       )}
     </div>
   );

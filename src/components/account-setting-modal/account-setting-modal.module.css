@@ -1,0 +1,47 @@
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  color: var(--color-gray300);
+}
+
+.profileImageSection {
+  display: flex;
+  align-items: center;
+}
+
+.profileImage > div > div,
+.profileImage img {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+}
+
+.emailSection {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.nicknameSection {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.passwordSection {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.profileImageButtons {
+  display: flex;
+  gap: 12px;
+  margin-left: 20px;
+}
+
+.invisibleFileInput {
+  display: none;
+}

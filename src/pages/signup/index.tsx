@@ -170,6 +170,7 @@ export default function SignupPage() {
             onFocus={onEmailFocus}
             errorMessage={emailErrorMessage}
             value={email}
+            type="email"
           />
           <p>닉네임</p>
           <Input

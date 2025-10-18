@@ -14,7 +14,6 @@
   left: 106px;
   border-radius: 100%;
 }
-
 .mainWrap::before {
   content: "";
   width: 344px;
@@ -26,7 +25,6 @@
   left: 1244px;
   border-radius: 100%;
 }
-
 .header {
   padding: 24px 120px;
   display: flex;
@@ -49,14 +47,13 @@
   color: var(--color-gray300);
 }
 .mainSectionTopWrap {
-  min-width: 1365px;
+  width: 1365px;
   padding: 159px 0 159px 240px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 100px;
   z-index: 10;
-  overflow: hidden;
   position: relative;
 }
 .mainSectionTopWrap > .mainSectionTopMain {

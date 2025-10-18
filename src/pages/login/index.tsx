@@ -114,6 +114,7 @@ export default function LoginPage() {
               errorMessage={emailErrorMessage}
               value={email}
               onFocus={onEmailFocus}
+              type="email"
             />
             <p>비밀번호</p>
             <Input
