@@ -10,3 +10,8 @@ export interface Comment {
     id: number;
   };
 }
+
+export interface FetchCommentsResponse {
+  comments: Comment[];
+  cursorId: string | null;
+}
