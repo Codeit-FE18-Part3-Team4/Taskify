@@ -18,11 +18,11 @@ import { useDashboardPagination } from "@/hooks/use-dashboard-pagination";
 import { useInvitationSearch } from "@/hooks/use-invitation-search";
 import { useInvitations } from "@/hooks/use-invitations";
 import { useResponsiveValue } from "@/hooks/use-responsive-value";
+import styles from "@/styles/my-dashboard.module.css";
 import { MyDashboardMainProps } from "@/types/my-dashboard";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { useDashboardContext } from "./dashboard-provider";
-import styles from "@/styles/my-dashboard.module.css";
 
 export async function getServerSideProps() {
   return {
@@ -57,6 +57,17 @@ export default function MyDashboardMain({
   const { searchValue, setSearchValue, filteredInvitations } =
     useInvitationSearch(invitations);
 
+  const dashboardIdPage = (id: number) => {
+    router.push(`dashboard/${id}`);
+  };
+
+  const handleInvitationAction = async (id: number, action: boolean) => {
+    const success = await acceptInvitation(id, action);
+    if (success) {
+      refreshSidebar();
+    }
+  };
+
   const homeText = useResponsiveValue({
     desktop: Typography.xl3Bold,
     tablet: Typography.xl2Bold,
@@ -86,17 +97,6 @@ export default function MyDashboardMain({
     tablet: Typography.lgBold,
     mobile: Typography.lgSemiBold,
   });
-
-  const dashboardIdPage = (id: number) => {
-    router.push(`dashboard/${id}`);
-  };
-
-  const handleInvitationAction = async (id: number, action: boolean) => {
-    const success = await acceptInvitation(id, action);
-    if (success) {
-      refreshSidebar();
-    }
-  };
 
   const nextActiveButton = isLastPage ? "" : styles.active;
   const prevActiveButton = !isFirstPage ? styles.active : "";

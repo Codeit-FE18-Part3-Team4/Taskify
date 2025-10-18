@@ -14,6 +14,7 @@ export function useInvitations() {
   const observerRef = useRef<IntersectionObserver | null>(null);
   const loadMoreRef = useRef<HTMLDivElement | null>(null);
   const { isLoadingToken } = useAuth();
+  const isInitialLoadRef = useRef(true); // 초기 로드 추적
 
   const loadInvitations = useCallback(
     async (reset = false) => {
@@ -21,10 +22,12 @@ export function useInvitations() {
 
       try {
         setIsLoadingMore(true);
+        const currentCursorId = reset ? undefined : cursorId;
+
         const { invitations: newInvitations, cursorId: nextCursor } =
           await getInvitations({
             size: 10,
-            cursorId: reset ? undefined : cursorId,
+            cursorId: currentCursorId,
           });
 
         if (reset) {
@@ -41,7 +44,7 @@ export function useInvitations() {
         setIsLoadingMore(false);
       }
     },
-    [cursorId, isLoadingMore]
+    [cursorId, isLoadingMore] // 의존성 유지
   );
 
   const removeInvitation = useCallback((invitationId: number) => {
@@ -65,6 +68,15 @@ export function useInvitations() {
     [removeInvitation]
   );
 
+  // 초기 로드만 한 번 실행
+  useEffect(() => {
+    if (isLoadingToken || !isInitialLoadRef.current) return;
+
+    isInitialLoadRef.current = false;
+    loadInvitations(true);
+  }, [isLoadingToken]); // loadInvitations 제거
+
+  // IntersectionObserver 설정
   useEffect(() => {
     if (isLoadingToken) return;
 
@@ -87,11 +99,6 @@ export function useInvitations() {
       }
     };
   }, [hasMore, isLoadingMore, loadInvitations, isLoadingToken]);
-
-  useEffect(() => {
-    if (isLoadingToken) return;
-    loadInvitations(true);
-  }, [loadInvitations, isLoadingToken]);
 
   return {
     invitations,
