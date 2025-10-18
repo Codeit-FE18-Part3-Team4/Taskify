@@ -10,7 +10,6 @@ import styles from "./alert.module.css";
 export enum AlertActionType {
   Cancel = "취소",
   Delete = "삭제",
-  Confirm = "확인",
 }
 
 interface AlertActionProps {
@@ -25,7 +24,6 @@ function AlertAction({ type, onClick }: AlertActionProps) {
     return {
       [AlertActionType.Cancel]: ButtonVariant.Secondary,
       [AlertActionType.Delete]: ButtonVariant.Delete,
-      [AlertActionType.Confirm]: ButtonVariant.Primary,
     }[type];
   }, [type]);
 
@@ -49,7 +47,7 @@ interface Props {
   title: string;
   alertKey: string;
   message: string;
-  actionType?: AlertActionType;
+  actionType: AlertActionType;
   onCancel?: () => void;
   onAction?: () => void;
 }
@@ -93,22 +91,11 @@ export default function Alert({
           </p>
         </div>
         <div className={styles.action}>
-          {actionType === AlertActionType.Confirm ? (
-            <AlertAction
-              type={AlertActionType.Confirm}
-              onClick={handleCancelClick}
-            />
-          ) : (
-            <>
-              <AlertAction
-                type={AlertActionType.Cancel}
-                onClick={handleCancelClick}
-              />
-              {actionType && (
-                <AlertAction type={actionType} onClick={handleActionClick} />
-              )}
-            </>
-          )}
+          <AlertAction
+            type={AlertActionType.Cancel}
+            onClick={handleCancelClick}
+          />
+          <AlertAction type={actionType} onClick={handleActionClick} />
         </div>
       </div>
     </Modal>

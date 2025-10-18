@@ -2,7 +2,7 @@ import axiosInstance from "@/services/axios-instance";
 
 export async function getCards({
   columnId,
-  size = 20,
+  size,
 }: {
   columnId: number;
   size?: number;

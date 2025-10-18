@@ -1,4 +1,4 @@
-// import SampleImage from "@/assets/images/dashboard-gui.png";
+import SampleImage from "@/assets/images/dashboard-gui.png";
 import Alert, { AlertActionType } from "@/components/alert";
 import IconButton from "@/components/button/icon-button";
 import Badge from "@/components/chips/badge/badge";
@@ -12,20 +12,19 @@ import { ProfileSize } from "@/components/profile/profile-size";
 import Typography from "@/components/typography";
 import { deleteCard } from "@/features/card/apis";
 import { Direction, Menu, MenuItem } from "@/features/card/components/menu";
+import { getComments } from "@/features/comment/apis/mock";
 import { CommentInput, CommentList } from "@/features/comment/components";
 import { useAlert } from "@/hooks/use-alert";
 import { useDialog } from "@/hooks/use-dialog";
 import { useModal } from "@/hooks/use-modal";
 import { useResponsive } from "@/hooks/use-responsive";
 import { Card } from "@/types/card";
+import { Comment } from "@/types/comment";
 import { classnames } from "@/utils/classnames";
 import { formatDueDate } from "@/utils/date-formatter";
 import Image from "next/image";
 import { ReactNode, useEffect, useState } from "react";
 import styles from "./card-detail-modal.module.css";
-import { useComments } from "@/hooks/use-comment";
-import { useRouter } from "next/router";
-import { OperationStatus } from "@/types/operation-status";
 
 interface ActionsProps {
   onEdit: () => void;
@@ -140,7 +139,6 @@ interface MainProps extends ActionsProps {
   card: Card;
   dashboardTitle: string;
   columnTitle: string;
-  columnId: number;
 }
 
 function Main({
@@ -150,50 +148,26 @@ function Main({
   onEdit,
   onDelete,
   onClose,
-  columnId,
 }: MainProps) {
-  const router = useRouter();
-  const { id: dashboardId } = router.query;
-
+  const [comments, setComments] = useState<Comment[]>([]);
   const { isDesktop } = useResponsive();
-  const [statusMessage, setStatusMessage] = useState<OperationStatus | null>(
-    null,
-  );
 
-  const { comments, createComment, error, isLoading, refetch, status } =
-    useComments(card.id);
-
-  useEffect(
-    () => {
-      if (status.type !== "idle") {
-        console.log(status);
+  useEffect(() => {
+    async function loadComments() {
+      try {
+        const data = await getComments();
+        setComments(data);
+      } catch (error) {
+        // TODO: Error handling
+        console.error(error);
       }
-    },
-    // [status, clearStatus, openAlert]
-  );
+    }
+    loadComments();
+  }, []);
 
   const handleCommentSubmit = (value: string) => {
-    if (value && dashboardId && columnId && card.id) {
-      commentSubmit(value, Number(dashboardId), columnId, card.id);
-    }
-  };
-
-  const commentSubmit = async (
-    value: string,
-    dashboardId: number,
-    columnId: number,
-    cardId: number,
-  ) => {
-    const result = await createComment({
-      content: value,
-      cardId,
-      columnId,
-      dashboardId,
-    });
-
-    if (result.success) {
-      await refetch();
-    }
+    // TODO: Add comment
+    console.log("Submit comment:", value);
   };
 
   return (
@@ -203,7 +177,7 @@ function Main({
           <h2
             className={classnames(
               isDesktop ? "" : styles.compact,
-              Typography.xl2SemiBold,
+              Typography.xl2SemiBold
             )}
           >
             {card.title}
@@ -220,9 +194,7 @@ function Main({
         <article className={styles.content}>
           <p className={Typography.lgMedium160}>{card.description}</p>
           <div className={styles.image}>
-            {card.imageUrl && (
-              <Image src={card.imageUrl} alt="카드에 등록된 이미지" fill />
-            )}
+            <Image src={SampleImage} alt="카드에 등록된 이미지" fill />
           </div>
         </article>
         {isDesktop || (
@@ -240,7 +212,7 @@ function Main({
             authorName={card.assignee.nickname}
             onSubmit={handleCommentSubmit}
           />
-          {comments && <CommentList comments={comments} />}
+          <CommentList comments={comments} />
         </div>
       </div>
     </div>
@@ -252,7 +224,6 @@ interface Props {
   card: Card;
   dashboardTitle: string;
   columnTitle: string;
-  columnId: number;
 }
 
 export default function CardDetailModal({
@@ -260,7 +231,6 @@ export default function CardDetailModal({
   card,
   dashboardTitle,
   columnTitle,
-  columnId,
 }: Props) {
   const { openModal } = useModal({ key: modalKey });
   const { isDesktop, isMobile } = useResponsive();
@@ -305,7 +275,6 @@ export default function CardDetailModal({
           card={card}
           dashboardTitle={dashboardTitle}
           columnTitle={columnTitle}
-          columnId={columnId}
           onEdit={handleEdit}
           onDelete={handleDelete}
           onClose={handleClose}

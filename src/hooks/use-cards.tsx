@@ -23,7 +23,7 @@ export function useCards(columnIds: number[]) {
 
       try {
         const cardsPromises = columnIds.map((columnId) =>
-          getCards({ columnId }),
+          getCards({ columnId })
         );
         const cardsDataList = await Promise.all(cardsPromises);
 
@@ -32,7 +32,7 @@ export function useCards(columnIds: number[]) {
             acc[columnId] = cardsDataList[index].cards;
             return acc;
           },
-          {},
+          {}
         );
 
         setCards(cardsMap);

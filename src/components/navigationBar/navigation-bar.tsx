@@ -1,7 +1,7 @@
 import { CommonSize } from "@/constants/common/common-size";
 import styles from "./navigation-bar.module.css";
-import SettingSvg from "@/components/icon/setting-svg";
-import UserPlusSvg from "@/components/icon/user-plus-svg";
+import SettingSvg from "./setting-svg";
+import UserPlusSvg from "./user-plus-svg";
 import Link from "next/link";
 import { MemberInfo } from "@/types/member-info";
 import MemberList from "./member-list";

@@ -1,4 +1,6 @@
 import DashboardSideBar from "@/components/dashboard-side-bar/dashboard-side-bar";
+import Modal from "@/components/modal";
+import NavigationBar from "@/components/navigationBar/navigation-bar";
 import { useCards } from "@/hooks/use-cards";
 import { useColumn } from "@/hooks/use-column";
 import { useDashboardById } from "@/hooks/use-dashboard";
@@ -7,16 +9,8 @@ import { useModal } from "@/hooks/use-modal";
 import { Card } from "@/types/card";
 import { useRouter } from "next/router";
 import { useEffect, useMemo, useState } from "react";
-import DashboardContent from "@/features/dashboard/components/dashboard-content";
-import CardDetailModal from "@/features/card/components/card-detail-modal";
-import NavigationBar from "@/components/navigationBar/navigation-bar";
+import DashboardContent from "./dashboard-content";
 import styles from "./index.module.css";
-
-interface SelectedCardInfo {
-  card: Card;
-  columnTitle: string;
-  columnId: number;
-}
 
 export default function DashboardPage() {
   const router = useRouter();
@@ -32,7 +26,7 @@ export default function DashboardPage() {
   const { columns, isLoading: isColumnsLoading } = useColumn(dashboardId);
   const columnIds = useMemo(
     () => columns?.map((column) => column.id) ?? [],
-    [columns],
+    [columns]
   );
   const { cards, isLoading: isCardsLoading } = useCards(columnIds);
 
@@ -47,20 +41,16 @@ export default function DashboardPage() {
   }, [isColumnsLoading, isCardsLoading]);
 
   const isLoading = stillLoading || isColumnsLoading || isCardsLoading;
-  const [selectedCardInfo, setSelectedCardInfo] =
-    useState<SelectedCardInfo | null>(null);
-  const CARD_SHEET = "CARD_SHEET";
-  const { isShowModal: isShowCardSheet, openModal: openCardSheet } = useModal({
-    key: CARD_SHEET,
+
+  const [selectedCard, setSelectedCard] = useState<Card | null>(null);
+  const MODAL_KEY_1 = "CARD_MODAL";
+  const { isShowModal: isShowModal1, openModal: openModal1 } = useModal({
+    key: MODAL_KEY_1,
   });
 
-  const handleCardClick = (
-    card: Card,
-    columnTitle: string,
-    columnId: number,
-  ) => {
-    setSelectedCardInfo({ card, columnTitle, columnId });
-    openCardSheet(true);
+  const handleCardClick = (card: Card) => {
+    setSelectedCard(card);
+    openModal1(true);
   };
 
   useEffect(() => {
@@ -92,14 +82,25 @@ export default function DashboardPage() {
         </main>
       </div>
 
-      {isShowCardSheet && selectedCardInfo && dashboard && (
-        <CardDetailModal
-          modalKey={CARD_SHEET}
-          card={selectedCardInfo.card}
-          columnId={selectedCardInfo.columnId}
-          columnTitle={selectedCardInfo.columnTitle}
-          dashboardTitle={dashboard.title}
-        />
+      {isShowModal1 && (
+        <Modal modalKey={MODAL_KEY_1}>
+          <div
+            style={{
+              width: "600px",
+              height: "600px",
+              backgroundColor: "#242429",
+              borderRadius: "24px",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <h2 style={{ color: "white" }}>Modal 1 Title</h2>
+            <div>{selectedCard && JSON.stringify(selectedCard, null, 2)}</div>
+            <button onClick={() => openModal1(false)}>Close Modal 1</button>
+          </div>
+        </Modal>
       )}
     </div>
   );
