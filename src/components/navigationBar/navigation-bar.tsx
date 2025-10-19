@@ -44,9 +44,6 @@ export default function NavigationBar({
   const handleUserPlus = () => {
     openModal(true);
   };
-  console.log(isLoading);
-
-  console.log(members);
 
   let showMembers: MemberInfo[] = [];
   let hideMembers: MemberInfo[] = [];
