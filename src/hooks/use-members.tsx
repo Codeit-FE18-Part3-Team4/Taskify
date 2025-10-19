@@ -14,8 +14,9 @@ export function useMembers({ dashboardId, page, size }: MembersProps) {
   const [totalCount, setTotalCount] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<Error | null>(null);
+  const [refetchTrigger, setRefetchTrigger] = useState(0);
 
-  useAuthEffect(() => {
+  const loadMembers = async () => {
     if (!dashboardId) {
       setMembers(null);
       setTotalCount(0);
@@ -25,27 +26,26 @@ export function useMembers({ dashboardId, page, size }: MembersProps) {
     setIsLoading(true);
     setError(null);
 
-      try {
-        const res = await getMembers({ dashboardId });
-        setMembers(res?.members ?? []);
-      } catch (e) {
-        console.error(e);
-        setError(e as Error);
-        setMembers(null);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    loadDashboards();
-  }, [dashboardId]);
+    try {
+      const res = await getMembers({ dashboardId, page, size });
+      setMembers(res?.members ?? []);
+      setTotalCount(res?.totalCount ?? 0);
+    } catch (e) {
+      console.error(e);
+      setError(e as Error);
+      setMembers(null);
+      setTotalCount(0);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
-  useEffect(() => {
+  useAuthEffect(() => {
     loadMembers();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dashboardId, page, size, isLoadingToken]);
+  }, [dashboardId, page, size, refetchTrigger]);
 
   const refetch = () => {
-    return loadMembers();
+    setRefetchTrigger((prev) => prev + 1);
   };
 
   return { members, totalCount, isLoading, error, refetch };

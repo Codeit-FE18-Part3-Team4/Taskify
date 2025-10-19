@@ -1,10 +1,9 @@
-import Button, { ButtonSize, ButtonVariant } from "@/components/button/button";
-import ChevronIcon, { Direction } from "@/components/icon/chevron-icon";
-import UserPlusSvg from "@/components/icon/user-plus-svg";
-import Profile from "@/components/profile/profile";
-import { ProfileSize } from "@/components/profile/profile-size";
 import Typography from "@/components/typography";
-import { MemberInfo } from "@/types/member-info";
+import styles from "./modify-members.module.css";
+import { classnames } from "@/utils/classnames";
+import Button, { ButtonSize } from "@/components/button/button";
+import ChevronIcon, { Direction } from "@/components/icon/chevron-icon";
+import { useState } from "react";
 import UserPlusSvg from "@/components/icon/user-plus-svg";
 import { useMembers } from "@/hooks/use-members";
 import UserList from "./user-list";
@@ -35,10 +34,10 @@ export default function ModifyMembers({
   createdByMe,
 }: ModifyMembersProps) {
   const [rightColorRange, setRightColorRange] = useState(
-    ButtonColorRange.Disabled
+    ButtonColorRange.Disabled,
   );
   const [leftColorRange, setLeftColorRange] = useState(
-    ButtonColorRange.Disabled
+    ButtonColorRange.Disabled,
   );
   const [membersCurrentPage, setMembersCurrentPage] = useState(1);
 
