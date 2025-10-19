@@ -20,11 +20,13 @@ interface Props {
   children: ReactNode;
 }
 
+const STORAGE_KEY = "tagsHistory";
+
 export default function TagsProvider({ children }: Props) {
   const [tagsHistory, setTagsHistory] = useState<string[]>([]);
 
   const addTagsHistory = (tag: string) => {
-    localStorage.setItem("tagsHistory", JSON.stringify([...tagsHistory, tag]));
+    localStorage.setItem(STORAGE_KEY, JSON.stringify([...tagsHistory, tag]));
     setTagsHistory((prev) => {
       if (prev.includes(tag)) return prev;
       return [...prev, tag];
@@ -32,7 +34,7 @@ export default function TagsProvider({ children }: Props) {
   };
 
   useEffect(() => {
-    const storedTagsHistory = localStorage.getItem("tagsHistory");
+    const storedTagsHistory = localStorage.getItem(STORAGE_KEY);
     if (storedTagsHistory) {
       setTagsHistory(JSON.parse(storedTagsHistory));
     }
