@@ -1,16 +1,17 @@
 import { useDashboardContext } from "@/features/my-dashboard/dashboard-provider";
 import { useDashboardSidebar } from "@/hooks/use-dashboard-side-bar";
+import { useModal } from "@/hooks/use-modal";
 import { useSheet } from "@/hooks/use-sheet";
 import { useEffect } from "react";
+import AccountSettingModal from "../account-setting-modal";
 import CreateDashboardSheet from "../dashboard-create/create-dashboard-sheet";
 import styles from "./dashboard-side-bar.module.css";
 import Header from "./header";
 import Main from "./main";
 import UserProfile from "./user-profile";
-import { useModal } from "@/hooks/use-modal";
-import AccountSettingModal from "../account-setting-modal";
 
 const SHEET_KEY = "SHEET_DASHBOARD_ADD";
+const ACCOUNT_SETTING_MODAL_KEY = "ACCOUNT_SETTING_MODAL";
 
 export default function DashboardSideBar() {
   const {
@@ -32,7 +33,6 @@ export default function DashboardSideBar() {
     key: SHEET_KEY,
   });
 
-  const ACCOUNT_SETTING_MODAL_KEY = "ACCOUNT_SETTING_MODAL";
   const {
     isShowModal: isShowAccountSettingModal,
     openModal: openAccountSettingModal,
