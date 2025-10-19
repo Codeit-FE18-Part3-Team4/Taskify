@@ -20,6 +20,7 @@ export default function Main({
   currentPage,
   totalCount,
   onPageChange,
+  isLoading,
 }: MainProps) {
   const router = useRouter();
 
@@ -75,21 +76,19 @@ export default function Main({
         <span className={homeText}>홈</span>
       </Link>
       <div className={styles.mainDashboard}>
-        {dashboards && dashboards.length > 0 ? (
-          dashboards.map((dashboard) => (
-            <DashboardButton
-              onClick={() => handleDashboardNavigate(dashboard.id)}
-              key={dashboard.id}
-              active={currentDashboardId === dashboard.id}
-              createdByMe={dashboard.createdByMe}
-              color={dashboard.color}
-            >
-              {dashboard.title}
-            </DashboardButton>
-          ))
-        ) : (
-          <Spinner />
-        )}
+        {dashboards && dashboards.length > 0
+          ? dashboards.map((dashboard) => (
+              <DashboardButton
+                onClick={() => handleDashboardNavigate(dashboard.id)}
+                key={dashboard.id}
+                active={currentDashboardId === dashboard.id}
+                createdByMe={dashboard.createdByMe}
+                color={dashboard.color}
+              >
+                {dashboard.title}
+              </DashboardButton>
+            ))
+          : isLoading && <Spinner />}
       </div>
       {totalPages < 1 ? (
         ""
