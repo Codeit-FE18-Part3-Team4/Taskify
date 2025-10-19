@@ -7,12 +7,13 @@ import Sheet, { SheetActionType } from "@/components/sheet";
 import { useAuthEffect } from "@/features/auth/components/auth-provider";
 import { changeUserdata } from "@/features/user/apis/change-userdata";
 import { getMe, GetMeResponse } from "@/features/user/apis/get-me";
+import { uploadProfileImage } from "@/features/user/apis/upload-profile-image";
 import { useDialog } from "@/hooks/use-dialog";
 import { useModal } from "@/hooks/use-modal";
 import { AxiosError } from "axios";
 import { useEffect, useRef, useState } from "react";
-import styles from "./account-setting-modal.module.css";
 import PasswordChangeModal from "./password-change-modal";
+import styles from "./profile-setting-modal.module.css";
 
 const ACCOUNT_SETTING_MODAL_KEY = "ACCOUNT_SETTING_MODAL";
 const PASSWORD_CHANGE_MODAL_KEY = "PASSWORD_CHANGE_MODAL";
@@ -65,11 +66,18 @@ export default function AccountSettingModal() {
 
   const handleDeleteProfileImage = () => {
     setProfileImage("");
+    setSelectedFile(null);
   };
 
   const handleSubmit = async () => {
     try {
-      await changeUserdata(nickname, profileImage);
+      let finalProfileImageUrl = userData?.profileImageUrl ?? "";
+      if (selectedFile) {
+        finalProfileImageUrl = await uploadProfileImage(selectedFile);
+      } else if (!profileImage) {
+        finalProfileImageUrl = "";
+      }
+      await changeUserdata(nickname, finalProfileImageUrl);
       setDialogMessage("프로필이 성공적으로 변경되었습니다.");
     } catch (err) {
       const error = err as AxiosError<{ message?: string }>;

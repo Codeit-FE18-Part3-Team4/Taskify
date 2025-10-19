@@ -23,8 +23,8 @@ export default function LoginPage() {
   const [isLoginButtonDisabled, setIsLoginButtonDisabled] = useState(true);
   const router = useRouter();
   const [dialogMessage, setDialogMessage] = useState("");
-  const DIALOG_KEY = "DIALOG_LOGIN";
-  const { isShowDialog, openDialog } = useDialog({
+  const DIALOG_KEY = "LOGIN_DIALOG";
+  const { isShowDialog, isOpenDialog, openDialog } = useDialog({
     key: DIALOG_KEY,
   });
 
@@ -68,6 +68,13 @@ export default function LoginPage() {
 
   const onPasswordFocus = () => {
     setPasswordErrorMessage("");
+  };
+
+  const onPressEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (isOpenDialog) return;
+    if (e.key === "Enter") {
+      handleSubmit();
+    }
   };
 
   const handleSubmit = async () => {
@@ -115,6 +122,7 @@ export default function LoginPage() {
               value={email}
               onFocus={onEmailFocus}
               type="email"
+              onKeyDown={onPressEnter}
             />
             <p>비밀번호</p>
             <Input
@@ -126,6 +134,7 @@ export default function LoginPage() {
               errorMessage={passwordErrorMessage}
               value={password}
               onFocus={onPasswordFocus}
+              onKeyDown={onPressEnter}
             />
           </form>
           <div className={styles.loginActions}>

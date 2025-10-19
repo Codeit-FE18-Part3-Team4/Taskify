@@ -2,16 +2,9 @@ import Badge from "@/components/chips/badge/badge";
 import Typography from "@/components/typography";
 import { useBackdropClick } from "@/hooks/use-backdrop-unmount";
 import { classnames } from "@/utils/classnames";
-import {
-  ChangeEvent,
-  useContext,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
+import { ChangeEvent, useEffect, useMemo, useRef, useState } from "react";
 import styles from "./tag-input.module.css";
-import { TagsContext } from "./tags-provider";
+import { useTagsHistory } from "./tags-provider";
 
 function TagList({ tags }: { tags: string[] }) {
   return (
@@ -94,7 +87,7 @@ export default function TagInput({ tags = [], onChange }: Props) {
     },
   });
   const inputRef = useRef<HTMLInputElement>(null);
-  const { tagsHistory, setTagsHistory } = useContext(TagsContext);
+  const { tagsHistory, addTagsHistory } = useTagsHistory();
 
   const showsBadgeList = useMemo(() => {
     return tags.length > 0 && !isEditing;
@@ -127,7 +120,7 @@ export default function TagInput({ tags = [], onChange }: Props) {
     }
 
     onChange?.([...tags, value]);
-    setTagsHistory([...tagsHistory, value]);
+    addTagsHistory(value);
     setInputValue("");
     setEditing(false);
   };
@@ -139,6 +132,11 @@ export default function TagInput({ tags = [], onChange }: Props) {
       inputRef.current?.blur();
     }
   }, [isEditing]);
+
+  useEffect(() => {
+    addTagsHistory(tags);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [tags]);
 
   return (
     <div className={styles.container} ref={tagInputRef}>

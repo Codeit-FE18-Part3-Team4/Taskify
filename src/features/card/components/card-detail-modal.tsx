@@ -11,18 +11,17 @@ import { ProfileSize } from "@/components/profile/profile-size";
 import Typography from "@/components/typography";
 import { CardParams, deleteCard, updateCard } from "@/features/card/apis";
 import { Direction, Menu, MenuItem } from "@/features/card/components/menu";
-import { createComment, getComments } from "@/features/comment/apis";
-import { CommentInput, CommentList } from "@/features/comment/components";
+import CommentSection from "@/features/comment/components/comment-section";
 import { useAlert } from "@/hooks/use-alert";
 import { useDialog } from "@/hooks/use-dialog";
 import { useModal } from "@/hooks/use-modal";
 import { useResponsive } from "@/hooks/use-responsive";
 import { useSheet } from "@/hooks/use-sheet";
-import type { Card, Column, Comment, Dashboard, MemberInfo } from "@/types";
+import type { Card, Column, Dashboard, MemberInfo } from "@/types";
 import { classnames } from "@/utils/classnames";
 import { formatDueDate } from "@/utils/date-formatter";
 import Image from "next/image";
-import { ReactNode, useEffect, useState } from "react";
+import { ReactNode, useState } from "react";
 import styles from "./card-detail-modal.module.css";
 import CardEditSheet from "./card-edit-sheet";
 
@@ -149,43 +148,7 @@ function Main({
   onDelete,
   onClose,
 }: MainProps) {
-  const [comments, setComments] = useState<Comment[]>([]);
   const { isDesktop } = useResponsive();
-
-  const FAIL_DIALOG_KEY = "fail-dialog-from-card-detail-modal";
-  const { isShowDialog, openDialog } = useDialog({ key: FAIL_DIALOG_KEY });
-  const [failMessage, setFailMessage] = useState("");
-
-  useEffect(() => {
-    async function loadComments() {
-      try {
-        const comments = await getComments({ cardId: card.id });
-        setComments(comments);
-      } catch {
-        setComments([]);
-      }
-    }
-    loadComments();
-  }, [card]);
-
-  const handleCommentSubmit = async (value: string) => {
-    try {
-      const newComment = await createComment({
-        params: {
-          cardId: card.id,
-          columnId: card.columnId,
-          dashboardId: dashboard.id,
-          content: value,
-        },
-      });
-      setComments((prevComments) => [...prevComments, newComment]);
-    } catch (error) {
-      if (error instanceof Error) {
-        setFailMessage(error.message);
-        openDialog(true);
-      }
-    }
-  };
 
   return (
     <div className={styles.main}>
@@ -228,17 +191,8 @@ function Main({
             <DueDateInfo dueDate={card.dueDate} />
           </div>
         )}
-        <div className={styles.comments}>
-          <CommentInput
-            authorName={card.assignee.nickname}
-            onSubmit={handleCommentSubmit}
-          />
-          <CommentList comments={comments} />
-        </div>
+        <CommentSection card={card} dashboard={dashboard} />
       </div>
-      {isShowDialog && (
-        <Dialog dialogKey={FAIL_DIALOG_KEY} message={failMessage} />
-      )}
     </div>
   );
 }
