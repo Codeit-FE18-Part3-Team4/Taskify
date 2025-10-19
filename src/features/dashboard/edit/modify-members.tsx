@@ -59,8 +59,7 @@ export default function ModifyMembers({
     size: PAGE_SIZE,
   });
 
-  const { error: deleteError, removeMember } =
-    useDeleteDashboardMember(refetchMembers);
+  const { removeMember } = useDeleteDashboardMember(refetchMembers);
   const { removeInvitation } = useCancelDashboardInvitation(refetchInvitees);
 
   const totalPages = {
