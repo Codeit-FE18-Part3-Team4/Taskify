@@ -7,6 +7,7 @@ import Sheet, { SheetActionType } from "@/components/sheet";
 import { useAuthEffect } from "@/features/auth/components/auth-provider";
 import { changeUserdata } from "@/features/user/apis/change-userdata";
 import { getMe, GetMeResponse } from "@/features/user/apis/get-me";
+import { uploadProfileImage } from "@/features/user/apis/upload-profile-image";
 import { useDialog } from "@/hooks/use-dialog";
 import { useModal } from "@/hooks/use-modal";
 import { AxiosError } from "axios";
@@ -69,11 +70,16 @@ export default function ProfileSettingModal({
 
   const handleDeleteProfileImage = () => {
     setProfileImage("");
+    setSelectedFile(null);
   };
 
   const handleSubmit = async () => {
     try {
-      await changeUserdata(nickname, profileImage);
+      let finalProfileImageUrl = userData?.profileImageUrl ?? "";
+      if (selectedFile) {
+        finalProfileImageUrl = await uploadProfileImage(selectedFile);
+      }
+      await changeUserdata(nickname, finalProfileImageUrl);
       setDialogMessage("프로필이 성공적으로 변경되었습니다.");
     } catch (err) {
       const error = err as AxiosError<{ message?: string }>;
@@ -111,7 +117,7 @@ export default function ProfileSettingModal({
             >
               사진 변경
             </Button>
-            <Button
+            {/* <Button
               variant={ButtonVariant.Delete}
               size={ButtonSize.Small}
               onClick={(e) => {
@@ -120,7 +126,7 @@ export default function ProfileSettingModal({
               }}
             >
               사진 삭제
-            </Button>
+            </Button> */}
             <input
               className={styles.invisibleFileInput}
               ref={fileInputRef}
