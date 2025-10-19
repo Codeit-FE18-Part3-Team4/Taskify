@@ -1,4 +1,3 @@
-// pages/my-dashboard.tsx (또는 해당 페이지 경로)
 import DashboardLayout from "@/components/dashboard-layout";
 import { useDashboardContext } from "@/features/my-dashboard/dashboard-provider";
 import MyDashboardMain from "@/features/my-dashboard/my-dashboard-main";

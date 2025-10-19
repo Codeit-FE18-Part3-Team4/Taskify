@@ -9,7 +9,6 @@ import {
 import Button, { ButtonSize, ButtonVariant } from "@/components/button/button";
 import ColorChip from "@/components/chips/chip-color/chips-color";
 import Input, { InputSize, InputVariant } from "@/components/input/input";
-import NavigationBar from "@/components/navigationBar/navigation-bar";
 import Profile from "@/components/profile/profile";
 import { ProfileSize } from "@/components/profile/profile-size";
 import Typography from "@/components/typography";
@@ -103,7 +102,6 @@ export default function MyDashboardMain({
 
   return (
     <div className={styles.myDashboardMainWrap}>
-      <NavigationBar />
       <div className={styles.myDashboardMain}>
         <h1 className={homeText}>홈</h1>
         <div className={styles.dashboardSection}>
