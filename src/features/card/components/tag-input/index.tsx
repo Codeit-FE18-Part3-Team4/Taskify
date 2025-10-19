@@ -133,6 +133,11 @@ export default function TagInput({ tags = [], onChange }: Props) {
     }
   }, [isEditing]);
 
+  useEffect(() => {
+    addTagsHistory(tags);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [tags]);
+
   return (
     <div className={styles.container} ref={tagInputRef}>
       <div

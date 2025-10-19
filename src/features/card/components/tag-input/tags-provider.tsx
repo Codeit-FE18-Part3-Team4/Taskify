@@ -8,7 +8,7 @@ import {
 
 interface ContextValue {
   tagsHistory: string[];
-  addTagsHistory: (tag: string) => void;
+  addTagsHistory: (tags: string | string[]) => void;
 }
 
 const TagsContext = createContext<ContextValue>({
@@ -25,11 +25,15 @@ const STORAGE_KEY = "tagsHistory";
 export default function TagsProvider({ children }: Props) {
   const [tagsHistory, setTagsHistory] = useState<string[]>([]);
 
-  const addTagsHistory = (tag: string) => {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify([...tagsHistory, tag]));
+  const addTagsHistory = (tags: string | string[]) => {
+    const tagsArray = Array.isArray(tags) ? tags : [tags];
+    localStorage.setItem(
+      STORAGE_KEY,
+      JSON.stringify([...tagsHistory, ...tagsArray])
+    );
     setTagsHistory((prev) => {
-      if (prev.includes(tag)) return prev;
-      return [...prev, tag];
+      const newTags = tagsArray.filter((tag) => !prev.includes(tag));
+      return [...prev, ...newTags];
     });
   };
 
