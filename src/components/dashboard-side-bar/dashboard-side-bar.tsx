@@ -3,8 +3,6 @@ import { useDashboardSidebar } from "@/hooks/use-dashboard-side-bar";
 import { useModal } from "@/hooks/use-modal";
 import { useSheet } from "@/hooks/use-sheet";
 import { useEffect } from "react";
-import CreateDashboardSheet from "../dashboard-create/create-dashboard-sheet";
-import ProfileSettingModal from "../profile-setting-modal";
 import styles from "./dashboard-side-bar.module.css";
 import Header from "./header";
 import Main from "./main";
@@ -33,20 +31,17 @@ export default function DashboardSideBar() {
     key: SHEET_KEY,
   });
 
-  const {
-    isShowModal: isShowAccountSettingModal,
-    openModal: openAccountSettingModal,
-  } = useModal({
+  const { openModal: openAccountSettingModal } = useModal({
     key: ACCOUNT_SETTING_MODAL_KEY,
   });
 
   const handleMyPageUrlClick = () => {
-    // window.history.pushState(null, "", "/mypage");
     openAccountSettingModal(true);
   };
 
   return (
     <div className={styles.sideBar}>
+      <div className={styles.sideBarOverlay}></div>
       <Header />
       <Main
         dashboards={dashboards}
@@ -61,11 +56,6 @@ export default function DashboardSideBar() {
         profileImageUrl={userInfo?.profileImageUrl}
         onClick={handleMyPageUrlClick}
       />
-      <CreateDashboardSheet />
-
-      {isShowAccountSettingModal && (
-        <ProfileSettingModal modalKey={ACCOUNT_SETTING_MODAL_KEY} />
-      )}
     </div>
   );
 }

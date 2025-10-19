@@ -1,11 +1,11 @@
-import DashboardSideBar from "@/components/dashboard-side-bar/dashboard-side-bar";
+// pages/my-dashboard.tsx (또는 해당 페이지 경로)
+import DashboardLayout from "@/components/dashboard-layout";
+import { useDashboardContext } from "@/features/my-dashboard/dashboard-provider";
+import MyDashboardMain from "@/features/my-dashboard/my-dashboard-main";
 import { useAllDashboards } from "@/hooks/use-all-dashboards";
 import { useSheet } from "@/hooks/use-sheet";
-import { useSsrResponsive } from "@/hooks/use-ssr-responsive";
 import styles from "@/styles/my-dashboard.module.css";
-import { useEffect } from "react";
-import { useDashboardContext } from "../../features/my-dashboard/dashboard-provider";
-import MyDashboardMain from "../../features/my-dashboard/my-dashboard-main";
+import { ReactNode, useEffect } from "react";
 
 const SHEET_KEY = "SHEET_DASHBOARD_ADD";
 
@@ -17,16 +17,12 @@ export default function MyDashboard() {
     registerMainRefresh(refreshAllDashboards);
   }, [registerMainRefresh, refreshAllDashboards]);
 
-
   const { openSheet } = useSheet({
     key: SHEET_KEY,
   });
 
-  const { isMobile } = useSsrResponsive();
-
   return (
     <div className={styles.myDashboardWrap}>
-      {!isMobile && <DashboardSideBar />}
       <MyDashboardMain
         onClick={() => {
           openSheet(true);
@@ -36,3 +32,7 @@ export default function MyDashboard() {
     </div>
   );
 }
+
+MyDashboard.getLayout = function getLayout(page: ReactNode) {
+  return <DashboardLayout>{page}</DashboardLayout>;
+};

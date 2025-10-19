@@ -1,0 +1,9 @@
+.dashboardLayout {
+  display: flex;
+  min-height: 100vh;
+}
+
+.dashboardContent {
+  flex: 1;
+  overflow-x: hidden;
+}

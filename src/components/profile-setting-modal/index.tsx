@@ -15,14 +15,10 @@ import { useEffect, useRef, useState } from "react";
 import PasswordChangeModal from "./password-change-modal";
 import styles from "./profile-setting-modal.module.css";
 
-interface ProfileSettingModalProps {
-  modalKey: string;
-}
+const ACCOUNT_SETTING_MODAL_KEY = "ACCOUNT_SETTING_MODAL";
+const PASSWORD_CHANGE_MODAL_KEY = "PASSWORD_CHANGE_MODAL";
 
-export default function ProfileSettingModal({
-  modalKey,
-}: ProfileSettingModalProps) {
-  const PASSWORD_CHANGE_MODAL_KEY = "PASSWORD_CHANGE_MODAL";
+export default function AccountSettingModal() {
   const {
     isShowModal: isShowPasswordChangeModal,
     openModal: openPasswordChangeModal,
@@ -92,34 +88,40 @@ export default function ProfileSettingModal({
     }
   };
 
+  const { isShowModal } = useModal({
+    key: ACCOUNT_SETTING_MODAL_KEY,
+  });
+
   return (
-    <Sheet
-      sheetKey={modalKey}
-      title="프로필 변경"
-      actionType={SheetActionType.Update}
-      onAction={handleSubmit}
-    >
-      <div className={styles.body}>
-        <section className={styles.profileImageSection}>
-          <div className={styles.profileImage}>
-            <Profile
-              profileImageUrl={profileImage as string}
-              name={userData?.nickname}
-              size={ProfileSize.XLarge}
-            />
-          </div>
-          <div className={styles.profileImageButtons}>
-            <Button
-              variant={ButtonVariant.Secondary}
-              size={ButtonSize.Small}
-              onClick={(e) => {
-                e.preventDefault();
-                fileInputRef.current?.click();
-              }}
-            >
-              사진 변경
-            </Button>
-            {/* <Button
+    <>
+      {isShowModal && (
+        <Sheet
+          sheetKey={ACCOUNT_SETTING_MODAL_KEY}
+          title="프로필 변경"
+          actionType={SheetActionType.Update}
+          onAction={handleSubmit}
+        >
+          <div className={styles.body}>
+            <section className={styles.profileImageSection}>
+              <div className={styles.profileImage}>
+                <Profile
+                  profileImageUrl={profileImage as string}
+                  name={userData?.nickname}
+                  size={ProfileSize.XLarge}
+                />
+              </div>
+              <div className={styles.profileImageButtons}>
+                <Button
+                  variant={ButtonVariant.Secondary}
+                  size={ButtonSize.Small}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    fileInputRef.current?.click();
+                  }}
+                >
+                  사진 변경
+                </Button>
+                {/* <Button
               variant={ButtonVariant.Delete}
               size={ButtonSize.Small}
               onClick={(e) => {
@@ -129,56 +131,58 @@ export default function ProfileSettingModal({
             >
               사진 삭제
             </Button> */}
-            <input
-              className={styles.invisibleFileInput}
-              ref={fileInputRef}
-              type="file"
-              accept="image/*"
-              onChange={onFileChange}
-            />
+                <input
+                  className={styles.invisibleFileInput}
+                  ref={fileInputRef}
+                  type="file"
+                  accept="image/*"
+                  onChange={onFileChange}
+                />
+              </div>
+            </section>
+            <section className={styles.emailSection}>
+              <p>이메일</p>
+              <Input
+                variant={InputVariant.Default}
+                $size={InputSize.Auto}
+                disabled={true}
+                placeholder={userData?.email || ""}
+                type="email"
+              />
+            </section>
+            <section className={styles.nicknameSection}>
+              <p>닉네임</p>
+              <Input
+                variant={InputVariant.Default}
+                $size={InputSize.Auto}
+                value={nickname}
+                onChange={onNicknameChange}
+                placeholder={userData?.nickname || ""}
+              />
+            </section>
+            <section className={styles.passwordSection}>
+              <p>비밀번호</p>
+              <Button
+                variant={ButtonVariant.Secondary}
+                size={ButtonSize.Small}
+                onClick={(e) => {
+                  e.preventDefault();
+                  openPasswordChangeModal(true);
+                }}
+              >
+                비밀번호 변경
+              </Button>
+            </section>
           </div>
-        </section>
-        <section className={styles.emailSection}>
-          <p>이메일</p>
-          <Input
-            variant={InputVariant.Default}
-            $size={InputSize.Auto}
-            disabled={true}
-            placeholder={userData?.email || ""}
-            type="email"
-          />
-        </section>
-        <section className={styles.nicknameSection}>
-          <p>닉네임</p>
-          <Input
-            variant={InputVariant.Default}
-            $size={InputSize.Auto}
-            value={nickname}
-            onChange={onNicknameChange}
-            placeholder={userData?.nickname || ""}
-          />
-        </section>
-        <section className={styles.passwordSection}>
-          <p>비밀번호</p>
-          <Button
-            variant={ButtonVariant.Secondary}
-            size={ButtonSize.Small}
-            onClick={(e) => {
-              e.preventDefault();
-              openPasswordChangeModal(true);
-            }}
-          >
-            비밀번호 변경
-          </Button>
-        </section>
-      </div>
-      {isShowPasswordChangeModal && (
-        <PasswordChangeModal modalKey={PASSWORD_CHANGE_MODAL_KEY} />
-      )}
+          {isShowPasswordChangeModal && (
+            <PasswordChangeModal modalKey={PASSWORD_CHANGE_MODAL_KEY} />
+          )}
 
-      {isShowDialog && (
-        <Dialog dialogKey={DIALOG_KEY} message={dialogMessage} />
+          {isShowDialog && (
+            <Dialog dialogKey={DIALOG_KEY} message={dialogMessage} />
+          )}
+        </Sheet>
       )}
-    </Sheet>
+    </>
   );
 }
