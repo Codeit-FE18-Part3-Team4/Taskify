@@ -12,6 +12,7 @@ import UserList from "./user-list";
 import UserListTitle from "./user-list-title";
 import { useAlert } from "@/hooks/use-alert";
 import Alert, { AlertActionType } from "@/components/alert";
+import { Dashboard } from "@/types";
 
 const PAGE_SIZE = 6;
 
@@ -21,13 +22,13 @@ export enum UserListType {
 }
 
 interface ModifyMembersProps {
-  dashboardId: number;
+  dashboard: Dashboard;
   createdByMe: boolean;
   onUpdate: (message: string, status: boolean) => void | Promise<void>;
 }
 
 export default function ModifyMembers({
-  dashboardId,
+  dashboard,
   createdByMe,
   onUpdate,
 }: ModifyMembersProps) {
@@ -43,7 +44,7 @@ export default function ModifyMembers({
     totalCount: membersTotal,
     refetch: refetchMembers,
   } = useMembers({
-    dashboardId,
+    dashboardId: dashboard.id,
     page: page.members,
     size: PAGE_SIZE,
   });
@@ -53,7 +54,7 @@ export default function ModifyMembers({
     totalCount: inviteesTotal,
     refetch: refetchInvitees,
   } = useDashboardInvitees({
-    dashboardId,
+    dashboardId: dashboard.id,
     page: page.invitees,
     size: PAGE_SIZE,
   });
@@ -126,7 +127,7 @@ export default function ModifyMembers({
       }
     } else {
       const result = await removeInvitation({
-        dashboardId,
+        dashboardId: dashboard.id,
         invitationId: confirmProps.id,
       });
       if (result) {
@@ -152,9 +153,11 @@ export default function ModifyMembers({
           />
           <div className={styles.usersContainer}>
             <UserList
+              dashboard={dashboard}
               members={members ?? []}
               invitations={[]}
               onClickButton={handleUserListButtonClick}
+              createdByMe={createdByMe}
             />
           </div>
         </div>
@@ -170,6 +173,8 @@ export default function ModifyMembers({
             />
             <div className={styles.usersContainer}>
               <UserList
+                createdByMe={createdByMe}
+                dashboard={dashboard}
                 members={[]}
                 invitations={dashboardInvitations ?? []}
                 onClickButton={handleUserListButtonClick}

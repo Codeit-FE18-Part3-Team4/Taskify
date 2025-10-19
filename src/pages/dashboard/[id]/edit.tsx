@@ -93,7 +93,7 @@ export default function DashboardEditPage() {
               {tab === TabType.ModifyMembers && (
                 <ModifyMembers
                   createdByMe={dashboard.createdByMe}
-                  dashboardId={dashboard.id}
+                  dashboard={dashboard}
                   onUpdate={(message, status) =>
                     handleUpdatePage(message, status)
                   }

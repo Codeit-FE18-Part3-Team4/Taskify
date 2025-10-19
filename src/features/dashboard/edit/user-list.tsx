@@ -3,7 +3,7 @@ import Profile from "@/components/profile/profile";
 import { ProfileSize } from "@/components/profile/profile-size";
 import { classnames } from "@/utils/classnames";
 import styles from "./user-list.module.css";
-import { MemberInfo } from "@/types";
+import { Dashboard, MemberInfo } from "@/types";
 import { useEffect, useState } from "react";
 import { Invitations } from "@/types/dashboard-invitations";
 import { UserListType } from "./modify-members";
@@ -22,19 +22,23 @@ interface UserListProps {
   members: MemberInfo[];
   invitations: Invitations[];
   onClickButton: (type: UserListType, id: number, nickName: string) => void;
+  createdByMe: boolean;
+  dashboard: Dashboard;
 }
 
-interface MemberInfoWithMe extends MemberInfo {
-  me?: boolean;
+interface IsCreator extends MemberInfo {
+  creator?: boolean;
 }
 
 export default function UserList({
   members,
   invitations,
   onClickButton,
+  createdByMe = false,
+  dashboard,
 }: UserListProps) {
   const [myId, setMyId] = useState<number | null>(null);
-  const [orderedMembers, setOrderedMembers] = useState<MemberInfoWithMe[]>([]);
+  const [orderedMembers, setOrderedMembers] = useState<IsCreator[]>([]);
   const [profileType, setProfileType] = useState<ProfileType | null>(null);
 
   useAuthEffect(() => {
@@ -45,11 +49,17 @@ export default function UserList({
   });
 
   useEffect(() => {
-    const updated = members.map((m) =>
-      m.userId === myId ? { ...m, me: true } : m,
+    let creatorId;
+    if (createdByMe) {
+      creatorId = myId;
+    } else {
+      creatorId = dashboard.userId;
+    }
+    const updated = members.map((member) =>
+      member.userId === creatorId ? { ...member, creator: true } : member,
     );
     setOrderedMembers(updated);
-  }, [members, myId]);
+  }, [createdByMe, dashboard.userId, members, myId]);
 
   useEffect(() => {
     if (members.length) {
@@ -79,7 +89,7 @@ export default function UserList({
                 size={ProfileSize.Large}
                 name={member.nickname}
               />
-              {member.me ? (
+              {member.creator ? (
                 <div className={styles.iconWrapper}>
                   <Image
                     className={styles.crownIcon}
@@ -90,19 +100,23 @@ export default function UserList({
                   />
                 </div>
               ) : (
-                <Button
-                  size={ButtonSize.XSmall}
-                  variant={ButtonVariant.Secondary}
-                  onClick={() =>
-                    onClickButton(
-                      UserListType.Members,
-                      member.id,
-                      member.nickname,
-                    )
-                  }
-                >
-                  삭제
-                </Button>
+                <>
+                  {createdByMe && (
+                    <Button
+                      size={ButtonSize.XSmall}
+                      variant={ButtonVariant.Secondary}
+                      onClick={() =>
+                        onClickButton(
+                          UserListType.Members,
+                          member.id,
+                          member.nickname,
+                        )
+                      }
+                    >
+                      삭제
+                    </Button>
+                  )}
+                </>
               )}
             </div>
           ))}
