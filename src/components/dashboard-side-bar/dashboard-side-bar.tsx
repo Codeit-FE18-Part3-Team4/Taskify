@@ -3,8 +3,8 @@ import { useDashboardSidebar } from "@/hooks/use-dashboard-side-bar";
 import { useModal } from "@/hooks/use-modal";
 import { useSheet } from "@/hooks/use-sheet";
 import { useEffect } from "react";
-import AccountSettingModal from "../account-setting-modal";
 import CreateDashboardSheet from "../dashboard-create/create-dashboard-sheet";
+import ProfileSettingModal from "../profile-setting-modal";
 import styles from "./dashboard-side-bar.module.css";
 import Header from "./header";
 import Main from "./main";
@@ -64,7 +64,7 @@ export default function DashboardSideBar() {
       <CreateDashboardSheet />
 
       {isShowAccountSettingModal && (
-        <AccountSettingModal modalKey={ACCOUNT_SETTING_MODAL_KEY} />
+        <ProfileSettingModal modalKey={ACCOUNT_SETTING_MODAL_KEY} />
       )}
     </div>
   );

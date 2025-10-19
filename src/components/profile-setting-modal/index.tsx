@@ -11,16 +11,16 @@ import { useDialog } from "@/hooks/use-dialog";
 import { useModal } from "@/hooks/use-modal";
 import { AxiosError } from "axios";
 import { useEffect, useRef, useState } from "react";
-import styles from "./account-setting-modal.module.css";
 import PasswordChangeModal from "./password-change-modal";
+import styles from "./profile-setting-modal.module.css";
 
-interface AccountSettingModalProps {
+interface ProfileSettingModalProps {
   modalKey: string;
 }
 
-export default function AccountSettingModal({
+export default function ProfileSettingModal({
   modalKey,
-}: AccountSettingModalProps) {
+}: ProfileSettingModalProps) {
   const PASSWORD_CHANGE_MODAL_KEY = "PASSWORD_CHANGE_MODAL";
   const {
     isShowModal: isShowPasswordChangeModal,
