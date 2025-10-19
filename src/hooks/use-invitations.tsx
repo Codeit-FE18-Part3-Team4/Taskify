@@ -1,10 +1,10 @@
-import { useAuth } from "@/features/auth/components/auth-provider";
+import { useAuthEffect } from "@/features/auth/components/auth-provider";
 import {
   getInvitations,
   putInvitationsAccepts,
 } from "@/features/my-dashboard/api/";
 import { Invitation } from "@/types/my-dashboard";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 
 export function useInvitations() {
   const [invitations, setInvitations] = useState<Invitation[]>([]);
@@ -13,7 +13,6 @@ export function useInvitations() {
   const [cursorId, setCursorId] = useState<number | undefined>(undefined);
   const observerRef = useRef<IntersectionObserver | null>(null);
   const loadMoreRef = useRef<HTMLDivElement | null>(null);
-  const { isLoadingToken } = useAuth();
   const isInitialLoadRef = useRef(true);
 
   const loadInvitations = useCallback(
@@ -68,16 +67,14 @@ export function useInvitations() {
     [removeInvitation]
   );
 
-  useEffect(() => {
-    if (isLoadingToken || !isInitialLoadRef.current) return;
+  useAuthEffect(() => {
+    if (!isInitialLoadRef.current) return;
 
     isInitialLoadRef.current = false;
     loadInvitations(true);
-  }, [isLoadingToken]);
+  }, [loadInvitations]);
 
-  useEffect(() => {
-    if (isLoadingToken) return;
-
+  useAuthEffect(() => {
     observerRef.current = new IntersectionObserver(
       (entries) => {
         if (entries[0].isIntersecting && hasMore && !isLoadingMore) {
@@ -96,7 +93,7 @@ export function useInvitations() {
         observerRef.current.disconnect();
       }
     };
-  }, [hasMore, isLoadingMore, loadInvitations, isLoadingToken]);
+  }, [hasMore, isLoadingMore, loadInvitations]);
 
   return {
     invitations,

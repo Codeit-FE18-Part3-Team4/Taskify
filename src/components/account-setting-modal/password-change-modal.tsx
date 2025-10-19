@@ -97,7 +97,7 @@ export default function PasswordChangeModal({
     <Sheet
       sheetKey={modalKey}
       title="비밀번호 변경"
-      actionType={SheetActionType.Modify}
+      actionType={SheetActionType.Update}
       canSubmit={!isSubmitButtonDisabled}
       onAction={handleSubmit}
     >

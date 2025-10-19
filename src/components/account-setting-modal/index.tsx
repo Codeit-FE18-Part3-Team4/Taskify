@@ -4,7 +4,7 @@ import Input, { InputSize, InputVariant } from "@/components/input/input";
 import Profile from "@/components/profile/profile";
 import { ProfileSize } from "@/components/profile/profile-size";
 import Sheet, { SheetActionType } from "@/components/sheet";
-import { useAuth } from "@/features/auth/components/auth-provider";
+import { useAuthEffect } from "@/features/auth/components/auth-provider";
 import { changeUserdata } from "@/features/user/apis/change-userdata";
 import { getMe, GetMeResponse } from "@/features/user/apis/get-me";
 import { useDialog } from "@/hooks/use-dialog";
@@ -29,7 +29,6 @@ export default function AccountSettingModal({
   const [userData, setUserData] = useState<GetMeResponse | null>(null);
   const [nickname, setNickname] = useState("");
   const [profileImage, setProfileImage] = useState("");
-  const { isLoadingToken } = useAuth();
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const DIALOG_KEY = "DIALOG_CHAGNE_USERDATA";
   const { isShowDialog, openDialog } = useDialog({
@@ -38,8 +37,7 @@ export default function AccountSettingModal({
   const [dialogMessage, setDialogMessage] = useState("");
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
-  useEffect(() => {
-    if (isLoadingToken) return;
+  useAuthEffect(() => {
     async function loadUserData() {
       try {
         setUserData(await getMe());
@@ -48,7 +46,7 @@ export default function AccountSettingModal({
       }
     }
     loadUserData();
-  }, [isLoadingToken]);
+  });
 
   useEffect(() => {
     if (userData) {
@@ -90,7 +88,7 @@ export default function AccountSettingModal({
     <Sheet
       sheetKey={modalKey}
       title="프로필 변경"
-      actionType={SheetActionType.Modify}
+      actionType={SheetActionType.Update}
       onAction={handleSubmit}
     >
       <div className={styles.body}>
