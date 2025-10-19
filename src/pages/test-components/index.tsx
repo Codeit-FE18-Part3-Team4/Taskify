@@ -25,7 +25,6 @@ import { CommonSize } from "@/constants/common/common-size";
 import { ProfileRandomColor } from "@/constants/profile-random-color";
 import { logout } from "@/features/auth/apis/logout";
 import { getCard } from "@/features/card/apis/mock";
-import CardDetailModal from "@/features/card/components/card-detail-modal";
 import CardEditSheet from "@/features/card/components/card-edit-sheet";
 import Dropdown, { DropdownOption } from "@/features/card/components/dropdown";
 import ImageInput from "@/features/card/components/image-input";
@@ -688,7 +687,7 @@ function CardEditSheetSample() {
     async function loadCard() {
       const [card, columns, members] = await Promise.all([
         getCard(),
-        getColumn({ dashboardId: 1234 }),
+        getColumn(),
         getMembers(),
       ]);
 
@@ -828,49 +827,6 @@ function LogoutButton() {
   return <button onClick={logout}>로그아웃</button>;
 }
 
-function CardDetailModalSample() {
-  const modalKey = "card-detail";
-  const { isShowModal, openModal } = useModal({ key: modalKey });
-
-  const [card, setCard] = useState<Card | null>(null);
-  const [columns, setColumns] = useState<Column[]>([]);
-  const [members, setMembers] = useState<MemberInfo[]>([]);
-
-  useEffect(() => {
-    async function loadCard() {
-      const [card, columns, members] = await Promise.all([
-        getCard(),
-        getColumn({ dashboardId: 1234 }),
-        getMembers(),
-      ]);
-
-      setCard(card);
-      setColumns(columns);
-      setMembers(members);
-    }
-    loadCard();
-  }, []);
-
-  return (
-    <>
-      <div>
-        <button onClick={() => openModal(true)}>Open Modal</button>
-        {isShowModal && card && (
-          <CardDetailModal
-            modalKey={modalKey}
-            card={card}
-            columnTitle="Progress"
-            dashboardTitle="포트폴리오"
-            columns={columns}
-            members={members}
-            onDelete={() => console.log("Delete Card")}
-          />
-        )}
-      </div>
-    </>
-  );
-}
-
 export default function Page() {
   return (
     <main style={{ padding: "24px" }}>
@@ -935,9 +891,6 @@ export default function Page() {
       </Section>
       <Section title="Menu">
         <MenuSample />
-      </Section>
-      <Section title="Card Detail Modal">
-        <CardDetailModalSample />
       </Section>
       <Section title="profile">
         <ProfileSample />

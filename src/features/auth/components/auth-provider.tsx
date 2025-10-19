@@ -1,6 +1,8 @@
 import axios from "axios";
 import {
   createContext,
+  DependencyList,
+  EffectCallback,
   PropsWithChildren,
   useContext,
   useEffect,
@@ -27,9 +29,15 @@ interface AuthContextValue {
 
 const AuthContext = createContext<AuthContextValue>({ isLoadingToken: true });
 
-export function useAuth() {
+export function useAuthEffect(effect: EffectCallback, deps?: DependencyList) {
   const { isLoadingToken } = useContext(AuthContext);
-  return { isLoadingToken };
+
+  useEffect(() => {
+    if (!isLoadingToken) {
+      return effect();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isLoadingToken, ...(deps || [])]);
 }
 
 export function AuthProvider({ children }: PropsWithChildren) {

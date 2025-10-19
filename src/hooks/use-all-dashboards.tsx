@@ -1,12 +1,11 @@
-import { useAuth } from "@/features/auth/components/auth-provider";
+import { useAuthEffect } from "@/features/auth/components/auth-provider";
 import { getDashboards } from "@/features/my-dashboard/api/";
 import { Dashboard } from "@/types/my-dashboard";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 
 export function useAllDashboards() {
   const [allDashboards, setAllDashboards] = useState<Dashboard[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const { isLoadingToken } = useAuth();
 
   const loadAllDashboards = useCallback(async () => {
     setIsLoading(true);
@@ -21,10 +20,9 @@ export function useAllDashboards() {
     }
   }, []);
 
-  useEffect(() => {
-    if (isLoadingToken) return;
+  useAuthEffect(() => {
     loadAllDashboards();
-  }, [isLoadingToken, loadAllDashboards]);
+  }, [loadAllDashboards]);
 
   const addDashboard = useCallback((dashboard: Dashboard) => {
     setAllDashboards((prev) => [dashboard, ...prev]);
