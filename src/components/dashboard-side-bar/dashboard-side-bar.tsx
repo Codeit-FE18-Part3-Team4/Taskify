@@ -11,7 +11,13 @@ import UserProfile from "./user-profile";
 const SHEET_KEY = "SHEET_DASHBOARD_ADD";
 const ACCOUNT_SETTING_MODAL_KEY = "ACCOUNT_SETTING_MODAL";
 
-export default function DashboardSideBar() {
+interface DashboardSideBarProps {
+  handleCloseMobileSidebar?: () => void;
+}
+
+export default function DashboardSideBar({
+  handleCloseMobileSidebar,
+}: DashboardSideBarProps) {
   const {
     dashboards,
     userInfo,
@@ -41,7 +47,10 @@ export default function DashboardSideBar() {
 
   return (
     <div className={styles.sideBar}>
-      <div className={styles.sideBarOverlay}></div>
+      <div
+        onClick={handleCloseMobileSidebar}
+        className={styles.sideBarOverlay}
+      ></div>
       <Header />
       <Main
         dashboards={dashboards}
