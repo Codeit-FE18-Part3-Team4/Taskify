@@ -7,12 +7,15 @@ interface GetCommentsResponse {
   comments: Comment[];
 }
 
-export async function getComments({ cardId }: { cardId: number }) {
-  return withThrowingAxiosError<Comment[]>(async () => {
+export async function getComments(params: {
+  cardId: number;
+  cursorId?: number;
+}) {
+  return withThrowingAxiosError(async () => {
     const response = await axiosInstance.get<GetCommentsResponse>(`/comments`, {
-      params: { cardId },
+      params,
     });
-    return response.data.comments;
+    return response.data;
   });
 }
 

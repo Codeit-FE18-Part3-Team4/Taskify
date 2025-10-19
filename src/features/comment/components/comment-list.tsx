@@ -3,7 +3,8 @@ import { ProfileSize } from "@/components/profile/profile-size";
 import Typography from "@/components/typography";
 import { Comment } from "@/types/comment";
 import { formatFullDate } from "@/utils/date-formatter";
-import { Key } from "react";
+import { useIntersectionObserver } from "@uidotdev/usehooks";
+import { Key, useEffect } from "react";
 import styles from "./comment-list.module.css";
 
 function CommentListItem({ key, comment }: { key: Key; comment: Comment }) {
@@ -32,9 +33,21 @@ function CommentListItem({ key, comment }: { key: Key; comment: Comment }) {
 
 interface Props {
   comments?: Comment[];
+  onScrollEnd: () => void;
 }
 
-export default function CommentList({ comments = [] }: Props) {
+export default function CommentList({ comments = [], onScrollEnd }: Props) {
+  const [ref, entry] = useIntersectionObserver();
+
+  useEffect(() => {
+    if (entry?.isIntersecting) {
+      onScrollEnd();
+    }
+
+    // `onScrollEnd` should not be a dependency here
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [entry]);
+
   return (
     <ul className={styles.listContainer}>
       {comments
@@ -42,6 +55,7 @@ export default function CommentList({ comments = [] }: Props) {
         .map((comment) => (
           <CommentListItem key={comment.id} comment={comment} />
         ))}
+      <div ref={ref} />
     </ul>
   );
 }
