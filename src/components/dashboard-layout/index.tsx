@@ -1,8 +1,8 @@
 import DashboardSideBar from "@/components/dashboard-side-bar/dashboard-side-bar";
 import { useSsrResponsive } from "@/hooks/use-ssr-responsive";
 import { ReactNode } from "react";
-import AccountSettingModal from "../account-setting-modal";
 import CreateDashboardSheet from "../dashboard-create/create-dashboard-sheet";
+import AccountSettingModal from "../profile-setting-modal";
 import styles from "./dashboard-layout.module.css";
 
 interface DashboardLayoutProps {

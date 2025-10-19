@@ -121,16 +121,16 @@ export default function AccountSettingModal() {
                 >
                   사진 변경
                 </Button>
-                <Button
-                  variant={ButtonVariant.Delete}
-                  size={ButtonSize.Small}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    handleDeleteProfileImage();
-                  }}
-                >
-                  사진 삭제
-                </Button>
+                {/* <Button
+              variant={ButtonVariant.Delete}
+              size={ButtonSize.Small}
+              onClick={(e) => {
+                e.preventDefault();
+                handleDeleteProfileImage();
+              }}
+            >
+              사진 삭제
+            </Button> */}
                 <input
                   className={styles.invisibleFileInput}
                   ref={fileInputRef}
