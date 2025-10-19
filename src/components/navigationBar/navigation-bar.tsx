@@ -44,6 +44,7 @@ export default function NavigationBar({
   const handleUserPlus = () => {
     openModal(true);
   };
+  console.log(isLoading);
 
   console.log(members);
 
