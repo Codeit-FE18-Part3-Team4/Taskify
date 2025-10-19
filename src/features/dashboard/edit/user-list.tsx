@@ -5,50 +5,71 @@ import { classnames } from "@/utils/classnames";
 import styles from "./user-list.module.css";
 import { MemberInfo } from "@/types";
 import { useEffect, useState } from "react";
-import Typography from "@/components/typography";
 import { Invitations } from "@/types/dashboard-invitations";
+import { UserListType } from "./modify-members";
+import { getUserInfo } from "@/features/my-dashboard/api";
+import { useAuthEffect } from "@/features/auth/components/auth-provider";
+import CrownIcon from "@/assets/images/ic-crown.svg";
+import Image from "next/image";
 
 enum ProfileType {
   Members,
-  Invitiees,
+  Invitees,
   NoUsers,
 }
 
 interface UserListProps {
   members: MemberInfo[];
   invitations: Invitations[];
+  onClickButton: (type: UserListType, id: number, nickName: string) => void;
 }
 
-export default function UserList({ members, invitations }: UserListProps) {
+interface MemberInfoWithMe extends MemberInfo {
+  me?: boolean;
+}
+
+export default function UserList({
+  members,
+  invitations,
+  onClickButton,
+}: UserListProps) {
+  const [myId, setMyId] = useState<number | null>(null);
+  const [orderedMembers, setOrderedMembers] = useState<MemberInfoWithMe[]>([]);
   const [profileType, setProfileType] = useState<ProfileType | null>(null);
+
+  useAuthEffect(() => {
+    (async () => {
+      const { id } = await getUserInfo();
+      setMyId(id);
+    })();
+  });
+
+  useEffect(() => {
+    const updated = members.map((m) =>
+      m.userId === myId ? { ...m, me: true } : m,
+    );
+    setOrderedMembers(updated);
+  }, [members, myId]);
 
   useEffect(() => {
     if (members.length) {
       setProfileType(ProfileType.Members);
     } else if (invitations.length) {
-      setProfileType(ProfileType.Invitiees);
+      setProfileType(ProfileType.Invitees);
     } else {
       setProfileType(ProfileType.NoUsers);
     }
   }, [members, invitations]);
 
   if (profileType === ProfileType.NoUsers) {
-    return (
-      <h3 className={classnames(Typography.smMedium, styles.exceptionText)}>
-        유저 정보가 없습니다
-      </h3>
-    );
+    return <span className={styles.exception}>유저 정보가 없습니다</span>;
   }
 
-  const handleInvitationCancle = (invitationId: number) => {
-    console.log(`취소할 번호:          ${invitationId}`);
-  };
-
   return (
-    <>
+    <div className={styles.topContainer}>
       {profileType === ProfileType.Members ? (
         <>
-          {members?.map((member, index) => (
+          {orderedMembers?.map((member, index) => (
             <div
               key={index}
               className={classnames(styles.userList, styles.member)}
@@ -58,28 +79,53 @@ export default function UserList({ members, invitations }: UserListProps) {
                 size={ProfileSize.Large}
                 name={member.nickname}
               />
-              <Button
-                size={ButtonSize.XSmall}
-                variant={ButtonVariant.Secondary}
-              >
-                삭제
-              </Button>
+              {member.me ? (
+                <div className={styles.iconWrapper}>
+                  <Image
+                    className={styles.crownIcon}
+                    src={CrownIcon}
+                    width={20}
+                    height={20}
+                    alt="내 대시보드 아이콘"
+                  />
+                </div>
+              ) : (
+                <Button
+                  size={ButtonSize.XSmall}
+                  variant={ButtonVariant.Secondary}
+                  onClick={() =>
+                    onClickButton(
+                      UserListType.Members,
+                      member.id,
+                      member.nickname,
+                    )
+                  }
+                >
+                  삭제
+                </Button>
+              )}
             </div>
           ))}
         </>
       ) : (
         <>
-          {invitations?.map((invitations, index) => (
+          {invitations?.map((invitation, index) => (
             <div key={index} className={styles.userList}>
               <Profile
                 showFullName
                 size={ProfileSize.Large}
-                name={invitations.invitee.nickname}
+                name={invitation.invitee.nickname}
               />
               <Button
                 size={ButtonSize.XSmall}
                 variant={ButtonVariant.Secondary}
-                onClick={() => handleInvitationCancle(invitations.id)}
+                onClick={() =>
+                  onClickButton(
+                    UserListType.Invitees,
+                    invitation.id,
+                    invitation.invitee.nickname,
+                  )
+                }
               >
                 취소
               </Button>
@@ -87,6 +133,6 @@ export default function UserList({ members, invitations }: UserListProps) {
           ))}
         </>
       )}
-    </>
+    </div>
   );
 }

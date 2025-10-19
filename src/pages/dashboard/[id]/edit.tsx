@@ -79,7 +79,7 @@ export default function DashboardEditPage() {
         <EditSidebar onTabChange={handleTabChange} activeTab={activeTab} />
         <section className={styles.contents}>
           {dashboardIsLoading ? (
-            <span>로딩중...</span>
+            <span className={styles.exception}>로딩중...</span>
           ) : dashboard ? (
             <>
               {tab === TabType.Edit && (
@@ -94,11 +94,16 @@ export default function DashboardEditPage() {
                 <ModifyMembers
                   createdByMe={dashboard.createdByMe}
                   dashboardId={dashboard.id}
+                  onUpdate={(message, status) =>
+                    handleUpdatePage(message, status)
+                  }
                 />
               )}
             </>
           ) : (
-            <span>대시보드를 찾을 수 없습니다.</span>
+            <span className={styles.exception}>
+              대시보드를 찾을 수 없습니다.
+            </span>
           )}
           {dashboard && (
             <div>

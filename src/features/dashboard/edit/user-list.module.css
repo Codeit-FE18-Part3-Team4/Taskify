@@ -1,3 +1,7 @@
+.topContainer {
+  height: 500px;
+}
+
 .userList {
   border-bottom: 1px solid #383a42;
   height: 59px;
@@ -21,4 +25,13 @@
 
 .userList .exceptionText {
   color: var(--color-gray100);
+}
+
+.userList.member .iconWrapper {
+  margin-right: 15px;
+}
+
+.userList.member .iconWrapper .crownIcon {
+  filter: invert(42%) sepia(100%) saturate(5942%) hue-rotate(110deg)
+    brightness(95%) contrast(91%);
 }

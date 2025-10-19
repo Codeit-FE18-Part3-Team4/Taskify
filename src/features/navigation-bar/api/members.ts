@@ -37,3 +37,28 @@ export async function getDashboardInvitees({
     throw e;
   }
 }
+
+export async function deleteDashboardMember(memberId: number) {
+  try {
+    return await axiosInstance.delete(`/members/${memberId}`);
+  } catch (e) {
+    console.error(e);
+    throw e;
+  }
+}
+
+export async function cancelDashboardInviete({
+  dashboardId,
+  invitationId,
+}: {
+  dashboardId: number;
+  invitationId: number;
+}) {
+  try {
+    return axiosInstance.delete(`/dashboards/${dashboardId}/invitations/${invitationId}
+`);
+  } catch (e) {
+    console.error(e);
+    throw e;
+  }
+}
