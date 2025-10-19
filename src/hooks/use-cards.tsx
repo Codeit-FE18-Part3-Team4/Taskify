@@ -1,13 +1,12 @@
 import { getCards } from "@/components/dashboard/card/api/cards";
-import { useAuth } from "@/features/auth/components/auth-provider";
+import { useAuthEffect } from "@/features/auth/components/auth-provider";
 import { Card } from "@/types/card";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 
 export function useCards(columnIds: number[]) {
   const [cards, setCards] = useState<Record<number, Card[]> | null>(null);
   const [isLoadingCards, setIsLoading] = useState(false);
   const [error, setError] = useState<Error | null>(null);
-  const { isLoadingToken } = useAuth();
 
   const getCardData = useCallback(
     async ({ loading }: { loading: boolean } = { loading: true }) => {
@@ -46,10 +45,9 @@ export function useCards(columnIds: number[]) {
     [columnIds]
   );
 
-  useEffect(() => {
-    if (isLoadingToken) return;
+  useAuthEffect(() => {
     getCardData();
-  }, [isLoadingToken, getCardData]);
+  }, [getCardData]);
 
   return { cards, isLoadingCards, error, reloadCards: getCardData };
 }

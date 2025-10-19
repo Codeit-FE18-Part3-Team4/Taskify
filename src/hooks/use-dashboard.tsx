@@ -1,17 +1,14 @@
-import { useAuth } from "@/features/auth/components/auth-provider";
+import { useAuthEffect } from "@/features/auth/components/auth-provider";
 import { getDashboardById, getDashboards } from "@/features/my-dashboard/api/";
 import { Dashboard } from "@/types/dashboard";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 export function useDashboard() {
   const [dashboards, setDashboards] = useState<Dashboard[] | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<Error | null>(null);
-  const { isLoadingToken } = useAuth();
 
-  useEffect(() => {
-    if (isLoadingToken) return;
-
+  useAuthEffect(() => {
     const loadDashboards = async () => {
       setIsLoading(true);
       setError(null);
@@ -20,7 +17,7 @@ export function useDashboard() {
         const res = await getDashboards();
         const sortedDashboards = (res?.dashboards ?? []).sort(
           (a: Dashboard, b: Dashboard) =>
-            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
+            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
         );
         setDashboards(sortedDashboards);
       } catch (e) {
@@ -32,7 +29,7 @@ export function useDashboard() {
       }
     };
     loadDashboards();
-  }, [isLoadingToken]);
+  });
 
   return { dashboards, isLoading, error };
 }
@@ -41,7 +38,6 @@ export function useDashboardById(dashboardId: number | null) {
   const [dashboard, setDashboard] = useState<Dashboard | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<Error | null>(null);
-  const { isLoadingToken } = useAuth();
 
   const loadDashboard = async (dashboardId: number | null = null) => {
     if (!dashboardId) {
@@ -64,10 +60,9 @@ export function useDashboardById(dashboardId: number | null) {
     }
   };
 
-  useEffect(() => {
-    if (isLoadingToken) return;
+  useAuthEffect(() => {
     loadDashboard(dashboardId);
-  }, [dashboardId, isLoadingToken]);
+  }, [dashboardId]);
 
   const refetch = () => {
     return loadDashboard(dashboardId);
