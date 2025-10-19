@@ -17,7 +17,6 @@ export default function MyDashboard() {
     registerMainRefresh(refreshAllDashboards);
   }, [registerMainRefresh, refreshAllDashboards]);
 
-
   const { openSheet } = useSheet({
     key: SHEET_KEY,
   });

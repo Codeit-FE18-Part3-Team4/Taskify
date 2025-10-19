@@ -47,6 +47,7 @@ export default function DashboardSideBar() {
 
   return (
     <div className={styles.sideBar}>
+      <div className={styles.sideBarOverlay}></div>
       <Header />
       <Main
         dashboards={dashboards}

@@ -367,7 +367,7 @@
 }
 
 /* Mobile */
-@media (max-width: 375px) {
+@media (max-width: 487px) {
   .myDashboardMain {
     padding: 0 20px;
   }

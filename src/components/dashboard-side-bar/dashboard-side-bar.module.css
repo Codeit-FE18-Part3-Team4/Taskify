@@ -172,3 +172,20 @@
     height: 26px;
   }
 }
+@media (max-width: 487px) {
+  .sideBar {
+    position: fixed;
+    z-index: 1;
+  }
+  .sideBarOverlay {
+    content: "";
+    width: 100vw;
+    height: 100vh;
+    opacity: 0.7;
+    background-color: #000;
+    left: 0;
+    top: 0;
+    z-index: -1;
+    position: absolute;
+  }
+}
