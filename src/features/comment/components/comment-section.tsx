@@ -1,11 +1,12 @@
 import Dialog from "@/components/dialog";
-import { createComment, getComments } from "@/features/comment/apis";
+import { createComment } from "@/features/comment/apis";
+import { useComments } from "@/hooks/use-comments";
 import { useDialog } from "@/hooks/use-dialog";
-import type { Card, Comment, Dashboard } from "@/types";
-import { useEffect, useState } from "react";
-import styles from "./card-detail-modal.module.css";
+import type { Card, Dashboard } from "@/types";
+import { useState } from "react";
 import CommentInput from "./comment-input";
 import CommentList from "./comment-list";
+import styles from "./comment-section.module.css";
 
 export default function CommentSection({
   card,
@@ -14,18 +15,7 @@ export default function CommentSection({
   card: Card;
   dashboard: Dashboard;
 }) {
-  const [comments, setComments] = useState<Comment[]>([]);
-  useEffect(() => {
-    async function loadComments() {
-      try {
-        const comments = await getComments({ cardId: card.id });
-        setComments(comments);
-      } catch {
-        setComments([]);
-      }
-    }
-    loadComments();
-  }, [card]);
+  const { comments, append, loadNext } = useComments({ cardId: card.id });
 
   const FAIL_DIALOG_KEY = "fail-dialog-from-card-detail-modal";
   const { isShowDialog, openDialog } = useDialog({ key: FAIL_DIALOG_KEY });
@@ -41,7 +31,7 @@ export default function CommentSection({
           content: value,
         },
       });
-      setComments((prevComments) => [...prevComments, newComment]);
+      append(newComment);
     } catch (error) {
       if (error instanceof Error) {
         setFailMessage(error.message);
@@ -57,7 +47,7 @@ export default function CommentSection({
           authorName={card.assignee.nickname}
           onSubmit={handleCommentSubmit}
         />
-        <CommentList comments={comments} />
+        <CommentList comments={comments} onScrollEnd={loadNext} />
       </section>
       {isShowDialog && (
         <Dialog dialogKey={FAIL_DIALOG_KEY} message={failMessage} />
