@@ -59,16 +59,9 @@ export default function ModifyMembers({
     size: PAGE_SIZE,
   });
 
-  const {
-    success: deleteMemberSuccess,
-    error: deleteError,
-    removeMember,
-  } = useDeleteDashboardMember(refetchMembers);
-  const {
-    error: cancelError,
-    success: cancelInvitationSuccess,
-    removeInvitation,
-  } = useCancelDashboardInvitation(refetchInvitees);
+  const { error: deleteError, removeMember } =
+    useDeleteDashboardMember(refetchMembers);
+  const { removeInvitation } = useCancelDashboardInvitation(refetchInvitees);
 
   const totalPages = {
     members: Math.ceil(membersTotal / PAGE_SIZE),
@@ -118,7 +111,6 @@ export default function ModifyMembers({
 
   const hadleConfirmClick = async () => {
     if (!confirmProps) return;
-    console.log(deleteError);
 
     if (confirmProps.type === UserListType.Members) {
       const result = await removeMember(confirmProps.id);

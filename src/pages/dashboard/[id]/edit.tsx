@@ -1,17 +1,20 @@
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import styles from "./edit.module.css";
 import NavigationBar from "@/components/navigationBar/navigation-bar";
 import Typography from "@/components/typography";
 import EditSidebar, { TabType } from "@/features/dashboard/edit/edit-sidebar";
 import Edit from "@/features/dashboard/edit/edit";
-import { useDashboardById } from "@/hooks/use-dashboard";
+import { useDashboardById, useDeleteDashboard } from "@/hooks/use-dashboard";
 import Link from "next/link";
 import XIcon from "@/components/icon/x-gray-icon";
 import { classnames } from "@/utils/classnames";
 import ModifyMembers from "@/features/dashboard/edit/modify-members";
 import Dialog from "@/components/dialog";
 import { useDialog } from "@/hooks/use-dialog";
+import { useAlert } from "@/hooks/use-alert";
+import Alert, { AlertActionType } from "@/components/alert";
+import { useAllDashboards } from "@/hooks/use-all-dashboards";
 
 export default function DashboardEditPage() {
   const router = useRouter();
@@ -27,7 +30,7 @@ export default function DashboardEditPage() {
     isLoading: dashboardIsLoading,
     refetch,
   } = useDashboardById(dashboardId);
-
+  const [alertMessage, setAlertMessage] = useState("");
   const tabValue = Array.isArray(tab) ? tab[0] : tab;
   const activeTab = (tabValue as TabType) ?? TabType.Edit;
 
@@ -37,14 +40,17 @@ export default function DashboardEditPage() {
     key: EDIT_EIALOG,
   });
 
-  useEffect(() => {
-    if (router.isReady) {
-      console.log("현재 탭:", tab);
-    }
-  }, [router.isReady, tab]);
+  const DASHBOARD_DELETE_KEY = "DASHBOARD_DELETE_CHEKCK";
+  const { isShowAlert, openAlert } = useAlert({
+    key: DASHBOARD_DELETE_KEY,
+  });
+
+  const { allDashboards } = useAllDashboards();
+  const { removeDashboard } = useDeleteDashboard();
 
   const deleteDashboard = () => {
-    console.log("delete할꺼야");
+    setAlertMessage("대시보드를 삭제하시겠습니까?");
+    openAlert(true);
   };
 
   const handleTabChange = (newTab: TabType) => {
@@ -61,6 +67,28 @@ export default function DashboardEditPage() {
       undefined,
       { shallow: true },
     );
+  };
+
+  const hadleConfirmClick = async () => {
+    if (dashboardId) {
+      const result = await removeDashboard(dashboardId);
+      setDialogMessage(result?.message ?? "대시보드 삭제에 실패하였습니다.");
+      openDialog(true);
+    }
+
+    setTimeout(() => {
+      openDialog(false);
+
+      const remainingDashboards = allDashboards?.filter(
+        (dashboard) => dashboard.id !== dashboardId,
+      );
+
+      if (remainingDashboards && remainingDashboards.length > 0) {
+        router.push(`/dashboard/${remainingDashboards[0].id}`);
+      } else {
+        router.push("/my-dashboard");
+      }
+    }, 1500);
   };
 
   const handleUpdatePage = (message: string, status: boolean) => {
@@ -126,6 +154,17 @@ export default function DashboardEditPage() {
           dialogKey={EDIT_EIALOG}
           message={dialogMessage}
           onConfirm={() => openDialog(false)}
+        />
+      )}
+
+      {isShowAlert && (
+        <Alert
+          alertKey={DASHBOARD_DELETE_KEY}
+          title="알림"
+          message={alertMessage}
+          actionType={AlertActionType.Delete}
+          onCancel={() => {}}
+          onAction={hadleConfirmClick}
         />
       )}
     </div>
