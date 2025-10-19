@@ -12,9 +12,10 @@ import Link from "next/link";
 import MemberList from "./member-list";
 import styles from "./navigation-bar.module.css";
 
+const MEMBERS_SIZE = 6;
+
 interface NavigationBarProps {
   size?: CommonSize;
-  members?: MemberInfo[];
   totalCount?: number;
   dashboardId?: number | null;
   onMobileSidebarToggle?: () => void;
@@ -22,11 +23,14 @@ interface NavigationBarProps {
 
 export default function NavigationBar({
   size = CommonSize.Large,
-  members = [],
   totalCount,
   dashboardId = null,
   onMobileSidebarToggle,
 }: NavigationBarProps) {
+  const { members, isLoading } = useMembers({
+    dashboardId,
+    size: MEMBERS_SIZE,
+  });
   const sizeName = CommonSize[size].toLowerCase();
   const navigationBarClasses = `${styles.navigationBar} ${styles[sizeName]}`;
   const iconSpanClasses = `${styles.iconSpan} ${Typography.lgMedium}`;
@@ -40,14 +44,17 @@ export default function NavigationBar({
   const handleUserPlus = () => {
     openModal(true);
   };
+  console.log(isLoading);
 
   let showMembers: MemberInfo[] = [];
   let hideMembers: MemberInfo[] = [];
-  if (members.length > 6) {
-    showMembers = members.slice(0, 5);
-    hideMembers = members.slice(5);
-  } else {
-    showMembers = members;
+  if (members) {
+    if (members.length > 6) {
+      showMembers = members.slice(0, 5);
+      hideMembers = members.slice(5);
+    } else {
+      showMembers = members;
+    }
   }
 
   const { isMobile } = useSsrResponsive();

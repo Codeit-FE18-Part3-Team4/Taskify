@@ -5,7 +5,7 @@ import Button, { ButtonSize } from "@/components/button/button";
 import ChevronIcon, { Direction } from "@/components/icon/chevron-icon";
 import { useState } from "react";
 import UserPlusSvg from "@/components/icon/user-plus-svg";
-import { useMembers } from "@/hooks/use-members";
+import { useMembers, useDashboardInvitees } from "@/hooks/use-members";
 import UserList from "./user-list";
 
 const MEMBERS_SIZE = 6;
@@ -40,14 +40,23 @@ export default function ModifyMembers({
     ButtonColorRange.Disabled,
   );
   const [membersCurrentPage, setMembersCurrentPage] = useState(1);
+  const [inviteesCurrentPage, setInviteesCurrentPage] = useState(1);
 
-  const { members, totalCount } = useMembers({
+  const { members, totalCount: membersTotalCount } = useMembers({
     dashboardId,
     page: membersCurrentPage,
     size: MEMBERS_SIZE,
   });
 
-  const membersTotalPage = Math.ceil(totalCount / MEMBERS_SIZE);
+  const { dashboardInvitations, totalCount: inviteesTotalCount } =
+    useDashboardInvitees({
+      dashboardId,
+      page: inviteesCurrentPage,
+      size: INVITEES_SIZE,
+    });
+
+  const membersTotalPage = Math.ceil(membersTotalCount / MEMBERS_SIZE);
+  const inviteesTotalPage = Math.ceil(inviteesTotalCount / INVITEES_SIZE);
 
   return (
     <div className={styles.topContainer}>
@@ -77,7 +86,7 @@ export default function ModifyMembers({
             </div>
           </div>
           <div className={styles.usersContainer}>
-            {members && <UserList members={members} invitees={[]} />}
+            {members && <UserList members={members} invitations={[]} />}
           </div>
         </div>
 
@@ -92,7 +101,7 @@ export default function ModifyMembers({
                 </Button>
               </div>
               <div className={styles.countAndButtons}>
-                <span>1 of 3</span>
+                <span>{`${inviteesCurrentPage} of ${inviteesTotalCount}`}</span>
                 <div className={styles.arrowButtonWrapper}>
                   <button>
                     <ChevronIcon
@@ -110,7 +119,9 @@ export default function ModifyMembers({
               </div>
             </div>
             <div className={styles.usersContainer}>
-              {/* {invitees && <UserList members={members} invitees={[]} />} */}
+              {dashboardInvitations && (
+                <UserList members={[]} invitations={dashboardInvitations} />
+              )}
             </div>
           </div>
         )}

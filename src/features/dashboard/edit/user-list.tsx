@@ -6,6 +6,7 @@ import styles from "./user-list.module.css";
 import { MemberInfo } from "@/types";
 import { useEffect, useState } from "react";
 import Typography from "@/components/typography";
+import { Invitations } from "@/types/dashboard-invitations";
 
 enum ProfileType {
   Members,
@@ -15,21 +16,21 @@ enum ProfileType {
 
 interface UserListProps {
   members: MemberInfo[];
-  invitees: MemberInfo[];
+  invitations: Invitations[];
 }
 
-export default function UserList({ members, invitees }: UserListProps) {
+export default function UserList({ members, invitations }: UserListProps) {
   const [profileType, setProfileType] = useState<ProfileType | null>(null);
 
   useEffect(() => {
     if (members.length) {
       setProfileType(ProfileType.Members);
-    } else if (invitees.length) {
+    } else if (invitations.length) {
       setProfileType(ProfileType.Invitiees);
     } else {
       setProfileType(ProfileType.NoUsers);
     }
-  }, [members, invitees]);
+  }, [members, invitations]);
 
   if (profileType === ProfileType.NoUsers) {
     return (
@@ -39,7 +40,9 @@ export default function UserList({ members, invitees }: UserListProps) {
     );
   }
 
-  console.log(members);
+  const handleInvitationCancle = (invitationId: number) => {
+    console.log(`취소할 번호:          ${invitationId}`);
+  };
 
   return (
     <>
@@ -66,16 +69,17 @@ export default function UserList({ members, invitees }: UserListProps) {
         </>
       ) : (
         <>
-          {invitees?.map((invitee, index) => (
+          {invitations?.map((invitations, index) => (
             <div key={index} className={styles.userList}>
               <Profile
                 showFullName
                 size={ProfileSize.Large}
-                name={invitee.nickname}
+                name={invitations.invitee.nickname}
               />
               <Button
                 size={ButtonSize.XSmall}
                 variant={ButtonVariant.Secondary}
+                onClick={() => handleInvitationCancle(invitations.id)}
               >
                 취소
               </Button>

@@ -1,5 +1,4 @@
 import DashboardSideBar from "@/components/dashboard-side-bar/dashboard-side-bar";
-import { useMembers } from "@/hooks/use-members";
 import { useSsrResponsive } from "@/hooks/use-ssr-responsive";
 import { useRouter } from "next/router";
 import { ReactNode, useState } from "react";
