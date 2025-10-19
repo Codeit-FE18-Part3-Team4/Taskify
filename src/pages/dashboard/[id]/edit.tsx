@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import styles from "./edit.module.css";
 import NavigationBar from "@/components/navigationBar/navigation-bar";
 import Typography from "@/components/typography";
@@ -10,9 +10,8 @@ import Link from "next/link";
 import XIcon from "@/components/icon/x-gray-icon";
 import { classnames } from "@/utils/classnames";
 import ModifyMembers from "@/features/dashboard/edit/modify-members";
-
-// const MEMBERS_PER_PAGE = 6;
-// const INVITATIONS_PER_PAGE = 6;
+import Dialog from "@/components/dialog";
+import { useDialog } from "@/hooks/use-dialog";
 
 export default function DashboardEditPage() {
   const router = useRouter();
@@ -32,10 +31,11 @@ export default function DashboardEditPage() {
   const tabValue = Array.isArray(tab) ? tab[0] : tab;
   const activeTab = (tabValue as TabType) ?? TabType.Edit;
 
-  // useEffect(() => {
-  //   console.log(router.query);
-  //   console.log("Editing dashboard:", id);
-  // }, [id]);
+  const [dialogMessage, setDialogMessage] = useState("");
+  const EDIT_EIALOG = "EDIT_EIALOG";
+  const { isShowDialog, openDialog } = useDialog({
+    key: EDIT_EIALOG,
+  });
 
   useEffect(() => {
     if (router.isReady) {
@@ -63,24 +63,48 @@ export default function DashboardEditPage() {
     );
   };
 
+  const handleUpdatePage = (message: string, status: boolean) => {
+    setDialogMessage(message);
+    openDialog(true);
+
+    if (status) {
+      refetch();
+    }
+  };
+
   return (
     <div className={styles.page}>
       <NavigationBar />
       <main className={styles.main}>
         <EditSidebar onTabChange={handleTabChange} activeTab={activeTab} />
         <section className={styles.contents}>
-          {tab === TabType.Edit && (
+          {dashboardIsLoading ? (
+            <span className={styles.exception}>로딩중...</span>
+          ) : dashboard ? (
             <>
-              {dashboardIsLoading ? (
-                <div>로딩중...</div>
-              ) : dashboard ? (
-                <Edit dashboard={dashboard} onUpdate={refetch} />
-              ) : (
-                <div>대시보드를 찾을 수 없습니다.</div>
+              {tab === TabType.Edit && (
+                <Edit
+                  dashboard={dashboard}
+                  onUpdate={(message, status) =>
+                    handleUpdatePage(message, status)
+                  }
+                />
+              )}
+              {tab === TabType.ModifyMembers && (
+                <ModifyMembers
+                  createdByMe={dashboard.createdByMe}
+                  dashboard={dashboard}
+                  onUpdate={(message, status) =>
+                    handleUpdatePage(message, status)
+                  }
+                />
               )}
             </>
+          ) : (
+            <span className={styles.exception}>
+              대시보드를 찾을 수 없습니다.
+            </span>
           )}
-          {tab === TabType.ModifyMembers && <ModifyMembers />}
           {dashboard && (
             <div>
               <Link
@@ -96,6 +120,14 @@ export default function DashboardEditPage() {
           )}
         </section>
       </main>
+
+      {isShowDialog && (
+        <Dialog
+          dialogKey={EDIT_EIALOG}
+          message={dialogMessage}
+          onConfirm={() => openDialog(false)}
+        />
+      )}
     </div>
   );
 }

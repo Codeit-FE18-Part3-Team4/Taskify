@@ -11,6 +11,9 @@ import { ReactNode, useEffect, useMemo, useState } from "react";
 import DashboardContent from "./dashboard-content";
 import styles from "./index.module.css";
 
+const MEMBERS_PAGE = 1;
+const MEMBERS_SIZE = 1000;
+
 export default function DashboardPage() {
   const router = useRouter();
   const { id } = router.query;
@@ -21,11 +24,15 @@ export default function DashboardPage() {
       : null;
 
   const { dashboard } = useDashboardById(dashboardId);
-  const { members } = useMembers(dashboardId);
+  const { members } = useMembers({
+    dashboardId,
+    page: MEMBERS_PAGE,
+    size: MEMBERS_SIZE,
+  });
   const { columns, isLoadingColumns, reloadColumns } = useColumn(dashboardId);
   const columnIds = useMemo(
     () => columns?.map((column) => column.id) ?? [],
-    [columns]
+    [columns],
   );
   const { cards, isLoadingCards, reloadCards } = useCards(columnIds);
 

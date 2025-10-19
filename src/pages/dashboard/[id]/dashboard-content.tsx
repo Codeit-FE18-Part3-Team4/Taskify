@@ -149,7 +149,7 @@ export default function DashboardContent({
                 type="button"
                 className={classnames(
                   styles.createColumnButton,
-                  Typography.lg2Medium
+                  Typography.lg2Medium,
                 )}
                 onClick={handleCreateColumnClick}
               >

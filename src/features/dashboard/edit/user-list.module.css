@@ -1,0 +1,37 @@
+.topContainer {
+  height: 500px;
+}
+
+.userList {
+  border-bottom: 1px solid #383a42;
+  height: 59px;
+  flex-direction: row;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.userList:hover {
+  background-color: var(--color-black800);
+}
+
+.userList.member {
+  padding: 0 10px;
+}
+
+.userList:last-child {
+  border-bottom: none;
+}
+
+.userList .exceptionText {
+  color: var(--color-gray100);
+}
+
+.userList.member .iconWrapper {
+  margin-right: 15px;
+}
+
+.userList.member .iconWrapper .crownIcon {
+  filter: invert(42%) sepia(100%) saturate(5942%) hue-rotate(110deg)
+    brightness(95%) contrast(91%);
+}
