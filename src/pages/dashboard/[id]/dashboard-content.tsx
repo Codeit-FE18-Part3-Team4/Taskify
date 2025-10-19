@@ -116,7 +116,7 @@ export default function DashboardContent({
       <section>
         <div className={classnames(styles.dashboardTitle, Typography.xl3Bold)}>
           <ColorChip color={dashboard.color} size={CommonSize.Large} />
-          <h3>{dashboard.title}</h3>
+          <h3 title={dashboard.title}>{dashboard.title}</h3>
         </div>
 
         <div className={styles.columnWrapper}>

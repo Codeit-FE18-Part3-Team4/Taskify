@@ -10,6 +10,7 @@
 .page > :first-child {
   flex-shrink: 0;
 }
+
 .layoutContainer {
   display: flex;
   overflow: hidden;
@@ -24,10 +25,16 @@
   padding-top: 25px;
   margin-bottom: 4px;
   flex-shrink: 0;
+  max-width: calc(100vw - 350px);
 }
 
 .dashboardTitle h3 {
   color: var(--color-gray100);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  flex: 1;
+  min-width: 0;
 }
 
 .columnWrapper {

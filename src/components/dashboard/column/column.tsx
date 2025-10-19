@@ -4,6 +4,7 @@ import Typography from "@/components/typography";
 import { Card as CardData } from "@/types/card";
 import styles from "./column.module.css";
 import PlusSvg from "./plus-svg";
+import { classnames } from "@/utils/classnames";
 
 export enum ColumnActionType {
   Create = "create",
@@ -29,7 +30,12 @@ export default function Column({
     <section className={styles.columnContainer}>
       <div className={styles.columnTitleWrapper}>
         <div className={styles.columnTitle}>
-          <h3 className={Typography.xlSemiBold}>{columnTitle}</h3>
+          <h3
+            title={columnTitle}
+            className={classnames(Typography.xlSemiBold, styles.columnName)}
+          >
+            {columnTitle}
+          </h3>
           <h3 className={Typography.lgSemiBold}>{cards.length}</h3>
         </div>
         <div className={styles.buttonWrapper}>

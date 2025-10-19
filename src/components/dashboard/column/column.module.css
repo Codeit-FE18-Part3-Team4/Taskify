@@ -52,6 +52,14 @@
 .columnTitle {
   display: flex;
   gap: 8px;
+  min-width: 0;
+}
+
+.columnTitle .columnName {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 85%;
 }
 
 .columnTitle h3:first-child {
@@ -60,4 +68,5 @@
 
 .columnTitle h3:last-child {
   color: var(--color-gray400);
+  flex-shrink: 0;
 }
