@@ -524,7 +524,7 @@ function BadgeSample() {
 function ColorPaletteSample() {
   const sizes = Object.values(ColorFrameSize);
   const [selectedColors, setSelectedColors] = useState<string[]>(
-    sizes.map(() => "")
+    sizes.map(() => ""),
   );
 
   const handleSelect = (index: number, color: string) => {

@@ -3,20 +3,27 @@ import { getMembers } from "@/features/navigation-bar/api/members";
 import { MemberInfo } from "@/types/member-info";
 import { useState } from "react";
 
-export function useMembers(dashboardId: number | null) {
+interface MembersProps {
+  dashboardId: number | null;
+  page: number;
+  size: number;
+}
+
+export function useMembers({ dashboardId, page, size }: MembersProps) {
   const [members, setMembers] = useState<MemberInfo[] | null>(null);
+  const [totalCount, setTotalCount] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<Error | null>(null);
 
   useAuthEffect(() => {
     if (!dashboardId) {
       setMembers(null);
+      setTotalCount(0);
       return;
     }
 
-    const loadDashboards = async () => {
-      setIsLoading(true);
-      setError(null);
+    setIsLoading(true);
+    setError(null);
 
       try {
         const res = await getMembers({ dashboardId });
@@ -32,5 +39,14 @@ export function useMembers(dashboardId: number | null) {
     loadDashboards();
   }, [dashboardId]);
 
-  return { members, isLoading, error };
+  useEffect(() => {
+    loadMembers();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dashboardId, page, size, isLoadingToken]);
+
+  const refetch = () => {
+    return loadMembers();
+  };
+
+  return { members, totalCount, isLoading, error, refetch };
 }

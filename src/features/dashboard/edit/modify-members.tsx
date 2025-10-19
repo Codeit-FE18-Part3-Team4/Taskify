@@ -5,32 +5,50 @@ import Profile from "@/components/profile/profile";
 import { ProfileSize } from "@/components/profile/profile-size";
 import Typography from "@/components/typography";
 import { MemberInfo } from "@/types/member-info";
-import { classnames } from "@/utils/classnames";
-import { useState } from "react";
-import styles from "./modify-members.module.css";
+import UserPlusSvg from "@/components/icon/user-plus-svg";
+import { useMembers } from "@/hooks/use-members";
+import UserList from "./user-list";
+
+const MEMBERS_SIZE = 6;
+const INVITEES_SIZE = 6;
 
 enum ButtonColorRange {
   Disabled = 500,
   Enabled = 200,
 }
 
+type ButtonType = { Member: [`Delete`]; Invitee: [`Delete`] };
+
 interface ModifyMembersProps {
-  totalMembersPageCount: number;
-  currentMembersPageCount: number;
-  totalInvitationPageCount: number;
-  currentInvitationPageCount: number;
-  dashboardMembers: MemberInfo[];
-  invitees?: MemberInfo[];
+  // membersCurrentPage: number;
+  // membersPageCount: number;
+  // currentInvitationPageCount: number;
+  // dashboardMembers: MemberInfo[];
+  // invitees?: MemberInfo[];
+  dashboardId: number;
   createdByMe: boolean;
+  // onClick: () => void;
 }
 
-export default function ModifyMembers() {
+export default function ModifyMembers({
+  dashboardId,
+  createdByMe,
+}: ModifyMembersProps) {
   const [rightColorRange, setRightColorRange] = useState(
     ButtonColorRange.Disabled
   );
   const [leftColorRange, setLeftColorRange] = useState(
     ButtonColorRange.Disabled
   );
+  const [membersCurrentPage, setMembersCurrentPage] = useState(1);
+
+  const { members, totalCount } = useMembers({
+    dashboardId,
+    page: membersCurrentPage,
+    size: MEMBERS_SIZE,
+  });
+
+  const membersTotalPage = Math.ceil(totalCount / MEMBERS_SIZE);
 
   return (
     <div className={styles.topContainer}>
@@ -42,7 +60,7 @@ export default function ModifyMembers() {
           <div className={styles.memberListTitle}>
             <span className={Typography.xlBold}>구성원</span>
             <div className={styles.countAndButtons}>
-              <span>1 of 3</span>
+              <span>{`${membersCurrentPage} of ${membersTotalPage}`}</span>
               <div className={styles.arrowButtonWrapper}>
                 <button>
                   <ChevronIcon
@@ -60,72 +78,43 @@ export default function ModifyMembers() {
             </div>
           </div>
           <div className={styles.usersContainer}>
-            {Array(6)
-              .fill(null)
-              .map((_, i) => (
-                <div
-                  key={i}
-                  className={classnames(styles.usersList, styles.member)}
-                >
-                  <Profile
-                    showFullName
-                    size={ProfileSize.Large}
-                    name="김정은"
-                  />
-                  <Button
-                    size={ButtonSize.XSmall}
-                    variant={ButtonVariant.Secondary}
-                  >
-                    삭제
-                  </Button>
-                </div>
-              ))}
+            {members && <UserList members={members} invitees={[]} />}
           </div>
         </div>
 
-        <div className={styles.list}>
-          <div className={styles.memberListTitle}>
-            <div className={styles.titleAndButton}>
-              <span className={Typography.xlBold}>초대내역</span>
-              <Button size={ButtonSize.XSmall}>
-                <span>초대</span>
-                <UserPlusSvg className={styles.icon} />
-              </Button>
-            </div>
-            <div className={styles.countAndButtons}>
-              <span>1 of 3</span>
-              <div className={styles.arrowButtonWrapper}>
-                <button>
-                  <ChevronIcon
-                    direction={Direction.Left}
-                    color={`var(--color-gray${rightColorRange})`}
-                  />
-                </button>
-                <button>
-                  <ChevronIcon
-                    direction={Direction.Right}
-                    color={`var(--color-gray${leftColorRange})`}
-                  />
-                </button>
+        {createdByMe && (
+          <div className={styles.list}>
+            <div className={styles.memberListTitle}>
+              <div className={styles.titleAndButton}>
+                <span className={Typography.xlBold}>초대내역</span>
+                <Button size={ButtonSize.XSmall}>
+                  <span>초대</span>
+                  <UserPlusSvg className={styles.icon} />
+                </Button>
+              </div>
+              <div className={styles.countAndButtons}>
+                <span>1 of 3</span>
+                <div className={styles.arrowButtonWrapper}>
+                  <button>
+                    <ChevronIcon
+                      direction={Direction.Left}
+                      color={`var(--color-gray${rightColorRange})`}
+                    />
+                  </button>
+                  <button>
+                    <ChevronIcon
+                      direction={Direction.Right}
+                      color={`var(--color-gray${leftColorRange})`}
+                    />
+                  </button>
+                </div>
               </div>
             </div>
+            <div className={styles.usersContainer}>
+              {/* {invitees && <UserList members={members} invitees={[]} />} */}
+            </div>
           </div>
-          <div className={styles.usersContainer}>
-            {Array(6)
-              .fill(null)
-              .map((_, i) => (
-                <div key={i} className={styles.usersList}>
-                  <span>test{i + 1}@email.com</span>
-                  <Button
-                    size={ButtonSize.XSmall}
-                    variant={ButtonVariant.Secondary}
-                  >
-                    취소
-                  </Button>
-                </div>
-              ))}
-          </div>
-        </div>
+        )}
       </div>
     </div>
   );

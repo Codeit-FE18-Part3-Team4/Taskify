@@ -12,12 +12,14 @@ import Link from "next/link";
 interface NavigationBarProps {
   size?: CommonSize;
   members?: MemberInfo[];
+  totalCount?: number;
   dashboardId?: number | null;
 }
 
 export default function NavigationBar({
   size = CommonSize.Large,
   members = [],
+  totalCount,
   dashboardId = null,
 }: NavigationBarProps) {
   const sizeName = CommonSize[size].toLowerCase();
