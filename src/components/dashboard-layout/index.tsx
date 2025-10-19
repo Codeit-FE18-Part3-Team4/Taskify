@@ -1,5 +1,4 @@
 import DashboardSideBar from "@/components/dashboard-side-bar/dashboard-side-bar";
-import { useMembers } from "@/hooks/use-members";
 import { useSsrResponsive } from "@/hooks/use-ssr-responsive";
 import { useRouter } from "next/router";
 import { ReactNode, useState } from "react";
@@ -25,8 +24,6 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
       ? Number(id)
       : null;
 
-  const { members } = useMembers(dashboardId);
-
   const handleToggleMobileSidebar = () => {
     setIsMobileSidebarOpen((prev) => !prev);
   };
@@ -43,7 +40,6 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
       )}
       <div className={styles.dashboardContent}>
         <NavigationBar
-          members={members ?? []}
           dashboardId={dashboardId ?? null}
           onMobileSidebarToggle={handleToggleMobileSidebar}
         />

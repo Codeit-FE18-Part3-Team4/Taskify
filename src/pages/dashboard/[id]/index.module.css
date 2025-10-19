@@ -1,33 +1,19 @@
 .page {
-  height: 100vh;
+  height: calc(100vh - 72px);
   background-color: var(--color-background);
-  display: flex;
+  overflow: scroll;
+  box-sizing: border-box;
+  overflow-x: auto;
+  overflow-y: auto;
 }
 
 .page > :first-child {
   flex-shrink: 0;
 }
-
 .layoutContainer {
   display: flex;
   overflow: hidden;
   flex-direction: column;
-}
-
-.main {
-  flex: 1;
-  padding: 20px;
-  min-width: 0;
-  display: flex;
-  flex-direction: column;
-  overflow-x: auto;
-  overflow-y: auto;
-}
-
-.main section {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
 }
 
 .dashboardTitle {
@@ -69,13 +55,13 @@
   color: #ffffff;
 }
 
-.main::-webkit-scrollbar,
+.page::-webkit-scrollbar,
 .columnContentWrapper::-webkit-scrollbar {
   height: 8px;
   width: 8px;
 }
 
-.main::-webkit-scrollbar-thumb,
+.page::-webkit-scrollbar-thumb,
 .columnContentWrapper::-webkit-scrollbar-thumb {
   background-color: var(--color-gray500);
   border-radius: 4px;

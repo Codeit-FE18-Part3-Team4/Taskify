@@ -117,3 +117,13 @@ export async function putInvitationsAccepts({
     console.error(e);
   }
 }
+
+export async function deleteDashboard(dashboardId: number) {
+  try {
+    const res = await axiosInstance.delete(`/dashboards/${dashboardId}`);
+    return res;
+  } catch (e) {
+    console.log(e);
+    throw e;
+  }
+}

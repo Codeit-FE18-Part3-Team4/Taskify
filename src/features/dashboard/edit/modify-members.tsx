@@ -1,36 +1,131 @@
-import Button, { ButtonSize, ButtonVariant } from "@/components/button/button";
-import ChevronIcon, { Direction } from "@/components/icon/chevron-icon";
-import UserPlusSvg from "@/components/icon/user-plus-svg";
-import Profile from "@/components/profile/profile";
-import { ProfileSize } from "@/components/profile/profile-size";
 import Typography from "@/components/typography";
-import { MemberInfo } from "@/types/member-info";
+import styles from "./modify-members.module.css";
 import { classnames } from "@/utils/classnames";
 import { useState } from "react";
-import styles from "./modify-members.module.css";
+import {
+  useMembers,
+  useDashboardInvitees,
+  useDeleteDashboardMember,
+  useCancelDashboardInvitation,
+} from "@/hooks/use-members";
+import UserList from "./user-list";
+import UserListTitle from "./user-list-title";
+import { useAlert } from "@/hooks/use-alert";
+import Alert, { AlertActionType } from "@/components/alert";
+import { Dashboard } from "@/types";
 
-enum ButtonColorRange {
-  Disabled = 500,
-  Enabled = 200,
+const PAGE_SIZE = 6;
+
+export enum UserListType {
+  Members = "members",
+  Invitees = "invitees",
 }
 
 interface ModifyMembersProps {
-  totalMembersPageCount: number;
-  currentMembersPageCount: number;
-  totalInvitationPageCount: number;
-  currentInvitationPageCount: number;
-  dashboardMembers: MemberInfo[];
-  invitees?: MemberInfo[];
+  dashboard: Dashboard;
   createdByMe: boolean;
+  onUpdate: (message: string, status: boolean) => void | Promise<void>;
 }
 
-export default function ModifyMembers() {
-  const [rightColorRange, setRightColorRange] = useState(
-    ButtonColorRange.Disabled
-  );
-  const [leftColorRange, setLeftColorRange] = useState(
-    ButtonColorRange.Disabled
-  );
+export default function ModifyMembers({
+  dashboard,
+  createdByMe,
+  onUpdate,
+}: ModifyMembersProps) {
+  const [page, setPage] = useState({ members: 1, invitees: 1 });
+  const [alertMessage, setAlertMessage] = useState("");
+  const [confirmProps, setConfirmProps] = useState<{
+    type: UserListType;
+    id: number;
+  }>();
+
+  const {
+    members,
+    totalCount: membersTotal,
+    refetch: refetchMembers,
+  } = useMembers({
+    dashboardId: dashboard.id,
+    page: page.members,
+    size: PAGE_SIZE,
+  });
+
+  const {
+    dashboardInvitations,
+    totalCount: inviteesTotal,
+    refetch: refetchInvitees,
+  } = useDashboardInvitees({
+    dashboardId: dashboard.id,
+    page: page.invitees,
+    size: PAGE_SIZE,
+  });
+
+  const { removeMember } = useDeleteDashboardMember(refetchMembers);
+  const { removeInvitation } = useCancelDashboardInvitation(refetchInvitees);
+
+  const totalPages = {
+    members: Math.ceil(membersTotal / PAGE_SIZE),
+    invitees: Math.ceil(inviteesTotal / PAGE_SIZE),
+  };
+
+  const DELETE_KEY = "DELETE_CHEKCK";
+  const { isShowAlert: isShowDeleteAlert, openAlert: openDeleteAlert } =
+    useAlert({
+      key: DELETE_KEY,
+    });
+
+  const CANCEL_KEY = "CANCEL_CHEKCK";
+  const { isShowAlert: isShowCancelAlert, openAlert: openCancelAlert } =
+    useAlert({
+      key: CANCEL_KEY,
+    });
+
+  const handlePageChange = (type: UserListType, direction: "prev" | "next") => {
+    setPage((prev) => {
+      const current = prev[type];
+      const max = totalPages[type];
+      const next =
+        direction === "next"
+          ? Math.min(current + 1, max)
+          : Math.max(current - 1, 1);
+      return { ...prev, [type]: next };
+    });
+  };
+
+  const handleUserListButtonClick = async (
+    type: UserListType,
+    id: number,
+    nickName: string,
+  ) => {
+    setConfirmProps({ type: type, id: id });
+    if (type === UserListType.Members) {
+      setAlertMessage(
+        `'${nickName}'님을 대시보드 멤버 목록에서 삭제하시겠습니까?`,
+      );
+      openDeleteAlert(true);
+    } else {
+      setAlertMessage(`'${nickName}'님에게 보낸 초대를 삭제하시겠습니까?`);
+      openCancelAlert(true);
+    }
+  };
+
+  const hadleConfirmClick = async () => {
+    if (!confirmProps) return;
+
+    if (confirmProps.type === UserListType.Members) {
+      const result = await removeMember(confirmProps.id);
+      if (result) {
+        onUpdate(result.message ?? "멤버 삭제 실패", result?.success ?? false);
+      }
+    } else {
+      const result = await removeInvitation({
+        dashboardId: dashboard.id,
+        invitationId: confirmProps.id,
+      });
+      if (result) {
+        onUpdate(result.message ?? "초대 취소 실패", result?.success ?? false);
+      }
+    }
+  };
 
   return (
     <div className={styles.topContainer}>
@@ -38,95 +133,58 @@ export default function ModifyMembers() {
         <h3 className={classnames(Typography.xl3Bold, styles.title)}>
           멤버 관리
         </h3>
+
         <div className={styles.list}>
-          <div className={styles.memberListTitle}>
-            <span className={Typography.xlBold}>구성원</span>
-            <div className={styles.countAndButtons}>
-              <span>1 of 3</span>
-              <div className={styles.arrowButtonWrapper}>
-                <button>
-                  <ChevronIcon
-                    direction={Direction.Left}
-                    color={`var(--color-gray${rightColorRange})`}
-                  />
-                </button>
-                <button>
-                  <ChevronIcon
-                    direction={Direction.Right}
-                    color={`var(--color-gray${leftColorRange})`}
-                  />
-                </button>
-              </div>
-            </div>
-          </div>
+          <UserListTitle
+            type={UserListType.Members}
+            currentPage={page.members}
+            totalPage={totalPages.members}
+            onPageChange={handlePageChange}
+            showInviteButton={false}
+          />
           <div className={styles.usersContainer}>
-            {Array(6)
-              .fill(null)
-              .map((_, i) => (
-                <div
-                  key={i}
-                  className={classnames(styles.usersList, styles.member)}
-                >
-                  <Profile
-                    showFullName
-                    size={ProfileSize.Large}
-                    name="김정은"
-                  />
-                  <Button
-                    size={ButtonSize.XSmall}
-                    variant={ButtonVariant.Secondary}
-                  >
-                    삭제
-                  </Button>
-                </div>
-              ))}
+            <UserList
+              dashboard={dashboard}
+              members={members ?? []}
+              invitations={[]}
+              onClickButton={handleUserListButtonClick}
+              createdByMe={createdByMe}
+            />
           </div>
         </div>
 
-        <div className={styles.list}>
-          <div className={styles.memberListTitle}>
-            <div className={styles.titleAndButton}>
-              <span className={Typography.xlBold}>초대내역</span>
-              <Button size={ButtonSize.XSmall}>
-                <span>초대</span>
-                <UserPlusSvg className={styles.icon} />
-              </Button>
-            </div>
-            <div className={styles.countAndButtons}>
-              <span>1 of 3</span>
-              <div className={styles.arrowButtonWrapper}>
-                <button>
-                  <ChevronIcon
-                    direction={Direction.Left}
-                    color={`var(--color-gray${rightColorRange})`}
-                  />
-                </button>
-                <button>
-                  <ChevronIcon
-                    direction={Direction.Right}
-                    color={`var(--color-gray${leftColorRange})`}
-                  />
-                </button>
-              </div>
+        {createdByMe && (
+          <div className={styles.list}>
+            <UserListTitle
+              type={UserListType.Invitees}
+              currentPage={page.invitees}
+              totalPage={totalPages.invitees}
+              onPageChange={handlePageChange}
+              showInviteButton
+            />
+            <div className={styles.usersContainer}>
+              <UserList
+                createdByMe={createdByMe}
+                dashboard={dashboard}
+                members={[]}
+                invitations={dashboardInvitations ?? []}
+                onClickButton={handleUserListButtonClick}
+              />
             </div>
           </div>
-          <div className={styles.usersContainer}>
-            {Array(6)
-              .fill(null)
-              .map((_, i) => (
-                <div key={i} className={styles.usersList}>
-                  <span>test{i + 1}@email.com</span>
-                  <Button
-                    size={ButtonSize.XSmall}
-                    variant={ButtonVariant.Secondary}
-                  >
-                    취소
-                  </Button>
-                </div>
-              ))}
-          </div>
-        </div>
+        )}
       </div>
+
+      {(isShowCancelAlert || isShowDeleteAlert) && (
+        <Alert
+          alertKey={isShowCancelAlert ? CANCEL_KEY : DELETE_KEY}
+          title="알림"
+          message={alertMessage}
+          actionType={AlertActionType.Delete}
+          onCancel={() => {}}
+          onAction={hadleConfirmClick}
+        />
+      )}
     </div>
   );
 }

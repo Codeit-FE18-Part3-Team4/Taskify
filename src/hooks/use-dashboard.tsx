@@ -1,5 +1,9 @@
 import { useAuthEffect } from "@/features/auth/components/auth-provider";
-import { getDashboardById, getDashboards } from "@/features/my-dashboard/api/";
+import {
+  deleteDashboard,
+  getDashboardById,
+  getDashboards,
+} from "@/features/my-dashboard/api/";
 import { Dashboard } from "@/types/dashboard";
 import { useState } from "react";
 
@@ -17,7 +21,7 @@ export function useDashboard() {
         const res = await getDashboards();
         const sortedDashboards = (res?.dashboards ?? []).sort(
           (a: Dashboard, b: Dashboard) =>
-            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
         );
         setDashboards(sortedDashboards);
       } catch (e) {
@@ -69,4 +73,37 @@ export function useDashboardById(dashboardId: number | null) {
   };
 
   return { dashboard, isLoading, error, refetch };
+}
+
+export function useDeleteDashboard() {
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [error, setError] = useState<Error | null>(null);
+
+  const removeDashboard = async (dashboardId: number) => {
+    if (!dashboardId) return;
+
+    setError(null);
+    setIsDeleting(true);
+    setSuccess(false);
+
+    try {
+      const res = await deleteDashboard(dashboardId);
+      if (res.status === 204) {
+        return { success: true, message: "대시보드 삭제에 성공하였습니다." };
+      } else {
+        return { success: false, message: "대시보드 삭제를 실패하였습니다." };
+      }
+    } catch (e) {
+      console.error(e);
+      return {
+        success: false,
+        message: (e as Error).message,
+      };
+    } finally {
+      setIsDeleting(false);
+    }
+  };
+
+  return { error, isDeleting, success, removeDashboard };
 }

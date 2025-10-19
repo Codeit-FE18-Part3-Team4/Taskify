@@ -8,16 +8,23 @@ import { useState } from "react";
 import Input from "@/components/input/input";
 import { updateDashboard } from "@/features/my-dashboard/api";
 import { ColorFrameSize } from "@/components/chips/color-frame/color-frame-size";
+import Dialog from "@/components/dialog";
+import { useDialog } from "@/hooks/use-dialog";
 
 interface EditProps {
   dashboard: Dashboard;
-  onUpdate: () => void | Promise<void>;
+  onUpdate: (message: string, status: boolean) => void | Promise<void>;
 }
 
 export default function Edit({ dashboard, onUpdate }: EditProps) {
   const [selectedColor, setSelectedColor] = useState(dashboard.color);
   const [dashboardTitle, setDashboardTitle] = useState(dashboard.title);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [dialogMessage, setDialogMessage] = useState("");
+  const UPDATE_BEFORE_CHECK = "UPDATE_BEFORE_CHECK";
+  const { isShowDialog, openDialog } = useDialog({
+    key: UPDATE_BEFORE_CHECK,
+  });
 
   const handleSelect = (color: string) => {
     setSelectedColor(color);
@@ -27,17 +34,22 @@ export default function Edit({ dashboard, onUpdate }: EditProps) {
     setDashboardTitle(e.target.value);
   };
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (
       dashboardTitle === dashboard.title &&
       selectedColor === dashboard.color
     ) {
-      alert("변경된 내용이 없습니다.");
+      onUpdate("변경된 내용이 없습니다.", false);
       return;
     }
 
+    setDialogMessage("변경사항을 저장하시겠습니까?");
+    openDialog(true);
+  };
+
+  const confirmDialog = async () => {
     setIsSubmitting(true);
 
     try {
@@ -46,11 +58,11 @@ export default function Edit({ dashboard, onUpdate }: EditProps) {
         title: dashboardTitle,
         color: selectedColor,
       });
-      await onUpdate();
-      alert("수정되었습니다");
+
+      await onUpdate("수정되었습니다.", true);
     } catch (e) {
       console.error("수정 실패:", e);
-      alert("수정에 실패했습니다.");
+      onUpdate("수정에 실패했습니다.", false);
     } finally {
       setIsSubmitting(false);
     }
@@ -84,6 +96,14 @@ export default function Edit({ dashboard, onUpdate }: EditProps) {
           </Button>
         </div>
       </form>
+
+      {isShowDialog && (
+        <Dialog
+          dialogKey={UPDATE_BEFORE_CHECK}
+          message={dialogMessage}
+          onConfirm={confirmDialog}
+        />
+      )}
     </div>
   );
 }
