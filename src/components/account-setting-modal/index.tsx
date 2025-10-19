@@ -90,7 +90,7 @@ export default function AccountSettingModal({
     <Sheet
       sheetKey={modalKey}
       title="프로필 변경"
-      actionType={SheetActionType.Modify}
+      actionType={SheetActionType.Update}
       onAction={handleSubmit}
     >
       <div className={styles.body}>

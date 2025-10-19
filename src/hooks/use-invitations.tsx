@@ -73,7 +73,7 @@ export function useInvitations() {
 
     isInitialLoadRef.current = false;
     loadInvitations(true);
-  }, [isLoadingToken]);
+  }, [isLoadingToken, loadInvitations]);
 
   useEffect(() => {
     if (isLoadingToken) return;

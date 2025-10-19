@@ -1,13 +1,13 @@
-import Typography from "@/components/typography";
-import styles from "./modify-members.module.css";
-import { classnames } from "@/utils/classnames";
 import Button, { ButtonSize, ButtonVariant } from "@/components/button/button";
+import ChevronIcon, { Direction } from "@/components/icon/chevron-icon";
+import UserPlusSvg from "@/components/icon/user-plus-svg";
 import Profile from "@/components/profile/profile";
 import { ProfileSize } from "@/components/profile/profile-size";
-import ChevronIcon, { Direction } from "@/components/icon/chevron-icon";
-import { useState } from "react";
+import Typography from "@/components/typography";
 import { MemberInfo } from "@/types/member-info";
-import UserPlusSvg from "@/components/icon/user-plus-svg";
+import { classnames } from "@/utils/classnames";
+import { useState } from "react";
+import styles from "./modify-members.module.css";
 
 enum ButtonColorRange {
   Disabled = 500,
@@ -26,10 +26,10 @@ interface ModifyMembersProps {
 
 export default function ModifyMembers() {
   const [rightColorRange, setRightColorRange] = useState(
-    ButtonColorRange.Disabled,
+    ButtonColorRange.Disabled
   );
   const [leftColorRange, setLeftColorRange] = useState(
-    ButtonColorRange.Disabled,
+    ButtonColorRange.Disabled
   );
 
   return (
