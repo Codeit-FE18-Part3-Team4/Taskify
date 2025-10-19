@@ -128,7 +128,7 @@ export function useDeleteDashboardMember(refetch: () => void) {
         };
       }
     } catch (e) {
-      console.log(e);
+      console.error(e);
       const reulst = {
         success: false,
         message: e instanceof Error ? e.message : String(e),
@@ -167,6 +167,7 @@ export function useCancelDashboardInvitation(refetch: () => void) {
         return { success: false, message: "초대 취소를 실패하였습니다." };
       }
     } catch (e) {
+      console.error(e);
       return {
         success: false,
         message: (e as Error).message,
