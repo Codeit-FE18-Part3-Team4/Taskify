@@ -78,6 +78,8 @@ export default function ProfileSettingModal({
       let finalProfileImageUrl = userData?.profileImageUrl ?? "";
       if (selectedFile) {
         finalProfileImageUrl = await uploadProfileImage(selectedFile);
+      } else if (!profileImage) {
+        finalProfileImageUrl = "";
       }
       await changeUserdata(nickname, finalProfileImageUrl);
       setDialogMessage("프로필이 성공적으로 변경되었습니다.");
