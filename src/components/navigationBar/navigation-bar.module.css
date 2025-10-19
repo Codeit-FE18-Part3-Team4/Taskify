@@ -7,6 +7,17 @@
   align-items: center;
 }
 
+.navigationBar button.mobileMenu {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.navigationBar .mobileMenu > img {
+  filter: invert(100%) sepia(1%) saturate(5814%) hue-rotate(186deg)
+    brightness(88%) contrast(92%);
+}
+
 .small {
   height: 50px;
 }

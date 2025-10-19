@@ -1,19 +1,23 @@
+import { SidebarMenu } from "@/assets/images";
+import SettingSvg from "@/components/icon/setting-svg";
+import UserPlusSvg from "@/components/icon/user-plus-svg";
 import Modal from "@/components/modal";
 import Typography from "@/components/typography";
 import { CommonSize } from "@/constants/common/common-size";
 import { useModal } from "@/hooks/use-modal";
+import { useSsrResponsive } from "@/hooks/use-ssr-responsive";
 import { MemberInfo } from "@/types/member-info";
+import Image from "next/image";
+import Link from "next/link";
 import MemberList from "./member-list";
 import styles from "./navigation-bar.module.css";
-import SettingSvg from "@/components/icon/setting-svg";
-import UserPlusSvg from "@/components/icon/user-plus-svg";
-import Link from "next/link";
 
 interface NavigationBarProps {
   size?: CommonSize;
   members?: MemberInfo[];
   totalCount?: number;
   dashboardId?: number | null;
+  onMobileSidebarToggle?: () => void;
 }
 
 export default function NavigationBar({
@@ -21,6 +25,7 @@ export default function NavigationBar({
   members = [],
   totalCount,
   dashboardId = null,
+  onMobileSidebarToggle,
 }: NavigationBarProps) {
   const sizeName = CommonSize[size].toLowerCase();
   const navigationBarClasses = `${styles.navigationBar} ${styles[sizeName]}`;
@@ -45,8 +50,15 @@ export default function NavigationBar({
     showMembers = members;
   }
 
+  const { isMobile } = useSsrResponsive();
+
   return (
     <div className={navigationBarClasses}>
+      {isMobile && (
+        <button className={styles.mobileMenu} onClick={onMobileSidebarToggle}>
+          <Image src={SidebarMenu} width={20} height={20} alt="사이드바 메뉴" />
+        </button>
+      )}
       {dashboardId && (
         <>
           {showMembers.length > 0 && (
