@@ -57,8 +57,8 @@ export function useMembers({ dashboardId, page = 1, size = 6 }: MembersProps) {
 
 export function useDashboardInvitees({
   dashboardId,
-  page,
-  size,
+  page = 1,
+  size = 6,
 }: MembersProps) {
   const [dashboardInvitations, setDashboardInvitations] = useState<
     Invitations[] | null

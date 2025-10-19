@@ -5,4 +5,5 @@
 
 .dashboardContent {
   flex: 1;
+  overflow: hidden;
 }

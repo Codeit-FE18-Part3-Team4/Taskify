@@ -24,8 +24,6 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
       ? Number(id)
       : null;
 
-  const { members } = useMembers(dashboardId);
-
   const handleToggleMobileSidebar = () => {
     setIsMobileSidebarOpen((prev) => !prev);
   };
@@ -42,7 +40,6 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
       )}
       <div className={styles.dashboardContent}>
         <NavigationBar
-          members={members ?? []}
           dashboardId={dashboardId ?? null}
           onMobileSidebarToggle={handleToggleMobileSidebar}
         />

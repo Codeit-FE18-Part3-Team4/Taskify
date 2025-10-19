@@ -11,8 +11,9 @@ import Image from "next/image";
 import Link from "next/link";
 import MemberList from "./member-list";
 import styles from "./navigation-bar.module.css";
+import { useMembers } from "@/hooks/use-members";
 
-const MEMBERS_SIZE = 6;
+const MEMBERS_SIZE = 1000;
 
 interface NavigationBarProps {
   size?: CommonSize;
@@ -23,11 +24,10 @@ interface NavigationBarProps {
 
 export default function NavigationBar({
   size = CommonSize.Large,
-  totalCount,
   dashboardId = null,
   onMobileSidebarToggle,
 }: NavigationBarProps) {
-  const { members, isLoading } = useMembers({
+  const { members } = useMembers({
     dashboardId,
     size: MEMBERS_SIZE,
   });
@@ -44,7 +44,8 @@ export default function NavigationBar({
   const handleUserPlus = () => {
     openModal(true);
   };
-  console.log(isLoading);
+
+  console.log(members);
 
   let showMembers: MemberInfo[] = [];
   let hideMembers: MemberInfo[] = [];
