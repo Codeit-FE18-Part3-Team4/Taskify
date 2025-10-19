@@ -1,5 +1,4 @@
-import DashboardSideBar from "@/components/dashboard-side-bar/dashboard-side-bar";
-import NavigationBar from "@/components/navigationBar/navigation-bar";
+import DashboardLayout from "@/components/dashboard-layout";
 import CardDetailModal from "@/features/card/components/card-detail-modal";
 import { useCards } from "@/hooks/use-cards";
 import { useColumn } from "@/hooks/use-column";
@@ -8,7 +7,7 @@ import { useMembers } from "@/hooks/use-members";
 import { useModal } from "@/hooks/use-modal";
 import { Card } from "@/types/card";
 import { useRouter } from "next/router";
-import { useEffect, useMemo, useState } from "react";
+import { ReactNode, useEffect, useMemo, useState } from "react";
 import DashboardContent from "./dashboard-content";
 import styles from "./index.module.css";
 
@@ -58,28 +57,19 @@ export default function DashboardPage() {
 
   return (
     <div className={styles.page}>
-      <DashboardSideBar />
-      <div className={styles.layoutContainer}>
-        <NavigationBar
+      {dashboard && (
+        <DashboardContent
+          dashboard={dashboard}
+          columns={columns ?? []}
           members={members ?? []}
-          dashboardId={dashboardId ?? null}
+          cards={cards ?? {}}
+          isLoadingColumns={isLoadingColumns}
+          isLoadingCards={isLoadingCards}
+          onCardClick={handleCardClick}
+          onCardChange={handleCardChange}
+          onColumnChange={handleColumnChange}
         />
-        <main className={styles.main}>
-          {dashboard && (
-            <DashboardContent
-              dashboard={dashboard}
-              columns={columns ?? []}
-              members={members ?? []}
-              cards={cards ?? {}}
-              isLoadingColumns={isLoadingColumns}
-              isLoadingCards={isLoadingCards}
-              onCardClick={handleCardClick}
-              onCardChange={handleCardChange}
-              onColumnChange={handleColumnChange}
-            />
-          )}
-        </main>
-      </div>
+      )}
       {isShowModal && selectedCard !== null && dashboard !== null && (
         <CardDetailModal
           modalKey={CARD_DETAIL_MODAL_KEY}
@@ -94,3 +84,7 @@ export default function DashboardPage() {
     </div>
   );
 }
+
+DashboardPage.getLayout = function getLayout(page: ReactNode) {
+  return <DashboardLayout>{page}</DashboardLayout>;
+};
