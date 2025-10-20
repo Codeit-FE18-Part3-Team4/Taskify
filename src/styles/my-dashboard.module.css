@@ -107,6 +107,17 @@
   button.myDashboardButton {
   border: 1px solid var(--color-black500);
   background: var(--color-black700);
+  max-width: 359px;
+}
+.myDashboardMain
+  .dashboardSection
+  .myDashboard
+  .myDashboardBox
+  button.myDashboardButton
+  .myDashboardButtonTitle {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 .myDashboardMain
   .dashboardSection
