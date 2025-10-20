@@ -191,7 +191,7 @@
     brightness(85%) contrast(84%);
 }
 /* Tablet */
-@media (max-width: 744px) {
+@media (max-width: 1200px) {
   .mainWrap::after {
     width: 200px;
     height: 200px;
@@ -206,7 +206,7 @@
     padding: 24px 30px;
   }
   .mainSectionTopWrap {
-    min-width: 100%;
+    width: 100%;
     padding: 61px 0 0 80px;
     gap: 54px;
   }
@@ -328,7 +328,7 @@
   }
 }
 /* Mobile */
-@media (max-width: 375px) {
+@media (max-width: 487px) {
   .mainWrap::after {
     width: 200px;
     height: 200px;
@@ -365,6 +365,7 @@
   .mainSectionTopWrap .buttonBox {
     flex-direction: row;
     gap: 12px;
+    justify-content: center;
   }
   .mainSectionTopWrap .buttonBox > button {
     width: 151px;
