@@ -1,3 +1,4 @@
+import Alert, { AlertActionType } from "@/components/alert";
 import ColorChip from "@/components/chips/chip-color/chips-color";
 import Column, { ColumnActionType } from "@/components/dashboard/column/column";
 import Dialog from "@/components/dialog";
@@ -6,8 +7,14 @@ import Typography from "@/components/typography";
 import { CommonSize } from "@/constants/common/common-size";
 import { CardParams, createCard, CreateCardParams } from "@/features/card/apis";
 import CardEditSheet from "@/features/card/components/card-edit-sheet";
-import { createColumn, updateColumn } from "@/features/column/apis";
+import {
+  createColumn,
+  deleteColumn,
+  updateColumn,
+} from "@/features/column/apis";
 import ColumnEditSheet from "@/features/column/components/column-edit-sheet";
+import { useAlert } from "@/hooks/use-alert";
+import { ColumnCardData } from "@/hooks/use-cards";
 import { useDialog } from "@/hooks/use-dialog";
 import { useSheet } from "@/hooks/use-sheet";
 import { Card } from "@/types/card";
@@ -17,7 +24,6 @@ import { classnames } from "@/utils/classnames";
 import { useState } from "react";
 import styles from "./index.module.css";
 import PlusCircleSvg from "./plus-circle-svg";
-import { ColumnCardData } from "@/hooks/use-cards";
 
 export async function getServerSideProps() {
   return {
@@ -50,10 +56,13 @@ export default function DashboardContent({
   onCardChange,
   onLoadMoreCards,
 }: DashboardContentProps) {
-  const CREATE_COLUMN_SHEET_KEY = "CREATE_COLUMN_SHEET_KEY";
+  const EDIT_COLUMN_SHEET_KEY = "EDIT_COLUMN_SHEET_KEY";
   const { isShowSheet: isShowColumnEditSheet, openSheet: openColumnEditSheet } =
-    useSheet({ key: CREATE_COLUMN_SHEET_KEY });
+    useSheet({ key: EDIT_COLUMN_SHEET_KEY });
   const [editingColumn, setEditingColumn] = useState<ColumnType>();
+
+  const DELETE_COLUMN_ALERT_KEY = "DELETE_COLUMN_ALERT_KEY";
+  const { isShowAlert, openAlert } = useAlert({ key: DELETE_COLUMN_ALERT_KEY });
 
   const CREATE_CARD_SHEET_KEY = "CREATE_CARD_SHEET";
   const { isShowSheet, openSheet } = useSheet({ key: CREATE_CARD_SHEET_KEY });
@@ -68,6 +77,11 @@ export default function DashboardContent({
 
   const handleEditColumnClick = (column: ColumnType) => {
     openColumnEditSheet(true);
+    setEditingColumn(column);
+  };
+
+  const handleDeleteColumnClick = (column: ColumnType) => {
+    openAlert(true);
     setEditingColumn(column);
   };
 
@@ -100,6 +114,20 @@ export default function DashboardContent({
       } else {
         await createColumn({ dashboardId: dashboard.id, title });
       }
+      onColumnChange();
+      setEditingColumn(undefined);
+    } catch (error) {
+      if (error instanceof Error) {
+        openDialog(true);
+        setFailMessage(error.message);
+      }
+    }
+  };
+
+  const handleColumnDelete = async () => {
+    try {
+      if (!editingColumn) return;
+      await deleteColumn({ columnId: editingColumn.id });
       onColumnChange();
       setEditingColumn(undefined);
     } catch (error) {
@@ -144,6 +172,9 @@ export default function DashboardContent({
                       case ColumnActionType.Modify:
                         handleEditColumnClick(column);
                         break;
+                      case ColumnActionType.Delete:
+                        handleDeleteColumnClick(column);
+                        break;
                     }
                   }}
                 />
@@ -154,7 +185,7 @@ export default function DashboardContent({
                 type="button"
                 className={classnames(
                   styles.createColumnButton,
-                  Typography.lg2Medium,
+                  Typography.lg2Medium
                 )}
                 onClick={handleCreateColumnClick}
               >
@@ -167,10 +198,19 @@ export default function DashboardContent({
       </section>
       {isShowColumnEditSheet && (
         <ColumnEditSheet
-          sheetKey={CREATE_COLUMN_SHEET_KEY}
+          sheetKey={EDIT_COLUMN_SHEET_KEY}
           column={editingColumn}
           usedTitles={[]}
           onSubmit={handleColumnEdit}
+        />
+      )}
+      {isShowAlert && (
+        <Alert
+          alertKey={DELETE_COLUMN_ALERT_KEY}
+          title="칼럼을 삭제하시겠습니까?"
+          message="칼럼 내 모든 카드도 함께 삭제됩니다."
+          actionType={AlertActionType.Delete}
+          onAction={handleColumnDelete}
         />
       )}
       {isShowSheet && (
