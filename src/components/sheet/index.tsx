@@ -2,6 +2,7 @@ import Button, { ButtonSize, ButtonVariant } from "@/components/button/button";
 import XmarkIcon from "@/components/icon/xmark-icon";
 import Modal from "@/components/modal";
 import Typography from "@/components/typography";
+import { ModalZIndex } from "@/constants/modal-z-index";
 import { useResponsive } from "@/hooks/use-responsive";
 import { useSheet } from "@/hooks/use-sheet";
 import { classnames } from "@/utils/classnames";
@@ -65,7 +66,6 @@ interface Props {
   children: ReactNode;
   onCancel?: () => void;
   onAction?: () => void;
-  zIndex?: boolean;
 }
 
 export default function Sheet({
@@ -76,7 +76,6 @@ export default function Sheet({
   children,
   onCancel,
   onAction,
-  zIndex,
 }: Props) {
   const { openSheet } = useSheet({ key: sheetKey });
   const { isMobile } = useResponsive();
@@ -99,7 +98,7 @@ export default function Sheet({
   };
 
   return (
-    <Modal modalKey={sheetKey} zIndex={zIndex}>
+    <Modal modalKey={sheetKey} zIndex={ModalZIndex.Over}>
       <div className={styles.sheet}>
         <div className={styles.header}>
           <h2 className={classnames(styles.title, titleTypography)}>{title}</h2>

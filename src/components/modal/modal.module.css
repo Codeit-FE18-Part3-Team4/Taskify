@@ -10,10 +10,6 @@
   justify-content: center;
 }
 
-.over {
-  z-index: 2;
-}
-
 .transparent {
   background-color: transparent;
 }

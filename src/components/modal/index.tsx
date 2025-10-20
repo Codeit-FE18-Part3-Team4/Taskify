@@ -1,3 +1,4 @@
+import { ModalZIndex } from "@/constants/modal-z-index";
 import { useModal } from "@/hooks/use-modal";
 import { classnames } from "@/utils/classnames";
 import { MouseEvent, ReactNode, useRef } from "react";
@@ -8,14 +9,14 @@ interface Props {
   modalKey: string;
   isFullScreen?: boolean;
   children: ReactNode;
-  zIndex?: boolean;
+  zIndex?: number;
 }
 
 export default function Modal({
   modalKey,
   isFullScreen = false,
   children,
-  zIndex = false,
+  zIndex = ModalZIndex.Default,
 }: Props) {
   const { isOpenModal, openModal, onCloseModal, modalStack } = useModal({
     key: modalKey,
@@ -28,7 +29,7 @@ export default function Modal({
     const base = styles.modal;
 
     if (!isRootModal) {
-      return classnames(base, styles.transparent, zIndex ? styles.over : "");
+      return classnames(base, styles.transparent);
     }
 
     let className;
@@ -41,7 +42,7 @@ export default function Modal({
       className = hasNestedModal ? "nested" : styles.close;
     }
 
-    return classnames(base, className, zIndex ? styles.over : "");
+    return classnames(base, className);
   }
 
   function contentClassName() {
@@ -79,6 +80,7 @@ export default function Modal({
   const modal = (
     <div
       className={modalClassName()}
+      style={{ zIndex }}
       onAnimationEnd={handleAnimationEnd}
       onClick={handleClick}
       ref={modalRef}
