@@ -17,6 +17,7 @@ import { classnames } from "@/utils/classnames";
 import { useState } from "react";
 import styles from "./index.module.css";
 import PlusCircleSvg from "./plus-circle-svg";
+import { ColumnCardData } from "@/hooks/use-cards";
 
 export async function getServerSideProps() {
   return {
@@ -28,24 +29,26 @@ interface DashboardContentProps {
   dashboard: Dashboard;
   columns: ColumnType[];
   members: MemberInfo[];
-  cards: Record<number, Card[]>;
+  columnCardsData: Record<number, ColumnCardData>;
   isLoadingColumns: boolean;
   isLoadingCards: boolean;
   onColumnChange: () => void;
   onCardClick: (card: Card) => void;
   onCardChange: () => void;
+  onLoadMoreCards: (columnId: number) => void;
 }
 
 export default function DashboardContent({
   dashboard,
   columns,
   members,
-  cards,
+  columnCardsData,
   isLoadingColumns,
   isLoadingCards,
   onColumnChange,
   onCardClick,
   onCardChange,
+  onLoadMoreCards,
 }: DashboardContentProps) {
   const CREATE_COLUMN_SHEET_KEY = "CREATE_COLUMN_SHEET_KEY";
   const { isShowSheet: isShowColumnEditSheet, openSheet: openColumnEditSheet } =
@@ -116,7 +119,7 @@ export default function DashboardContent({
       <section>
         <div className={classnames(styles.dashboardTitle, Typography.xl3Bold)}>
           <ColorChip color={dashboard.color} size={CommonSize.Large} />
-          <h3>{dashboard.title}</h3>
+          <h3 title={dashboard.title}>{dashboard.title}</h3>
         </div>
 
         <div className={styles.columnWrapper}>
@@ -127,10 +130,12 @@ export default function DashboardContent({
               columns.map((column) => (
                 <Column
                   key={column.id}
-                  cards={cards[column.id] ?? []}
+                  cards={columnCardsData[column.id]?.cards ?? []}
                   isLoadingCards={isLoadingCards}
                   onCardClick={onCardClick}
                   columnTitle={column.title}
+                  moreCards={columnCardsData[column.id]?.moreCards ?? false}
+                  onLoadMore={() => onLoadMoreCards(column.id)}
                   onClick={(type) => {
                     switch (type) {
                       case ColumnActionType.Create:

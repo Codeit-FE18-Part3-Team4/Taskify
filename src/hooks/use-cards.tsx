@@ -3,8 +3,17 @@ import { useAuthEffect } from "@/features/auth/components/auth-provider";
 import { Card } from "@/types/card";
 import { useCallback, useState } from "react";
 
-export function useCards(columnIds: number[]) {
-  const [cards, setCards] = useState<Record<number, Card[]> | null>(null);
+export type ColumnCardData = {
+  cards: Card[];
+  moreCards: boolean;
+  cursorId: number | null;
+};
+
+export function useCards(columnIds: number[], size = 20) {
+  const [columnCardsData, setColumnCardsData] = useState<Record<
+    number,
+    ColumnCardData
+  > | null>(null);
   const [isLoadingCards, setIsLoading] = useState(false);
   const [error, setError] = useState<Error | null>(null);
 
@@ -15,39 +24,87 @@ export function useCards(columnIds: number[]) {
 
       try {
         if (columnIds.length === 0) {
-          setCards(null);
+          setColumnCardsData(null);
           return;
         }
 
         const cardsPromises = columnIds.map((columnId) =>
-          getCards({ columnId })
+          getCards({ columnId, size, cursorId: null }),
         );
         const cardsDataList = await Promise.all(cardsPromises);
 
-        const cardsMap = columnIds.reduce(
-          (acc: Record<number, Card[]>, columnId, index) => {
-            acc[columnId] = cardsDataList[index].cards;
+        const cardsMap: Record<number, ColumnCardData> = columnIds.reduce(
+          (acc, columnId, index) => {
+            acc[columnId] = {
+              cards: cardsDataList[index].cards,
+              cursorId: cardsDataList[index].cursorId,
+              moreCards: cardsDataList[index].cursorId !== null,
+            };
             return acc;
           },
-          {}
+          {} as Record<number, ColumnCardData>,
         );
 
-        setCards(cardsMap);
+        setColumnCardsData(cardsMap);
       } catch (e) {
         console.log(e);
         setError(e as Error);
-        setCards(null);
+        setColumnCardsData(null);
         throw e;
       } finally {
         setIsLoading(false);
       }
     },
-    [columnIds]
+    [columnIds, size],
+  );
+
+  const loadMoreCards = useCallback(
+    async (columnId: number) => {
+      if (!columnCardsData?.[columnId]) return;
+
+      const currentData = columnCardsData[columnId];
+      if (!currentData.cursorId || !currentData.moreCards) return;
+
+      setIsLoading(true);
+
+      try {
+        const newData = await getCards({
+          columnId,
+          size,
+          cursorId: currentData.cursorId,
+        });
+
+        setColumnCardsData((prev) => {
+          if (!prev) return prev;
+
+          return {
+            ...prev,
+            [columnId]: {
+              cards: [...prev[columnId].cards, ...newData.cards],
+              cursorId: newData.cursorId,
+              moreCards: newData.cursorId !== null,
+            },
+          };
+        });
+      } catch (e) {
+        console.error(e);
+        setError(e as Error);
+      } finally {
+        setIsLoading(false);
+      }
+    },
+    [columnCardsData, size],
   );
 
   useAuthEffect(() => {
     getCardData();
   }, [getCardData]);
 
-  return { cards, isLoadingCards, error, reloadCards: getCardData };
+  return {
+    columnCardsData,
+    isLoadingCards,
+    error,
+    reloadCards: getCardData,
+    loadMoreCards,
+  };
 }
