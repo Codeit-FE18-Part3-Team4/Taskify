@@ -57,3 +57,9 @@ export async function uploadCardImage({
     return response.data.imageUrl;
   });
 }
+
+export async function deleteColumn({ columnId }: { columnId: number }) {
+  return withThrowingAxiosError(async () => {
+    await axiosInstance.delete(`/columns/${columnId}`);
+  });
+}
