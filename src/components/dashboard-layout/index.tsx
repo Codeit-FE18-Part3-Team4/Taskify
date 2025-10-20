@@ -1,7 +1,7 @@
 import DashboardSideBar from "@/components/dashboard-side-bar/dashboard-side-bar";
 import { useSsrResponsive } from "@/hooks/use-ssr-responsive";
 import { useRouter } from "next/router";
-import { ReactNode, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import CreateDashboardSheet from "../dashboard-create/create-dashboard-sheet";
 import NavigationBar from "../navigationBar/navigation-bar";
 import AccountSettingModal from "../profile-setting-modal";
@@ -31,6 +31,18 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
   const handleCloseMobileSidebar = () => {
     setIsMobileSidebarOpen(false);
   };
+
+  useEffect(() => {
+    if (isMobileSidebarOpen) {
+      document.body.style.position = "fixed";
+      document.body.style.width = "100%";
+    } else {
+      document.body.style.position = "";
+    }
+    return () => {
+      document.body.style.position = "";
+    };
+  }, [isMobileSidebarOpen]);
 
   return (
     <div className={styles.dashboardLayout}>

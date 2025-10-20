@@ -23,10 +23,13 @@
 }
 .main {
   padding: 0 24px;
-  min-height: 720px;
+  /* min-height: 720px; */
   flex: 1;
   display: flex;
   flex-direction: column;
+}
+.main > .mainDashboard {
+  flex: 1;
 }
 .dashboardAdd {
   width: 100%;
@@ -114,6 +117,8 @@
   align-items: center;
   justify-content: space-between;
   height: 44px;
+  position: sticky;
+  bottom: 62px;
 }
 .dashboardPagenation > button {
   display: flex;
@@ -122,7 +127,7 @@
   width: 77px;
   height: 40px;
 }
-.dashboardPagenation > button.disabled {
+/* .dashboardPagenation > button.disabled {
   cursor: not-allowed;
 }
 .dashboardPagenation > button.disabled > span {
@@ -131,6 +136,12 @@
 .dashboardPagenation > button.disabled > img {
   filter: invert(48%) sepia(9%) saturate(563%) hue-rotate(213deg)
     brightness(94%) contrast(89%);
+} */
+.dashboardPagenation > button.visible {
+  visibility: visible;
+}
+.dashboardPagenation > button.visibleHidden {
+  visibility: hidden;
 }
 .dashboardPagenation > button > span {
   color: var(--color-gray100);
