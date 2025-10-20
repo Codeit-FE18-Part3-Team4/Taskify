@@ -56,10 +56,16 @@
   gap: 20px;
 }
 
-.image {
+.imageContainer {
   position: relative;
   width: 361px;
   aspect-ratio: 361 / 219;
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+.image {
+  object-fit: cover;
 }
 
 .info {
@@ -125,7 +131,7 @@
     padding-right: 10px;
   }
 
-  .image {
+  .imageContainer {
     width: 100%;
   }
 
