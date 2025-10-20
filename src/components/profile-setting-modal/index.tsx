@@ -3,6 +3,7 @@ import Button, { ButtonSize, ButtonVariant } from "@/components/button/button";
 import Dialog from "@/components/dialog";
 import Input, { InputSize, InputVariant } from "@/components/input/input";
 import Profile from "@/components/profile/profile";
+import { ProfileSize } from "@/components/profile/profile-size";
 import Sheet, { SheetActionType } from "@/components/sheet";
 import { useAuthEffect } from "@/features/auth/components/auth-provider";
 import { changeUserdata } from "@/features/user/apis/change-userdata";
@@ -112,6 +113,7 @@ export default function AccountSettingModal() {
                 <Profile
                   profileImageUrl={profileImage as string}
                   name={userData?.nickname}
+                  size={ProfileSize.SuperLarge}
                 />
               </div>
               <div className={styles.profileImageButtons}>
