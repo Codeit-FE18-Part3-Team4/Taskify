@@ -13,7 +13,7 @@ import SheetSection from "../sheet/sheet-section";
 const SHEET_KEY = "SHEET_DASHBOARD_ADD";
 const DIALOG_KEY = "MY_DASHBOARD_DIALOG";
 
-export default function CreateDashboardSheet() {
+export default function CreateDashboardSheet({zIndex} : {zIndex?:boolean}) {
   const {
     dashboardValue,
     setDashboardValue,
@@ -72,6 +72,7 @@ export default function CreateDashboardSheet() {
           actionType={SheetActionType.Create}
           onCancel={handleCancelSubmit}
           onAction={handleSubmit}
+          zIndex={zIndex}
         >
           <SheetSection title="대시보드 이름">
             <Input

@@ -8,6 +8,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.over {
   z-index: 2;
 }
 
