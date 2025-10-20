@@ -8,6 +8,7 @@ import { CardParams, createCard, CreateCardParams } from "@/features/card/apis";
 import CardEditSheet from "@/features/card/components/card-edit-sheet";
 import { createColumn, updateColumn } from "@/features/column/apis";
 import ColumnEditSheet from "@/features/column/components/column-edit-sheet";
+import { ColumnCardData } from "@/hooks/use-cards";
 import { useDialog } from "@/hooks/use-dialog";
 import { useSheet } from "@/hooks/use-sheet";
 import { Card } from "@/types/card";
@@ -17,7 +18,6 @@ import { classnames } from "@/utils/classnames";
 import { useState } from "react";
 import styles from "./index.module.css";
 import PlusCircleSvg from "./plus-circle-svg";
-import { ColumnCardData } from "@/hooks/use-cards";
 
 export async function getServerSideProps() {
   return {
@@ -50,9 +50,9 @@ export default function DashboardContent({
   onCardChange,
   onLoadMoreCards,
 }: DashboardContentProps) {
-  const CREATE_COLUMN_SHEET_KEY = "CREATE_COLUMN_SHEET_KEY";
+  const EDIT_COLUMN_SHEET_KEY = "EDIT_COLUMN_SHEET_KEY";
   const { isShowSheet: isShowColumnEditSheet, openSheet: openColumnEditSheet } =
-    useSheet({ key: CREATE_COLUMN_SHEET_KEY });
+    useSheet({ key: EDIT_COLUMN_SHEET_KEY });
   const [editingColumn, setEditingColumn] = useState<ColumnType>();
 
   const CREATE_CARD_SHEET_KEY = "CREATE_CARD_SHEET";
@@ -154,7 +154,7 @@ export default function DashboardContent({
                 type="button"
                 className={classnames(
                   styles.createColumnButton,
-                  Typography.lg2Medium,
+                  Typography.lg2Medium
                 )}
                 onClick={handleCreateColumnClick}
               >
@@ -167,7 +167,7 @@ export default function DashboardContent({
       </section>
       {isShowColumnEditSheet && (
         <ColumnEditSheet
-          sheetKey={CREATE_COLUMN_SHEET_KEY}
+          sheetKey={EDIT_COLUMN_SHEET_KEY}
           column={editingColumn}
           usedTitles={[]}
           onSubmit={handleColumnEdit}

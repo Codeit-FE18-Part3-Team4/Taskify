@@ -12,9 +12,10 @@
 }
 
 .menuItem > span {
+  color: var(--color-gray200);
   white-space: nowrap;
 }
 
-.delete {
+.menuItem > .delete {
   color: var(--color-red500);
 }

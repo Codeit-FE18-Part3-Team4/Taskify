@@ -1,15 +1,17 @@
 import Card from "@/components/dashboard/card/card";
 import SettingSvg from "@/components/icon/setting-svg";
 import Typography from "@/components/typography";
+import { Direction, Menu, MenuItem } from "@/features/card/components/menu";
 import { Card as CardData } from "@/types/card";
-import styles from "./column.module.css";
-import PlusSvg from "./plus-svg";
 import { classnames } from "@/utils/classnames";
 import { useEffect, useRef } from "react";
+import styles from "./column.module.css";
+import PlusSvg from "./plus-svg";
 
 export enum ColumnActionType {
   Create = "create",
   Modify = "modify",
+  Delete = "delete",
 }
 
 interface ColumnProps {
@@ -46,7 +48,7 @@ export default function Column({
       {
         threshold: 0.1,
         rootMargin: "100px",
-      },
+      }
     );
 
     observer.observe(observerRef.current);
@@ -69,12 +71,26 @@ export default function Column({
           <h3 className={Typography.lgSemiBold}>{cards.length}</h3>
         </div>
         <div className={styles.buttonWrapper}>
-          <button onClick={() => onClick?.(ColumnActionType.Create)}>
+          <button
+            className={styles.columnTitleButton}
+            onClick={() => onClick?.(ColumnActionType.Create)}
+          >
             <PlusSvg className={styles.icon} />
           </button>
-          <button onClick={() => onClick?.(ColumnActionType.Modify)}>
-            <SettingSvg className={styles.icon} />
-          </button>
+          <Menu
+            items={[
+              MenuItem.edit(() => onClick?.(ColumnActionType.Modify)),
+              MenuItem.delete(() => onClick?.(ColumnActionType.Delete)),
+            ]}
+            direction={Direction.Right}
+          >
+            <SettingSvg
+              className={classnames(
+                styles.columnEditIcon,
+                styles.columnTitleButton
+              )}
+            />
+          </Menu>
         </div>
       </div>
       <div className={styles.cardsWrapper}>

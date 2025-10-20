@@ -16,14 +16,6 @@
   gap: 20px;
 }
 
-.columnTitleWrapper button {
-  border: none;
-  border-radius: 5px;
-  background-color: transparent;
-  padding: 2px;
-  cursor: pointer;
-}
-
 .columnTitleWrapper button:hover {
   background-color: var(--color-modalBackground);
 }
@@ -46,7 +38,15 @@
   color: var(--color-brand500);
 }
 
-.columnTitleWrapper .buttonWrapper > button:last-child .icon {
+.columnTitleButton {
+  border: none;
+  border-radius: 5px;
+  background-color: transparent;
+  padding: 2px;
+  cursor: pointer;
+}
+
+.columnEditIcon {
   color: var(--color-gray400);
 }
 
