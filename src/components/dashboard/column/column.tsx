@@ -64,15 +64,6 @@ export default function Column({
 
   return (
     <section className={styles.columnContainer}>
-      <div className={styles.columnTitleWrapper}>
-        <div className={styles.columnTitle}>
-          <h3
-            title={columnTitle}
-            className={classnames(Typography.xlSemiBold, styles.columnName)}
-          >
-            {columnTitle}
-          </h3>
-          <h3 className={Typography.lgSemiBold}>{totalCount}</h3>
       {isLoadingCards && cards.length === 0 ? (
         <ColumnTitleSkeleton />
       ) : (
@@ -84,7 +75,7 @@ export default function Column({
             >
               {columnTitle}
             </h3>
-            <h3 className={Typography.lgSemiBold}>{cards.length}</h3>
+            <h3 className={Typography.lgSemiBold}>{totalCount}</h3>
           </div>
           <div className={styles.buttonWrapper}>
             <button
@@ -103,35 +94,12 @@ export default function Column({
               <SettingSvg
                 className={classnames(
                   styles.columnEditIcon,
-                  styles.columnTitleButton
+                  styles.columnTitleButton,
                 )}
               />
             </Menu>
           </div>
         </div>
-        <div className={styles.buttonWrapper}>
-          <button
-            className={styles.columnTitleButton}
-            onClick={() => onClick?.(ColumnActionType.Create)}
-          >
-            <PlusSvg className={styles.icon} />
-          </button>
-          <Menu
-            items={[
-              MenuItem.edit(() => onClick?.(ColumnActionType.Modify)),
-              MenuItem.delete(() => onClick?.(ColumnActionType.Delete)),
-            ]}
-            direction={Direction.Right}
-          >
-            <SettingSvg
-              className={classnames(
-                styles.columnEditIcon,
-                styles.columnTitleButton,
-              )}
-            />
-          </Menu>
-        </div>
-      </div>
       )}
 
       <div className={styles.cardsWrapper}>
