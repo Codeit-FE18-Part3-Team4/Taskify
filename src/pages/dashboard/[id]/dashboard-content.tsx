@@ -158,6 +158,7 @@ export default function DashboardContent({
               columns.map((column) => (
                 <Column
                   key={column.id}
+                  totalCount={columnCardsData[column.id]?.totalCount ?? 0}
                   cards={columnCardsData[column.id]?.cards ?? []}
                   isLoadingCards={isLoadingCards}
                   onCardClick={onCardClick}
@@ -185,7 +186,7 @@ export default function DashboardContent({
                 type="button"
                 className={classnames(
                   styles.createColumnButton,
-                  Typography.lg2Medium
+                  Typography.lg2Medium,
                 )}
                 onClick={handleCreateColumnClick}
               >
