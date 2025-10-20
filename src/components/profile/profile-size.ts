@@ -4,4 +4,5 @@ export enum ProfileSize {
   Medium = "medium",
   Large = "large",
   XLarge = "xlarge",
+  SuperLarge = "superlarge",
 }
