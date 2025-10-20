@@ -127,3 +127,20 @@ export async function deleteDashboard(dashboardId: number) {
     throw e;
   }
 }
+
+export async function inviteUserByEmail({
+  email,
+  dashboardId,
+}: {
+  email: string;
+  dashboardId: number;
+}) {
+  try {
+    return await axiosInstance.post(`dashboards/${dashboardId}/invitations`, {
+      email,
+    });
+  } catch (e) {
+    console.log(e);
+    throw e;
+  }
+}

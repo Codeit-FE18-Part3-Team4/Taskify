@@ -1,12 +1,15 @@
 .topContainer {
   padding: 30px 50px;
+  flex: 1;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .topContainer .formContents {
   display: flex;
   flex-direction: column;
   gap: 30px;
-  width: 840px;
+  max-width: 840px;
 }
 
 .topContainer .formContents .inputWrapper {

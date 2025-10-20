@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "./edit.module.css";
 import NavigationBar from "@/components/navigationBar/navigation-bar";
 import Typography from "@/components/typography";
@@ -18,7 +18,7 @@ import { useAllDashboards } from "@/hooks/use-all-dashboards";
 
 export default function DashboardEditPage() {
   const router = useRouter();
-  const { id, tab } = router.query;
+  const { id } = router.query;
   const dashboardId = Array.isArray(id)
     ? Number(id[0])
     : id
@@ -31,8 +31,18 @@ export default function DashboardEditPage() {
     refetch,
   } = useDashboardById(dashboardId);
   const [alertMessage, setAlertMessage] = useState("");
-  const tabValue = Array.isArray(tab) ? tab[0] : tab;
-  const activeTab = (tabValue as TabType) ?? TabType.Edit;
+  const createdByMeOrNot = dashboard?.createdByMe ?? false;
+  console.log(createdByMeOrNot);
+  const [activeTab, setActiveTab] = useState<TabType | null>(null);
+
+  useEffect(() => {
+    if (dashboard && activeTab === null) {
+      const initialTab = dashboard.createdByMe
+        ? TabType.Edit
+        : TabType.ModifyMembers;
+      setActiveTab(initialTab);
+    }
+  }, [dashboard, activeTab]);
 
   const [dialogMessage, setDialogMessage] = useState("");
   const EDIT_EIALOG = "EDIT_EIALOG";
@@ -59,14 +69,7 @@ export default function DashboardEditPage() {
       return;
     }
 
-    router.push(
-      {
-        pathname: router.pathname,
-        query: { id, tab: newTab },
-      },
-      undefined,
-      { shallow: true },
-    );
+    setActiveTab(newTab);
   };
 
   const hadleConfirmClick = async () => {
@@ -104,13 +107,17 @@ export default function DashboardEditPage() {
     <div className={styles.page}>
       <NavigationBar />
       <main className={styles.main}>
-        <EditSidebar onTabChange={handleTabChange} activeTab={activeTab} />
+        <EditSidebar
+          onTabChange={handleTabChange}
+          activeTab={activeTab ?? TabType.ModifyMembers}
+          createdByMe={dashboard?.createdByMe ?? false}
+        />
         <section className={styles.contents}>
           {dashboardIsLoading ? (
             <span className={styles.exception}>로딩중...</span>
           ) : dashboard ? (
             <>
-              {tab === TabType.Edit && (
+              {activeTab === TabType.Edit && (
                 <Edit
                   dashboard={dashboard}
                   onUpdate={(message, status) =>
@@ -118,7 +125,7 @@ export default function DashboardEditPage() {
                   }
                 />
               )}
-              {tab === TabType.ModifyMembers && (
+              {activeTab === TabType.ModifyMembers && (
                 <ModifyMembers
                   createdByMe={dashboard.createdByMe}
                   dashboard={dashboard}

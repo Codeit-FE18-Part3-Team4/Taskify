@@ -7,6 +7,7 @@ export type ColumnCardData = {
   cards: Card[];
   moreCards: boolean;
   cursorId: number | null;
+  totalCount: number;
 };
 
 export function useCards(columnIds: number[], size = 20) {
@@ -39,6 +40,7 @@ export function useCards(columnIds: number[], size = 20) {
               cards: cardsDataList[index].cards,
               cursorId: cardsDataList[index].cursorId,
               moreCards: cardsDataList[index].cursorId !== null,
+              totalCount: cardsDataList[index].totalCount,
             };
             return acc;
           },
@@ -83,6 +85,7 @@ export function useCards(columnIds: number[], size = 20) {
               cards: [...prev[columnId].cards, ...newData.cards],
               cursorId: newData.cursorId,
               moreCards: newData.cursorId !== null,
+              totalCount: newData.totalCount,
             },
           };
         });

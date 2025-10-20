@@ -54,6 +54,7 @@
   display: flex;
   gap: 8px;
   min-width: 0;
+  flex: 1;
 }
 
 .columnTitle .columnName {
@@ -89,4 +90,9 @@
 .cardsWrapper::-webkit-scrollbar-thumb {
   background-color: var(--color-gray500);
   border-radius: 4px;
+}
+
+.cardsWrapper .exception {
+  padding: 30px 50px;
+  color: var(--color-gray300);
 }
