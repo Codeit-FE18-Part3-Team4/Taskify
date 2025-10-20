@@ -91,3 +91,8 @@
   background-color: var(--color-gray500);
   border-radius: 4px;
 }
+
+.cardsWrapper .exception {
+  padding: 30px 50px;
+  color: var(--color-gray300);
+}

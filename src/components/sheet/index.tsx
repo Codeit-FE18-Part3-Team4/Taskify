@@ -13,6 +13,7 @@ export enum SheetActionType {
   Create = "생성",
   Done = "완료",
   Update = "변경",
+  Share = "공유",
 }
 
 interface SheetActionProps {
@@ -30,6 +31,7 @@ function SheetAction({ type, onClick, disabled }: SheetActionProps) {
       [SheetActionType.Create]: ButtonVariant.Primary,
       [SheetActionType.Done]: ButtonVariant.Primary,
       [SheetActionType.Update]: ButtonVariant.Primary,
+      [SheetActionType.Share]: ButtonVariant.Primary,
     }[type];
   }, [type]);
 

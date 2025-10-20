@@ -91,7 +91,14 @@ export default function Edit({ dashboard, onUpdate }: EditProps) {
           />
         </div>
         <div className={styles.buttonWrapper}>
-          <Button size={ButtonSize.Large} disabled={isSubmitting}>
+          <Button
+            size={ButtonSize.Large}
+            disabled={
+              isSubmitting ||
+              (dashboardTitle === dashboard.title &&
+                selectedColor === dashboard.color)
+            }
+          >
             변경
           </Button>
         </div>
