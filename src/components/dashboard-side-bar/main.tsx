@@ -7,8 +7,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useMemo } from "react";
-import Spinner from "../spinner";
 import DashboardButton from "./dashboard-button";
+import DashboardButtonSkeleton from "./dashboard-button-skeleton";
 import styles from "./dashboard-side-bar.module.css";
 import SidebarPageControl from "./sidebar-page-control";
 
@@ -76,19 +76,25 @@ export default function Main({
         <span className={homeText}>홈</span>
       </Link>
       <div className={styles.mainDashboard}>
-        {dashboards && dashboards.length > 0
-          ? dashboards.map((dashboard) => (
-              <DashboardButton
-                onClick={() => handleDashboardNavigate(dashboard.id)}
-                key={dashboard.id}
-                active={currentDashboardId === dashboard.id}
-                createdByMe={dashboard.createdByMe}
-                color={dashboard.color}
-              >
-                {dashboard.title}
-              </DashboardButton>
-            ))
-          : isLoading && <Spinner />}
+        {isLoading ? (
+          <>
+            {Array.from({ length: 3 }).map((_, index) => (
+              <DashboardButtonSkeleton key={`skeleton-${index}`} />
+            ))}
+          </>
+        ) : dashboards && dashboards.length > 0 ? (
+          dashboards.map((dashboard) => (
+            <DashboardButton
+              onClick={() => handleDashboardNavigate(dashboard.id)}
+              key={dashboard.id}
+              active={currentDashboardId === dashboard.id}
+              createdByMe={dashboard.createdByMe}
+              color={dashboard.color}
+            >
+              {dashboard.title}
+            </DashboardButton>
+          ))
+        ) : null}
       </div>
       {totalPages < 1 ? (
         ""

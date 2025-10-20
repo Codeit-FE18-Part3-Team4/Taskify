@@ -6,6 +6,7 @@ import { useResponsiveValue } from "@/hooks/use-responsive-value";
 import Image from "next/image";
 import { MouseEventHandler, ReactNode } from "react";
 import styles from "./dashboard-side-bar.module.css";
+import { classnames } from "@/utils/classnames";
 
 interface DashboardButtonProps {
   children: ReactNode;
@@ -43,7 +44,7 @@ export default function DashboardButton({
     >
       <ColorChip size={colorChipSize} color={color} />
       <span
-        className={buttonText}
+        className={classnames(buttonText, styles.buttonText)}
       >
         {children}
       </span>
