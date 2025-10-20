@@ -34,7 +34,12 @@ export default function DashboardPage() {
     () => columns?.map((column) => column.id) ?? [],
     [columns],
   );
-  const { cards, isLoadingCards, reloadCards } = useCards(columnIds);
+  const {
+    columnCardsData,
+    isLoadingCards,
+    reloadCards,
+    loadMoreCards: getMoreCards,
+  } = useCards(columnIds);
 
   const [selectedCard, setSelectedCard] = useState<Card | null>(null);
 
@@ -62,6 +67,10 @@ export default function DashboardPage() {
     }
   }, [router, router.isReady, dashboardId, dashboard]);
 
+  const loadMoreCard = (cursorId: number) => {
+    getMoreCards(cursorId);
+  };
+
   return (
     <div className={styles.page}>
       {dashboard && (
@@ -69,12 +78,13 @@ export default function DashboardPage() {
           dashboard={dashboard}
           columns={columns ?? []}
           members={members ?? []}
-          cards={cards ?? {}}
+          columnCardsData={columnCardsData ?? {}}
           isLoadingColumns={isLoadingColumns}
           isLoadingCards={isLoadingCards}
           onCardClick={handleCardClick}
           onCardChange={handleCardChange}
           onColumnChange={handleColumnChange}
+          onLoadMoreCards={loadMoreCard}
         />
       )}
       {isShowModal && selectedCard !== null && dashboard !== null && (
