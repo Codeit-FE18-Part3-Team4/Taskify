@@ -24,6 +24,7 @@ import { classnames } from "@/utils/classnames";
 import { useState } from "react";
 import styles from "./index.module.css";
 import PlusCircleSvg from "./plus-circle-svg";
+import { useResponsive } from "@/hooks/use-responsive";
 
 export async function getServerSideProps() {
   return {
@@ -49,7 +50,6 @@ export default function DashboardContent({
   columns,
   members,
   columnCardsData,
-  isLoadingColumns,
   isLoadingCards,
   onColumnChange,
   onCardClick,
@@ -142,10 +142,21 @@ export default function DashboardContent({
     openDialog(false);
   };
 
+  const { isTablet, isDesktop } = useResponsive();
+
   return (
     <>
       <section>
-        <div className={classnames(styles.dashboardTitle, Typography.xl3Bold)}>
+        <div
+          className={classnames(
+            styles.dashboardTitle,
+            isDesktop
+              ? Typography.xl3Bold
+              : isTablet
+                ? Typography.xl2Bold
+                : Typography.xlBold,
+          )}
+        >
           <ColorChip color={dashboard.color} size={CommonSize.Large} />
           <h3 title={dashboard.title}>{dashboard.title}</h3>
         </div>
@@ -182,7 +193,7 @@ export default function DashboardContent({
                 type="button"
                 className={classnames(
                   styles.createColumnButton,
-                  Typography.lg2Medium
+                  Typography.lg2Medium,
                 )}
                 onClick={handleCreateColumnClick}
               >

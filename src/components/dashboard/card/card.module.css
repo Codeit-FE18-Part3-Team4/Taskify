@@ -39,3 +39,24 @@
   gap: 4px;
   align-items: center;
 }
+
+@media (max-width: 744px) {
+  .cardContainer {
+    width: 450px;
+    height: 100%;
+  }
+  .cardImage > img {
+    width: 410px !important;
+    height: 260px !important;
+  }
+  @media (max-width: 375px) {
+    .cardContainer {
+      width: 335px;
+      height: 100%;
+    }
+    .cardImage > img {
+      width: 295px !important;
+      height: 180px !important;
+    }
+  }
+}
