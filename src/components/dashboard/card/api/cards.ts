@@ -1,12 +1,12 @@
 import axiosInstance from "@/services/axios-instance";
 
-export async function getCards({
-  columnId,
-  size,
-}: {
+interface CardProps {
   columnId: number;
-  size?: number;
-}) {
+  size: number;
+  cursorId?: number | null;
+}
+
+export async function getCards({ columnId, size, cursorId }: CardProps) {
   try {
     const params = new URLSearchParams({
       columnId: columnId.toString(),
@@ -14,6 +14,10 @@ export async function getCards({
 
     if (size) {
       params.append("size", size.toString());
+    }
+
+    if (cursorId !== null && cursorId !== undefined) {
+      params.append("cursorId", cursorId.toString());
     }
 
     const res = await axiosInstance.get(`/cards?${params.toString()}`);
