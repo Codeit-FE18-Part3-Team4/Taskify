@@ -221,9 +221,7 @@ export default function ModifyMembers({
         <Dialog
           dialogKey={INVITATION_DIALOG_KEY}
           message={dialogMessage}
-          onConfirm={() => {
-            handleDialogConfirm;
-          }}
+          onConfirm={handleDialogConfirm}
         />
       )}
     </div>
