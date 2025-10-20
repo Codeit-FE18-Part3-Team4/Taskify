@@ -53,8 +53,7 @@ export default function Profile({
   }, [colorIndex, name, isRemain]);
 
   const visualLength = localeLengthKR(name);
-  const spanClasses =
-    visualLength >= 5 ? styles.alignStart : styles.alignCenter;
+  const spanClasses = styles.alignCenter;
 
   const profileClasses = classnames(
     styles.profile,
@@ -76,7 +75,7 @@ export default function Profile({
         </div>
       ) : (
         <div className={profileClasses} style={{ backgroundColor }}>
-          <span className={spanClasses}>{name}</span>
+          <span className={spanClasses}>{name[0]}</span>
         </div>
       )}
       {showFullName && (
