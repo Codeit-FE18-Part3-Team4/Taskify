@@ -12,10 +12,11 @@
   border: none;
   cursor: pointer;
 }
-.logo {
+.button.logo {
   width: 100%;
   padding: 0 16px;
   text-align: left;
+  cursor: default;
 }
 .logo > img {
   width: 156px;
@@ -80,10 +81,13 @@
   filter: invert(42%) sepia(100%) saturate(5942%) hue-rotate(110deg)
     brightness(95%) contrast(91%);
 }
-.dashboardButton > span {
+.dashboardButton > .buttonText {
   flex: 1;
   text-align: left;
   color: var(--color-gray100);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 .dashboardButton.active {
   background: #2c2b30; /* 컬러 파렛트에 없어서 고정으로 넣었습니다. */
