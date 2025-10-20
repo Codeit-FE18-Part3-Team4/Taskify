@@ -1,8 +1,8 @@
+import DefaultProfileImage from "@/assets/images/profile-default.png";
 import Button, { ButtonSize, ButtonVariant } from "@/components/button/button";
 import Dialog from "@/components/dialog";
 import Input, { InputSize, InputVariant } from "@/components/input/input";
 import Profile from "@/components/profile/profile";
-import { ProfileSize } from "@/components/profile/profile-size";
 import Sheet, { SheetActionType } from "@/components/sheet";
 import { useAuthEffect } from "@/features/auth/components/auth-provider";
 import { changeUserdata } from "@/features/user/apis/change-userdata";
@@ -10,6 +10,7 @@ import { getMe, GetMeResponse } from "@/features/user/apis/get-me";
 import { uploadProfileImage } from "@/features/user/apis/upload-profile-image";
 import { useDialog } from "@/hooks/use-dialog";
 import { useModal } from "@/hooks/use-modal";
+import { staticImageDataToFile } from "@/utils/static-image-data-to-file";
 import { AxiosError } from "axios";
 import { useEffect, useRef, useState } from "react";
 import PasswordChangeModal from "./password-change-modal";
@@ -64,9 +65,13 @@ export default function AccountSettingModal() {
     setSelectedFile(file);
   };
 
-  const handleDeleteProfileImage = () => {
-    setProfileImage("");
-    setSelectedFile(null);
+  const handleDeleteProfileImage = async () => {
+    setProfileImage(DefaultProfileImage.src);
+    const defaultFile = await staticImageDataToFile(
+      DefaultProfileImage,
+      "profile-default.png"
+    );
+    setSelectedFile(defaultFile);
   };
 
   const handleSubmit = async () => {
@@ -107,7 +112,6 @@ export default function AccountSettingModal() {
                 <Profile
                   profileImageUrl={profileImage as string}
                   name={userData?.nickname}
-                  size={ProfileSize.XLarge}
                 />
               </div>
               <div className={styles.profileImageButtons}>
@@ -121,16 +125,16 @@ export default function AccountSettingModal() {
                 >
                   사진 변경
                 </Button>
-                {/* <Button
-              variant={ButtonVariant.Delete}
-              size={ButtonSize.Small}
-              onClick={(e) => {
-                e.preventDefault();
-                handleDeleteProfileImage();
-              }}
-            >
-              사진 삭제
-            </Button> */}
+                <Button
+                  variant={ButtonVariant.Delete}
+                  size={ButtonSize.Small}
+                  onClick={async (e) => {
+                    e.preventDefault();
+                    await handleDeleteProfileImage();
+                  }}
+                >
+                  사진 삭제
+                </Button>
                 <input
                   className={styles.invisibleFileInput}
                   ref={fileInputRef}
