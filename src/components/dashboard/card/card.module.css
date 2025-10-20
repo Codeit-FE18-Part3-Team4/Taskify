@@ -13,11 +13,12 @@
 
 .cardImage {
   position: relative;
-  width: 100%;
 }
 
 .cardImage img {
   border-radius: 14px;
+  aspect-ratio: 361 / 215 !important;
+  max-width: 291px !important;
 }
 
 .title {
@@ -46,8 +47,8 @@
     height: 100%;
   }
   .cardImage > img {
-    width: 410px !important;
-    height: 260px !important;
+    aspect-ratio: 361 / 215 !important;
+    max-width: 410px !important;
   }
   @media (max-width: 375px) {
     .cardContainer {
