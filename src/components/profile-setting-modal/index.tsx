@@ -35,6 +35,7 @@ export default function AccountSettingModal() {
   });
   const [dialogMessage, setDialogMessage] = useState("");
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [isSubmitEnabled, setIsSubmitEnabled] = useState(false);
 
   useAuthEffect(() => {
     async function loadUserData() {
@@ -53,6 +54,17 @@ export default function AccountSettingModal() {
       setProfileImage(userData.profileImageUrl);
     }
   }, [userData]);
+
+  useEffect(() => {
+    if (
+      userData?.nickname !== nickname ||
+      userData.profileImageUrl !== profileImage
+    ) {
+      setIsSubmitEnabled(true);
+    } else {
+      setIsSubmitEnabled(false);
+    }
+  }, [nickname, profileImage]);
 
   const onNicknameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setNickname(e.target.value);
@@ -106,6 +118,7 @@ export default function AccountSettingModal() {
           title="프로필 변경"
           actionType={SheetActionType.Update}
           onAction={handleSubmit}
+          canSubmit={isSubmitEnabled}
         >
           <div className={styles.body}>
             <section className={styles.profileImageSection}>
