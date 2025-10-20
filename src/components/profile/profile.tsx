@@ -23,6 +23,7 @@ interface ProfileProps {
 }
 
 const IMG_SIZE: Record<ProfileSize, number> = {
+  [ProfileSize.SuperLarge]: 120,
   [ProfileSize.XLarge]: 34,
   [ProfileSize.Large]: 30,
   [ProfileSize.Medium]: 26,

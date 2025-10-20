@@ -1,3 +1,4 @@
+import DefaultProfileImage from "@/assets/images/profile-default.png";
 import Button, { ButtonSize, ButtonVariant } from "@/components/button/button";
 import Dialog from "@/components/dialog";
 import Input, { InputSize, InputVariant } from "@/components/input/input";
@@ -10,6 +11,7 @@ import { getMe, GetMeResponse } from "@/features/user/apis/get-me";
 import { uploadProfileImage } from "@/features/user/apis/upload-profile-image";
 import { useDialog } from "@/hooks/use-dialog";
 import { useModal } from "@/hooks/use-modal";
+import { staticImageDataToFile } from "@/utils/static-image-data-to-file";
 import { AxiosError } from "axios";
 import { useEffect, useRef, useState } from "react";
 import PasswordChangeModal from "./password-change-modal";
@@ -23,18 +25,22 @@ export default function AccountSettingModal() {
     isShowModal: isShowPasswordChangeModal,
     openModal: openPasswordChangeModal,
   } = useModal({ key: PASSWORD_CHANGE_MODAL_KEY });
+  const { isShowModal } = useModal({ key: ACCOUNT_SETTING_MODAL_KEY });
   const [userData, setUserData] = useState<GetMeResponse | null>(null);
   const [nickname, setNickname] = useState("");
   const [profileImage, setProfileImage] = useState("");
   const fileInputRef = useRef<HTMLInputElement | null>(null);
-  const DIALOG_KEY = "DIALOG_CHAGNE_USERDATA";
+  const DIALOG_KEY = "DIALOG_CHANGE_USERDATA";
   const { isShowDialog, openDialog } = useDialog({
     key: DIALOG_KEY,
   });
   const [dialogMessage, setDialogMessage] = useState("");
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [isSubmitEnabled, setIsSubmitEnabled] = useState(false);
 
   useAuthEffect(() => {
+    if (!isShowModal) return;
+
     async function loadUserData() {
       try {
         setUserData(await getMe());
@@ -43,7 +49,7 @@ export default function AccountSettingModal() {
       }
     }
     loadUserData();
-  });
+  }, [isShowModal]);
 
   useEffect(() => {
     if (userData) {
@@ -51,6 +57,17 @@ export default function AccountSettingModal() {
       setProfileImage(userData.profileImageUrl);
     }
   }, [userData]);
+
+  useEffect(() => {
+    if (
+      userData?.nickname !== nickname ||
+      userData.profileImageUrl !== profileImage
+    ) {
+      setIsSubmitEnabled(true);
+    } else {
+      setIsSubmitEnabled(false);
+    }
+  }, [nickname, profileImage, userData]);
 
   const onNicknameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setNickname(e.target.value);
@@ -64,9 +81,13 @@ export default function AccountSettingModal() {
     setSelectedFile(file);
   };
 
-  const handleDeleteProfileImage = () => {
-    setProfileImage("");
-    setSelectedFile(null);
+  const handleDeleteProfileImage = async () => {
+    setProfileImage(DefaultProfileImage.src);
+    const defaultFile = await staticImageDataToFile(
+      DefaultProfileImage,
+      "profile-default.png"
+    );
+    setSelectedFile(defaultFile);
   };
 
   const handleSubmit = async () => {
@@ -79,6 +100,8 @@ export default function AccountSettingModal() {
       }
       await changeUserdata(nickname, finalProfileImageUrl);
       setDialogMessage("프로필이 성공적으로 변경되었습니다.");
+      setIsSubmitEnabled(false);
+      setUserData(await getMe());
     } catch (err) {
       const error = err as AxiosError<{ message?: string }>;
       const message = error.response?.data?.message;
@@ -88,10 +111,6 @@ export default function AccountSettingModal() {
     }
   };
 
-  const { isShowModal } = useModal({
-    key: ACCOUNT_SETTING_MODAL_KEY,
-  });
-
   return (
     <>
       {isShowModal && (
@@ -100,6 +119,7 @@ export default function AccountSettingModal() {
           title="프로필 변경"
           actionType={SheetActionType.Update}
           onAction={handleSubmit}
+          canSubmit={isSubmitEnabled}
         >
           <div className={styles.body}>
             <section className={styles.profileImageSection}>
@@ -107,7 +127,7 @@ export default function AccountSettingModal() {
                 <Profile
                   profileImageUrl={profileImage as string}
                   name={userData?.nickname}
-                  size={ProfileSize.XLarge}
+                  size={ProfileSize.SuperLarge}
                 />
               </div>
               <div className={styles.profileImageButtons}>
@@ -121,16 +141,16 @@ export default function AccountSettingModal() {
                 >
                   사진 변경
                 </Button>
-                {/* <Button
-              variant={ButtonVariant.Delete}
-              size={ButtonSize.Small}
-              onClick={(e) => {
-                e.preventDefault();
-                handleDeleteProfileImage();
-              }}
-            >
-              사진 삭제
-            </Button> */}
+                <Button
+                  variant={ButtonVariant.Delete}
+                  size={ButtonSize.Small}
+                  onClick={async (e) => {
+                    e.preventDefault();
+                    await handleDeleteProfileImage();
+                  }}
+                >
+                  사진 삭제
+                </Button>
                 <input
                   className={styles.invisibleFileInput}
                   ref={fileInputRef}
