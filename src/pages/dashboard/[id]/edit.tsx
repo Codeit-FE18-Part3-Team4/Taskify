@@ -32,8 +32,6 @@ export default function DashboardEditPage() {
     refetch,
   } = useDashboardById(dashboardId);
   const [alertMessage, setAlertMessage] = useState("");
-  const createdByMeOrNot = dashboard?.createdByMe ?? false;
-  console.log(createdByMeOrNot);
   const [activeTab, setActiveTab] = useState<TabType | null>(null);
 
   useEffect(() => {
