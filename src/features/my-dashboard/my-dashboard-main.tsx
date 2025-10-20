@@ -22,6 +22,7 @@ import { MyDashboardMainProps } from "@/types/my-dashboard";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { useDashboardContext } from "./dashboard-provider";
+import { classnames } from "@/utils/classnames";
 
 export async function getServerSideProps() {
   return {
@@ -149,7 +150,7 @@ export default function MyDashboardMain({
                     onClick={() => dashboardIdPage(item.id)}
                   >
                     <ColorChip color={item.color} size={CommonSize.Medium} />
-                    <span className={Typography.lg2SemiBold}>{item.title}</span>
+                    <span className={classnames(Typography.lg2SemiBold, styles.myDashboardButtonTitle)}>{item.title}</span>
                     <Image
                       src={ArrowRight}
                       width={24}

@@ -11,10 +11,12 @@ import styles from "./password-change-modal.module.css";
 
 interface PasswordChangeModalProps {
   modalKey: string;
+  zIndex?: boolean;
 }
 
 export default function PasswordChangeModal({
   modalKey,
+  zIndex,
 }: PasswordChangeModalProps) {
   const { openModal } = useModal({ key: modalKey });
   const [password, setPassword] = useState("");
@@ -100,6 +102,7 @@ export default function PasswordChangeModal({
       actionType={SheetActionType.Update}
       canSubmit={!isSubmitButtonDisabled}
       onAction={handleSubmit}
+      zIndex={zIndex}
     >
       <div className={styles.body}>
         <section className={styles.inputSection}>

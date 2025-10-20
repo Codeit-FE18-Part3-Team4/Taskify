@@ -11,9 +11,15 @@ interface Props {
   dialogKey: string;
   message: string;
   onConfirm?: () => void;
+  zIndex?: boolean;
 }
 
-export default function Dialog({ dialogKey, message, onConfirm }: Props) {
+export default function Dialog({
+  dialogKey,
+  message,
+  zIndex,
+  onConfirm,
+}: Props) {
   const { openDialog } = useDialog({ key: dialogKey });
   const { isMobile } = useResponsive();
 
@@ -31,7 +37,7 @@ export default function Dialog({ dialogKey, message, onConfirm }: Props) {
   };
 
   return (
-    <Modal modalKey={dialogKey}>
+    <Modal zIndex={zIndex} modalKey={dialogKey}>
       <div className={styles.dialog}>
         <p className={classnames(styles.message, messageTypography)}>
           {message}

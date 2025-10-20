@@ -20,7 +20,7 @@ import styles from "./profile-setting-modal.module.css";
 const ACCOUNT_SETTING_MODAL_KEY = "ACCOUNT_SETTING_MODAL";
 const PASSWORD_CHANGE_MODAL_KEY = "PASSWORD_CHANGE_MODAL";
 
-export default function AccountSettingModal() {
+export default function AccountSettingModal({ zIndex }: { zIndex: boolean }) {
   const {
     isShowModal: isShowPasswordChangeModal,
     openModal: openPasswordChangeModal,
@@ -120,6 +120,7 @@ export default function AccountSettingModal() {
           actionType={SheetActionType.Update}
           onAction={handleSubmit}
           canSubmit={isSubmitEnabled}
+          zIndex={zIndex}
         >
           <div className={styles.body}>
             <section className={styles.profileImageSection}>
@@ -195,11 +196,11 @@ export default function AccountSettingModal() {
             </section>
           </div>
           {isShowPasswordChangeModal && (
-            <PasswordChangeModal modalKey={PASSWORD_CHANGE_MODAL_KEY} />
+            <PasswordChangeModal zIndex modalKey={PASSWORD_CHANGE_MODAL_KEY} />
           )}
 
           {isShowDialog && (
-            <Dialog dialogKey={DIALOG_KEY} message={dialogMessage} />
+            <Dialog zIndex dialogKey={DIALOG_KEY} message={dialogMessage} />
           )}
         </Sheet>
       )}

@@ -8,12 +8,14 @@ interface Props {
   modalKey: string;
   isFullScreen?: boolean;
   children: ReactNode;
+  zIndex?: boolean;
 }
 
 export default function Modal({
   modalKey,
   isFullScreen = false,
   children,
+  zIndex = false,
 }: Props) {
   const { isOpenModal, openModal, onCloseModal, modalStack } = useModal({
     key: modalKey,
@@ -26,7 +28,7 @@ export default function Modal({
     const base = styles.modal;
 
     if (!isRootModal) {
-      return classnames(base, styles.transparent);
+      return classnames(base, styles.transparent, zIndex ? styles.over : "");
     }
 
     let className;
@@ -39,7 +41,7 @@ export default function Modal({
       className = hasNestedModal ? "nested" : styles.close;
     }
 
-    return classnames(base, className);
+    return classnames(base, className, zIndex ? styles.over : "");
   }
 
   function contentClassName() {

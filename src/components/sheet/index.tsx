@@ -65,6 +65,7 @@ interface Props {
   children: ReactNode;
   onCancel?: () => void;
   onAction?: () => void;
+  zIndex?: boolean;
 }
 
 export default function Sheet({
@@ -75,6 +76,7 @@ export default function Sheet({
   children,
   onCancel,
   onAction,
+  zIndex,
 }: Props) {
   const { openSheet } = useSheet({ key: sheetKey });
   const { isMobile } = useResponsive();
@@ -97,7 +99,7 @@ export default function Sheet({
   };
 
   return (
-    <Modal modalKey={sheetKey}>
+    <Modal modalKey={sheetKey} zIndex={zIndex}>
       <div className={styles.sheet}>
         <div className={styles.header}>
           <h2 className={classnames(styles.title, titleTypography)}>{title}</h2>
