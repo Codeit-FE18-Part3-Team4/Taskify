@@ -1,4 +1,5 @@
 import { useAuthEffect } from "@/features/auth/components/auth-provider";
+import { inviteUserByEmail } from "@/features/my-dashboard/api";
 import {
   getMembers,
   getDashboardInvitees,
@@ -92,6 +93,26 @@ export function useDashboardInvitees({
     }
   };
 
+  const inviteUser = async (email: string) => {
+    if (!dashboardId) return;
+
+    try {
+      const res = await inviteUserByEmail({ email, dashboardId });
+      if (res.status === 201) {
+        refetch();
+        return { success: true, message: "사용자에게 초대를 보냈습니다." };
+      } else {
+        return { success: false, message: "사용자 초대에 실패하였습니다." };
+      }
+    } catch (e) {
+      console.error(e);
+      return {
+        success: false,
+        message: e instanceof Error ? e.message : String(e),
+      };
+    }
+  };
+
   useAuthEffect(() => {
     loadInvitees();
   }, [dashboardId, page, size, refetchTrigger]);
@@ -100,7 +121,14 @@ export function useDashboardInvitees({
     setRefetchTrigger((prev) => prev + 1);
   };
 
-  return { dashboardInvitations, totalCount, isLoading, error, refetch };
+  return {
+    inviteUser,
+    dashboardInvitations,
+    totalCount,
+    isLoading,
+    error,
+    refetch,
+  };
 }
 
 export function useDeleteDashboardMember(refetch: () => void) {

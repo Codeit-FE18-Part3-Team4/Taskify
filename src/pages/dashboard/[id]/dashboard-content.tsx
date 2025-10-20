@@ -152,36 +152,41 @@ export default function DashboardContent({
 
         <div className={styles.columnWrapper}>
           <div className={styles.columnContentWrapper}>
-            {columns.map((column) => (
-              <Column
-                key={column.id}
-                cards={columnCardsData[column.id]?.cards ?? []}
-                isLoadingCards={isLoadingCards}
-                onCardClick={onCardClick}
-                columnTitle={column.title}
-                moreCards={columnCardsData[column.id]?.moreCards ?? false}
-                onLoadMore={() => onLoadMoreCards(column.id)}
-                onClick={(type) => {
-                  switch (type) {
-                    case ColumnActionType.Create:
-                      handleCardCreate();
-                      break;
-                    case ColumnActionType.Modify:
-                      handleEditColumnClick(column);
-                      break;
-                    case ColumnActionType.Delete:
-                      handleDeleteColumnClick(column);
-                      break;
-                  }
-                }}
-              />
-            ))}
+            {isLoadingColumns ? (
+              <h2>컬럼 로딩중...</h2>
+            ) : (
+              columns.map((column) => (
+                <Column
+                  key={column.id}
+                  totalCount={columnCardsData[column.id]?.totalCount ?? 0}
+                  cards={columnCardsData[column.id]?.cards ?? []}
+                  isLoadingCards={isLoadingCards}
+                  onCardClick={onCardClick}
+                  columnTitle={column.title}
+                  moreCards={columnCardsData[column.id]?.moreCards ?? false}
+                  onLoadMore={() => onLoadMoreCards(column.id)}
+                  onClick={(type) => {
+                    switch (type) {
+                      case ColumnActionType.Create:
+                        handleCardCreate();
+                        break;
+                      case ColumnActionType.Modify:
+                        handleEditColumnClick(column);
+                        break;
+                      case ColumnActionType.Delete:
+                        handleDeleteColumnClick(column);
+                        break;
+                    }
+                  }}
+                />
+              ))
+            )}
             <div>
               <button
                 type="button"
                 className={classnames(
                   styles.createColumnButton,
-                  Typography.lg2Medium
+                  Typography.lg2Medium,
                 )}
                 onClick={handleCreateColumnClick}
               >

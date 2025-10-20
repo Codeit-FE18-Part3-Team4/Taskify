@@ -21,7 +21,12 @@ enum ProfileType {
 interface UserListProps {
   members: MemberInfo[];
   invitations: Invitations[];
-  onClickButton: (type: UserListType, id: number, nickName: string) => void;
+  onClickButton: (
+    type: UserListType,
+    id: number,
+    nickName: string,
+    email?: string,
+  ) => void;
   createdByMe: boolean;
   dashboard: Dashboard;
 }
@@ -125,11 +130,7 @@ export default function UserList({
         <>
           {invitations?.map((invitation, index) => (
             <div key={index} className={styles.userList}>
-              <Profile
-                showFullName
-                size={ProfileSize.Large}
-                name={invitation.invitee.nickname}
-              />
+              <span>{invitation.invitee.email}</span>
               <Button
                 size={ButtonSize.XSmall}
                 variant={ButtonVariant.Secondary}
@@ -138,6 +139,7 @@ export default function UserList({
                     UserListType.Invitees,
                     invitation.id,
                     invitation.invitee.nickname,
+                    invitation.invitee.email,
                   )
                 }
               >

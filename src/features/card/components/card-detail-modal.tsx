@@ -176,8 +176,14 @@ function Main({
         <article className={styles.content}>
           <p className={Typography.lgMedium160}>{card.description}</p>
           {card.imageUrl && (
-            <div className={styles.image}>
-              <Image src={card.imageUrl} alt="카드에 등록된 이미지" fill />
+            <div className={styles.imageContainer}>
+              <Image
+                className={styles.image}
+                src={card.imageUrl}
+                alt="카드에 등록된 이미지"
+                quality={100}
+                fill
+              />
             </div>
           )}
         </article>

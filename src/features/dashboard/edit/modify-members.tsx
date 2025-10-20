@@ -13,6 +13,8 @@ import UserListTitle from "./user-list-title";
 import { useAlert } from "@/hooks/use-alert";
 import Alert, { AlertActionType } from "@/components/alert";
 import { Dashboard } from "@/types";
+import Dialog from "@/components/dialog";
+import { useDialog } from "@/hooks/use-dialog";
 
 const PAGE_SIZE = 6;
 
@@ -34,6 +36,7 @@ export default function ModifyMembers({
 }: ModifyMembersProps) {
   const [page, setPage] = useState({ members: 1, invitees: 1 });
   const [alertMessage, setAlertMessage] = useState("");
+  const [dialogMessage, setDialogMessage] = useState("");
   const [confirmProps, setConfirmProps] = useState<{
     type: UserListType;
     id: number;
@@ -53,11 +56,14 @@ export default function ModifyMembers({
     dashboardInvitations,
     totalCount: inviteesTotal,
     refetch: refetchInvitees,
+    inviteUser,
   } = useDashboardInvitees({
     dashboardId: dashboard.id,
     page: page.invitees,
     size: PAGE_SIZE,
   });
+
+  const inviteeList = dashboardInvitations?.map((inv) => inv.invitee);
 
   const { removeMember } = useDeleteDashboardMember(refetchMembers);
   const { removeInvitation } = useCancelDashboardInvitation(refetchInvitees);
@@ -79,6 +85,12 @@ export default function ModifyMembers({
       key: CANCEL_KEY,
     });
 
+  const INVITATION_DIALOG_KEY = "USER_INVITATION_DIALOG";
+  const { isShowDialog: isShowUserInvitationDialog, openDialog } = useDialog({
+    key: INVITATION_DIALOG_KEY,
+  });
+  const [dialogStauts, setDialogStatus] = useState(false);
+
   const handlePageChange = (type: UserListType, direction: "prev" | "next") => {
     setPage((prev) => {
       const current = prev[type];
@@ -95,6 +107,7 @@ export default function ModifyMembers({
     type: UserListType,
     id: number,
     nickName: string,
+    email?: string,
   ) => {
     setConfirmProps({ type: type, id: id });
     if (type === UserListType.Members) {
@@ -103,7 +116,7 @@ export default function ModifyMembers({
       );
       openDeleteAlert(true);
     } else {
-      setAlertMessage(`'${nickName}'님에게 보낸 초대를 삭제하시겠습니까?`);
+      setAlertMessage(`'${email}'에 보낸 초대를 삭제하시겠습니까?`);
       openCancelAlert(true);
     }
   };
@@ -125,6 +138,21 @@ export default function ModifyMembers({
         onUpdate(result.message ?? "초대 취소 실패", result?.success ?? false);
       }
     }
+  };
+
+  const handleInviteUser = async (email: string) => {
+    if (!email) return;
+
+    const result = await inviteUser(email);
+    setDialogMessage(result?.message ?? "사용자 초대에 실패하였습니다.");
+    setDialogStatus(true);
+    openDialog(true);
+  };
+
+  const handleDialogConfirm = () => {
+    openDialog(false);
+    setDialogStatus(false);
+    setDialogMessage("");
   };
 
   return (
@@ -161,6 +189,9 @@ export default function ModifyMembers({
               totalPage={totalPages.invitees}
               onPageChange={handlePageChange}
               showInviteButton
+              invitees={inviteeList ?? []}
+              members={members ?? []}
+              onClickConfirm={handleInviteUser}
             />
             <div className={styles.usersContainer}>
               <UserList
@@ -183,6 +214,14 @@ export default function ModifyMembers({
           actionType={AlertActionType.Delete}
           onCancel={() => {}}
           onAction={hadleConfirmClick}
+        />
+      )}
+
+      {isShowUserInvitationDialog && dialogStauts && (
+        <Dialog
+          dialogKey={INVITATION_DIALOG_KEY}
+          message={dialogMessage}
+          onConfirm={handleDialogConfirm}
         />
       )}
     </div>

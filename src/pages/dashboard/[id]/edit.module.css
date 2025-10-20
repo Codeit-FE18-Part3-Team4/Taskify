@@ -32,6 +32,7 @@
   align-items: center;
   cursor: pointer;
   text-decoration: none;
+  flex-shrink: 0;
 }
 
 .page .main .contents .backButton span {
@@ -47,4 +48,9 @@
 
 .page .main .contents .backButton:hover .xIcon {
   color: var(--color-black500);
+}
+
+.page .main .contents .exception {
+  padding: 30px 50px;
+  color: var(--color-gray300);
 }

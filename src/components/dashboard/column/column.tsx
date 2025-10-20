@@ -17,6 +17,7 @@ export enum ColumnActionType {
 }
 
 interface ColumnProps {
+  totalCount: number;
   columnTitle: string;
   cards: CardData[];
   isLoadingCards: boolean;
@@ -27,6 +28,7 @@ interface ColumnProps {
 }
 
 export default function Column({
+  totalCount,
   columnTitle,
   cards = [],
   isLoadingCards,
@@ -50,7 +52,7 @@ export default function Column({
       {
         threshold: 0.1,
         rootMargin: "100px",
-      }
+      },
     );
 
     observer.observe(observerRef.current);
@@ -73,7 +75,7 @@ export default function Column({
             >
               {columnTitle}
             </h3>
-            <h3 className={Typography.lgSemiBold}>{cards.length}</h3>
+            <h3 className={Typography.lgSemiBold}>{totalCount}</h3>
           </div>
           <div className={styles.buttonWrapper}>
             <button
@@ -92,7 +94,7 @@ export default function Column({
               <SettingSvg
                 className={classnames(
                   styles.columnEditIcon,
-                  styles.columnTitleButton
+                  styles.columnTitleButton,
                 )}
               />
             </Menu>

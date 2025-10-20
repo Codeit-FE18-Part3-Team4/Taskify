@@ -43,7 +43,7 @@ export function useInvitations() {
         setIsLoadingMore(false);
       }
     },
-    [cursorId, isLoadingMore]
+    [cursorId, isLoadingMore],
   );
 
   const removeInvitation = useCallback((invitationId: number) => {
@@ -64,7 +64,7 @@ export function useInvitations() {
         return false;
       }
     },
-    [removeInvitation]
+    [removeInvitation],
   );
 
   useAuthEffect(() => {
@@ -81,7 +81,7 @@ export function useInvitations() {
           loadInvitations();
         }
       },
-      { threshold: 0.1 }
+      { threshold: 0.1 },
     );
 
     if (loadMoreRef.current) {
