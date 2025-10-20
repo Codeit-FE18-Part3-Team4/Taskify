@@ -2,7 +2,7 @@ import { useDashboardContext } from "@/features/my-dashboard/dashboard-provider"
 import { useDashboardForm } from "@/hooks/use-dashboard-form";
 import { useDialog } from "@/hooks/use-dialog";
 import { useSheet } from "@/hooks/use-sheet";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ColorFrameSize } from "../chips/color-frame/color-frame-size";
 import ColorPalette from "../color-palette/color-palette";
 import Dialog from "../dialog";
@@ -13,7 +13,7 @@ import SheetSection from "../sheet/sheet-section";
 const SHEET_KEY = "SHEET_DASHBOARD_ADD";
 const DIALOG_KEY = "MY_DASHBOARD_DIALOG";
 
-export default function CreateDashboardSheet({zIndex} : {zIndex?:boolean}) {
+export default function CreateDashboardSheet({ zIndex }: { zIndex?: boolean }) {
   const {
     dashboardValue,
     setDashboardValue,
@@ -23,6 +23,7 @@ export default function CreateDashboardSheet({zIndex} : {zIndex?:boolean}) {
   } = useDashboardForm();
   const { refreshSidebar, refreshMainDashboards } = useDashboardContext();
   const [dialogMessage, setDialogMessage] = useState<string>("");
+  const [isSubmitEnabled, setIsSubmitEnabled] = useState<boolean>(false);
 
   const { isShowSheet, openSheet } = useSheet({
     key: SHEET_KEY,
@@ -31,19 +32,15 @@ export default function CreateDashboardSheet({zIndex} : {zIndex?:boolean}) {
     key: DIALOG_KEY,
   });
 
+  useEffect(() => {
+    if (dashboardValue !== "" && color !== "") {
+      setIsSubmitEnabled(true);
+    } else {
+      setIsSubmitEnabled(false);
+    }
+  }, [dashboardValue, color]);
+
   const handleSubmit = async () => {
-    if (dashboardValue === "") {
-      setDialogMessage("대시보드 이름을 입력해주세요");
-      openDialog(true);
-      return;
-    }
-
-    if (color === "") {
-      setDialogMessage("컬러를 정해주세요");
-      openDialog(true);
-      return;
-    }
-
     try {
       const result = await submitDashboard();
       if (result) {
@@ -73,6 +70,7 @@ export default function CreateDashboardSheet({zIndex} : {zIndex?:boolean}) {
           onCancel={handleCancelSubmit}
           onAction={handleSubmit}
           zIndex={zIndex}
+          canSubmit={isSubmitEnabled}
         >
           <SheetSection title="대시보드 이름">
             <Input

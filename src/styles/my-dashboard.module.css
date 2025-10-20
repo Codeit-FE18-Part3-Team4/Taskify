@@ -307,7 +307,7 @@
 }
 
 /* Tablet */
-@media (max-width: 774px) {
+@media (max-width: 1200px) {
   .myDashboardMain {
     padding: 0 30px;
   }
@@ -376,6 +376,13 @@
     p:nth-of-type(2) {
     padding-left: 0px;
   }
+  .myDashboardMain
+    .dashboardSection
+    .myDashboard
+    .myDashboardBox
+    button.myDashboardButton {
+    max-width: 100%;
+  }
 }
 
 /* Mobile */
@@ -421,7 +428,7 @@
     .invitationsDashboardSection
     .invitationsDashboardSectionMain
     > div {
-    width: 315px;
+    width: 100%;
     justify-content: space-between;
   }
   .myDashboardMain

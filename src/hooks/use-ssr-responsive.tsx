@@ -6,7 +6,7 @@ export function useSsrResponsive() {
 
   const isMobile = useMediaQuery({ query: "(max-width: 487px)" });
   const isTablet = useMediaQuery({
-    query: "(min-width: 376px) and (max-width: 744px)",
+    query: "(min-width: 376px) and (max-width: 1200px)",
   });
   const isDesktop = useMediaQuery({ query: "(min-width: 745px)" });
 

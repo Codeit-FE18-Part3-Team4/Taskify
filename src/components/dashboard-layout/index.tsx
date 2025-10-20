@@ -33,6 +33,10 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
   };
 
   useEffect(() => {
+    if (!isMobile) {
+      setIsMobileSidebarOpen(false);
+    }
+
     if (isMobileSidebarOpen) {
       document.body.style.position = "fixed";
       document.body.style.width = "100%";
@@ -42,7 +46,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
     return () => {
       document.body.style.position = "";
     };
-  }, [isMobileSidebarOpen]);
+  }, [isMobileSidebarOpen, isMobile]);
 
   return (
     <div className={styles.dashboardLayout}>
