@@ -1,7 +1,7 @@
 .topContainer {
   padding: 30px 50px;
-  flex: 1;
-  max-width: 100%;
+  width: 70%;
+  max-width: 840px;
   box-sizing: border-box;
 }
 
@@ -37,4 +37,14 @@
 
 .topContainer .textInput {
   width: 100%;
+}
+
+@media (max-width: 744px) {
+  .topContainer {
+    max-width: 700px;
+    padding: 30px 24px;
+  }
+  .topContainer .formContents .inputWrapper {
+    height: fit-content;
+  }
 }

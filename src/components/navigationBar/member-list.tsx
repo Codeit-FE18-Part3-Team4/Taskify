@@ -3,6 +3,7 @@ import { ProfileSize } from "@/components/profile/profile-size";
 import { ProfileType } from "@/components/profile/profile-type";
 import styles from "./member-list.module.css";
 import { MemberInfo } from "@/types/member-info";
+import { useResponsive } from "@/hooks/use-responsive";
 
 interface MembersProps {
   showMembers: MemberInfo[];
@@ -15,6 +16,8 @@ export default function NavigationBarMemberList({
 }: MembersProps) {
   const iconColor = `var(--color-gray400)`;
 
+  const { isDesktop, isTablet } = useResponsive();
+
   return (
     <>
       <div className={styles.users}>
@@ -23,7 +26,13 @@ export default function NavigationBarMemberList({
             key={index}
             name={member.nickname}
             colorIndex={index}
-            size={ProfileSize.XLarge}
+            size={
+              isDesktop
+                ? ProfileSize.XLarge
+                : isTablet
+                  ? ProfileSize.Medium
+                  : ProfileSize.Small
+            }
             type={ProfileType.NavigationBar}
           />
         ))}
@@ -31,7 +40,13 @@ export default function NavigationBarMemberList({
           <Profile
             name={`+${hideMembers.length}`}
             colorIndex={0}
-            size={ProfileSize.XLarge}
+            size={
+              isDesktop
+                ? ProfileSize.XLarge
+                : isTablet
+                  ? ProfileSize.Medium
+                  : ProfileSize.Small
+            }
             type={ProfileType.NavigationBar}
             isRemain={true}
           />

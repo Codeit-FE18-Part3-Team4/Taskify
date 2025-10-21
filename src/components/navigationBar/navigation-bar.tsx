@@ -1,17 +1,21 @@
 import { SidebarMenu } from "@/assets/images";
 import SettingSvg from "@/components/icon/setting-svg";
 import UserPlusSvg from "@/components/icon/user-plus-svg";
-import Modal from "@/components/modal";
 import Typography from "@/components/typography";
 import { CommonSize } from "@/constants/common/common-size";
-import { useModal } from "@/hooks/use-modal";
 import { useSsrResponsive } from "@/hooks/use-ssr-responsive";
 import { MemberInfo } from "@/types/member-info";
 import Image from "next/image";
 import Link from "next/link";
 import MemberList from "./member-list";
 import styles from "./navigation-bar.module.css";
-import { useMembers } from "@/hooks/use-members";
+import { useMembers, useDashboardInvitees } from "@/hooks/use-members";
+import UserInvitationSheet from "@/features/dashboard/edit/user-invitation-sheet";
+import { useSheet } from "@/hooks/use-sheet";
+import { useState } from "react";
+import Dialog from "../dialog";
+import { useDialog } from "@/hooks/use-dialog";
+import { useDashboardById } from "@/hooks/use-dashboard";
 
 const MEMBERS_SIZE = 1000;
 
@@ -31,19 +35,30 @@ export default function NavigationBar({
     dashboardId,
     size: MEMBERS_SIZE,
   });
+  const [naviDialogMessage, setNaviDialogMessage] = useState("");
+  const { dashboard } = useDashboardById(dashboardId);
+  const { dashboardInvitations } = useDashboardInvitees({ dashboardId });
+  const INVITATION_SHEET_NAVI_KEY = "INVITATION_FROM_NAVIGATION";
+  const {
+    isShowSheet: isShowInvitationModalFromNavigation,
+    openSheet: openInvitationSheetFromNavigation,
+  } = useSheet({
+    key: INVITATION_SHEET_NAVI_KEY,
+  });
+  const NAVI_DIALOG_KEY = "NAVI_DIALOG";
+  const { isShowDialog: isShowNaviDialog, openDialog: openNaviDialog } =
+    useDialog({
+      key: NAVI_DIALOG_KEY,
+    });
   const sizeName = CommonSize[size].toLowerCase();
   const navigationBarClasses = `${styles.navigationBar} ${styles[sizeName]}`;
   const iconSpanClasses = `${styles.iconSpan} ${Typography.lgMedium}`;
   const settingLink = `/dashboard/${dashboardId}/edit?tab=edit`;
 
-  const MODAL_KEY_1 = "MODAL_SAMPLE_1";
-  const { isShowModal: isShowModal1, openModal: openModal } = useModal({
-    key: MODAL_KEY_1,
-  });
-
   const handleUserPlus = () => {
-    openModal(true);
+    openInvitationSheetFromNavigation(true);
   };
+  const inviteeList = dashboardInvitations?.map((inv) => inv.invitee);
 
   let showMembers: MemberInfo[] = [];
   let hideMembers: MemberInfo[] = [];
@@ -55,9 +70,19 @@ export default function NavigationBar({
       showMembers = members;
     }
   }
-
   const { isMobile } = useSsrResponsive();
+  const { inviteUser } = useDashboardInvitees({
+    dashboardId: dashboardId,
+    size: MEMBERS_SIZE,
+  });
 
+  const handleSubmitInvitation = async (email: string) => {
+    if (!email) return;
+
+    const result = await inviteUser(email);
+    setNaviDialogMessage(result?.message ?? "사용자 초대에 실패하였습니다.");
+    openNaviDialog(true);
+  };
   return (
     <div className={navigationBarClasses}>
       {isMobile && (
@@ -76,34 +101,33 @@ export default function NavigationBar({
           <div className={styles.rightIcons}>
             <Link href={settingLink} className={styles.iconLink}>
               <SettingSvg className={styles.icon} />
-              <span className={iconSpanClasses}>관리</span>
+              {!isMobile && <span className={iconSpanClasses}>관리</span>}
             </Link>
-            <button onClick={() => handleUserPlus()}>
-              <UserPlusSvg className={styles.icon} />
-              <span className={iconSpanClasses}>공유</span>
-            </button>
+            {dashboard && dashboard.createdByMe && (
+              <button onClick={handleUserPlus}>
+                <UserPlusSvg className={styles.icon} />
+                {!isMobile && <span className={iconSpanClasses}>공유</span>}
+              </button>
+            )}
           </div>
         </>
       )}
 
-      {isShowModal1 && (
-        <Modal modalKey={MODAL_KEY_1}>
-          <div
-            style={{
-              width: "600px",
-              height: "600px",
-              backgroundColor: "#242429",
-              borderRadius: "24px",
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <h2 style={{ color: "white" }}>초대하기 모달뜨는듯</h2>
-            <button onClick={() => openModal(false)}>Close Modal 1</button>
-          </div>
-        </Modal>
+      {isShowInvitationModalFromNavigation && (
+        <UserInvitationSheet
+          sheetKey={INVITATION_SHEET_NAVI_KEY}
+          invitees={inviteeList}
+          members={members ?? []}
+          onSubmit={handleSubmitInvitation}
+        />
+      )}
+
+      {isShowNaviDialog && (
+        <Dialog
+          dialogKey={NAVI_DIALOG_KEY}
+          message={naviDialogMessage}
+          onConfirm={() => openNaviDialog(false)}
+        />
       )}
     </div>
   );
