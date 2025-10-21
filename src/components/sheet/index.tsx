@@ -3,11 +3,11 @@ import XmarkIcon from "@/components/icon/xmark-icon";
 import Modal from "@/components/modal";
 import Typography from "@/components/typography";
 import { ModalZIndex } from "@/constants/modal-z-index";
-import { useResponsive } from "@/hooks/use-responsive";
 import { useSheet } from "@/hooks/use-sheet";
 import { classnames } from "@/utils/classnames";
 import { MouseEventHandler, ReactNode, useMemo } from "react";
 import styles from "./sheet.module.css";
+import { useSsrResponsive } from "@/hooks/use-ssr-responsive";
 
 export enum SheetActionType {
   Cancel = "취소",
@@ -24,7 +24,7 @@ interface SheetActionProps {
 }
 
 function SheetAction({ type, onClick, disabled }: SheetActionProps) {
-  const { isMobile } = useResponsive();
+  const { isMobile } = useSsrResponsive();
 
   const buttonVariant = useMemo(() => {
     return {
@@ -78,7 +78,7 @@ export default function Sheet({
   onAction,
 }: Props) {
   const { openSheet } = useSheet({ key: sheetKey });
-  const { isMobile } = useResponsive();
+  const { isMobile } = useSsrResponsive();
 
   const titleTypography = useMemo(() => {
     return isMobile ? Typography.lg2SemiBold : Typography.xl2SemiBold;

@@ -1,8 +1,8 @@
 import Typography from "@/components/typography";
-import { useResponsive } from "@/hooks/use-responsive";
 import { classnames } from "@/utils/classnames";
 import { ReactNode, useMemo } from "react";
 import styles from "./sheet-section.module.css";
+import { useSsrResponsive } from "@/hooks/use-ssr-responsive";
 
 interface Props {
   title?: string;
@@ -17,7 +17,7 @@ export default function SheetSection({
   zIndex = 0,
   children,
 }: Props) {
-  const { isMobile } = useResponsive();
+  const { isMobile } = useSsrResponsive();
 
   const typography = useMemo(() => {
     return isMobile ? Typography.mdSemiBold : Typography.lgSemiBold;

@@ -15,6 +15,7 @@ import { useDialog } from "@/hooks/use-dialog";
 import { useAlert } from "@/hooks/use-alert";
 import Alert, { AlertActionType } from "@/components/alert";
 import { useAllDashboards } from "@/hooks/use-all-dashboards";
+import { useSsrResponsive } from "@/hooks/use-ssr-responsive";
 
 export default function DashboardEditPage() {
   const router = useRouter();
@@ -103,6 +104,8 @@ export default function DashboardEditPage() {
     }
   };
 
+  const { isMobile } = useSsrResponsive();
+  
   return (
     <div className={styles.page}>
       <NavigationBar />
