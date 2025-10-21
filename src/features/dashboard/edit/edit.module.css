@@ -45,9 +45,6 @@
     padding: 30px 24px;
   }
   .topContainer .formContents .inputWrapper {
-    height: 100px;
-  }
-
-  @media (max-width: 375px) {
+    height: fit-content;
   }
 }
