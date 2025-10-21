@@ -32,6 +32,8 @@ export default function DashboardEditPage() {
     refetch,
   } = useDashboardById(dashboardId);
   const [alertMessage, setAlertMessage] = useState("");
+  const createdByMeOrNot = dashboard?.createdByMe ?? false;
+  console.log(createdByMeOrNot);
   const [activeTab, setActiveTab] = useState<TabType | null>(null);
 
   useEffect(() => {
@@ -103,7 +105,7 @@ export default function DashboardEditPage() {
   };
 
   const { isMobile } = useSsrResponsive();
-
+  
   return (
     <div className={styles.page}>
       <NavigationBar />
@@ -142,17 +144,15 @@ export default function DashboardEditPage() {
             </span>
           )}
           {dashboard && (
-            <div className={styles.backbuttonWrapper}>
+            <div>
               <Link
                 href={`/dashboard/${dashboard.id}`}
                 className={styles.backButton}
               >
                 <XIcon className={styles.xIcon} />
-                {!isMobile && (
-                  <span className={classnames(Typography.mdSemiBold)}>
-                    돌아가기
-                  </span>
-                )}
+                <span className={classnames(Typography.mdSemiBold)}>
+                  돌아가기
+                </span>
               </Link>
             </div>
           )}
@@ -166,6 +166,7 @@ export default function DashboardEditPage() {
           onConfirm={() => openDialog(false)}
         />
       )}
+
       {isShowAlert && (
         <Alert
           alertKey={DASHBOARD_DELETE_KEY}

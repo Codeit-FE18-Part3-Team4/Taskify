@@ -1,16 +1,12 @@
 .topContainer {
   padding: 30px 50px;
-  width: 70%;
-  box-sizing: border-box;
-  max-width: 840px;
 }
 
 .topContainer .contents {
   display: flex;
   flex-direction: column;
   gap: 30px;
-  width: 100%;
-  margin: 0 auto;
+  width: 840px;
 }
 
 .topContainer .contents .title,
@@ -18,9 +14,12 @@
   color: var(--color-gray100);
 }
 
-.topContainer .contents .list .usersContainer {
+.topContainer .contents .usersContainer {
   padding-top: 10px;
   padding-bottom: 30px;
+}
+
+.topContainer .contents .list .usersContainer {
   display: flex;
   flex-direction: column;
 }

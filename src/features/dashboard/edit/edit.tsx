@@ -74,16 +74,7 @@ export default function Edit({ dashboard, onUpdate }: EditProps) {
   return (
     <div className={styles.topContainer}>
       <form className={styles.formContents} onSubmit={handleSubmit}>
-        <h3
-          className={classnames(
-            isDesktop
-              ? Typography.xl3Bold
-              : isTablet
-                ? Typography.xl2Bold
-                : Typography.xlBold,
-            styles.title,
-          )}
-        >
+        <h3 className={classnames(Typography.xl3Bold, styles.title)}>
           대시보드 편집
         </h3>
         <div className={styles.inputWrapper}>
@@ -99,13 +90,7 @@ export default function Edit({ dashboard, onUpdate }: EditProps) {
           <ColorPalette
             onSelect={(color) => handleSelect(color)}
             selectedColor={selectedColor}
-            size={
-              isDesktop
-                ? ColorFrameSize.Large
-                : isTablet
-                  ? ColorFrameSize.Medium
-                  : ColorFrameSize.Small
-            }
+            size={ColorFrameSize.Large}
           />
         </div>
         <div className={styles.buttonWrapper}>

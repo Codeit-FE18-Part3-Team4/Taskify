@@ -81,7 +81,7 @@ function AssigneeInfo({ name }: { name: string }) {
     <>
       <InfoTitle>담당자</InfoTitle>
       <div className={classnames(styles.assigneeInfo, Typography.lgMedium)}>
-        <Profile size={ProfileSize.XSmall} name={name.slice(1)} />
+        <Profile size={ProfileSize.XSmall} name={name} />
         <span>{name}</span>
       </div>
     </>
