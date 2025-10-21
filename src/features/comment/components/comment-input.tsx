@@ -55,9 +55,7 @@ export default function CommentInput({ authorName, onSubmit }: Props) {
 
   return (
     <div className={styles.container} ref={targetRef}>
-      {isEditing || (
-        <Profile size={ProfileSize.Large} name={authorName.slice(1)} />
-      )}
+      {isEditing || <Profile size={ProfileSize.Large} name={authorName} />}
       <div
         className={classnames(styles.input, isEditing ? styles.editing : "")}
         onClick={handleClick}
