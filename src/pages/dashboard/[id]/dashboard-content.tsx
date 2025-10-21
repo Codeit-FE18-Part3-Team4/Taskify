@@ -50,6 +50,7 @@ export default function DashboardContent({
   columns,
   members,
   columnCardsData,
+  isLoadingColumns,
   isLoadingCards,
   onColumnChange,
   onCardClick,
@@ -147,16 +148,7 @@ export default function DashboardContent({
   return (
     <>
       <section>
-        <div
-          className={classnames(
-            styles.dashboardTitle,
-            isDesktop
-              ? Typography.xl3Bold
-              : isTablet
-                ? Typography.xl2Bold
-                : Typography.xlBold,
-          )}
-        >
+        <div className={classnames(styles.dashboardTitle, Typography.xl3Bold)}>
           <ColorChip color={dashboard.color} size={CommonSize.Large} />
           <h3 title={dashboard.title}>{dashboard.title}</h3>
         </div>
@@ -193,7 +185,7 @@ export default function DashboardContent({
                 type="button"
                 className={classnames(
                   styles.createColumnButton,
-                  Typography.lg2Medium,
+                  Typography.lg2Medium
                 )}
                 onClick={handleCreateColumnClick}
               >

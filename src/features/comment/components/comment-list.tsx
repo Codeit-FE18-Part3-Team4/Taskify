@@ -11,10 +11,7 @@ function CommentListItem({ key, comment }: { key: Key; comment: Comment }) {
   return (
     <li className={styles.commentContainer} key={key}>
       <div className={styles.avatar}>
-        <Profile
-          size={ProfileSize.Large}
-          name={comment.author.nickname.slice(1)}
-        />
+        <Profile size={ProfileSize.Large} name={comment.author.nickname} />
       </div>
       <div className={styles.commentContent}>
         <div className={styles.commentHeader}>

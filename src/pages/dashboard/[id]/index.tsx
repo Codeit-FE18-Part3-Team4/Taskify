@@ -41,6 +41,8 @@ export default function DashboardPage() {
     loadMoreCards: getMoreCards,
   } = useCards(columnIds);
 
+  console.log("Dfsdfdsfsd");
+
   const [selectedCard, setSelectedCard] = useState<Card | null>(null);
 
   const CARD_DETAIL_MODAL_KEY = "card-detail-modal";

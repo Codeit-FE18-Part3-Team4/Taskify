@@ -15,9 +15,8 @@ export default function NavigationBarMemberList({
   hideMembers,
 }: MembersProps) {
   const iconColor = `var(--color-gray400)`;
-
   const { isDesktop, isTablet } = useSsrResponsive();
-
+  
   return (
     <>
       <div className={styles.users}>
@@ -26,13 +25,7 @@ export default function NavigationBarMemberList({
             key={index}
             name={member.nickname}
             colorIndex={index}
-            size={
-              isDesktop
-                ? ProfileSize.XLarge
-                : isTablet
-                  ? ProfileSize.Medium
-                  : ProfileSize.Small
-            }
+            size={ProfileSize.XLarge}
             type={ProfileType.NavigationBar}
           />
         ))}
@@ -40,13 +33,7 @@ export default function NavigationBarMemberList({
           <Profile
             name={`+${hideMembers.length}`}
             colorIndex={0}
-            size={
-              isDesktop
-                ? ProfileSize.XLarge
-                : isTablet
-                  ? ProfileSize.Medium
-                  : ProfileSize.Small
-            }
+            size={ProfileSize.XLarge}
             type={ProfileType.NavigationBar}
             isRemain={true}
           />
