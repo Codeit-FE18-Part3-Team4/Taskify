@@ -2,11 +2,11 @@ import Modal from "@/components/modal";
 import Typography from "@/components/typography";
 import { ModalZIndex } from "@/constants/modal-z-index";
 import { useAlert } from "@/hooks/use-alert";
-import { useResponsive } from "@/hooks/use-responsive";
 import { classnames } from "@/utils/classnames";
 import { MouseEventHandler, useMemo } from "react";
 import Button, { ButtonSize, ButtonVariant } from "../button/button";
 import styles from "./alert.module.css";
+import { useSsrResponsive } from "@/hooks/use-ssr-responsive";
 
 export enum AlertActionType {
   Cancel = "취소",
@@ -19,7 +19,7 @@ interface AlertActionProps {
 }
 
 function AlertAction({ type, onClick }: AlertActionProps) {
-  const { isMobile } = useResponsive();
+  const { isMobile } = useSsrResponsive();
 
   const buttonVariant = useMemo(() => {
     return {
@@ -62,7 +62,7 @@ export default function Alert({
   onAction,
 }: Props) {
   const { openAlert } = useAlert({ key: alertKey });
-  const { isMobile } = useResponsive();
+  const { isMobile } = useSsrResponsive();
 
   const titleTypography = useMemo(() => {
     return isMobile ? Typography.lg2SemiBold : Typography.xl2SemiBold;

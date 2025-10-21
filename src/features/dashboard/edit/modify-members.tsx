@@ -1,20 +1,21 @@
+import Alert, { AlertActionType } from "@/components/alert";
+import Dialog from "@/components/dialog";
 import Typography from "@/components/typography";
-import styles from "./modify-members.module.css";
-import { classnames } from "@/utils/classnames";
-import { useState } from "react";
+import { useAlert } from "@/hooks/use-alert";
+import { useDialog } from "@/hooks/use-dialog";
 import {
-  useMembers,
+  useCancelDashboardInvitation,
   useDashboardInvitees,
   useDeleteDashboardMember,
-  useCancelDashboardInvitation,
+  useMembers,
 } from "@/hooks/use-members";
+import { useSsrResponsive } from "@/hooks/use-ssr-responsive";
+import { Dashboard } from "@/types";
+import { classnames } from "@/utils/classnames";
+import { useState } from "react";
+import styles from "./modify-members.module.css";
 import UserList from "./user-list";
 import UserListTitle from "./user-list-title";
-import { useAlert } from "@/hooks/use-alert";
-import Alert, { AlertActionType } from "@/components/alert";
-import { Dashboard } from "@/types";
-import Dialog from "@/components/dialog";
-import { useDialog } from "@/hooks/use-dialog";
 
 const PAGE_SIZE = 6;
 
@@ -107,12 +108,12 @@ export default function ModifyMembers({
     type: UserListType,
     id: number,
     nickName: string,
-    email?: string,
+    email?: string
   ) => {
     setConfirmProps({ type: type, id: id });
     if (type === UserListType.Members) {
       setAlertMessage(
-        `'${nickName}'님을 대시보드 멤버 목록에서 삭제하시겠습니까?`,
+        `'${nickName}'님을 대시보드 멤버 목록에서 삭제하시겠습니까?`
       );
       openDeleteAlert(true);
     } else {
@@ -155,10 +156,21 @@ export default function ModifyMembers({
     setDialogMessage("");
   };
 
+  const { isDesktop, isTablet } = useSsrResponsive();
+
   return (
     <div className={styles.topContainer}>
       <div className={styles.contents}>
-        <h3 className={classnames(Typography.xl3Bold, styles.title)}>
+        <h3
+          className={classnames(
+            isDesktop
+              ? Typography.xl3Bold
+              : isTablet
+                ? Typography.xl2Bold
+                : Typography.xlBold,
+            styles.title
+          )}
+        >
           멤버 관리
         </h3>
 

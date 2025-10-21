@@ -2,16 +2,16 @@ import ImageIcon from "@/assets/images/ic-image.svg";
 import CloseImage from "@/assets/images/ic-x-circle-gray.svg";
 import Typography from "@/components/typography";
 import { useFileDragAndDrop } from "@/hooks/use-file-drag-and-drop";
-import { useResponsive } from "@/hooks/use-responsive";
 import { classnames } from "@/utils/classnames";
 import Image from "next/image";
 import { ChangeEvent, useEffect, useMemo, useState } from "react";
 import styles from "./image-input.module.css";
+import { useSsrResponsive } from "@/hooks/use-ssr-responsive";
 
 type FileChangeHandler = (file: File) => void;
 
 function Input({ onChange }: { onChange: FileChangeHandler }) {
-  const { isMobile } = useResponsive();
+  const { isMobile } = useSsrResponsive();
   const { targetRef, isDraggingOnTarget } =
     useFileDragAndDrop<HTMLLabelElement>({
       fileType: "image/",
@@ -35,7 +35,7 @@ function Input({ onChange }: { onChange: FileChangeHandler }) {
       htmlFor="image-input"
       className={classnames(
         styles.imageInput,
-        isDraggingOnTarget ? styles.dragging : ""
+        isDraggingOnTarget ? styles.dragging : "",
       )}
       ref={targetRef}
     >

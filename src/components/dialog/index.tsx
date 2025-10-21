@@ -2,11 +2,11 @@ import Modal from "@/components/modal";
 import Typography from "@/components/typography";
 import { ModalZIndex } from "@/constants/modal-z-index";
 import { useDialog } from "@/hooks/use-dialog";
-import { useResponsive } from "@/hooks/use-responsive";
 import { classnames } from "@/utils/classnames";
 import { useMemo } from "react";
 import Button, { ButtonSize, ButtonVariant } from "../button/button";
 import styles from "./dialog.module.css";
+import { useSsrResponsive } from "@/hooks/use-ssr-responsive";
 
 interface Props {
   dialogKey: string;
@@ -17,7 +17,7 @@ interface Props {
 
 export default function Dialog({ dialogKey, message, onConfirm }: Props) {
   const { openDialog } = useDialog({ key: dialogKey });
-  const { isMobile } = useResponsive();
+  const { isMobile } = useSsrResponsive();
 
   const messageTypography = useMemo(() => {
     return isMobile ? Typography.lgSemiBold : Typography.xlSemiBold;

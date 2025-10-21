@@ -1,20 +1,21 @@
+import Alert, { AlertActionType } from "@/components/alert";
+import Dialog from "@/components/dialog";
+import XIcon from "@/components/icon/x-gray-icon";
+import NavigationBar from "@/components/navigationBar/navigation-bar";
+import Typography from "@/components/typography";
+import Edit from "@/features/dashboard/edit/edit";
+import EditSidebar, { TabType } from "@/features/dashboard/edit/edit-sidebar";
+import ModifyMembers from "@/features/dashboard/edit/modify-members";
+import { useAlert } from "@/hooks/use-alert";
+import { useAllDashboards } from "@/hooks/use-all-dashboards";
+import { useDashboardById, useDeleteDashboard } from "@/hooks/use-dashboard";
+import { useDialog } from "@/hooks/use-dialog";
+import { useSsrResponsive } from "@/hooks/use-ssr-responsive";
+import { classnames } from "@/utils/classnames";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import styles from "./edit.module.css";
-import NavigationBar from "@/components/navigationBar/navigation-bar";
-import Typography from "@/components/typography";
-import EditSidebar, { TabType } from "@/features/dashboard/edit/edit-sidebar";
-import Edit from "@/features/dashboard/edit/edit";
-import { useDashboardById, useDeleteDashboard } from "@/hooks/use-dashboard";
-import Link from "next/link";
-import XIcon from "@/components/icon/x-gray-icon";
-import { classnames } from "@/utils/classnames";
-import ModifyMembers from "@/features/dashboard/edit/modify-members";
-import Dialog from "@/components/dialog";
-import { useDialog } from "@/hooks/use-dialog";
-import { useAlert } from "@/hooks/use-alert";
-import Alert, { AlertActionType } from "@/components/alert";
-import { useAllDashboards } from "@/hooks/use-all-dashboards";
 
 export default function DashboardEditPage() {
   const router = useRouter();
@@ -31,8 +32,6 @@ export default function DashboardEditPage() {
     refetch,
   } = useDashboardById(dashboardId);
   const [alertMessage, setAlertMessage] = useState("");
-  const createdByMeOrNot = dashboard?.createdByMe ?? false;
-  console.log(createdByMeOrNot);
   const [activeTab, setActiveTab] = useState<TabType | null>(null);
 
   useEffect(() => {
@@ -83,7 +82,7 @@ export default function DashboardEditPage() {
       openDialog(false);
 
       const remainingDashboards = allDashboards?.filter(
-        (dashboard) => dashboard.id !== dashboardId,
+        (dashboard) => dashboard.id !== dashboardId
       );
 
       if (remainingDashboards && remainingDashboards.length > 0) {
@@ -102,6 +101,8 @@ export default function DashboardEditPage() {
       refetch();
     }
   };
+
+  const { isMobile } = useSsrResponsive();
 
   return (
     <div className={styles.page}>
@@ -141,15 +142,17 @@ export default function DashboardEditPage() {
             </span>
           )}
           {dashboard && (
-            <div>
+            <div className={styles.backbuttonWrapper}>
               <Link
                 href={`/dashboard/${dashboard.id}`}
                 className={styles.backButton}
               >
                 <XIcon className={styles.xIcon} />
-                <span className={classnames(Typography.mdSemiBold)}>
-                  돌아가기
-                </span>
+                {!isMobile && (
+                  <span className={classnames(Typography.mdSemiBold)}>
+                    돌아가기
+                  </span>
+                )}
               </Link>
             </div>
           )}
