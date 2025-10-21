@@ -327,6 +327,7 @@ export default function CardDetailModal({
       {isShowSheet && (
         <CardEditSheet
           sheetKey={sheetKey}
+          dashboardId={dashboard.id}
           card={card}
           columns={columns}
           members={members}

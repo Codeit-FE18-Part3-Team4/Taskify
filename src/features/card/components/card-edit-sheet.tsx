@@ -15,6 +15,7 @@ import TagInput from "./tag-input";
 
 interface Props {
   sheetKey: string;
+  dashboardId: number;
   card?: Card;
   columns: Column[];
   members: MemberInfo[];
@@ -24,6 +25,7 @@ interface Props {
 
 export default function CardEditSheet({
   sheetKey,
+  dashboardId,
   card,
   columns,
   members,
@@ -190,7 +192,11 @@ export default function CardEditSheet({
         </SheetSection>
       </SheetSectionGroup>
       <SheetSection title="태그" zIndex={1}>
-        <TagInput tags={tags} onChange={handleTagsChange} />
+        <TagInput
+          dashboardId={dashboardId}
+          tags={tags}
+          onChange={handleTagsChange}
+        />
       </SheetSection>
       <SheetSection title="이미지" required>
         <ImageInput imageUrl={card?.imageUrl} onChange={setImage} />
