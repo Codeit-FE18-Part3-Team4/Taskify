@@ -13,12 +13,11 @@
 
 .cardImage {
   position: relative;
+  width: 100%;
 }
 
 .cardImage img {
   border-radius: 14px;
-  aspect-ratio: 361 / 215 !important;
-  max-width: 291px !important;
 }
 
 .title {
@@ -39,25 +38,4 @@
   display: flex;
   gap: 4px;
   align-items: center;
-}
-
-@media (max-width: 744px) {
-  .cardContainer {
-    width: 450px;
-    height: 100%;
-  }
-  .cardImage > img {
-    aspect-ratio: 361 / 215 !important;
-    max-width: 410px !important;
-  }
-  @media (max-width: 375px) {
-    .cardContainer {
-      width: 335px;
-      height: 100%;
-    }
-    .cardImage > img {
-      width: 295px !important;
-      height: 180px !important;
-    }
-  }
 }

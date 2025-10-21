@@ -15,7 +15,6 @@ import Alert, { AlertActionType } from "@/components/alert";
 import { Dashboard } from "@/types";
 import Dialog from "@/components/dialog";
 import { useDialog } from "@/hooks/use-dialog";
-import { useResponsive } from "@/hooks/use-responsive";
 
 const PAGE_SIZE = 6;
 
@@ -156,21 +155,10 @@ export default function ModifyMembers({
     setDialogMessage("");
   };
 
-  const { isDesktop, isTablet } = useResponsive();
-
   return (
     <div className={styles.topContainer}>
       <div className={styles.contents}>
-        <h3
-          className={classnames(
-            isDesktop
-              ? Typography.xl3Bold
-              : isTablet
-                ? Typography.xl2Bold
-                : Typography.xlBold,
-            styles.title,
-          )}
-        >
+        <h3 className={classnames(Typography.xl3Bold, styles.title)}>
           멤버 관리
         </h3>
 

@@ -1,20 +1,16 @@
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import styles from "./card.module.css";
-import { useResponsive } from "@/hooks/use-responsive";
 
 const skeletonBaseColor = "var(--color-black500)";
 const skeletonHighlightColor = "var(--color-black300)";
 
 export default function CardSkeleton() {
-  const { isDesktop, isTablet } = useResponsive();
-  const imageWidth = isDesktop ? 173 : isTablet ? 240 : 180;
-
   return (
     <article className={styles.cardContainer}>
       <div className={styles.cardImage}>
         <Skeleton
-          height={imageWidth}
+          height={160}
           borderRadius={8}
           baseColor={skeletonBaseColor}
           highlightColor={skeletonHighlightColor}
@@ -27,6 +23,7 @@ export default function CardSkeleton() {
         borderRadius={6}
         baseColor={skeletonBaseColor}
         highlightColor={skeletonHighlightColor}
+        style={{ marginBottom: 8 }}
       />
 
       <div className={styles.badge}>
@@ -51,6 +48,7 @@ export default function CardSkeleton() {
         width={100}
         height={18}
         borderRadius={4}
+        style={{ marginBottom: 8 }}
         baseColor={skeletonBaseColor}
         highlightColor={skeletonHighlightColor}
       />
