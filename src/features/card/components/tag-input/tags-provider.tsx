@@ -7,12 +7,12 @@ import {
 } from "react";
 
 interface ContextValue {
-  tagsHistory: string[];
-  addTagsHistory: (tags: string | string[]) => void;
+  tagsHistory: { [dashboardId: number]: string[] };
+  addTagsHistory: (dashboardId: number, tags: string | string[]) => void;
 }
 
 const TagsContext = createContext<ContextValue>({
-  tagsHistory: [],
+  tagsHistory: {},
   addTagsHistory: () => {},
 });
 
@@ -23,17 +23,24 @@ interface Props {
 const STORAGE_KEY = "tagsHistory";
 
 export default function TagsProvider({ children }: Props) {
-  const [tagsHistory, setTagsHistory] = useState<string[]>([]);
+  const [tagsHistory, setTagsHistory] = useState<{
+    [dashboardId: number]: string[];
+  }>({});
 
-  const addTagsHistory = (tags: string | string[]) => {
+  const addTagsHistory = (dashboardId: number, tags: string | string[]) => {
     const tagsArray = Array.isArray(tags) ? tags : [tags];
-    localStorage.setItem(
-      STORAGE_KEY,
-      JSON.stringify([...tagsHistory, ...tagsArray])
-    );
+
     setTagsHistory((prev) => {
-      const newTags = tagsArray.filter((tag) => !prev.includes(tag));
-      return [...prev, ...newTags];
+      const dashboardTags = prev[dashboardId] || [];
+      const newTags = tagsArray.filter((tag) => !dashboardTags.includes(tag));
+      const newTagsHistory = {
+        ...prev,
+        [dashboardId]: [...dashboardTags, ...newTags],
+      };
+
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(newTagsHistory));
+
+      return newTagsHistory;
     });
   };
 

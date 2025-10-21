@@ -17,6 +17,7 @@ import { useAlert } from "@/hooks/use-alert";
 import { ColumnCardData } from "@/hooks/use-cards";
 import { useDialog } from "@/hooks/use-dialog";
 import { useSheet } from "@/hooks/use-sheet";
+import { useSsrResponsive } from "@/hooks/use-ssr-responsive";
 import { Card } from "@/types/card";
 import { Column as ColumnType } from "@/types/column";
 import { Dashboard } from "@/types/dashboard";
@@ -49,7 +50,6 @@ export default function DashboardContent({
   columns,
   members,
   columnCardsData,
-  isLoadingColumns,
   isLoadingCards,
   onColumnChange,
   onCardClick,
@@ -142,10 +142,21 @@ export default function DashboardContent({
     openDialog(false);
   };
 
+  const { isTablet, isDesktop } = useSsrResponsive();
+
   return (
     <>
       <section>
-        <div className={classnames(styles.dashboardTitle, Typography.xl3Bold)}>
+        <div
+          className={classnames(
+            styles.dashboardTitle,
+            isDesktop
+              ? Typography.xl3Bold
+              : isTablet
+                ? Typography.xl2Bold
+                : Typography.xlBold
+          )}
+        >
           <ColorChip color={dashboard.color} size={CommonSize.Large} />
           <h3 title={dashboard.title}>{dashboard.title}</h3>
         </div>
@@ -213,6 +224,7 @@ export default function DashboardContent({
       {isShowSheet && (
         <CardEditSheet
           sheetKey={CREATE_CARD_SHEET_KEY}
+          dashboardId={dashboard.id}
           columns={columns}
           members={members}
           onCreate={handleCardCreate}

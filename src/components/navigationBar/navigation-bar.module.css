@@ -46,6 +46,7 @@
   gap: 10.25px;
   border-radius: 5px;
   text-decoration: none;
+  margin-right: 15px;
 }
 
 .rightIcons button {
@@ -59,6 +60,7 @@
   gap: 10.25px;
   border-radius: 5px;
   text-decoration: none;
+  margin-right: 30px;
 }
 
 .iconLink:hover,
@@ -68,14 +70,6 @@
 
 .rightIcons .icon {
   color: var(--color-gray400);
-}
-
-.iconLink {
-  margin-right: 15px;
-}
-
-.rightIcons button {
-  margin-right: 30px;
 }
 
 .iconSpan {
@@ -90,4 +84,34 @@
 .icMedium {
   width: 20px;
   height: 20px;
+}
+
+@media (max-width: 744px) {
+  .rightIcons button {
+    margin-right: 20px;
+  }
+  .large {
+    height: 60px;
+    gap: 15px;
+  }
+  .navigationBar button.mobileMenu {
+    width: 100%;
+    text-align: left;
+    margin-left: 10px;
+  }
+  @media (max-width: 375px) {
+    .columnContentWrapper {
+      padding: 10px 0 10px 20px;
+    }
+    .iconLink,
+    .rightIcon {
+      padding: 6px;
+    }
+    .iconLink {
+      margin-right: 10px;
+    }
+    .large {
+      height: 50px;
+    }
+  }
 }

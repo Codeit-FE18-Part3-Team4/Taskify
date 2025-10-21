@@ -58,10 +58,16 @@
 
 .imageContainer {
   position: relative;
-  width: 361px;
-  aspect-ratio: 361 / 219;
   border-radius: 14px;
   overflow: hidden;
+}
+.imageContainer.portrait {
+  width: 219px;
+  height: 361px;
+}
+.imageContainer.landscape {
+  width: 361px;
+  height: 219px;
 }
 
 .image {

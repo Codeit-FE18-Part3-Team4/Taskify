@@ -524,7 +524,7 @@ function BadgeSample() {
 function ColorPaletteSample() {
   const sizes = Object.values(ColorFrameSize);
   const [selectedColors, setSelectedColors] = useState<string[]>(
-    sizes.map(() => ""),
+    sizes.map(() => "")
   );
 
   const handleSelect = (index: number, color: string) => {
@@ -655,7 +655,11 @@ function SheetSample() {
               </SheetSection>
             </SheetSectionGroup>
             <SheetSection title="태그" zIndex={1}>
-              <TagInput tags={tags} onChange={handleTagChange} />
+              <TagInput
+                dashboardId={1}
+                tags={tags}
+                onChange={handleTagChange}
+              />
             </SheetSection>
             <SheetSection title="이미지">
               <ImageInput onChange={handleImageChange} />
@@ -708,6 +712,7 @@ function CardEditSheetSample() {
         {isShowSheet && (
           <CardEditSheet
             sheetKey={SHEET_KEY}
+            dashboardId={1}
             columns={columns}
             members={members}
           />
@@ -715,6 +720,7 @@ function CardEditSheetSample() {
         {isShowSheetWithCard && (
           <CardEditSheet
             sheetKey={SHEET_KEY_WITH_CARD}
+            dashboardId={1}
             card={card || undefined}
             columns={columns}
             members={members}

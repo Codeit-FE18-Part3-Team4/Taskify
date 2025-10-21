@@ -1,15 +1,16 @@
 import Button, { ButtonSize } from "@/components/button/button";
-import styles from "./edit.module.css";
-import { classnames } from "@/utils/classnames";
-import Typography from "@/components/typography";
-import ColorPalette from "@/components/color-palette/color-palette";
-import { Dashboard } from "@/types/dashboard";
-import { useState } from "react";
-import Input from "@/components/input/input";
-import { updateDashboard } from "@/features/my-dashboard/api";
 import { ColorFrameSize } from "@/components/chips/color-frame/color-frame-size";
+import ColorPalette from "@/components/color-palette/color-palette";
 import Dialog from "@/components/dialog";
+import Input from "@/components/input/input";
+import Typography from "@/components/typography";
+import { updateDashboard } from "@/features/my-dashboard/api";
 import { useDialog } from "@/hooks/use-dialog";
+import { useSsrResponsive } from "@/hooks/use-ssr-responsive";
+import { Dashboard } from "@/types/dashboard";
+import { classnames } from "@/utils/classnames";
+import { useState } from "react";
+import styles from "./edit.module.css";
 
 interface EditProps {
   dashboard: Dashboard;
@@ -68,10 +69,21 @@ export default function Edit({ dashboard, onUpdate }: EditProps) {
     }
   };
 
+  const { isDesktop, isTablet } = useSsrResponsive();
+
   return (
     <div className={styles.topContainer}>
       <form className={styles.formContents} onSubmit={handleSubmit}>
-        <h3 className={classnames(Typography.xl3Bold, styles.title)}>
+        <h3
+          className={classnames(
+            isDesktop
+              ? Typography.xl3Bold
+              : isTablet
+                ? Typography.xl2Bold
+                : Typography.xlBold,
+            styles.title
+          )}
+        >
           대시보드 편집
         </h3>
         <div className={styles.inputWrapper}>
@@ -87,7 +99,13 @@ export default function Edit({ dashboard, onUpdate }: EditProps) {
           <ColorPalette
             onSelect={(color) => handleSelect(color)}
             selectedColor={selectedColor}
-            size={ColorFrameSize.Large}
+            size={
+              isDesktop
+                ? ColorFrameSize.Large
+                : isTablet
+                  ? ColorFrameSize.Medium
+                  : ColorFrameSize.Small
+            }
           />
         </div>
         <div className={styles.buttonWrapper}>

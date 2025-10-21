@@ -120,7 +120,6 @@ export default function AccountSettingModal({ zIndex }: { zIndex: boolean }) {
           actionType={SheetActionType.Update}
           onAction={handleSubmit}
           canSubmit={isSubmitEnabled}
-          zIndex={zIndex}
         >
           <div className={styles.body}>
             <section className={styles.profileImageSection}>

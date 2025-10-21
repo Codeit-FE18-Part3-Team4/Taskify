@@ -15,7 +15,6 @@ import CommentSection from "@/features/comment/components/comment-section";
 import { useAlert } from "@/hooks/use-alert";
 import { useDialog } from "@/hooks/use-dialog";
 import { useModal } from "@/hooks/use-modal";
-import { useResponsive } from "@/hooks/use-responsive";
 import { useSheet } from "@/hooks/use-sheet";
 import type { Card, Column, Dashboard, MemberInfo } from "@/types";
 import { classnames } from "@/utils/classnames";
@@ -24,6 +23,7 @@ import Image from "next/image";
 import { ReactNode, useState } from "react";
 import styles from "./card-detail-modal.module.css";
 import CardEditSheet from "./card-edit-sheet";
+import { useSsrResponsive } from "@/hooks/use-ssr-responsive";
 
 interface ActionsProps {
   onEdit: () => void;
@@ -81,7 +81,7 @@ function AssigneeInfo({ name }: { name: string }) {
     <>
       <InfoTitle>담당자</InfoTitle>
       <div className={classnames(styles.assigneeInfo, Typography.lgMedium)}>
-        <Profile size={ProfileSize.XSmall} name={name.slice(1)} />
+        <Profile size={ProfileSize.XSmall} name={name} />
         <span>{name}</span>
       </div>
     </>
@@ -148,7 +148,17 @@ function Main({
   onDelete,
   onClose,
 }: MainProps) {
-  const { isDesktop } = useResponsive();
+  const { isDesktop } = useSsrResponsive();
+  const [imageState, setImageState] = useState({
+    isPortrait: false,
+  });
+
+  const handleImageLoad = (event: React.SyntheticEvent<HTMLImageElement>) => {
+    const { naturalWidth, naturalHeight } = event.currentTarget;
+    setImageState({
+      isPortrait: naturalHeight > naturalWidth,
+    });
+  };
 
   return (
     <div className={styles.main}>
@@ -157,7 +167,7 @@ function Main({
           <h2
             className={classnames(
               isDesktop ? "" : styles.compact,
-              Typography.xl2SemiBold
+              Typography.xl2SemiBold,
             )}
           >
             {card.title}
@@ -176,13 +186,19 @@ function Main({
         <article className={styles.content}>
           <p className={Typography.lgMedium160}>{card.description}</p>
           {card.imageUrl && (
-            <div className={styles.imageContainer}>
+            <div
+              className={classnames(
+                styles.imageContainer,
+                imageState.isPortrait ? styles.portrait : styles.landscape,
+              )}
+            >
               <Image
                 className={styles.image}
                 src={card.imageUrl}
                 alt="카드에 등록된 이미지"
                 quality={100}
                 fill
+                onLoad={handleImageLoad}
               />
             </div>
           )}
@@ -225,7 +241,7 @@ export default function CardDetailModal({
   const [card, setCard] = useState<Card>(initialCard);
 
   const { openModal } = useModal({ key: modalKey });
-  const { isDesktop, isMobile } = useResponsive();
+  const { isDesktop, isMobile } = useSsrResponsive();
 
   const alertKey = "alert-from-card-detail-modal";
   const { isShowAlert, openAlert } = useAlert({ key: alertKey });
@@ -311,6 +327,7 @@ export default function CardDetailModal({
       {isShowSheet && (
         <CardEditSheet
           sheetKey={sheetKey}
+          dashboardId={dashboard.id}
           card={card}
           columns={columns}
           members={members}

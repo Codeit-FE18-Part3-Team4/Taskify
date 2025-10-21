@@ -1,29 +1,22 @@
-.page {
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
+.page .main {
   background-color: var(--color-background);
+  align-items: center;
+  overflow: auto;
+  width: 100vw;
+  height: 100vh;
 }
-
 .page .topBar {
   width: 100%;
   background-color: var(--color-background);
   border-bottom: 2px solid var(--color-stroke);
   height: 72px;
 }
-
-.page .main {
-  display: flex;
-  height: 100%;
-}
-
 .page .main .contents {
   flex: 1;
-  margin-left: 540px;
+  margin-left: 32vw;
   display: flex;
-  direction: row;
+  width: 100%;
 }
-
 .page .main .contents .backButton {
   padding-top: 30px;
   display: flex;
@@ -34,12 +27,10 @@
   text-decoration: none;
   flex-shrink: 0;
 }
-
 .page .main .contents .backButton span {
   color: var(--color-gray300);
   cursor: pointer;
 }
-
 .page .main .contents .backButton .xIcon {
   width: 40px;
   height: 40px;
@@ -53,4 +44,9 @@
 .page .main .contents .exception {
   padding: 30px 50px;
   color: var(--color-gray300);
+}
+
+.page .main .contents .backbuttonWrapper {
+  position: sticky;
+  right: 24px;
 }

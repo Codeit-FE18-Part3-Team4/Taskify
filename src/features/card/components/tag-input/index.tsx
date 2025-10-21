@@ -72,11 +72,12 @@ function Combobox({
 }
 
 interface Props {
+  dashboardId: number;
   tags?: string[];
   onChange?: (tag: string[]) => void;
 }
 
-export default function TagInput({ tags = [], onChange }: Props) {
+export default function TagInput({ dashboardId, tags = [], onChange }: Props) {
   const [inputValue, setInputValue] = useState<string>("");
   const [isEditing, setEditing] = useState(false);
   const tagInputRef = useBackdropClick<HTMLDivElement>({
@@ -120,7 +121,7 @@ export default function TagInput({ tags = [], onChange }: Props) {
     }
 
     onChange?.([...tags, value]);
-    addTagsHistory(value);
+    addTagsHistory(dashboardId, value);
     setInputValue("");
     setEditing(false);
   };
@@ -134,7 +135,7 @@ export default function TagInput({ tags = [], onChange }: Props) {
   }, [isEditing]);
 
   useEffect(() => {
-    addTagsHistory(tags);
+    addTagsHistory(dashboardId, tags);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [tags]);
 
@@ -163,7 +164,7 @@ export default function TagInput({ tags = [], onChange }: Props) {
       {isEditing && (
         <Combobox
           tags={tags}
-          tagsHistory={tagsHistory}
+          tagsHistory={tagsHistory[dashboardId] ?? []}
           inputValue={inputValue}
           onSelect={handleTagSelect}
           onCreate={handleTagCreate}
