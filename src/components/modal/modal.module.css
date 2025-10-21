@@ -23,6 +23,9 @@
 .content.fullscreen {
   border: none;
   border-radius: 0px;
+  max-width: none;
+  width: 100vw;
+  height: 100vh;
 }
 
 @keyframes fadeIn {
