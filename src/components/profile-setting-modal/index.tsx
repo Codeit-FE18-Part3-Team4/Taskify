@@ -11,6 +11,7 @@ import { getMe, GetMeResponse } from "@/features/user/apis/get-me";
 import { uploadProfileImage } from "@/features/user/apis/upload-profile-image";
 import { useDialog } from "@/hooks/use-dialog";
 import { useModal } from "@/hooks/use-modal";
+import { useResponsive } from "@/hooks/use-responsive";
 import { staticImageDataToFile } from "@/utils/static-image-data-to-file";
 import { AxiosError } from "axios";
 import { useEffect, useRef, useState } from "react";
@@ -37,6 +38,7 @@ export default function AccountSettingModal({ zIndex }: { zIndex: boolean }) {
   const [dialogMessage, setDialogMessage] = useState("");
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [isSubmitEnabled, setIsSubmitEnabled] = useState(false);
+  const { isMobile } = useResponsive();
 
   useAuthEffect(() => {
     if (!isShowModal) return;
