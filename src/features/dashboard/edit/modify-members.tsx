@@ -15,7 +15,7 @@ import Alert, { AlertActionType } from "@/components/alert";
 import { Dashboard } from "@/types";
 import Dialog from "@/components/dialog";
 import { useDialog } from "@/hooks/use-dialog";
-import { useResponsive } from "@/hooks/use-responsive";
+import { useSsrResponsive } from "@/hooks/use-ssr-responsive";
 
 const PAGE_SIZE = 6;
 
@@ -156,7 +156,7 @@ export default function ModifyMembers({
     setDialogMessage("");
   };
 
-  const { isDesktop, isTablet } = useResponsive();
+  const { isDesktop, isTablet } = useSsrResponsive();
 
   return (
     <div className={styles.topContainer}>

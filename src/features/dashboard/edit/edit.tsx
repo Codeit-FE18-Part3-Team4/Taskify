@@ -10,7 +10,7 @@ import { updateDashboard } from "@/features/my-dashboard/api";
 import { ColorFrameSize } from "@/components/chips/color-frame/color-frame-size";
 import Dialog from "@/components/dialog";
 import { useDialog } from "@/hooks/use-dialog";
-import { useResponsive } from "@/hooks/use-responsive";
+import { useSsrResponsive } from "@/hooks/use-ssr-responsive";
 
 interface EditProps {
   dashboard: Dashboard;
@@ -69,7 +69,7 @@ export default function Edit({ dashboard, onUpdate }: EditProps) {
     }
   };
 
-  const { isDesktop, isTablet } = useResponsive();
+  const { isDesktop, isTablet } = useSsrResponsive();
 
   return (
     <div className={styles.topContainer}>

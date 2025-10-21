@@ -24,7 +24,7 @@ import { classnames } from "@/utils/classnames";
 import { useState } from "react";
 import styles from "./index.module.css";
 import PlusCircleSvg from "./plus-circle-svg";
-import { useResponsive } from "@/hooks/use-responsive";
+import { useSsrResponsive } from "@/hooks/use-ssr-responsive";
 
 export async function getServerSideProps() {
   return {
@@ -142,7 +142,7 @@ export default function DashboardContent({
     openDialog(false);
   };
 
-  const { isTablet, isDesktop } = useResponsive();
+  const { isTablet, isDesktop } = useSsrResponsive();
 
   return (
     <>

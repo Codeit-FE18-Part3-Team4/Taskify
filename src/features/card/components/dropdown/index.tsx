@@ -1,7 +1,6 @@
 import { Color } from "@/components/color";
 import ChevronIcon, { Direction } from "@/components/icon/chevron-icon";
 import Typography from "@/components/typography";
-import { useResponsive } from "@/hooks/use-responsive";
 import { classnames } from "@/utils/classnames";
 import {
   MouseEventHandler,
@@ -12,6 +11,7 @@ import {
   useState,
 } from "react";
 import styles from "./dropdown.module.css";
+import { useSsrResponsive } from "@/hooks/use-ssr-responsive";
 
 export interface DropdownOption {
   element: ReactNode;
@@ -24,7 +24,7 @@ interface DropdownContainerProps {
 }
 
 function DropdownContainer({ options, onSelect }: DropdownContainerProps) {
-  const { isMobile } = useResponsive();
+  const { isMobile } = useSsrResponsive();
 
   const scrollableOrEmpty = useMemo(() => {
     const maxVisibleOptions = isMobile ? 3 : 5;
@@ -33,7 +33,9 @@ function DropdownContainer({ options, onSelect }: DropdownContainerProps) {
 
   const handleOptionClick = (index: number) => {
     onSelect(
-      typeof options[index] === "string" ? options[index] : options[index].value
+      typeof options[index] === "string"
+        ? options[index]
+        : options[index].value,
     );
   };
 
@@ -49,7 +51,7 @@ function DropdownContainer({ options, onSelect }: DropdownContainerProps) {
             className={classnames(
               styles.dropdownOption,
               scrollableOrEmpty,
-              Typography.lgMedium
+              Typography.lgMedium,
             )}
             onClick={() => handleOptionClick(index)}
           >

@@ -15,7 +15,6 @@ import CommentSection from "@/features/comment/components/comment-section";
 import { useAlert } from "@/hooks/use-alert";
 import { useDialog } from "@/hooks/use-dialog";
 import { useModal } from "@/hooks/use-modal";
-import { useResponsive } from "@/hooks/use-responsive";
 import { useSheet } from "@/hooks/use-sheet";
 import type { Card, Column, Dashboard, MemberInfo } from "@/types";
 import { classnames } from "@/utils/classnames";
@@ -24,6 +23,7 @@ import Image from "next/image";
 import { ReactNode, useState } from "react";
 import styles from "./card-detail-modal.module.css";
 import CardEditSheet from "./card-edit-sheet";
+import { useSsrResponsive } from "@/hooks/use-ssr-responsive";
 
 interface ActionsProps {
   onEdit: () => void;
@@ -148,7 +148,7 @@ function Main({
   onDelete,
   onClose,
 }: MainProps) {
-  const { isDesktop } = useResponsive();
+  const { isDesktop } = useSsrResponsive();
   const [imageState, setImageState] = useState({
     isPortrait: false,
   });
@@ -167,7 +167,7 @@ function Main({
           <h2
             className={classnames(
               isDesktop ? "" : styles.compact,
-              Typography.xl2SemiBold
+              Typography.xl2SemiBold,
             )}
           >
             {card.title}
@@ -189,7 +189,7 @@ function Main({
             <div
               className={classnames(
                 styles.imageContainer,
-                imageState.isPortrait ? styles.portrait : styles.landscape
+                imageState.isPortrait ? styles.portrait : styles.landscape,
               )}
             >
               <Image
@@ -241,7 +241,7 @@ export default function CardDetailModal({
   const [card, setCard] = useState<Card>(initialCard);
 
   const { openModal } = useModal({ key: modalKey });
-  const { isDesktop, isMobile } = useResponsive();
+  const { isDesktop, isMobile } = useSsrResponsive();
 
   const alertKey = "alert-from-card-detail-modal";
   const { isShowAlert, openAlert } = useAlert({ key: alertKey });
