@@ -166,7 +166,6 @@ export default function DashboardEditPage() {
           onConfirm={() => openDialog(false)}
         />
       )}
-
       {isShowAlert && (
         <Alert
           alertKey={DASHBOARD_DELETE_KEY}
