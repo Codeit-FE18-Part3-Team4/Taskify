@@ -149,6 +149,16 @@ function Main({
   onClose,
 }: MainProps) {
   const { isDesktop } = useResponsive();
+  const [imageState, setImageState] = useState({
+    isPortrait: false,
+  });
+
+  const handleImageLoad = (event: React.SyntheticEvent<HTMLImageElement>) => {
+    const { naturalWidth, naturalHeight } = event.currentTarget;
+    setImageState({
+      isPortrait: naturalHeight > naturalWidth,
+    });
+  };
 
   return (
     <div className={styles.main}>
@@ -176,13 +186,19 @@ function Main({
         <article className={styles.content}>
           <p className={Typography.lgMedium160}>{card.description}</p>
           {card.imageUrl && (
-            <div className={styles.imageContainer}>
+            <div
+              className={classnames(
+                styles.imageContainer,
+                imageState.isPortrait ? styles.portrait : styles.landscape
+              )}
+            >
               <Image
                 className={styles.image}
                 src={card.imageUrl}
                 alt="카드에 등록된 이미지"
                 quality={100}
                 fill
+                onLoad={handleImageLoad}
               />
             </div>
           )}
