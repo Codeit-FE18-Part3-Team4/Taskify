@@ -15,9 +15,8 @@ export default function NavigationBarMemberList({
   hideMembers,
 }: MembersProps) {
   const iconColor = `var(--color-gray400)`;
-
   const { isDesktop, isTablet } = useSsrResponsive();
-
+  
   return (
     <>
       <div className={styles.users}>

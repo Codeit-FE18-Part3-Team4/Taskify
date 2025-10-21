@@ -105,7 +105,7 @@ export default function DashboardEditPage() {
   };
 
   const { isMobile } = useSsrResponsive();
-
+  
   return (
     <div className={styles.page}>
       <NavigationBar />
