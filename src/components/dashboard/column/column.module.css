@@ -96,3 +96,18 @@
   padding: 30px 50px;
   color: var(--color-gray300);
 }
+
+@media (max-width: 744px) {
+  .cardsWrapper {
+    flex: auto;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    flex-direction: row;
+    height: 435px;
+  }
+  @media (max-width: 375px) {
+    .cardsWrapper {
+      height: 355px;
+    }
+  }
+}

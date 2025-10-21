@@ -1,6 +1,7 @@
 .palleteContainer {
   width: 100%;
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
 }
 
 .xsmall {
@@ -21,4 +22,15 @@
 .large {
   height: 90px;
   gap: 16px;
+}
+
+@media (max-width: 744px) {
+  .palleteContainer {
+    grid-template-columns: repeat(5, 1fr);
+  }
+  .medium {
+    height: 165px;
+  }
+  @media (max-width: 375px) {
+  }
 }

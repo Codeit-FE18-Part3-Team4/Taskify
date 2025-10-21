@@ -50,7 +50,6 @@ export default function DashboardContent({
   columns,
   members,
   columnCardsData,
-  isLoadingColumns,
   isLoadingCards,
   onColumnChange,
   onCardClick,

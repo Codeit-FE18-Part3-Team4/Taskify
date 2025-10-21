@@ -1,5 +1,7 @@
 .page {
-  height: calc(100vh - 72px);
+  margin: 0;
+  padding: 0;
+  height: 100vh;
   background-color: var(--color-background);
   overflow: scroll;
   box-sizing: border-box;
@@ -25,7 +27,7 @@
   padding-top: 25px;
   margin-bottom: 4px;
   flex-shrink: 0;
-  max-width: calc(100vw - 350px);
+  max-width: calc(100vw - 5vw);
 }
 
 .dashboardTitle h3 {
@@ -94,4 +96,17 @@
 
 .createColumnButton:active {
   background-color: var(--color-black800);
+}
+
+@media (max-width: 744px) {
+  .columnContentWrapper {
+    flex-direction: column;
+    padding: 10px 0 10px 30px;
+    overflow-y: none;
+  }
+  @media (max-width: 375px) {
+    .columnContentWrapper {
+      padding: 10px 0 10px 20px;
+    }
+  }
 }

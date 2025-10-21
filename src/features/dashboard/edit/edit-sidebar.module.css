@@ -1,13 +1,14 @@
 .sidebar {
-  width: 540px;
+  width: 32vw;
+  max-width: 540px;
   background-color: var(--color-black900);
   position: fixed;
   left: 0;
   top: 0;
-  height: 100vh;
   padding-top: 90px;
   padding-right: 24px;
   z-index: 100;
+  height: inherit;
 }
 
 .contents {
@@ -18,7 +19,8 @@
 }
 
 .sidebar .sidebarMenu {
-  width: 276px;
+  width: 80%;
+  max-width: 276px;
   height: 175px;
   display: flex;
   flex-direction: column;
@@ -41,7 +43,8 @@
 .sidebar .sidebarMenu .betweenLine {
   background-color: var(--color-modalBackground);
   height: 1px;
-  width: 260px;
+  max-width: 260px;
+  width: 100%;
 }
 
 .sidebar .sidebarMenu button:last-child {
