@@ -3,6 +3,7 @@
   flex-direction: column;
   gap: 30px;
   color: var(--color-gray300);
+  margin-top: 16px;
 }
 
 .profileImageSection {
