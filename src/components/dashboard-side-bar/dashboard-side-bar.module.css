@@ -190,7 +190,7 @@
 @media (max-width: 487px) {
   .sideBar {
     position: fixed;
-    z-index: 1;
+    z-index: 100;
   }
   .sideBarOverlay {
     content: "";

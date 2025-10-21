@@ -69,7 +69,6 @@ export default function CreateDashboardSheet({ zIndex }: { zIndex?: boolean }) {
           actionType={SheetActionType.Create}
           onCancel={handleCancelSubmit}
           onAction={handleSubmit}
-          zIndex={zIndex}
           canSubmit={isSubmitEnabled}
         >
           <SheetSection title="대시보드 이름">

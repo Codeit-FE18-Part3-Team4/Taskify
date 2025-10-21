@@ -1,5 +1,6 @@
 import Modal from "@/components/modal";
 import Typography from "@/components/typography";
+import { ModalZIndex } from "@/constants/modal-z-index";
 import { useDialog } from "@/hooks/use-dialog";
 import { useResponsive } from "@/hooks/use-responsive";
 import { classnames } from "@/utils/classnames";
@@ -14,12 +15,7 @@ interface Props {
   zIndex?: boolean;
 }
 
-export default function Dialog({
-  dialogKey,
-  message,
-  zIndex,
-  onConfirm,
-}: Props) {
+export default function Dialog({ dialogKey, message, onConfirm }: Props) {
   const { openDialog } = useDialog({ key: dialogKey });
   const { isMobile } = useResponsive();
 
@@ -37,7 +33,7 @@ export default function Dialog({
   };
 
   return (
-    <Modal zIndex={zIndex} modalKey={dialogKey}>
+    <Modal modalKey={dialogKey} zIndex={ModalZIndex.Over}>
       <div className={styles.dialog}>
         <p className={classnames(styles.message, messageTypography)}>
           {message}

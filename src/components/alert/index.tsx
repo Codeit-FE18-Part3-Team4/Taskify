@@ -1,5 +1,6 @@
 import Modal from "@/components/modal";
 import Typography from "@/components/typography";
+import { ModalZIndex } from "@/constants/modal-z-index";
 import { useAlert } from "@/hooks/use-alert";
 import { useResponsive } from "@/hooks/use-responsive";
 import { classnames } from "@/utils/classnames";
@@ -82,7 +83,7 @@ export default function Alert({
   };
 
   return (
-    <Modal modalKey={alertKey}>
+    <Modal modalKey={alertKey} zIndex={ModalZIndex.Over}>
       <div className={styles.alert}>
         <div className={styles.header}>
           <h2 className={classnames(styles.title, titleTypography)}>{title}</h2>

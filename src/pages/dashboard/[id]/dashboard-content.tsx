@@ -213,6 +213,7 @@ export default function DashboardContent({
       {isShowSheet && (
         <CardEditSheet
           sheetKey={CREATE_CARD_SHEET_KEY}
+          dashboardId={dashboard.id}
           columns={columns}
           members={members}
           onCreate={handleCardCreate}

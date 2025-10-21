@@ -102,7 +102,6 @@ export default function PasswordChangeModal({
       actionType={SheetActionType.Update}
       canSubmit={!isSubmitButtonDisabled}
       onAction={handleSubmit}
-      zIndex={zIndex}
     >
       <div className={styles.body}>
         <section className={styles.inputSection}>
