@@ -48,13 +48,14 @@
 }
 .mainSectionTopWrap {
   width: 1365px;
-  padding: 159px 0 159px 240px;
+  padding: 159px 0 159px 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 100px;
   z-index: 10;
   position: relative;
+  margin: 0 auto;
 }
 .mainSectionTopWrap > .mainSectionTopMain {
   width: 510px;
@@ -209,6 +210,7 @@
     width: 100%;
     padding: 61px 0 0 80px;
     gap: 54px;
+    justify-content: center;
   }
   .mainSectionTopWrap > .mainSectionTopMain {
     width: 293px;
