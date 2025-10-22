@@ -4,10 +4,10 @@ import Modal from "@/components/modal";
 import Typography from "@/components/typography";
 import { ModalZIndex } from "@/constants/modal-z-index";
 import { useSheet } from "@/hooks/use-sheet";
+import { useSsrResponsive } from "@/hooks/use-ssr-responsive";
 import { classnames } from "@/utils/classnames";
 import { MouseEventHandler, ReactNode, useMemo } from "react";
 import styles from "./sheet.module.css";
-import { useSsrResponsive } from "@/hooks/use-ssr-responsive";
 
 export enum SheetActionType {
   Cancel = "취소",
@@ -66,6 +66,7 @@ interface Props {
   children: ReactNode;
   onCancel?: () => void;
   onAction?: () => void;
+  isFullScreen?: boolean;
 }
 
 export default function Sheet({
@@ -76,6 +77,7 @@ export default function Sheet({
   children,
   onCancel,
   onAction,
+  isFullScreen = false,
 }: Props) {
   const { openSheet } = useSheet({ key: sheetKey });
   const { isMobile } = useSsrResponsive();
@@ -98,7 +100,11 @@ export default function Sheet({
   };
 
   return (
-    <Modal modalKey={sheetKey} zIndex={ModalZIndex.Over}>
+    <Modal
+      modalKey={sheetKey}
+      zIndex={ModalZIndex.Over}
+      isFullScreen={isFullScreen}
+    >
       <div className={styles.sheet}>
         <div className={styles.header}>
           <h2 className={classnames(styles.title, titleTypography)}>{title}</h2>

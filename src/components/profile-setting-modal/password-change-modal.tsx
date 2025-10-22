@@ -95,6 +95,8 @@ export default function PasswordChangeModal({
     }
   };
 
+  const isMobile = typeof window !== "undefined" && window.innerWidth <= 375;
+
   return (
     <Sheet
       sheetKey={modalKey}
@@ -102,6 +104,7 @@ export default function PasswordChangeModal({
       actionType={SheetActionType.Update}
       canSubmit={!isSubmitButtonDisabled}
       onAction={handleSubmit}
+      isFullScreen={isMobile}
     >
       <div className={styles.body}>
         <section className={styles.inputSection}>

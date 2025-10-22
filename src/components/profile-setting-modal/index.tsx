@@ -111,6 +111,8 @@ export default function AccountSettingModal({ zIndex }: { zIndex: boolean }) {
     }
   };
 
+  const isMobile = typeof window !== "undefined" && window.innerWidth <= 375;
+
   return (
     <>
       {isShowModal && (
@@ -120,6 +122,7 @@ export default function AccountSettingModal({ zIndex }: { zIndex: boolean }) {
           actionType={SheetActionType.Update}
           onAction={handleSubmit}
           canSubmit={isSubmitEnabled}
+          isFullScreen={isMobile}
         >
           <div className={styles.body}>
             <section className={styles.profileImageSection}>
